@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eintrag Null - Roman</title>
+    <title>Eintrag Null / Entry Zero - Roman</title>
     <style>
         /* Volle Höhe für das Dokument erzwingen */
         html, body {
@@ -12,7 +12,7 @@
             padding: 0;
         }
 
-        /* Maximale Stabilität für das Hintergrundbild */
+        /* Maximale Stabilität für das fixierte Hintergrundbild */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #ffffff;
@@ -21,16 +21,15 @@
             align-items: center;
             min-height: 100vh;
             
-            /* GEÄNDERT: Reiner, sauberer Bildpfad ohne Verlauf und ohne Punkte */
             background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
             background-repeat: no-repeat;
             background-size: cover;
-            background-color: #0b1724; /* Fallback-Farbe */
+            background-color: #0b1724;
         }
 
-        /* Obere Leiste für das Übersetzungs-Widget */
+        /* Obere Leiste für die echten Sprach-Buttons */
         .header-bar {
             width: 100%;
             max-width: 1200px;
@@ -39,6 +38,37 @@
             padding: 20px;
             box-sizing: border-box;
             z-index: 10;
+        }
+
+        /* Styling für die DE/EN Knöpfe */
+        .lang-switch {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lang-btn.active {
+            background: #1abc9c;
+            border-color: #1abc9c;
+            color: white;
+            box-shadow: 0 0 10px rgba(26, 188, 156, 0.5);
         }
 
         /* Hauptcontainer */
@@ -50,19 +80,19 @@
             text-align: center;
         }
 
-        /* Der Ankündigungs-Hinweis ganz oben mit starkem Schatten zur Lesbarkeit */
+        /* Ankündigungs-Hinweis */
         .announcement {
             font-size: 1.1rem;
             color: #1abc9c;
             font-weight: 500;
             letter-spacing: 1px;
             margin-bottom: 30px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
         }
 
-        /* Die Lese-Karte: Hier ist die Abdunklung jetzt integriert (rgba 0,0,0,0.65) */
+        /* Die Lese-Karte mit Abdunklung */
         .book-card {
-            background: rgba(11, 23, 36, 0.75); /* Dunkler Hintergrund direkt in der Karte */
+            background: rgba(11, 23, 36, 0.75);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -72,7 +102,6 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
-        /* Titel-Formate */
         h1 {
             font-size: 2.8rem;
             font-weight: 800;
@@ -103,7 +132,6 @@
             padding-bottom: 25px;
         }
 
-        /* Einzelne Abschnitte (Ebenen) */
         .level-section {
             margin-bottom: 25px;
         }
@@ -129,15 +157,11 @@
             margin: 0;
         }
 
-        /* Google Translate Element */
-        #google_translate_element {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 6px;
-            backdrop-filter: blur(5px);
+        /* Klasse zum Verbergen der jeweils anderen Sprache */
+        .hidden {
+            display: none !important;
         }
 
-        /* Responsive Anpassungen für kleine Smartphones */
         @media (max-width: 480px) {
             h1 { font-size: 2rem; }
             .book-card { padding: 25px 20px; }
@@ -148,65 +172,129 @@
 </head>
 <body>
 
+    <!-- Manuelle Sprachauswahl oben rechts -->
     <div class="header-bar">
-        <div id="google_translate_element"></div>
+        <div class="lang-switch">
+            <button id="btn-de" class="lang-btn active" onclick="changeLanguage('de')">DE</button>
+            <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">EN</button>
+        </div>
     </div>
 
+    <!-- Hauptinhalt -->
     <div class="main-container">
         
-        <div class="announcement">
+        <!-- Ankündigungstexte -->
+        <div id="announcement-de" class="announcement">
             Schon bald auf dieser Webseite: Zusätzliche Informationen zum Buch
+        </div>
+        <div id="announcement-en" class="announcement hidden">
+            Coming soon to this website: Additional information about the book
         </div>
 
         <div class="book-card">
-            <h1>EINTRAG NULL</h1>
+            
+            <!-- Titel und Autor (bleiben in beiden Sprachen gleich) -->
+            <h1 id="book-title">EINTRAG NULL</h1>
             <div class="author">Martin U G P</div>
             
-            <div class="intro-text">
-                Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.
+            <!-- DEUTSCHER TEXTBLOCK -->
+            <div id="content-de">
+                <div class="intro-text">
+                    Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.
+                </div>
+
+                <div class="level-section">
+                    <span class="level-title">Als Erzählung</span>
+                    <p class="level-content">
+                        folgt er vier Generationen einer Familie zwischen 2030 and 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
+                    </p>
+                </div>
+
+                <div class="level-section">
+                    <span class="level-title">Als Weltentwurf</span>
+                    <p class="level-content">
+                        zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.
+                    </p>
+                </div>
+
+                <div class="level-section">
+                    <span class="level-title">Als Dokument</span>
+                    <p class="level-content">
+                        ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.
+                    </p>
+                </div>
+
+                <div class="level-section">
+                    <span class="level-title">Als Frage</span>
+                    <p class="level-content">
+                        bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.
+                    </p>
+                </div>
             </div>
 
-            <div class="level-section">
-                <span class="level-title">Als Erzählung</span>
-                <p class="level-content">
-                    folgt er vier Generationen einer Familie zwischen 2030 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
-                </p>
-            </div>
+            <!-- ENGLISCHER TEXTBLOCK (Exakt aus deiner Vorlage) -->
+            <div id="content-en" class="hidden">
+                <div class="intro-text">
+                    The novel can be read on several levels - and it lays each of them open.
+                </div>
 
-            <div class="level-section">
-                <span class="level-title">Als Weltentwurf</span>
-                <p class="media level-content">
-                    zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.
-                </p>
-            </div>
+                <div class="level-section">
+                    <span class="level-title">As a story</span>
+                    <p class="level-content">
+                        it follows four generations of a family between 2030 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.[cite: 2]
+                    </p>
+                </div>
 
-            <div class="level-section">
-                <span class="level-title">Als Dokument</span>
-                <p class="level-content">
-                    ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.
-                </p>
-            </div>
+                <div class="level-section">
+                    <span class="level-title">As a vision of the world</span>
+                    <p class="level-content">
+                        it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price.[cite: 2]
+                    </p>
+                </div>
 
-            <div class="level-section">
-                <span class="level-title">Als Frage</span>
-                <p class="level-content">
-                    bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.
-                </p>
+                <div class="level-section">
+                    <span class="level-title">As a document</span>
+                    <p class="level-content">
+                        it rests on verifiable sources – a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC – and leaves its framework open to inspection.[cite: 2]
+                    </p>
+                </div>
+
+                <div class="level-section">
+                    <span class="level-title">As a question</span>
+                    <p class="level-content">
+                        it remains: whether a just order can do without innocence and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once.[cite: 2]
+                    </p>
+                </div>
             </div>
 
         </div>
     </div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'de',
-                includedLanguages: 'en,de,fr,es,it',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
+    <!-- Kleines JavaScript zum Umschalten ohne Neuladen -->
+    <script>
+        function changeLanguage(lang) {
+            // Buttons anpassen
+            document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            // Textblöcke und Ankündigungen umschalten
+            if (lang === 'en') {
+                document.getElementById('content-de').classList.add('hidden');
+                document.getElementById('announcement-de').classList.add('hidden');
+                
+                document.getElementById('content-en').classList.remove('hidden');
+                document.getElementById('announcement-en').classList.remove('hidden');
+                document.getElementById('book-title').textContent = "ENTRY ZERO";
+            } else {
+                document.getElementById('content-en').classList.add('hidden');
+                document.getElementById('announcement-en').classList.add('hidden');
+                
+                document.getElementById('content-de').classList.remove('hidden');
+                document.getElementById('announcement-de').classList.remove('hidden');
+                document.getElementById('book-title').textContent = "EINTRAG NULL";
+            }
         }
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
