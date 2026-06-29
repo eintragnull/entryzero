@@ -21,15 +21,16 @@
             align-items: center;
             min-height: 100vh;
             
+            /* Sauberer Bildpfad */
             background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
             background-repeat: no-repeat;
             background-size: cover;
-            background-color: #0b1724;
+            background-color: #0b1724; /* Fallback-Farbe */
         }
 
-        /* Obere Leiste für die echten Sprach-Buttons */
+        /* Obere Leiste für die Sprach-Buttons */
         .header-bar {
             width: 100%;
             max-width: 1200px;
@@ -47,7 +48,7 @@
         }
 
         .lang-btn {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
             padding: 6px 14px;
@@ -61,7 +62,7 @@
         }
 
         .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .lang-btn.active {
@@ -71,56 +72,60 @@
             box-shadow: 0 0 10px rgba(26, 188, 156, 0.5);
         }
 
-        /* Hauptcontainer */
+        /* Hauptcontainer etwas schmaler (680px statt 750px), damit das Cover mehr Platz hat */
         .main-container {
-            max-width: 750px;
+            max-width: 680px;
             width: 90%;
             margin: 20px auto 60px auto;
             box-sizing: border-box;
             text-align: center;
         }
 
-        /* Ankündigungs-Hinweis */
+        /* Ankündigungs-Hinweis mit starkem Textschatten statt Balken */
         .announcement {
             font-size: 1.1rem;
             color: #1abc9c;
             font-weight: 500;
             letter-spacing: 1px;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+            margin-bottom: 40px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 4px 20px rgba(0, 0, 0, 0.9);
         }
 
-        /* Die Lese-Karte mit Abdunklung */
+        /* Die Lese-Karte: Fast VOLLKOMMEN TRANSPARENT (nur 0.15 statt 0.75) */
+        /* Der Blur-Effekt sorgt dafür, dass das Cover edel durchschimmert */
         .book-card {
-            background: rgba(11, 23, 36, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(11, 23, 36, 0.15); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 16px;
-            padding: 40px 30px;
+            padding: 45px 35px;
             text-align: left;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
 
+        /* Titel-Formate mit Schatten, damit sie sich vom Cover abheben */
         h1 {
             font-size: 2.8rem;
             font-weight: 800;
             margin: 0 0 5px 0;
             text-align: center;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 15px rgba(0,0,0,0.9), 0 4px 30px rgba(0,0,0,0.9);
         }
 
         .author {
             font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 4px;
-            color: #b3c1cd;
-            margin-bottom: 35px;
+            letter-spacing: 5px;
+            color: #d1dce5;
+            margin-bottom: 40px;
             text-align: center;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
         }
 
+        /* Dezent abgedunkelter Hintergrund NUR für die Textblöcke zur Lesbarkeit */
         .intro-text {
             font-size: 1.25rem;
             line-height: 1.6;
@@ -128,12 +133,17 @@
             color: #ffffff;
             margin-bottom: 35px;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 25px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.9);
         }
 
         .level-section {
             margin-bottom: 25px;
+            background: rgba(0, 0, 0, 0.35); /* Schützt die Lesbarkeit, lässt das Bild aber atmen */
+            padding: 15px 20px;
+            border-radius: 8px;
+            border-left: 3px solid #1abc9c;
         }
 
         .level-section:last-of-type {
@@ -146,14 +156,14 @@
             color: #1abc9c;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             display: block;
         }
 
         .level-content {
             font-size: 1.05rem;
             line-height: 1.65;
-            color: #e2e8f0;
+            color: #f1f5f9;
             margin: 0;
         }
 
@@ -163,16 +173,16 @@
         }
 
         @media (max-width: 480px) {
-            h1 { font-size: 2rem; }
-            .book-card { padding: 25px 20px; }
+            h1 { font-size: 2.1rem; }
+            .book-card { padding: 30px 20px; }
             .intro-text { font-size: 1.1rem; }
             .level-content { font-size: 1rem; }
+            .main-container { width: 95%; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Manuelle Sprachauswahl oben rechts -->
     <div class="header-bar">
         <div class="lang-switch">
             <button id="btn-de" class="lang-btn active" onclick="changeLanguage('de')">DE</button>
@@ -180,10 +190,8 @@
         </div>
     </div>
 
-    <!-- Hauptinhalt -->
     <div class="main-container">
         
-        <!-- Ankündigungstexte -->
         <div id="announcement-de" class="announcement">
             Schon bald auf dieser Webseite: Zusätzliche Informationen zum Buch
         </div>
@@ -193,11 +201,9 @@
 
         <div class="book-card">
             
-            <!-- Titel und Autor (bleiben in beiden Sprachen gleich) -->
             <h1 id="book-title">EINTRAG NULL</h1>
             <div class="author">Martin U G P</div>
             
-            <!-- DEUTSCHER TEXTBLOCK -->
             <div id="content-de">
                 <div class="intro-text">
                     Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.
@@ -206,7 +212,7 @@
                 <div class="level-section">
                     <span class="level-title">Als Erzählung</span>
                     <p class="level-content">
-                        folgt er vier Generationen einer Familie zwischen 2030 and 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
+                        folgt er vier Generationen einer Familie zwischen 2030 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
                     </p>
                 </div>
 
@@ -232,7 +238,6 @@
                 </div>
             </div>
 
-            <!-- ENGLISCHER TEXTBLOCK (Exakt aus deiner Vorlage) -->
             <div id="content-en" class="hidden">
                 <div class="intro-text">
                     The novel can be read on several levels - and it lays each of them open.
@@ -241,7 +246,8 @@
                 <div class="level-section">
                     <span class="level-title">As a story</span>
                     <p class="level-content">
-                        it follows four generations of a family between 2030 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.                   </p>
+                        it follows four generations of a family between 2030 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.
+                    </p>
                 </div>
 
                 <div class="level-section">
@@ -269,14 +275,11 @@
         </div>
     </div>
 
-    <!-- Kleines JavaScript zum Umschalten ohne Neuladen -->
     <script>
         function changeLanguage(lang) {
-            // Buttons anpassen
             document.getElementById('btn-de').classList.toggle('active', lang === 'de');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             
-            // Textblöcke und Ankündigungen umschalten
             if (lang === 'en') {
                 document.getElementById('content-de').classList.add('hidden');
                 document.getElementById('announcement-de').classList.add('hidden');
