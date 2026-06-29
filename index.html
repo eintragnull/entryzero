@@ -3,76 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eintrag Null</title>
-    <!-- GunDB Bibliothek für dezentrale Daten-Synchronisation laden -->
-    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <title>Eintrag Null - Roman</title>
     <style>
-        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f4f7f6; color: #333; }
-        h1 { color: #2c3e50; }
-        form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        textarea, input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: #1abc9c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
-        button:hover { background: #16a085; }
-        .post { background: white; padding: 15px; margin-top: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .meta { font-size: 12px; color: #7f8c8d; }
+        /* Grunddesign und Tiefenwirkung durch Hintergrundbild */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            
+            /* Das Cover-Bild wird als fixierter Hintergrund gesetzt */
+            background-image: linear-gradient(to bottom, rgba(11, 23, 36, 0.4), rgba(11, 23, 36, 0.85)), url('cover.png');
+            background-attachment: fixed;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #0b1724; /* Fallback-Farbe passend zum Cover */
+        }
+
+        /* Obere Leiste für das Übersetzungs-Widget */
+        .header-bar {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        /* Hauptcontainer: Optimiert für Desktop und Smartphone */
+        .main-container {
+            max-width: 750px;
+            width: 90%;
+            margin: 20px auto 60px auto;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        /* Der Ankündigungs-Hinweis ganz oben */
+        .announcement {
+            font-size: 1.1rem;
+            color: #1abc9c;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Die Lese-Karte (Glassmorphismus-Effekt für Tiefenwirkung) */
+        .book-card {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: left;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Titel-Formate */
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0 0 5px 0;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .author {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #b3c1cd;
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .intro-text {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 35px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding-bottom: 25px;
+        }
+
+        /* Einzelne Abschnitte (Ebenen) */
+        .level-section {
+            margin-bottom: 25px;
+        }
+
+        .level-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .level-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1abc9c; /* Akzentfarbe aus deinem ersten Entwurf */
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .level-content {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            color: #e2e8f0;
+            margin: 0;
+        }
+
+        /* Google Translate Element Styling Anpassung */
+        #google_translate_element {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* Responsive Anpassungen für kleine Smartphones */
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .book-card { padding: 25px 20px; }
+            .intro-text { font-size: 1.1rem; }
+            .level-content { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>Eintrag Null</h1>
-    
-    <form id="textForm">
-        <input type="text" id="username" placeholder="Dein Name / Pseudonym" required>
-        <textarea id="textContent" rows="5" placeholder="Schreibe deinen Text hier..." required></textarea>
-        <button type="submit">Auf IPFS/GunDB veröffentlichen</button>
-    </form>
+    <!-- Google Translate oben rechts -->
+    <div class="header-bar">
+        <div id="google_translate_element"></div>
+    </div>
 
-    <h2>Veröffentlichte Inhalte</h2>
-    <div id="postsContainer">Lade Einträge aus dem Peer-to-Peer-Netzwerk...</div>
+    <!-- Hauptinhalt -->
+    <div class="main-container">
+        
+        <div class="announcement">
+            Schon bald auf dieser Webseite: Zusätzliche Informationen zum Buch
+        </div>
 
-    <script>
-        // Verbindung zu öffentlichen GunDB-Relay-Servern herstellen (Peer-to-Peer)
-        const gun = Gun(['https://gun-manhattan.herokuapp.com/gun']);
-        const textApp = gun.get('mein-einzigartiger-text-verteiler-2026');
-
-        const form = document.getElementById('textForm');
-        const container = document.getElementById('postsContainer');
-
-        // Text dezentral speichern
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('username').value;
-            const text = document.getElementById('textContent').value;
+        <div class="book-card">
+            <h1>EINTRAG NULL</h1>
+            <div class="author">Martin U G P</div>
             
-            // Neuen Eintrag in die dezentrale Graph-Datenbank pushen
-            textApp.set({
-                name: name,
-                text: text,
-                timestamp: new Date().toLocaleString()
-            });
+            <div class="intro-text">
+                Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.
+            </div>
 
-            form.reset();
-        });
+            <!-- Ebene 1 -->
+            <div class="level-section">
+                <span class="level-title">Als Erzählung</span>
+                <p class="level-content">
+                    folgt er vier Generationen einer Familie zwischen 2030 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer pfünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
+                </p>
+            </div>
 
-        // Texte live aus dem P2P-Netzwerk streamen
-        container.innerHTML = ''; // Container leeren
-        textApp.map().on((data, id) => {
-            if (data && data.text) {
-                // Prüfen, ob der Post schon angezeigt wird, sonst hinzufügen
-                let existingPost = document.getElementById(id);
-                if (!existingPost) {
-                    const postDiv = document.createElement('div');
-                    postDiv.id = id;
-                    postDiv.className = 'post';
-                    postDiv.innerHTML = `<strong>${escapeHtml(data.name)}</strong> <span class="meta">(${escapeHtml(data.timestamp)})</span><p>${escapeHtml(data.text)}</p>`;
-                    container.prepend(postDiv); // Neueste Posts nach oben
-                }
-            }
-        });
+            <!-- Ebene 2 -->
+            <div class="level-section">
+                <span class="level-title">Als Weltentwurf</span>
+                <p class="level-content">
+                    zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.
+                </p>
+            </div>
 
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            <!-- Ebene 3 -->
+            <div class="level-section">
+                <span class="level-title">Als Dokument</span>
+                <p class="level-content">
+                    ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.
+                </p>
+            </div>
+
+            <!-- Ebene 4 -->
+            <div class="level-section">
+                <span class="level-title">Als Frage</span>
+                <p class="level-content">
+                    bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'de',
+                includedLanguages: 'en,de,fr,es,it',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
         }
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 </body>
 </html>
