@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eintrag Null - Roman</title>
     <style>
-        /* WICHTIG: Holt die volle Höhe für das Hintergrundbild heraus */
+        /* Volle Höhe für das Dokument erzwingen */
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
 
-        /* Grunddesign und Tiefenwirkung durch das fixierte Hintergrundbild */
+        /* Maximale Stabilität für das Hintergrundbild */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #ffffff;
@@ -21,13 +21,13 @@
             align-items: center;
             min-height: 100vh;
             
-            /* Hintergrundbild mit sanftem, dunklem Verlauf für bessere Lesbarkeit */
-            background-image: linear-gradient(to bottom, rgba(11, 23, 36, 0.4), rgba(11, 23, 36, 0.85)), url("./cover.png");
+            /* GEÄNDERT: Reiner, sauberer Bildpfad ohne Verlauf und ohne Punkte */
+            background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
             background-repeat: no-repeat;
             background-size: cover;
-            background-color: #0b1724; /* Fallback-Farbe passend zum Cover */
+            background-color: #0b1724; /* Fallback-Farbe */
         }
 
         /* Obere Leiste für das Übersetzungs-Widget */
@@ -41,7 +41,7 @@
             z-index: 10;
         }
 
-        /* Hauptcontainer: Optimiert für Desktop und Smartphone */
+        /* Hauptcontainer */
         .main-container {
             max-width: 750px;
             width: 90%;
@@ -50,26 +50,26 @@
             text-align: center;
         }
 
-        /* Der Ankündigungs-Hinweis ganz oben */
+        /* Der Ankündigungs-Hinweis ganz oben mit starkem Schatten zur Lesbarkeit */
         .announcement {
             font-size: 1.1rem;
             color: #1abc9c;
             font-weight: 500;
             letter-spacing: 1px;
             margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.9);
         }
 
-        /* Die Lese-Karte (Glassmorphismus-Effekt für Tiefenwirkung) */
+        /* Die Lese-Karte: Hier ist die Abdunklung jetzt integriert (rgba 0,0,0,0.65) */
         .book-card {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(11, 23, 36, 0.75); /* Dunkler Hintergrund direkt in der Karte */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 40px 30px;
             text-align: left;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
         }
 
         /* Titel-Formate */
@@ -80,7 +80,7 @@
             text-align: center;
             letter-spacing: 2px;
             color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .author {
@@ -129,7 +129,7 @@
             margin: 0;
         }
 
-        /* Google Translate Element Styling Anpassung */
+        /* Google Translate Element */
         #google_translate_element {
             background: rgba(255, 255, 255, 0.1);
             padding: 4px 8px;
@@ -148,12 +148,10 @@
 </head>
 <body>
 
-    <!-- Google Translate oben rechts -->
     <div class="header-bar">
         <div id="google_translate_element"></div>
     </div>
 
-    <!-- Hauptinhalt -->
     <div class="main-container">
         
         <div class="announcement">
@@ -168,7 +166,6 @@
                 Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.
             </div>
 
-            <!-- Ebene 1 -->
             <div class="level-section">
                 <span class="level-title">Als Erzählung</span>
                 <p class="level-content">
@@ -176,15 +173,13 @@
                 </p>
             </div>
 
-            <!-- Ebene 2 -->
             <div class="level-section">
                 <span class="level-title">Als Weltentwurf</span>
-                <p class="level-content">
+                <p class="media level-content">
                     zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.
                 </p>
             </div>
 
-            <!-- Ebene 3 -->
             <div class="level-section">
                 <span class="level-title">Als Dokument</span>
                 <p class="level-content">
@@ -192,7 +187,6 @@
                 </p>
             </div>
 
-            <!-- Ebene 4 -->
             <div class="level-section">
                 <span class="level-title">Als Frage</span>
                 <p class="level-content">
@@ -203,7 +197,6 @@
         </div>
     </div>
 
-    <!-- Google Translate Script -->
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
