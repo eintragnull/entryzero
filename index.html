@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eintrag Null</title>
+    <!-- GunDB Bibliothek für dezentrale Daten-Synchronisation laden -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f4f7f6; color: #333; }
+        h1 { color: #2c3e50; }
+        form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        textarea, input { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background: #1abc9c; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background: #16a085; }
+        .post { background: white; padding: 15px; margin-top: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .meta { font-size: 12px; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+    <h1>Eintrag Null</h1>
+    
+    <form id="textForm">
+        <input type="text" id="username" placeholder="Dein Name / Pseudonym" required>
+        <textarea id="textContent" rows="5" placeholder="Schreibe deinen Text hier..." required></textarea>
+        <button type="submit">Auf IPFS/GunDB veröffentlichen</button>
+    </form>
+
+    <h2>Veröffentlichte Inhalte</h2>
+    <div id="postsContainer">Lade Einträge aus dem Peer-to-Peer-Netzwerk...</div>
+
+    <script>
+        // Verbindung zu öffentlichen GunDB-Relay-Servern herstellen (Peer-to-Peer)
+        const gun = Gun(['https://gun-manhattan.herokuapp.com/gun']);
+        const textApp = gun.get('mein-einzigartiger-text-verteiler-2026');
+
+        const form = document.getElementById('textForm');
+        const container = document.getElementById('postsContainer');
+
+        // Text dezentral speichern
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('username').value;
+            const text = document.getElementById('textContent').value;
+            
+            // Neuen Eintrag in die dezentrale Graph-Datenbank pushen
+            textApp.set({
+                name: name,
+                text: text,
+                timestamp: new Date().toLocaleString()
+            });
+
+            form.reset();
+        });
+
+        // Texte live aus dem P2P-Netzwerk streamen
+        container.innerHTML = ''; // Container leeren
+        textApp.map().on((data, id) => {
+            if (data && data.text) {
+                // Prüfen, ob der Post schon angezeigt wird, sonst hinzufügen
+                let existingPost = document.getElementById(id);
+                if (!existingPost) {
+                    const postDiv = document.createElement('div');
+                    postDiv.id = id;
+                    postDiv.className = 'post';
+                    postDiv.innerHTML = `<strong>${escapeHtml(data.name)}</strong> <span class="meta">(${escapeHtml(data.timestamp)})</span><p>${escapeHtml(data.text)}</p>`;
+                    container.prepend(postDiv); // Neueste Posts nach oben
+                }
+            }
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+    </script>
+</body>
+</html>
