@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eintrag Null - Roman</title>
     <style>
-        /* Grunddesign und Tiefenwirkung durch Hintergrundbild */
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        /* WICHTIG: Holt die volle Höhe für das Hintergrundbild heraus */
+        html, body {
+            height: 100%;
             margin: 0;
             padding: 0;
+        }
+
+        /* Grunddesign und Tiefenwirkung durch das fixierte Hintergrundbild */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             color: #ffffff;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
             
-            /* Das Cover-Bild wird als fixierter Hintergrund gesetzt */
-            background-image: linear-gradient(to bottom, rgba(11, 23, 36, 0.4), rgba(11, 23, 36, 0.85)), url('cover.png');
+            /* Hintergrundbild mit sanftem, dunklem Verlauf für bessere Lesbarkeit */
+            background-image: linear-gradient(to bottom, rgba(11, 23, 36, 0.4), rgba(11, 23, 36, 0.85)), url("./cover.png");
             background-attachment: fixed;
             background-position: center top;
             background-repeat: no-repeat;
@@ -110,7 +115,7 @@
         .level-title {
             font-weight: 700;
             font-size: 1.1rem;
-            color: #1abc9c; /* Akzentfarbe aus deinem ersten Entwurf */
+            color: #1abc9c;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 5px;
@@ -167,7 +172,7 @@
             <div class="level-section">
                 <span class="level-title">Als Erzählung</span>
                 <p class="level-content">
-                    folgt er vier Generationen einer Familie zwischen 2030 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer pfünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
+                    folgt er vier Generationen einer Familie zwischen 2030 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.
                 </p>
             </div>
 
