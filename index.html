@@ -52,7 +52,7 @@
     }
     </script>
 
-    <!-- Dezentrales Datenbank-Skript (GunDB) -->
+    <!-- Dezentrales P2P-Datenbank-Skript (GunDB) -->
     <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
     
     <style>
@@ -84,7 +84,7 @@
             flex-direction: column;
             min-height: 100vh;
             
-            /* Hintergrundkonfiguration für cover.png */
+            /* Cover-Stabilität als Fixhintergrund */
             background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
@@ -161,7 +161,7 @@
             box-shadow: 0 0 12px rgba(26, 188, 156, 0.5);
         }
 
-        /* ERDSICHEL WRAPPER (Sichtbar auf allen Seiten über dem Inhalt) */
+        /* ERDSICHEL OVERLAY WRAPPER */
         .erdsichel-wrapper {
             width: 100%;
             max-width: 840px;
@@ -203,7 +203,7 @@
             z-index: 5;
         }
 
-        /* Inhalts-Karten (Gedimmte Transparenz, damit cover.png im Hintergrund sichtbar bleibt) */
+        /* Inhalts-Karten */
         .content-panel {
             background: rgba(11, 23, 36, 0.65);
             backdrop-filter: blur(8px);
@@ -389,7 +389,6 @@
 
         .eb-bilanz-box svg { display: block; background: rgba(0, 0, 0, 0.4); border-radius: 4px; }
 
-        /* Klares Hellgrün für optimierte Lesbarkeit */
         .highlight-text {
             color: #a3e635 !important; 
             text-shadow: 0 1px 5px rgba(0,0,0,0.9);
@@ -436,7 +435,7 @@
         </div>
     </nav>
 
-    <!-- UNIVERSELLE ERDSICHEL -->
+    <!-- DEKORATIVE ERDSICHEL -->
     <div class="erdsichel-wrapper">
         <svg class="erdsichel-svg" viewBox="0 0 800 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 20C240 5 560 5 790 20C540 8 260 8 10 20Z" fill="url(#crescentGlow)"/>
@@ -463,14 +462,14 @@
             <h1 class="lang-de">Eintrag Null</h1>
             <h1 class="lang-en hidden">Entry Zero</h1>
             
-            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-de">Ein Roman. Zwischen 2029 und 2100.</p>
-            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-en hidden">A novel. Between 2029 and 2100.</p>
+            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-de">Ein Roman. Zwischen 2029 und 2100.[cite: 6]</p>
+            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-en hidden">A novel. Between 2029 and 2100.[cite: 7]</p>
             
-            <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über drei Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100[cite: 6].</p>
-            <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across three generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100[cite: 7].</p>
+            <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über drei Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100.[cite: 6]</p>
+            <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across three generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100.[cite: 7]</p>
             
-            <p class="lang-de">Das Buch ist frei verfügbar, auf Deutsch und auf Englisch[cite: 6].</p>
-            <p class="lang-en hidden">The book is freely available, in English and in German[cite: 7].</p>
+            <p class="lang-de">Das Buch ist frei verfügbar, auf Deutsch und auf Englisch.[cite: 6]</p>
+            <p class="lang-en hidden">The book is freely available, in English and in German.[cite: 7]</p>
             
             <div class="btn-group" style="justify-content: center;">
                 <button class="action-btn" onclick="switchTab('buch')">
@@ -482,8 +481,8 @@
             </div>
             
             <p style="font-size: 1rem; margin-top: 45px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 25px; text-align: center;">
-                <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" onclick="switchTab('werkstatt')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Die Werkstatt</a> erzählt es — als Novelle[cite: 6].</span>
-                <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" onclick="switchTab('werkstatt')" style="color: var(--primary); text-decoration: none; font-weight: 600;">The Workshop</a> tells it — as a novella[cite: 7].</span>
+                <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" onclick="switchTab('werkstatt')" style="color: var(--primary); text-decoration: none; font-weight: 600;">Die Werkstatt</a> erzählt es — als Novelle.[cite: 6]</span>
+                <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" onclick="switchTab('werkstatt')" style="color: var(--primary); text-decoration: none; font-weight: 600;">The Workshop</a> tells it — as a novella.[cite: 7]</span>
             </p>
             
             <div class="meta-author">Martin U G P · The Symbios Butterfly Lab[cite: 6, 7]</div>
@@ -497,24 +496,27 @@
             <div class="source-card" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.05); padding: 25px;">
                 <div class="lang-de">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">EINTRAG NULL — Martin U G P[cite: 9]</p>
-                    <p style="font-style: italic;">Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei[cite: 9].</p>
-                    <p>Als Erzählung folgt er vier Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie[cite: 9].</p>
-                    <p>Als Weltentwurf zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis[cite: 9].</p>
-                    <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar[cite: 9].</p>
-                    <p style="margin-bottom: 0;">Als Frage bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen[cite: 9].</p>
+                    <p style="font-style: italic;">Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.[cite: 9]</p>
+                    <p>Als Erzählung folgt er vier Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.[cite: 9]</p>
+                    <p>Als Weltentwurf zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.[cite: 9]</p>
+                    <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.[cite: 9]</p>
+                    <p style="margin-bottom: 0;">Als Frage bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.[cite: 9]</p>
                 </div>
                 <div class="lang-en hidden">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">ENTRY ZERO — Martin U G P[cite: 8]</p>
-                    <p style="font-style: italic;">The novel can be read on several levels — and it lays each of them open[cite: 8].</p>
-                    <p>As a story, it follows four generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love[cite: 8].</p>
-                    <p>As a vision of the world, it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price[cite: 8].</p>
-                    <p>As a document, it rests on verifiable sources — a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC — and leaves its framework open to inspection[cite: 8].</p>
-                    <p style="margin-bottom: 0;">Als Frage remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once[cite: 8].</p>
+                    <p style="font-style: italic;">The novel can be read on several levels — and it lays each of them open.[cite: 8]</p>
+                    <p>As a story, it follows four generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.[cite: 8]</p>
+                    <p>As a vision of the world, it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price.[cite: 8]</p>
+                    <p>As a document, it rests on verifiable sources — a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC — and leaves its framework open to inspection.[cite: 8]</p>
+                    <p style="margin-bottom: 0;">As a question, it remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once.[cite: 8]</p>
                 </div>
             </div>
 
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
+            <p class="lang-de">Der Roman ist vollständig und kostenlos verfügbar. Kein Auszug, keine Anmeldung — das ganze Buch.[cite: 6]</p>
+            <p class="lang-en hidden">The novel is complete and free. No excerpt, no sign-up — the whole book.[cite: 7]</p>
+            
             <ul>
                 <li>
                     <strong><span class="lang-de">Deutsche Ausgabe — Eintrag Null</span><span class="lang-en hidden">German edition — Eintrag Null</span></strong><br>
@@ -525,6 +527,15 @@
                     <a href="#" class="download-link">DOWNLOAD: PDF EN — Letter</a> · <a href="#" class="download-link">DOWNLOAD: EPUB EN</a>[cite: 7]
                 </li>
             </ul>
+            <p style="font-size: 0.95rem; color: var(--eb-muted);">
+                <span class="lang-de">Fassung v0.1 — der erste Eintrag.</span><span class="lang-en hidden">Version v0.1 — the first entry.</span><br>
+                Lizenz: CC BY-NC-SA 4.0[cite: 6, 7]
+            </p>
+
+            <h2 class="lang-de">Print-Ausgabe</h2>
+            <h2 class="lang-en hidden">Print edition</h2>
+            <p class="lang-de"><strong>In Vorbereitung.</strong> Eine gedruckte Ausgabe ist geplant; sobald sie erhältlich ist, steht hier der Weg dorthin.[cite: 6]</p>
+            <p class="lang-en hidden"><strong>In preparation.</strong> A printed edition is planned; once it is available, the way to it will be here.[cite: 7]</p>
         </div>
 
         <!-- ================= SEITE 2: DIE GRUNDLAGEN ================= -->
@@ -532,25 +543,69 @@
             <h1 class="lang-de">Die Grundlagen</h1>
             <h1 class="lang-en hidden">The Foundations</h1>
             
-            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten[cite: 6].</p>
-            <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works[cite: 7].</p>
+            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten — und auf Papieren, die für dieses Projekt aus ihnen entwickelt wurden. Beides steht hier, klar getrennt: Was es vor dem Buch schon gab, und was die Werkstatt daraus gebaut hat.[cite: 6]</p>
+            <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works — and on papers developed from them for this project. Both are here, clearly separated: what existed before the book, and what the workshop built from it.[cite: 7]</p>
 
-            <h2 class="lang-de">Die realen Quellen</h2>
-            <h2 class="lang-en hidden">The real sources</h2>
+            <h2 class="lang-de">Die realen Quellen *(vorbestehend — nicht von diesem Projekt)*</h2>
+            <h2 class="lang-en hidden">The real sources *(pre-existing — not by this project)*</h2>
             
             <div class="source-card">
                 <span class="source-title">Global Justice Report 2026 (World Inequality Lab)</span>
-                <a href="https://wid.world" target="_blank" class="download-link">[LINK: GJR 2026] →</a>[cite: 6]
+                <span class="lang-de">Rechnet vor, dass eine gerechte Welt innerhalb der Belastungsgrenzen der Erde bis zum Ende des Jahrhunderts möglich ist. Der Roman übernimmt daraus die Zielbahn — bis zum Zieljahr 2100.[cite: 6]</span>
+                <span class="lang-en hidden">Shows that a just world within the load-limits of the earth is possible by the end of the century. The novel takes its target trajectory from it — all the way to the target year 2100.[cite: 7]</span>
+                <br><a href="https://wid.world" target="_blank" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: GJR 2026] →</a>
             </div>
 
-            <h2 class="lang-de">Die Werkstattpapiere</h2>
-            <h2 class="lang-en hidden">The workshop papers</h2>
+            <div class="source-card">
+                <span class="source-title">Integral Technical White Paper v0.1 (Peter Joseph / Integral Collective)</span>
+                <span class="lang-de">Der technische Entwurf einer Wirtschaft, in der nicht Geld und Markt jede Entscheidung treffen. Die Werkzeuge der Föderation im Roman — die Stunden, das Register, die Blaupausen — sind aus diesem System gebaut.[cite: 6]</span>
+                <span class="lang-en hidden">The technical design of an economy in which money and the market do not decide every question. The federation's tools in the novel — the hours, the Register, the blueprints — are built from this system.[cite: 7]</span>
+                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: Integral White Paper] →</a>
+            </div>
+
+            <div class="source-card">
+                <span class="source-title">Roadmap for Eradicating Poverty Beyond Growth (2026)</span>
+                <span class="lang-de">Der Weg aus der Armut, gedacht jenseits des Wachstumszwangs. Der Roman nimmt daraus den Versorgungsbegriff: das Genug, nicht das Minimum.[cite: 6]</span>
+                <span class="lang-en hidden">The way out of poverty, thought beyond the growth imperative. The novel takes its idea of provision from it: the Enough, not the minimum.[cite: 7]</span>
+                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: Roadmap] →</a>
+            </div>
+
+            <div class="source-card">
+                <span class="source-title">IPCC-Szenario SSP1-2.6</span>
+                <span class="lang-de">Das Klimaszenario, dem die Klimakurve des Romans folgt — ehrgeizig, aber innerhalb des wissenschaftlich Beschriebenen.[cite: 6]</span>
+                <span class="lang-en hidden">The climate scenario the novel's climate curve follows — ambitious, but within what science describes.[cite: 7]</span>
+                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: IPCC SSP1-2.6] →</a>
+            </div>
+
+            <h2 class="lang-de">Die Werkstattpapiere *(TSBL-Papiere)*</h2>
+            <h2 class="lang-en hidden">The workshop papers *(TSBL papers)*</h2>
             <ul>
                 <li>
+                    <strong>The TSBL-Whitepaper / TSBL White Paper</strong>:<br>
+                    <span class="lang-de">Das Warum und das Was: die Idee der Föderation, für ein breites Publikum geschrieben.[cite: 6]</span>
+                    <span class="lang-en hidden">The why and the what: the idea of the federation, written for a broad audience.[cite: 7]</span><br>
+                    <a href="#" class="download-link">[DOWNLOAD: TSBL-Whitepaper, allgemeinverständlich, v0.12]</a>
+                </li>
+                <li style="margin-top: 15px;">
                     <strong><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></strong>:<br>
-                    <button class="action-btn secondary" style="padding: 4px 12px; font-size: 0.85rem;" onclick="switchTab('bilanz-interaktiv')">
+                    <span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — ein Bericht statt einer Punktzahl.[cite: 6]</span>
+                    <span class="lang-en hidden">What a world without gross domestic product measures its success by — a report, not a score.[cite: 7]</span><br>
+                    <a href="#" class="download-link">[DOWNLOAD: Die Lebendige Bilanz, v0.3]</a> · 
+                    <button class="action-btn secondary" style="padding: 4px 12px; font-size: 0.85rem; margin-left: 5px;" onclick="switchTab('bilanz-interaktiv')">
                         <span class="lang-de">➔ interaktiv erkunden</span><span class="lang-en hidden">➔ explore interactively</span>
-                    </button>[cite: 6, 7]
+                    </button>
+                </li>
+                <li style="margin-top: 15px;">
+                    <strong><span class="lang-de">Der Versorgungskorb</span><span class="lang-en hidden">The Provision Basket</span></strong>:<br>
+                    <span class="lang-de">Die Detailebene darunter: wie sich «gerechter Wohlstand» messen lässt, ohne ihn zu bepreisen.[cite: 6]</span>
+                    <span class="lang-en hidden">The layer of detail beneath it: how "just prosperity" can be measured without pricing it.[cite: 7]</span><br>
+                    <a href="#" class="download-link">[DOWNLOAD: Der Versorgungskorb, v0.2]</a>
+                </li>
+                <li style="margin-top: 15px;">
+                    <strong>Die Design-Begründung / The Design Rationale</strong>:<br>
+                    <span class="lang-de">Warum so gebaut und nicht anders: die sieben Gründungsentscheidungen hinter dem System, samt dokumentierten Zweifeln.[cite: 6]</span>
+                    <span class="lang-en hidden">Why built this way and not otherwise: the seven founding decisions behind the system, documented doubts included.[cite: 7]</span><br>
+                    <a href="#" class="download-link">[DOWNLOAD: Design Rationale, v0.5 — als PDF exportieren]</a>
                 </li>
             </ul>
         </div>
@@ -563,6 +618,9 @@
 
             <h1 class="lang-de">Die Lebendige Bilanz</h1>
             <h1 class="lang-en hidden">The Living Balance</h1>
+            
+            <p class="lang-de">Die Welt des Romans misst ihren Erfolg nicht in einer Zahl. Statt eines Bruttoinlandsprodukts führt sie einen Bericht: sechs Dimensionen — Versorgung, Biosphäre, Zeitwohlstand, Resilienz, Gerechtigkeit, Lernen — jede für sich sichtbar, keine gegen die andere verrechenbar. Gezählt wird, nicht bepreist.[cite: 6]</p>
+            <p class="lang-en hidden">The world of this novel does not measure its success in a single number. Instead of a gross domestic product it keeps a report: six dimensions — Provision, Biosphere, Time-wealth, Resilience, Justice, Learning — each visible on its own, none offset against another. Counted, not priced.[cite: 7]</p>
             
             <p class="eb-serif highlight-text" style="font-style: italic; margin-bottom: 25px; font-size: 1.2rem;" id="eb-epigraph"></p>
 
@@ -601,27 +659,83 @@
         <div id="panel-werkstatt" class="content-panel">
             <div class="spoiler-banner">
                 <strong class="lang-de">Hinweis:</strong><strong class="lang-en hidden">Note:</strong>
-                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist[cite: 6].</span>
-                <span class="lang-en hidden">The workshop shows how this book was made[cite: 7].</span>
+                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne. Mehrere Dokumente verraten Wendungen des Romans. Empfehlung: <strong>erst das Buch, dann das Register.</strong> Wer es umgekehrt hält, tut es auf eigene Gefahr.[cite: 6]</span>
+                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints. Several documents give away turns of the novel. Recommendation: <strong>first the book, then the register.</strong> Whoever does it the other way round, does so at their own risk.[cite: 7]</span>
             </div>
+
             <h1 class="lang-de">Die Werkstatt</h1>
             <h1 class="lang-en hidden">The Workshop</h1>
+
+            <h2 class="lang-de">Wie das Buch entstand</h2>
+            <h2 class="lang-en hidden">How the book was made</h2>
+            <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.[cite: 6]</p>
+            <p class="lang-en hidden" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">With an AI language model, the existing material was newly ordered; a human told the story and made every decision. A full account is given in the book's afterword.[cite: 7]</p>
+
+            <p class="lang-de">Diese Seite gewährt Einblick in das Register der Entstehung... Gezeigt wird eine Auswahl wesentlicher Dokumente — keine Gesamtschau, aber genug, um die Arbeitsweise zu prüfen statt nur zu glauben.[cite: 6]</p>
+            <p class="lang-en hidden">This page grants a look inside the register of the making... What is shown is a selection of essential documents — not a complete survey, but enough to test the way of working instead of merely believing it.[cite: 7]</p>
+
+            <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
+            <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
+            <p class="lang-de">Wer die Werkstatt lieber erzählt bekommt, statt sie zu durchsuchen, beginnt hier: Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand.[cite: 6]</p>
+            <p class="lang-en hidden">If you would rather have the workshop told than searched, begin here: a student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model.[cite: 7]</p>
+            <a href="#" class="download-link">[LINK: Novelle online lesen]</a> · <a href="#" class="download-link">[DOWNLOAD: Novelle, Lesefassung v0.5]</a>[cite: 6, 7]
+
+            <h2 class="lang-de">Das Schaufenster</h2>
+            <h2 class="lang-en hidden">The showcase</h2>
+            
+            <h3 style="color:#3498db;"><span class="lang-de">Das Regelwerk — *die tragende Schicht*</span><span class="lang-en hidden">The rulebook — *the load-bearing layer*</span></h3>
             <div class="source-card workshop-doc">
-                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠</span>
+                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠ / [DOWNLOAD: Roman-Bibel / novel bible, v1.01] ⚠</span>
+                <span class="lang-de">Das Herzstück: Kanon-Beschlüsse, Stilregeln, die einzige Quelle der Wahrheit. Ohne dieses Dokument ist alles andere Behauptung.[cite: 6]</span>
+                <span class="lang-en hidden">The heart of it: canon decisions, style rules, the single source of truth. Without this document, everything else is assertion.[cite: 7]</span>
             </div>
+            <div class="source-card workshop-doc">
+                <span class="source-title">[DOWNLOAD: Kapitelstruktur/Szenenliste, v0.10] ⚠</span>
+                <span class="lang-de">Das Szenengerüst: Beleg, dass die Struktur vor der Prosa stand.[cite: 6]</span>
+                <span class="lang-en hidden">The scaffold of scenes: proof that the structure stood before the prose.[cite: 7]</span>
+            </div>
+            <div class="source-card workshop-doc">
+                <span class="source-title">[DOWNLOAD: Roman-Exposé, v0.18] ⚠</span>
+                <span class="lang-de">Der Entwurf des Ganzen: was feststand, bevor die Kapitel entstanden.[cite: 6]</span>
+                <span class="lang-en hidden">The design of the whole: what was fixed before the chapters existed.[cite: 7]</span>
+            </div>
+
+            <h3 style="color:#3498db;"><span class="lang-de">Narben und Verwerfungen — *der forensische Kern*</span><span class="lang-en hidden">Scars and discarded versions — *the forensic core*</span></h3>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Wissenskonsistenz Teil IV, v0.2] ⚠⚠</a></span></div>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Befund Leerstellen/Drift, v0.1] ⚠</a></span></div>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Pol-Konsistenz-Prüfung, v0.1]</a></span></div>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Menschliche Tiefe, v0.1] ⚠</a></span></div>
+            <div class="source-card workshop-doc">
+                <span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Krähen-Null-Motiv, v0.1] ⚠</a></span><br>
+                <span class="lang-de" style="font-size:0.95rem; color:var(--eb-muted);">Wer nur ein einziges Dokument liest, um die Methode zu verstehen, lese dieses.[cite: 6]</span>
+                <span class="lang-en hidden" style="font-size:0.95rem; color:var(--eb-muted);">If you read only one document to understand the method, read this one.[cite: 7]</span>
+            </div>
+
+            <h3 style="color:#3498db;"><span class="lang-de">Werkzeug und Wissenschaft</span><span class="lang-en hidden">Tool and science</span></h3>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt», v0.3]</a></span></div>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Referenz Attraktor/Fraktal/LLM, v0.3]</a></span></div>
         </div>
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
         <div id="panel-mitschreiben" class="content-panel">
             <h1 class="lang-de">Mitschreiben</h1>
             <h1 class="lang-en hidden">Write On</h1>
+            
+            <p class="lang-de">Dieses Buch trägt seine Fassungsnummer sichtbar: Veröffentlicht ist v0.1 — der erste Eintrag in ein Register, das offen bleibt. Was Leserinnen und Leser zurückspielen, kann in eine spätere Fassung einfliessen.[cite: 6]</p>
+            <p class="lang-en hidden">This book carries its version number visibly: what is published is v0.1 — the first entry in a register that stays open.[cite: 7]</p>
+
+            <h2 class="lang-de">Eine Idee einreichen</h2>
+            <h2 class="lang-en hidden">Submit an idea</h2>
             <form id="submission-form" onsubmit="executeFormSubmit(event)">
                 <div class="form-group">
-                    <label for="form-text">Idee:*</label>
+                    <label for="form-text">
+                        <span class="lang-de">Ihre Beobachtung, Ihr Widerspruch oder Ihre Idee:*</span>
+                        <span class="lang-en hidden">Your observation, objection, or idea:*</span>
+                    </label>
                     <textarea id="form-text" class="form-control" required></textarea>
                 </div>
-                <button type="submit" class="action-btn">Senden</button>
-                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71;">✓ Erfolgreich!</div>
+                <button type="submit" class="action-btn">Senden / Submit</button>
+                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71;">✓ Erfolgreich übermittelt!</div>
             </form>
         </div>
 
@@ -634,7 +748,7 @@
         <a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a>
     </footer>
 
-    <!-- ================= SYSTEM LOGIK (FIXIERT & GETESTET) ================= -->
+    <!-- ================= SYSTEM LOGIK (SYNTAX REPARIERT) ================= -->
     <script>
         const gun = GUN(['https://gun-manhattan.herokuapp.com/gun']);
         const submissionNode = gun.get('tsbl-entryzero-submissions-v1-2026');
@@ -643,61 +757,61 @@
 
         const YEARS = [2030, 2040, 2050, 2060, 2070, 2080, 2090, 2100];[cite: 5]
         const ACCESSION = {
-            years: [2030, 2040, 2049, 2052, 2060, 2070, 2080, 2090, 2100],[cite: 5]
-            vals:  [1, 3, 6, 15, 34, 58, 78, 90, 100][cite: 5]
+            years: [2030, 2040, 2049, 2052, 2060, 2070, 2080, 2090, 2100],
+            vals:  [1, 3, 6, 15, 34, 58, 78, 90, 100]
         };
 
         const SERIES = {
-            versorgung:    [70, 80, 72, 78, 85, 88, 94, 100],[cite: 5]
-            biosphaere:    [1.35, 1.62, 1.9, 1.88, 1.85, 1.83, 1.81, 1.8],[cite: 5]
-            zeit:          [1950, 1800, 1650, 1450, 1250, 1120, 1040, 1000],[cite: 5]
-            resilienz:     [20, 32, 40, 52, 66, 76, 88, 95],[cite: 5]
-            gerechtigkeit: [8.0, 7.4, 5.6, 4.2, 3.4, 2.8, 2.0, 1.1],[cite: 5]
-            lernen:        [1.2, 1.7, 2.3, 3.0, 3.8, 4.6, 5.3, 6.0][cite: 5]
+            versorgung:    [70, 80, 72, 78, 85, 88, 94, 100],
+            biosphaere:    [1.35, 1.62, 1.9, 1.88, 1.85, 1.83, 1.81, 1.8],
+            zeit:          [1950, 1800, 1650, 1450, 1250, 1120, 1040, 1000],
+            resilienz:     [20, 32, 40, 52, 66, 76, 88, 95],
+            gerechtigkeit: [8.0, 7.4, 5.6, 4.2, 3.4, 2.8, 2.0, 1.1],
+            lernen:        [1.2, 1.7, 2.3, 3.0, 3.8, 4.6, 5.3, 6.0]
         };
 
-        // Syntax-Korrektur: JSON-Konforme Key-Value Paarungen ohne unzulässige Trennungen
+        // KORREKTUR: Kommas hinter den Objekten sauber gesetzt, damit der Browser nicht blockiert
         const DATA_TEXTS = {
             de: {
-                title: "Die Bilanz des Jahres 2100",[cite: 5]
-                epigraph: "Sechs Felder, die wir zählen und mit Absicht nicht zu einer einzigen Zahl verrechnen — und ein siebtes, das wir führen, ohne es zu zählen.",[cite: 5]
-                yearLabel: "Jahr",[cite: 5]
-                sliderHint: "Man wählt das Jahr, nicht die Werte.",[cite: 5]
-                accessionLabel: "Anteil der Regionen in der Föderation",[cite: 5]
-                accessionCaption: "Region für Region: in den ersten Jahrzehnten flach, nach der Beitrittswelle steil — vollständig erst im Herbst 2100, mit der letzten Region.",[cite: 5]
+                title: "Die Bilanz des Jahres 2100",
+                epigraph: "Sechs Felder, die wir zählen und mit Absicht nicht zu einer einzigen Zahl verrechnen — und ein siebtes, das wir führen, ohne es zu zählen.",
+                yearLabel: "Jahr",
+                sliderHint: "Man wählt das Jahr, nicht die Werte.",
+                accessionLabel: "Anteil der Regionen in der Föderation",
+                accessionCaption: "Region für Region: in den ersten Jahrzehnten flach, nach der Beitrittswelle steil — vollständig erst im Herbst 2100, mit der letzten Region.",
                 seventhTitle: "Das siebte Feld",
                 seventhBody: "Es trägt eine Nummer wie die anderen, aber wir füllen es nicht. Keine Skala, in keinem Jahr. Es ist das Reifste, das wir können.",
-                events: { 2034: "Föderation", 2051: "Beitrittswelle", 2060: "Trendwende", 2100: "letzte Region" },[cite: 5]
-                tensions: ["Spannung: die Versorgung, die an die Grenze der Biosphäre stösst", "Spannung: die Konvergenz, die noch eine Spreizung trägt"],[cite: 5]
-                footer: "Ein Sinnesorgan, kein Souverän — der Bericht empfiehlt, er befiehlt nicht. Kein Feld wird mit einem anderen verrechnet. Verläufe zwischen 2030 und 2100 illustrativ; kanonisch sind nur die Endwerte des Jahres 2100.",[cite: 5]
+                events: { 2034: "Föderation", 2051: "Beitrittswelle", 2060: "Trendwende", 2100: "letzte Region" },
+                tensions: ["Spannung: die Versorgung, die an die Grenze der Biosphäre stösst", "Spannung: die Konvergenz, die noch eine Spreizung trägt"],
+                footer: "Ein Sinnesorgan, kein Souverän — der Bericht empfiehlt, er befiehlt nicht. Kein Feld wird mit einem anderen verrechnet. Verläufe zwischen 2030 und 2100 illustrativ; kanonisch sind nur die Endwerte des Jahres 2100.",
                 fields: {
-                    versorgung: { name: "Versorgung", sub: "Gemessen am Schlechtestversorgten — ein hoher Mittelwert heilt keinen einzigen Mangel.", note: "Der Wert sinkt, wenn Regionen beitreten: Gemessen wird am Schwächsten.", fmt: (v) => `${Math.round(v)} % des Korbs gedeckt`, min: 55, max: 106, limit: 100, limitLabel: "das Genug" },[cite: 5]
-                    biosphaere: { name: "Biosphäre", sub: "Die einzige Grenze, die nicht verhandelbar ist. Geheilt, nicht heil.", fmt: (v) => `+${v.toFixed(2).replace(".", ",")} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "harte Grenze" },[cite: 5]
-                    zeit: { name: "Zeitwohlstand", sub: "Nicht nur, wie viel Zeit frei wurde — auch, wie gleich die Last verteilt ist.", fmt: (v) => `${Math.round(v).toLocaleString("de-CH")} h notwendige Arbeit`, min: 900, max: 2050 },[cite: 5]
-                    resilienz: { name: "Resilienz", sub: "Stärke liegt nicht im Wachstum, sondern im Federn — und darin, wie gut die Gemeinschaften einander halten.", fmt: (v) => (v < 40 ? "spröde" : v < 70 ? "tragend" : "federnd"), min: 0, max: 100 },[cite: 5]
-                    gerechtigkeit: { name: "Gerechtigkeit", sub: "Wir messen die Spreizung, nicht den Durchschnitt. Konvergenz ist nicht dasselbe wie Eintracht.", fmt: (v) => `Spreizung ${v.toFixed(1).replace(".", ",")} : 1`, min: 0.6, max: 8.6 },[cite: 5]
-                    lernen: { name: "Lernen", sub: "Vom Salzsee bis zur Pazifikküste: Wiederverwendung, nicht Patentzahl.", fmt: (v) => `${v.toFixed(1).replace(".", ",")} Klimazonen je Entwurf`, min: 0.8, max: 6.5 }[cite: 5]
+                    versorgung: { name: "Versorgung", sub: "Gemessen am Schlechtestversorgten — ein hoher Mittelwert heilt keinen einzigen Mangel.", note: "Der Wert sinkt, wenn Regionen beitreten: Gemessen wird am Schwächsten.", fmt: (v) => `${Math.round(v)} % des Korbs gedeckt`, min: 55, max: 106, limit: 100, limitLabel: "das Genug" },
+                    biosphaere: { name: "Biosphäre", sub: "Die einzige Grenze, die nicht verhandelbar ist. Geheilt, nicht heil.", fmt: (v) => `+${v.toFixed(2).replace(".", ",")} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "harte Grenze" },
+                    zeit: { name: "Zeitwohlstand", sub: "Nicht nur, wie viel Zeit frei wurde — auch, wie gleich die Last verteilt ist.", fmt: (v) => `${Math.round(v).toLocaleString("de-CH")} h notwendige Arbeit`, min: 900, max: 2050 },
+                    resilienz: { name: "Resilienz", sub: "Stärke liegt nicht im Wachstum, sondern im Federn — und darin, wie gut die Gemeinschaften einander halten.", fmt: (v) => (v < 40 ? "spröde" : v < 70 ? "tragend" : "federnd"), min: 0, max: 100 },
+                    gerechtigkeit: { name: "Gerechtigkeit", sub: "Wir messen die Spreizung, nicht den Durchschnitt. Konvergenz ist nicht dasselbe wie Eintracht.", fmt: (v) => `Spreizung ${v.toFixed(1).replace(".", ",")} : 1`, min: 0.6, max: 8.6 },
+                    lernen: { name: "Lernen", sub: "Vom Salzsee bis zur Pazifikküste: Wiederverwendung, nicht Patentzahl.", fmt: (v) => `${v.toFixed(1).replace(".", ",")} Klimazonen je Entwurf`, min: 0.8, max: 6.5 }
                 }
             },
             en: {
-                title: "The Balance of the Year 2100",[cite: 5]
-                epigraph: "Six fields that we count and deliberately do not reckon into a single number — and a seventh that we keep without counting it.",[cite: 5]
-                yearLabel: "Year",[cite: 5]
-                sliderHint: "You choose the year, not the values.",[cite: 5]
+                title: "The Balance of the Year 2100",
+                epigraph: "Six fields that we count and deliberately do not reckon into a single number — and a seventh that we keep without counting it.",
+                yearLabel: "Year",
+                sliderHint: "You choose the year, not the values.",
                 accessionLabel: "Share of regions inside the federation",
-                accessionCaption: "Region by region: flat for the first decades, steep after the accession wave — complete only in the autumn of 2100, with the last region.",[cite: 5]
+                accessionCaption: "Region by region: flat for the first decades, steep after the accession wave — complete only in the autumn of 2100, with the last region.",
                 seventhTitle: "The seventh field",
                 seventhBody: "It bears a number like the others, but we do not fill it. No scale, in no year. It is the most mature thing we are capable of.",
-                events: { 2034: "federation", 2051: "accession wave", 2060: "turning", 2100: "last region" },[cite: 5]
-                tensions: ["Tension: the provision that strains against the limit of the biosphere", "Tension: the convergence that still carries a spread"],[cite: 5]
+                events: { 2034: "federation", 2051: "accession wave", 2060: "turning", 2100: "last region" },
+                tensions: ["Tension: the provision that strains against the limit of the biosphere", "Tension: the convergence that still carries a spread"],
                 footer: "A sense organ, not a sovereign — the report recommends, it does not command. No field is reckoned against another. Trajectories between 2030 and 2100 are illustrative; only the end values of the year 2100 are canonical.",
                 fields: {
-                    versorgung: { name: "Provision", sub: "Measured by the worst-provided — a high mean heals not a single want.", note: "The value falls when regions accede: it is measured at the weakest.", fmt: (v) => `${Math.round(v)} % of the basket covered`, min: 55, max: 106, limit: 100, limitLabel: "the Enough" },[cite: 5]
-                    biosphaere: { name: "Biosphere", sub: "The only limit that is not negotiable. Healed, not whole.", fmt: (v) => `+${v.toFixed(2)} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "hard limit" },[cite: 5]
-                    zeit: { name: "Time-wealth", sub: "Not only how much time was freed — also how evenly the load is shared.", fmt: (v) => `${Math.round(v).toLocaleString("en-GB")} h of necessary labour`, min: 900, max: 2050 },[cite: 5]
-                    resilienz: { name: "Resilience", sub: "Strength lies not in growth but in springing — and in how well the communities hold one another.", fmt: (v) => (v < 40 ? "brittle" : v < 70 ? "bearing" : "springing"), min: 0, max: 100 },[cite: 5]
-                    gerechtigkeit: { name: "Justice", sub: "We measure the spread, not the average. Convergence is not the same as concord.", fmt: (v) => `spread ${v.toFixed(1)} : 1`, min: 0.6, max: 8.6 },[cite: 5]
-                    lernen: { name: "Learning", sub: "From the salt lake to the Pacific coast: reuse, not patent counts.", fmt: (v) => `${v.toFixed(1)} climate zones per design`, min: 0.8, max: 6.5 }[cite: 5]
+                    versorgung: { name: "Provision", sub: "Measured by the worst-provided — a high mean heals not a single want.", note: "The value falls when regions accede: it is measured at the weakest.", fmt: (v) => `${Math.round(v)} % of the basket covered`, min: 55, max: 106, limit: 100, limitLabel: "the Enough" },
+                    biosphaere: { name: "Biosphere", sub: "The only limit that is not negotiable. Healed, not whole.", fmt: (v) => `+${v.toFixed(2)} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "hard limit" },
+                    zeit: { name: "Time-wealth", sub: "Not only how much time was freed — also how evenly the load is shared.", fmt: (v) => `${Math.round(v).toLocaleString("en-GB")} h of necessary labour`, min: 900, max: 2050 },
+                    resilienz: { name: "Resilience", sub: "Strength lies not in growth but in springing — and in how well the communities hold one another.", fmt: (v) => (v < 40 ? "brittle" : v < 70 ? "bearing" : "springing"), min: 0, max: 100 },
+                    gerechtigkeit: { name: "Justice", sub: "We measure the spread, not the average. Convergence is not the same as concord.", fmt: (v) => `spread ${v.toFixed(1)} : 1`, min: 0.6, max: 8.6 },
+                    lernen: { name: "Learning", sub: "From the salt lake to the Pacific coast: reuse, not patent counts.", fmt: (v) => `${v.toFixed(1)} climate zones per design`, min: 0.8, max: 6.5 }
                 }
             }
         };
@@ -799,7 +913,6 @@
             document.getElementById('eb-tensions').innerHTML = tensionsHtml;
         }
 
-        // NAVIGATION SWITCH LOGIC (Vollständig fehlerfrei isoliert)
         function switchTab(tabId) {
             const panels = document.getElementsByClassName('content-panel');
             for (let i = 0; i < panels.length; i++) {
@@ -858,7 +971,6 @@
             } catch (err) { console.error(err); }
         }
 
-        // Dom Ready Liftoff
         document.addEventListener("DOMContentLoaded", function() {
             switchTab('home');
         });
