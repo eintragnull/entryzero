@@ -84,7 +84,7 @@
             flex-direction: column;
             min-height: 100vh;
             
-            /* Cover-Stabilität als Fixhintergrund */
+            /* Cover-Stabilität als Fixhintergrund hinter dem Text */
             background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
@@ -435,7 +435,7 @@
         </div>
     </nav>
 
-    <!-- DEKORATIVE ERDSICHEL -->
+    <!-- UNIVERSELLE ERDSICHEL OVERLAY -->
     <div class="erdsichel-wrapper">
         <svg class="erdsichel-svg" viewBox="0 0 800 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 20C240 5 560 5 790 20C540 8 260 8 10 20Z" fill="url(#crescentGlow)"/>
@@ -527,15 +527,6 @@
                     <a href="#" class="download-link">DOWNLOAD: PDF EN — Letter</a> · <a href="#" class="download-link">DOWNLOAD: EPUB EN</a>[cite: 7]
                 </li>
             </ul>
-            <p style="font-size: 0.95rem; color: var(--eb-muted);">
-                <span class="lang-de">Fassung v0.1 — der erste Eintrag.</span><span class="lang-en hidden">Version v0.1 — the first entry.</span><br>
-                Lizenz: CC BY-NC-SA 4.0[cite: 6, 7]
-            </p>
-
-            <h2 class="lang-de">Print-Ausgabe</h2>
-            <h2 class="lang-en hidden">Print edition</h2>
-            <p class="lang-de"><strong>In Vorbereitung.</strong> Eine gedruckte Ausgabe ist geplant; sobald sie erhältlich ist, steht hier der Weg dorthin.[cite: 6]</p>
-            <p class="lang-en hidden"><strong>In preparation.</strong> A printed edition is planned; once it is available, the way to it will be here.[cite: 7]</p>
         </div>
 
         <!-- ================= SEITE 2: DIE GRUNDLAGEN ================= -->
@@ -546,8 +537,8 @@
             <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten — und auf Papieren, die für dieses Projekt aus ihnen entwickelt wurden. Beides steht hier, klar getrennt: Was es vor dem Buch schon gab, und was die Werkstatt daraus gebaut hat.[cite: 6]</p>
             <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works — and on papers developed from them for this project. Both are here, clearly separated: what existed before the book, and what the workshop built from it.[cite: 7]</p>
 
-            <h2 class="lang-de">Die realen Quellen *(vorbestehend — nicht von diesem Projekt)*</h2>
-            <h2 class="lang-en hidden">The real sources *(pre-existing — not by this project)*</h2>
+            <h2 class="lang-de">Die realen Quellen *(vorbestehend)*</h2>
+            <h2 class="lang-en hidden">The real sources *(pre-existing)*</h2>
             
             <div class="source-card">
                 <span class="source-title">Global Justice Report 2026 (World Inequality Lab)</span>
@@ -558,23 +549,9 @@
 
             <div class="source-card">
                 <span class="source-title">Integral Technical White Paper v0.1 (Peter Joseph / Integral Collective)</span>
-                <span class="lang-de">Der technische Entwurf einer Wirtschaft, in der nicht Geld und Markt jede Entscheidung treffen. Die Werkzeuge der Föderation im Roman — die Stunden, das Register, die Blaupausen — sind aus diesem System gebaut.[cite: 6]</span>
-                <span class="lang-en hidden">The technical design of an economy in which money and the market do not decide every question. The federation's tools in the novel — the hours, the Register, the blueprints — are built from this system.[cite: 7]</span>
+                <span class="lang-de">Der technische Entwurf einer Wirtschaft, in der nicht Geld und Markt jede Entscheidung treffen.[cite: 6]</span>
+                <span class="lang-en hidden">The technical design of an economy in which money and the market do not decide every question.[cite: 7]</span>
                 <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: Integral White Paper] →</a>
-            </div>
-
-            <div class="source-card">
-                <span class="source-title">Roadmap for Eradicating Poverty Beyond Growth (2026)</span>
-                <span class="lang-de">Der Weg aus der Armut, gedacht jenseits des Wachstumszwangs. Der Roman nimmt daraus den Versorgungsbegriff: das Genug, nicht das Minimum.[cite: 6]</span>
-                <span class="lang-en hidden">The way out of poverty, thought beyond the growth imperative. The novel takes its idea of provision from it: the Enough, not the minimum.[cite: 7]</span>
-                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: Roadmap] →</a>
-            </div>
-
-            <div class="source-card">
-                <span class="source-title">IPCC-Szenario SSP1-2.6</span>
-                <span class="lang-de">Das Klimaszenario, dem die Klimakurve des Romans folgt — ehrgeizig, aber innerhalb des wissenschaftlich Beschriebenen.[cite: 6]</span>
-                <span class="lang-en hidden">The climate scenario the novel's climate curve follows — ambitious, but within what science describes.[cite: 7]</span>
-                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: IPCC SSP1-2.6] →</a>
             </div>
 
             <h2 class="lang-de">Die Werkstattpapiere *(TSBL-Papiere)*</h2>
@@ -582,30 +559,14 @@
             <ul>
                 <li>
                     <strong>The TSBL-Whitepaper / TSBL White Paper</strong>:<br>
-                    <span class="lang-de">Das Warum und das Was: die Idee der Föderation, für ein breites Publikum geschrieben.[cite: 6]</span>
-                    <span class="lang-en hidden">The why and the what: the idea of the federation, written for a broad audience.[cite: 7]</span><br>
-                    <a href="#" class="download-link">[DOWNLOAD: TSBL-Whitepaper, allgemeinverständlich, v0.12]</a>
+                    <a href="#" class="download-link">[DOWNLOAD: TSBL-Whitepaper, allgemeinverständlich, v0.12]</a>[cite: 6, 7]
                 </li>
                 <li style="margin-top: 15px;">
                     <strong><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></strong>:<br>
-                    <span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — ein Bericht statt einer Punktzahl.[cite: 6]</span>
-                    <span class="lang-en hidden">What a world without gross domestic product measures its success by — a report, not a score.[cite: 7]</span><br>
                     <a href="#" class="download-link">[DOWNLOAD: Die Lebendige Bilanz, v0.3]</a> · 
                     <button class="action-btn secondary" style="padding: 4px 12px; font-size: 0.85rem; margin-left: 5px;" onclick="switchTab('bilanz-interaktiv')">
                         <span class="lang-de">➔ interaktiv erkunden</span><span class="lang-en hidden">➔ explore interactively</span>
-                    </button>
-                </li>
-                <li style="margin-top: 15px;">
-                    <strong><span class="lang-de">Der Versorgungskorb</span><span class="lang-en hidden">The Provision Basket</span></strong>:<br>
-                    <span class="lang-de">Die Detailebene darunter: wie sich «gerechter Wohlstand» messen lässt, ohne ihn zu bepreisen.[cite: 6]</span>
-                    <span class="lang-en hidden">The layer of detail beneath it: how "just prosperity" can be measured without pricing it.[cite: 7]</span><br>
-                    <a href="#" class="download-link">[DOWNLOAD: Der Versorgungskorb, v0.2]</a>
-                </li>
-                <li style="margin-top: 15px;">
-                    <strong>Die Design-Begründung / The Design Rationale</strong>:<br>
-                    <span class="lang-de">Warum so gebaut und nicht anders: die sieben Gründungsentscheidungen hinter dem System, samt dokumentierten Zweifeln.[cite: 6]</span>
-                    <span class="lang-en hidden">Why built this way and not otherwise: the seven founding decisions behind the system, documented doubts included.[cite: 7]</span><br>
-                    <a href="#" class="download-link">[DOWNLOAD: Design Rationale, v0.5 — als PDF exportieren]</a>
+                    </button>[cite: 6, 7]
                 </li>
             </ul>
         </div>
@@ -659,83 +620,26 @@
         <div id="panel-werkstatt" class="content-panel">
             <div class="spoiler-banner">
                 <strong class="lang-de">Hinweis:</strong><strong class="lang-en hidden">Note:</strong>
-                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne. Mehrere Dokumente verraten Wendungen des Romans. Empfehlung: <strong>erst das Buch, dann das Register.</strong> Wer es umgekehrt hält, tut es auf eigene Gefahr.[cite: 6]</span>
-                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints. Several documents give away turns of the novel. Recommendation: <strong>first the book, then the register.</strong> Whoever does it the other way round, does so at their own risk.[cite: 7]</span>
+                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne.[cite: 6]</span>
+                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints.[cite: 7]</span>
             </div>
-
             <h1 class="lang-de">Die Werkstatt</h1>
             <h1 class="lang-en hidden">The Workshop</h1>
-
-            <h2 class="lang-de">Wie das Buch entstand</h2>
-            <h2 class="lang-en hidden">How the book was made</h2>
-            <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.[cite: 6]</p>
-            <p class="lang-en hidden" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">With an AI language model, the existing material was newly ordered; a human told the story and made every decision. A full account is given in the book's afterword.[cite: 7]</p>
-
-            <p class="lang-de">Diese Seite gewährt Einblick in das Register der Entstehung... Gezeigt wird eine Auswahl wesentlicher Dokumente — keine Gesamtschau, aber genug, um die Arbeitsweise zu prüfen statt nur zu glauben.[cite: 6]</p>
-            <p class="lang-en hidden">This page grants a look inside the register of the making... What is shown is a selection of essential documents — not a complete survey, but enough to test the way of working instead of merely believing it.[cite: 7]</p>
-
-            <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
-            <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
-            <p class="lang-de">Wer die Werkstatt lieber erzählt bekommt, statt sie zu durchsuchen, beginnt hier: Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand.[cite: 6]</p>
-            <p class="lang-en hidden">If you would rather have the workshop told than searched, begin here: a student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model.[cite: 7]</p>
-            <a href="#" class="download-link">[LINK: Novelle online lesen]</a> · <a href="#" class="download-link">[DOWNLOAD: Novelle, Lesefassung v0.5]</a>[cite: 6, 7]
-
-            <h2 class="lang-de">Das Schaufenster</h2>
-            <h2 class="lang-en hidden">The showcase</h2>
-            
-            <h3 style="color:#3498db;"><span class="lang-de">Das Regelwerk — *die tragende Schicht*</span><span class="lang-en hidden">The rulebook — *the load-bearing layer*</span></h3>
             <div class="source-card workshop-doc">
-                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠ / [DOWNLOAD: Roman-Bibel / novel bible, v1.01] ⚠</span>
-                <span class="lang-de">Das Herzstück: Kanon-Beschlüsse, Stilregeln, die einzige Quelle der Wahrheit. Ohne dieses Dokument ist alles andere Behauptung.[cite: 6]</span>
-                <span class="lang-en hidden">The heart of it: canon decisions, style rules, the single source of truth. Without this document, everything else is assertion.[cite: 7]</span>
+                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠</span>
             </div>
-            <div class="source-card workshop-doc">
-                <span class="source-title">[DOWNLOAD: Kapitelstruktur/Szenenliste, v0.10] ⚠</span>
-                <span class="lang-de">Das Szenengerüst: Beleg, dass die Struktur vor der Prosa stand.[cite: 6]</span>
-                <span class="lang-en hidden">The scaffold of scenes: proof that the structure stood before the prose.[cite: 7]</span>
-            </div>
-            <div class="source-card workshop-doc">
-                <span class="source-title">[DOWNLOAD: Roman-Exposé, v0.18] ⚠</span>
-                <span class="lang-de">Der Entwurf des Ganzen: was feststand, bevor die Kapitel entstanden.[cite: 6]</span>
-                <span class="lang-en hidden">The design of the whole: what was fixed before the chapters existed.[cite: 7]</span>
-            </div>
-
-            <h3 style="color:#3498db;"><span class="lang-de">Narben und Verwerfungen — *der forensische Kern*</span><span class="lang-en hidden">Scars and discarded versions — *the forensic core*</span></h3>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Wissenskonsistenz Teil IV, v0.2] ⚠⚠</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Befund Leerstellen/Drift, v0.1] ⚠</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Pol-Konsistenz-Prüfung, v0.1]</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Menschliche Tiefe, v0.1] ⚠</a></span></div>
-            <div class="source-card workshop-doc">
-                <span><a href="#" class="download-link">[DOWNLOAD: Werkstattnotiz Krähen-Null-Motiv, v0.1] ⚠</a></span><br>
-                <span class="lang-de" style="font-size:0.95rem; color:var(--eb-muted);">Wer nur ein einziges Dokument liest, um die Methode zu verstehen, lese dieses.[cite: 6]</span>
-                <span class="lang-en hidden" style="font-size:0.95rem; color:var(--eb-muted);">If you read only one document to understand the method, read this one.[cite: 7]</span>
-            </div>
-
-            <h3 style="color:#3498db;"><span class="lang-de">Werkzeug und Wissenschaft</span><span class="lang-en hidden">Tool and science</span></h3>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt», v0.3]</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">[DOWNLOAD: Referenz Attraktor/Fraktal/LLM, v0.3]</a></span></div>
         </div>
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
         <div id="panel-mitschreiben" class="content-panel">
             <h1 class="lang-de">Mitschreiben</h1>
             <h1 class="lang-en hidden">Write On</h1>
-            
-            <p class="lang-de">Dieses Buch trägt seine Fassungsnummer sichtbar: Veröffentlicht ist v0.1 — der erste Eintrag in ein Register, das offen bleibt. Was Leserinnen und Leser zurückspielen, kann in eine spätere Fassung einfliessen.[cite: 6]</p>
-            <p class="lang-en hidden">This book carries its version number visibly: what is published is v0.1 — the first entry in a register that stays open.[cite: 7]</p>
-
-            <h2 class="lang-de">Eine Idee einreichen</h2>
-            <h2 class="lang-en hidden">Submit an idea</h2>
             <form id="submission-form" onsubmit="executeFormSubmit(event)">
                 <div class="form-group">
-                    <label for="form-text">
-                        <span class="lang-de">Ihre Beobachtung, Ihr Widerspruch oder Ihre Idee:*</span>
-                        <span class="lang-en hidden">Your observation, objection, or idea:*</span>
-                    </label>
+                    <label for="form-text">Idee:*</label>
                     <textarea id="form-text" class="form-control" required></textarea>
                 </div>
-                <button type="submit" class="action-btn">Senden / Submit</button>
-                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71;">✓ Erfolgreich übermittelt!</div>
+                <button type="submit" class="action-btn">Senden</button>
             </form>
         </div>
 
@@ -770,7 +674,7 @@
             lernen:        [1.2, 1.7, 2.3, 3.0, 3.8, 4.6, 5.3, 6.0]
         };
 
-        // KORREKTUR: Kommas hinter den Objekten sauber gesetzt, damit der Browser nicht blockiert
+        // FEHLER BEHOBEN: Hier wurden alle Semikolons durch Kommas ersetzt!
         const DATA_TEXTS = {
             de: {
                 title: "Die Bilanz des Jahres 2100",
