@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -64,7 +64,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-family: ui-sans-serif, system-ui, sans-serif;
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -168,7 +168,6 @@
             display: block;
         }
 
-        /* Spoiler Warnbanner */
         .spoiler-banner {
             background: rgba(230, 126, 34, 0.2);
             border: 1px solid #e67e22;
@@ -180,6 +179,10 @@
         }
 
         /* Typografie */
+        h1, h2, .eb-serif {
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
         h1 {
             font-size: 2.6rem;
             font-weight: 800;
@@ -196,6 +199,7 @@
             margin-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 8px;
+            font-weight: 500;
         }
 
         p, li {
@@ -205,13 +209,8 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
 
-        ul {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 12px;
-        }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 12px; }
 
         .meta-author {
             font-size: 1.1rem;
@@ -242,30 +241,18 @@
             display: inline-block;
         }
 
-        .action-btn:hover {
-            background: #16a085;
-        }
+        .action-btn:hover { background: #16a085; }
 
         .action-btn.secondary {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .action-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.25);
-        }
+        .action-btn.secondary:hover { background: rgba(255, 255, 255, 0.25); }
+        .download-link { color: #1abc9c; text-decoration: none; font-weight: 600; }
+        .download-link:hover { text-decoration: underline; }
 
-        .download-link {
-            color: #1abc9c;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .download-link:hover {
-            text-decoration: underline;
-        }
-
-        /* Dokumentenschichten-Kacheln */
+        /* Kacheln & Grids */
         .source-card {
             background: rgba(0, 0, 0, 0.3);
             padding: 15px 20px;
@@ -274,153 +261,79 @@
             border-left: 4px solid #1abc9c;
         }
         
-        .source-card.workshop-doc {
-            border-left-color: #3498db;
-        }
+        .source-card.workshop-doc { border-left-color: #3498db; }
+        .source-title { font-weight: 700; color: #ffffff; display: block; margin-bottom: 4px; }
 
-        .source-title {
-            font-weight: 700;
-            color: #ffffff;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        /* Interaktive BilanzBahn Komponente */
-        .bilanz-bahn-box {
-            background: rgba(0, 0, 0, 0.5);
+        /* ================= BILANZBAHN STYLING ================= */
+        .eb-bilanz-box {
+            background: rgba(20, 25, 30, 0.6);
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px;
             margin: 30px 0;
-            border: 1px solid rgba(26, 188, 156, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
         }
 
-        .slider-container {
-            margin: 20px 0 30px 0;
-        }
-
-        .time-slider {
+        .eb-slider-container { margin: 25px 0 10px 0; }
+        .eb-slider {
             width: 100%;
-            -webkit-appearance: none;
+            accent-color: #1abc9c;
+            height: 6px;
             background: #2c3e50;
-            height: 8px;
             border-radius: 4px;
             outline: none;
         }
 
-        .time-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #1abc9c;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(26, 188, 156, 0.8);
+        .eb-ticks {
+            position: relative;
+            height: 1.8rem;
+            font-size: 11px;
+            color: #9b9a92;
+            margin-bottom: 25px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 4px;
         }
+        .eb-tick { position: absolute; transform: translateX(-50%); white-space: nowrap; }
 
-        .dimension-grid {
+        .eb-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 25px;
+        }
+        .eb-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 16px;
         }
 
-        .dim-item {
-            background: rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 0.95rem;
-        }
+        svg { display: block; background: rgba(0,0,0,0.15); border-radius: 4px; }
 
-        .dim-name {
-            font-weight: 700;
-            color: #1abc9c;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        /* Formular-Design */
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #d1dce5;
-        }
-
+        /* Formular */
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; color: #d1dce5; }
         .form-control {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            padding: 10px 12px;
-            color: white;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
+            width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px; padding: 10px 12px; color: white; box-sizing: border-box; font-family: inherit; font-size: 1rem;
         }
+        .form-control:focus { border-color: #1abc9c; outline: none; }
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        .status-msg { padding: 12px; border-radius: 6px; margin-top: 15px; display: none; font-weight: 600; }
 
-        .form-control:focus {
-            border-color: #1abc9c;
-            outline: none;
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .status-msg {
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 15px;
-            display: none;
-            font-weight: 600;
-        }
-
-        /* Klasse zum Verbergen der inaktiven Sprache */
-        .hidden {
-            display: none !important;
-        }
-
-        /* Fußzeile */
         .footer {
-            width: 100%;
-            background: rgba(11, 23, 36, 0.9);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            text-align: center;
-            box-sizing: border-box;
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-top: auto;
+            width: 100%; background: rgba(11, 23, 36, 0.9); border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px; text-align: center; box-sizing: border-box; font-size: 0.9rem; color: #94a3b8; margin-top: auto;
         }
+        .footer a { color: #1abc9c; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
 
-        .footer a {
-            color: #1abc9c;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            .navbar { flex-direction: column; gap: 10px; }
-            .dimension-grid { grid-template-columns: 1fr; }
-            .content-panel { padding: 25px; }
-            h1 { font-size: 2rem; }
-        }
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATIONSLEISTE -->
     <nav class="navbar">
         <div class="nav-links">
             <span class="nav-item active" onclick="switchTab('home')" id="nav-home">Startseite</span>
@@ -435,7 +348,7 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTAINER -->
+    <!-- INHALTSCONTAINER -->
     <div class="main-container">
 
         <!-- ================= SEITE 0: STARTSEITE ================= -->
@@ -448,9 +361,6 @@
             
             <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über drei Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100.</p>
             <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across three generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100.</p>
-            
-            <p class="lang-de">Das Buch ist frei verfügbar, auf Deutsch und auf Englisch.</p>
-            <p class="lang-en hidden">The book is freely available, in English and in German.</p>
             
             <div class="btn-group" style="justify-content: center;">
                 <button class="action-btn" onclick="switchTab('buch')">
@@ -465,10 +375,8 @@
                 <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" onclick="switchTab('werkstatt')" style="color: #1abc9c; text-decoration: none; font-weight: 600;">Die Werkstatt</a> erzählt es — als Novelle.</span>
                 <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" onclick="switchTab('werkstatt')" style="color: #1abc9c; text-decoration: none; font-weight: 600;">The Workshop</a> tells it — as a novella.</span>
             </p>
-            
             <div class="meta-author">Martin U G P · The Symbios Butterfly Lab</div>
         </div>
-
 
         <!-- ================= SEITE 1: DAS BUCH ================= -->
         <div id="panel-buch" class="content-panel">
@@ -482,312 +390,317 @@
 
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
-            <p class="lang-de">Der Roman ist vollständig und kostenlos verfügbar. Kein Auszug, keine Anmeldung — das ganze Buch.</p>
-            <p class="lang-en hidden">The novel is complete and free. No excerpt, no sign-up — the whole book.</p>
-            
             <ul>
-                <li>
-                    <strong><span class="lang-de">Deutsche Ausgabe — Eintrag Null</span><span class="lang-en hidden">German edition — Eintrag Null</span></strong><br>
-                    <a href="#" class="download-link">DOWNLOAD: PDF DE (A4)</a> · <a href="#" class="download-link">DOWNLOAD: EPUB DE</a>
-                </li>
-                <li>
-                    <strong><span class="lang-de">Englische Ausgabe — Entry Zero</span><span class="lang-en hidden">English edition — Entry Zero</span></strong><br>
-                    <a href="#" class="download-link">DOWNLOAD: PDF EN (Letter)</a> · <a href="#" class="download-link">DOWNLOAD: EPUB EN</a>
-                </li>
+                <li><strong><span class="lang-de">Deutsche Ausgabe — Eintrag Null</span><span class="lang-en hidden">German edition — Eintrag Null</span></strong><br><a href="#" class="download-link">DOWNLOAD: PDF DE (A4)</a> · <a href="#" class="download-link">DOWNLOAD: EPUB DE</a></li>
+                <li><strong><span class="lang-de">Englische Ausgabe — Entry Zero</span><span class="lang-en hidden">English edition — Entry Zero</span></strong><br><a href="#" class="download-link">DOWNLOAD: PDF EN (Letter)</a> · <a href="#" class="download-link">DOWNLOAD: EPUB EN</a></li>
             </ul>
-            
-            <p style="font-size: 0.9rem; color: #94a3b8;">
-                <span class="lang-de">Fassung v0.1 — der erste Eintrag.</span>
-                <span class="lang-en hidden">Version v0.1 — the first entry.</span><br>
-                Lizenz: CC BY-NC-SA 4.0
-            </p>
+            <p style="font-size: 0.9rem; color: #94a3b8;"><span class="lang-de">Fassung v0.1 — der erste Eintrag.</span><span class="lang-en hidden">Version v0.1 — the first entry.</span><br>Lizenz: CC BY-NC-SA 4.0</p>
 
-            <h2 class="lang-de">Print-Ausgabe</h2>
-            <h2 class="lang-en hidden">Print edition</h2>
-            <p class="lang-de"><strong>In Vorbereitung.</strong> Eine gedruckte Ausgabe ist geplant; sobald sie erhältlich ist, steht hier der Weg dorthin.</p>
-            <p class="lang-en hidden"><strong>In preparation.</strong> A printed edition is planned; once it is available, the way to it will be here.</p>
+            <h2 class="lang-de">Print-Ausgabe</h2><h2 class="lang-en hidden">Print edition</h2>
+            <p class="lang-de"><strong>In Vorbereitung.</strong> Eine gedruckte Ausgabe ist geplant.</p>
+            <p class="lang-en hidden"><strong>In preparation.</strong> A printed edition is planned.</p>
         </div>
-
 
         <!-- ================= SEITE 2: DIE GRUNDLAGEN ================= -->
         <div id="panel-grundlagen" class="content-panel">
             <h1 class="lang-de">Die Grundlagen</h1>
             <h1 class="lang-en hidden">The Foundations</h1>
             
-            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten — und auf Papieren, die für dieses Projekt aus ihnen entwickelt wurden. Beides steht hier, klar getrennt: Was es vor dem Buch schon gab, und was die Werkstatt daraus gebaut hat.</p>
-            <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works — and on papers developed from them for this project. Both are here, clearly separated: what existed before the book, and what the workshop built from it.</p>
+            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden. Sie beruht auf realen, frei zugänglichen Arbeiten und auf Papieren, die für dieses Projekt aus ihnen entwickelt wurden.</p>
+            <p class="lang-en hidden">Nothing about the world of this novel is freely invented. It rests on real, openly accessible works and papers developed from them.</p>
 
-            <h2 class="lang-de">Die realen Quellen (vorbestehend)</h2>
-            <h2 class="lang-en hidden">The real sources (pre-existing)</h2>
-            
-            <div class="source-card">
-                <span class="source-title">Global Justice Report 2026 (World Inequality Lab)</span>
-                <span class="lang-de">Rechnet vor, dass eine gerechte Welt innerhalb der Belastungsgrenzen der Erde bis zum Ende des Jahrhunderts möglich ist. Der Roman übernimmt daraus die Zielbahn — bis zum Zieljahr 2100.</span>
-                <span class="lang-en hidden">Shows that a just world within the load-limits of the earth is possible by the end of the century. The novel takes its target trajectory from it — all the way to the target year 2100.</span>
-                <br><a href="https://wid.world" target="_blank" class="download-link" style="font-size:0.9rem;">Link: GJR 2026 →</a>
-            </div>
+            <h2 class="lang-de">Die realen Quellen (vorbestehend)</h2><h2 class="lang-en hidden">The real sources (pre-existing)</h2>
+            <div class="source-card"><span class="source-title">Global Justice Report 2026 (World Inequality Lab)</span><br><a href="https://wid.world" target="_blank" class="download-link" style="font-size:0.9rem;">Link: GJR 2026 →</a></div>
+            <div class="source-card"><span class="source-title">Integral Technical White Paper v0.1 (Peter Joseph)</span><br><a href="#" class="download-link" style="font-size:0.9rem;">Link: Integral White Paper →</a></div>
 
-            <div class="source-card">
-                <span class="source-title">Integral Technical White Paper v0.1 (Peter Joseph / Integral Collective)</span>
-                <span class="lang-de">Der technische Entwurf einer Wirtschaft, in der nicht Geld und Markt jede Entscheidung treffen. Die Werkzeuge der Föderation im Roman — die Stunden, das Register, die Blaupausen — sind aus diesem System gebaut.</span>
-                <span class="lang-en hidden">The technical design of an economy in which money and the market do not decide every question. The federation's tools in the novel — the hours, the Register, the blueprints — are built from this system.</span>
-                <br><a href="#" target="_blank" class="download-link" style="font-size:0.9rem;">Link: Integral White Paper →</a>
-            </div>
-
-            <div class="source-card">
-                <span class="source-title">Roadmap for Eradicating Poverty Beyond Growth (2026)</span>
-                <span class="lang-de">Der Weg aus der Armut, gedacht jenseits des Wachstumszwangs. Der Roman nimmt daraus den Versorgungsbegriff: das Genug, nicht das Minimum.</span>
-                <span class="lang-en hidden">The way out of poverty, thought beyond the growth imperative. The novel takes its idea of provision from it: the Enough, not the minimum.</span>
-                <br><a href="#" target="_blank" class="download-link" style="font-size:0.9rem;">Link: Roadmap →</a>
-            </div>
-
-            <div class="source-card">
-                <span class="source-title">IPCC-Szenario SSP1-2.6</span>
-                <span class="lang-de">Das Klimaszenario, dem die Klimakurve des Romans folgt — ehrgeizig, aber innerhalb des wissenschaftlich Beschriebenen.</span>
-                <span class="lang-en hidden">The climate scenario the novel's climate curve follows — ambitious, but within what science describes.</span>
-                <br><a href="#" target="_blank" class="download-link" style="font-size:0.9rem;">Link: IPCC SSP1-2.6 →</a>
-            </div>
-
-            <h2 class="lang-de">Die Werkstattpapiere (TSBL-Papiere)</h2>
-            <h2 class="lang-en hidden">The workshop papers (TSBL papers)</h2>
-            <p class="lang-de" style="font-style: italic; font-size: 0.95rem; color: #a1b0cb;">*TSBL-Papier — aus den realen Quellen entwickelt, kein vorbestehendes Dokument*</p>
-            <p class="lang-en hidden" style="font-style: italic; font-size: 0.95rem; color: #a1b0cb;">*TSBL paper — developed from the real sources; not pre-existing documents*</p>
-
+            <h2 class="lang-de">Die Werkstattpapiere (TSBL-Papiere)</h2><h2 class="lang-en hidden">The workshop papers (TSBL papers)</h2>
             <ul>
                 <li><strong>The TSBL White Paper (plain language):</strong> <a href="#" class="download-link">Download v0.12</a></li>
-                <li>
-                    <strong><span class="lang-de">Die Lebendige Bilanz:</span><span class="lang-en hidden">The Living Balance:</span></strong> 
-                    <a href="#" class="download-link">Download v0.3</a> · 
-                    <button class="action-btn secondary" style="padding: 3px 10px; font-size: 0.85rem; margin-left: 5px;" onclick="switchTab('bilanz-interaktiv')">
-                        <span class="lang-de">➔ interaktiv erkunden</span><span class="lang-en hidden">➔ explore interactively</span>
-                    </button>
-                </li>
-                <li><strong><span class="lang-de">Der Versorgungskorb:</span><span class="lang-en hidden">The Provision Basket:</span></strong> <a href="#" class="download-link">Download v0.2</a></li>
-                <li><strong>Design Rationale:</strong> <a href="#" class="download-link">Download v0.5 (als PDF exportieren)</a></li>
+                <li><strong><span class="lang-de">Die Lebendige Bilanz:</span><span class="lang-en hidden">The Living Balance:</span></strong> <a href="#" class="download-link">Download v0.3</a> · <button class="action-btn secondary" style="padding: 3px 10px; font-size: 0.85rem;" onclick="switchTab('bilanz-interaktiv')"><span class="lang-de">➔ interaktiv erkunden</span><span class="lang-en hidden">➔ explore interactively</span></button></li>
+                <li><strong>Design Rationale:</strong> <a href="#" class="download-link">Download v0.5</a></li>
             </ul>
         </div>
 
-
-        <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (UNTERSEITE) ================= -->
+        <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (INTERAKTIV) ================= -->
         <div id="panel-bilanz-interaktiv" class="content-panel">
             <button class="action-btn secondary" style="padding: 5px 12px; font-size: 0.9rem; margin-bottom: 20px;" onclick="switchTab('grundlagen')">
                 <span class="lang-de">← Zurück zu Die Grundlagen</span><span class="lang-en hidden">← Back to The Foundations</span>
             </button>
 
-            <h1 class="lang-de">Die Lebendige Bilanz</h1>
-            <h1 class="lang-en hidden">The Living Balance</h1>
-            
-            <p class="lang-de">Die Welt des Romans misst ihren Erfolg nicht in einer Zahl. Statt eines Bruttoinlandsprodukts führt sie einen Bericht: sechs Dimensionen — Versorgung, Biosphäre, Zeitwohlstand, Resilienz, Gerechtigkeit, Lernen — jede für sich sichtbar, keine gegen die andere verrechenbar. Gezählt wird, nicht bepreist.</p>
-            <p class="lang-en hidden">The world of this novel does not measure its success in a single number. Instead of a gross domestic product it keeps a report: six dimensions — Provision, Biosphere, Time-wealth, Resilience, Justice, Learning — each visible on its own, none offset against another. Counted, not priced.</p>
+            <h1 class="lang-de">Die Lebendige Bilanz</h1><h1 class="lang-en hidden">The Living Balance</h1>
+            <p class="eb-serif" style="font-style: italic; color: #9b9a92;" id="eb-epigraph"></p>
 
-            <!-- INTERAKTIVE KOMPONENTE (BilanzBahn v0.2 Simulation) -->
-            <div class="bilanz-bahn-box">
-                <span class="lang-de" style="font-weight: 700; color: #1abc9c;">KOMPONENTE: TSBL_EntryZero_Web_BilanzBahn_v0_2.jsx</span>
-                <span class="lang-en hidden" style="font-weight: 700; color: #1abc9c;">COMPONENT: TSBL_EntryZero_Web_BilanzBahn_v0_2.jsx</span>
-                
-                <div class="slider-container">
-                    <label style="display:flex; justify-content:space-between; margin-bottom: 8px;">
-                        <span><strong>Jahr / Year:</strong> <span id="year-val" style="color:#1abc9c; font-size:1.2rem;">2029</span></span>
-                        <span id="region-band" style="color: #94a3b8; font-size:0.9rem;">Regionen: 5%</span>
-                    </label>
-                    <input type="range" min="2029" max="2100" value="2029" class="time-slider" id="bilanz-slider" oninput="updateBilanzBahn(this.value)">
+            <!-- ANZEIGE-BOX FÜR DIE DYNAMISCHEN DIAGRAMME (BILANZBAHN) -->
+            <div class="eb-bilanz-box">
+                <div style="display: flex; alignItems: center; gap: 12px; margin-bottom: 15px;">
+                    <label id="lbl-year" style="font-size: 14px; color: #9b9a92; margin-right: 10px;"></label>
+                    <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)">
+                    <span id="eb-year-display" style="font-size: 24px; font-weight: bold; color: #1abc9c; margin-left: 15px; font-variant-numeric: tabular-nums;">2100</span>
                 </div>
 
-                <div id="event-marker-text" style="background: rgba(26,188,156,0.15); padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 0.95rem; border-left: 3px solid #1abc9c;">
-                    <span class="lang-de">Startpunkt: Erste regionale Versorgungs-Register werden initialisiert.</span>
-                    <span class="lang-en hidden">Starting point: First regional provision registers initialized.</span>
+                <!-- Zeitachsen-Marken / Events -->
+                <div class="eb-ticks" id="eb-ticks-container"></div>
+
+                <!-- Beitrittsband Grafik -->
+                <div style="display:flex; justify-content:space-between; font-size:12px; color:#9b9a92; margin-bottom:5px;">
+                    <span id="lbl-accession"></span>
+                    <span id="eb-accession-val" style="font-weight:bold; color:white;">100 %</span>
+                </div>
+                <svg id="svg-accession" viewBox="0 0 680 60" width="100%" height="60"></svg>
+                <p class="eb-serif" id="eb-accession-caption" style="font-size: 12px; color: #9b9a92; margin: 6px 0 20px 0;"></p>
+
+                <!-- Raster für die 6 Felder (Die Grafiken / Sparklines) -->
+                <div class="eb-grid" id="fields-grid"></div>
+
+                <!-- Das siebte Feld -->
+                <div style="border: 1px dashed rgba(255,255,255,0.15); border-radius: 10px; padding: 16px; margin-top: 20px;">
+                    <p style="font-size: 12px; color: #9b9a92; margin: 0 0 4px 0;" id="lbl-seventh-title"></p>
+                    <p class="eb-serif" style="font-size: 14px; color: #9b9a92; margin: 0;" id="lbl-seventh-body"></p>
                 </div>
 
-                <div class="dimension-grid">
-                    <div class="dim-item"><span class="dim-name">Versorgung / Provision</span><span id="dim-1">Stabil / Basis-Sicherung</span></div>
-                    <div class="dim-item"><span class="dim-name">Biosphäre / Biosphere</span><span id="dim-2">Klimabelastung hoch</span></div>
-                    <div class="dim-item"><span class="dim-name">Zeitwohlstand / Time-wealth</span><span id="dim-3">Traditionelle Erwerbsstrukturen</span></div>
-                    <div class="dim-item"><span class="dim-name">Resilienz / Resilience</span><span id="dim-4">Lokale Puffer im Aufbau</span></div>
-                    <div class="dim-item"><span class="dim-name">Gerechtigkeit / Justice</span><span id="dim-5">Starke globale Disparitäten</span></div>
-                    <div class="dim-item"><span class="dim-name">Lernen / Learning</span><span id="dim-6">Dezentrale Wissens-Cluster aktiv</span></div>
-                </div>
+                <!-- Spannungen -->
+                <div id="eb-tensions" style="margin-top: 20px; display:flex; flex-direction:column; gap:4px;"></div>
+
+                <p id="eb-footer" style="font-size: 11px; color: #9b9a92; margin-top: 25px; line-height: 1.5;"></p>
             </div>
-            
-            <p style="font-style: italic; font-size: 0.9rem; color: #94a3b8;" class="lang-de">*Die Bahn zeigt, wohin die Geschichte führt — nicht, was unterwegs geschieht.*</p>
-            <p style="font-style: italic; font-size: 0.9rem; color: #94a3b8;" class="lang-en hidden">*The trajectory shows where the story leads — not what happens along the way.*</p>
-
-            <h2 class="lang-de">Zum Nachlesen</h2>
-            <h2 class="lang-en hidden">To read on</h2>
-            <p class="lang-de">Das Werkstattpapier hinter dieser Seite: wie die Lebendige Bilanz gedacht ist, Dimension für Dimension, samt der Frage, warum ein Bericht ehrlicher ist als eine Punktzahl.</p>
-            <p class="lang-en hidden">The workshop paper behind this page: how the Living Balance is thought through, dimension by dimension, including the question of why a report is more honest than a score.</p>
-            <a href="#" class="download-link">Download: Die Lebendige Bilanz, v0.3</a>
         </div>
-
 
         <!-- ================= SEITE 3: DIE WERKSTATT ================= -->
         <div id="panel-werkstatt" class="content-panel">
             <div class="spoiler-banner">
                 <strong class="lang-de">Hinweis:</strong><strong class="lang-en hidden">Note:</strong>
-                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne. Mehrere Dokumente verraten Wendungen des Romans. Empfehlung: <strong>erst das Buch, dann das Register.</strong> Wer es umgekehrt hält, tut es auf eigene Gefahr.</span>
-                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints. Several documents give away turns of the novel. Recommendation: <strong>first the book, then the register.</strong> Whoever does it the other way round, does so at their own risk.</span>
+                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist. Mehrere Dokumente verraten Wendungen. Empfehlung: <strong>erst das Buch, dann das Register.</strong></span>
+                <span class="lang-en hidden">The workshop shows how this book was made. Recommendation: <strong>first the book, then the register.</strong></span>
             </div>
 
-            <h1 class="lang-de">Die Werkstatt</h1>
-            <h1 class="lang-en hidden">The Workshop</h1>
+            <h1 class="lang-de">Die Werkstatt</h1><h1 class="lang-en hidden">The Workshop</h1>
+            <h2 class="lang-de">Wie das Buch entstand</h2><h2 class="lang-en hidden">How the book was made</h2>
+            <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.</p>
+            <p class="lang-en hidden" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px;">With an AI language model, the existing material was newly ordered; a human told the story and made every decision. A full account is given in the book's afterword.</p>
 
-            <h2 class="lang-de">Wie das Buch entstand</h2>
-            <h2 class="lang-en hidden">How the book was made</h2>
-            
-            <p class="lang-de" style="font-weight: 500; border-left: 3px solid #3498db; padding-left: 15px; font-style: italic;">
-                Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.
-            </p>
-            <p class="lang-en hidden" style="font-weight: 500; border-left: 3px solid #3498db; padding-left: 15px; font-style: italic;">
-                With an AI language model, the existing material was newly ordered; a human told the story and made every decision. A full account is given in the book's afterword.
-            </p>
-            
-            <p class="lang-de">Diese Seite gewährt Einblick in das Register der Entstehung: die Regeln, nach denen gearbeitet wurde, die Fehler samt ihrer Korrektur, die verworfenen Fassungen samt ihrer Gründe. Gezeigt wird eine Auswahl wesentlicher Dokumente — keine Gesamtschau, aber genug, um die Arbeitsweise zu prüfen statt nur zu glauben.</p>
-            <p class="lang-en hidden">This page grants a look inside the register of the making: the rules the work followed, the errors together with their correction, the discarded versions together with their reasons. What is shown is a selection of essential documents — not a complete survey, but enough to test the way of working instead of merely believing it.</p>
-
-            <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
-            <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
-            <p class="lang-de">Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand — gegen den Widerstand ihres Professors. Fünf Kapitel.</p>
-            <p class="lang-en hidden">A student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model — against the resistance of her professor. Five chapters.</p>
-            <a href="#" class="download-link">Link: Novelle online lesen</a> · <a href="#" class="download-link">Download: Novelle, Lesefassung v0.5</a>
-
-            <h2 class="lang-de">Das Schaufenster</h2>
-            <h2 class="lang-en hidden">The showcase</h2>
-            <p class="lang-de" style="font-style: italic; font-size: 0.95rem; color: #a1b0cb;">*Vierzehn wesentliche Dokumente aus der Werkstatt, gegliedert und eingeordnet — eine Auswahl, keine Gesamtschau. Mit ⚠ markierte Dokumente enthalten Spoiler.*</p>
-            <p class="lang-en hidden" style="font-style: italic; font-size: 0.95rem; color: #a1b0cb;">*Fourteen essential documents from the workshop, organized and introduced — a selection, not a complete survey. Documents marked ⚠ contain spoilers.*</p>
-
-            <h3 style="color:#3498db;">Das Regelwerk — *die tragende Schicht*</h3>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Roman-Bibel, v1.01 ⚠</a> — Das Herzstück: Kanon-Beschlüsse, Stilregeln, die einzige Quelle der Wahrheit. Ohne dieses Dokument ist alles andere Behauptung.</span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Kapitelstruktur/Szenenliste, v0.10 ⚠</a> — Das Szenengerüst: Beleg, dass die Struktur vor der Prosa stand.</span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Roman-Exposé, v0.18 ⚠</a> — Der Entwurf des Ganzen: was feststand, bevor die Kapitel entstanden.</span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Translation Bible, v0.48</a> — Die englische Ausgabe als Regelwerk, nicht als blosse Übersetzung.</span></div>
-
-            <h3 style="color:#3498db;">Das Zwischenstück — *was aus den Quellen wurde, bevor eine Romanseite existierte*</h3>
-            <p class="lang-de">Das TSBL-Whitepaper und die Design-Begründung — die Synthese aus den realen Quellen samt Laborbuch. (<a href="#" onclick="switchTab('grundlagen')" style="color:#1abc9c; font-weight:600;">siehe Die Grundlagen — dieselben Downloads</a>)</p>
-            <p class="lang-en hidden">The TSBL White Paper and the Design Rationale. (<a href="#" onclick="switchTab('grundlagen')" style="color:#1abc9c; font-weight:600;">see The Foundations — the same downloads</a>)</p>
-
-            <h3 style="color:#3498db;">Narben und Verwerfungen — *der forensische Kern*</h3>
-            <p class="lang-de">Ehrliche Register enthalten auch die Fehler. Hier stehen sie: dokumentiert, datiert, korrigiert — und daneben die Prüfungen, die nichts fanden.</p>
-            <p class="lang-en hidden">Honest registers contain the errors too. Here they are: documented, dated, corrected — and beside them the checks that found nothing.</p>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Werkstattnotiz Wissenskonsistenz Teil IV, v0.2 ⚠⚠</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Befund Leerstellen/Drift, v0.1 ⚠</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Pol-Konsistenz-Prüfung, v0.1</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Werkstattnotiz Menschliche Tiefe, v0.1 ⚠</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Werkstattnotiz Krähen-Null-Motiv, v0.1 ⚠</a> — Wer nur ein einziges Dokument liest, um die Methode zu verstehen, lese dieses.</span></div>
-
-            <h3 style="color:#3498db;">Werkzeug und Wissenschaft</h3>
-            <p class="lang-de">Was ein Sprachmodell beim Schreiben tut — und was nicht. In Alltagssprache, mit den Belegen daneben.</p>
-            <p class="lang-en hidden">What a language model does when writing — and what it does not. In everyday language, with the evidence beside it.</p>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt», v0.3</a></span></div>
-            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Download: Referenz Attraktor/Fraktal/LLM, v0.3</a></span></div>
+            <h3 style="color:#3498db;">Das Regelwerk</h3>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Roman-Bibel, v1.01 ⚠</a></span></div>
+            <div class="source-card workshop-doc"><span><a href="#" class="download-link">Translation Bible, v0.48</a></span></div>
         </div>
-
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
         <div id="panel-mitschreiben" class="content-panel">
-            <h1 class="lang-de">Mitschreiben</h1>
-            <h1 class="lang-en hidden">Write On</h1>
-            
-            <p class="lang-de">Dieses Buch trägt seine Fassungsnummer sichtbar: Veröffentlicht ist v0.1 — der erste Eintrag in ein Register, das offen bleibt. Was Leserinnen und Leser zurückspielen, kann in eine spätere Fassung einfliessen oder in andere Geschichten aus derselben Welt.</p>
-            <p class="lang-en hidden">This book carries its version number visibly: what is published is v0.1 — the first entry in a register that stays open. What readers send back can flow into a later version, or into other stories from the same world.</p>
+            <h1 class="lang-de">Mitschreiben</h1><h1 class="lang-en hidden">Write On</h1>
+            <p class="lang-de">Dieses Buch trägt seine Fassungsnummer sichtbar: Veröffentlicht ist v0.1 — der erste Eintrag in ein Register, das offen bleibt.</p>
+            <p class="lang-en hidden">This book carries its version number visibly: what is published is v0.1 — the first entry in a register that stays open.</p>
 
-            <h2 class="lang-de">Eine Idee einreichen</h2>
-            <h2 class="lang-en hidden">Submit an idea</h2>
-            <p class="lang-de">Eine Beobachtung, ein Widerspruch, eine Figur, die noch fehlt, ein Ort, der noch nicht erzählt ist — alles ist willkommen. Kurz oder lang.</p>
-            <p class="lang-en hidden">An observation, an objection, a character still missing, a place not yet told — everything is welcome. Short or long.</p>
-
-            <!-- INTERAKTIVES ANTWORTFORMULAR (GunDB P2P + StaticForms Dev-Schnittstelle) -->
             <form id="submission-form" onsubmit="executeFormSubmit(event)">
                 <div class="form-group">
-                    <label for="form-text">
-                        <span class="lang-de">Ihre Beobachtung, Ihr Widerspruch oder Ihre Idee:*</span>
-                        <span class="lang-en hidden">Your observation, contradiction, or idea:*</span>
-                    </label>
+                    <label for="form-text"><span class="lang-de">Ihre Idee:*</span><span class="lang-en hidden">Your idea:*</span></label>
                     <textarea id="form-text" class="form-control" required></textarea>
                 </div>
-                
                 <div class="form-group">
-                    <label for="form-name">
-                        <span class="lang-de">Name / Pseudonym (optional):</span>
-                        <span class="lang-en hidden">Name / Pseudonym (optional):</span>
-                    </label>
+                    <label for="form-name"><span class="lang-de">Name (optional):</span><span class="lang-en hidden">Name (optional):</span></label>
                     <input type="text" id="form-name" class="form-control">
                 </div>
-
                 <div class="form-group">
-                    <label for="form-email">
-                        <span class="lang-de">E-Mail-Adresse (optional, für Rückfragen):</span>
-                        <span class="lang-en hidden">E-Mail address (optional, for follow-ups):</span>
-                    </label>
+                    <label for="form-email"><span class="lang-de">E-Mail (optional):</span><span class="lang-en hidden">E-Mail (optional):</span></label>
                     <input type="email" id="form-email" class="form-control">
                 </div>
+                <button type="submit" class="action-btn"><span class="lang-de">Beitrag absenden</span><span class="lang-en hidden">Submit entry</span></button>
 
-                <button type="submit" class="action-btn">
-                    <span class="lang-de">Beitrag dezentral absenden</span>
-                    <span class="lang-en hidden">Submit entry decentrally</span>
-                </button>
-
-                <!-- Statusrückmeldungen -->
-                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; color: #2ecc71;">
-                    <span class="lang-de">✓ Erfolgreich! Ihr Beitrag wurde im P2P-Netzwerk verankert und an das Archiv übermittelt.</span>
-                    <span class="lang-en hidden">✓ Success! Your contribution is anchored in the P2P network and mirrored to the archive.</span>
-                </div>
-                <div id="status-error" class="status-msg" style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #e74c3c;">
-                    <span class="lang-de">⚠ Fehler beim Senden. Bitte versuchen Sie es erneut oder nutzen Sie den E-Mail-Fallback.</span>
-                    <span class="lang-en hidden">⚠ Transmission error. Please try again or use the email fallback.</span>
-                </div>
+                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.2); border: 1px solid #2ecc71; color: #2ecc71;"><span class="lang-de">✓ Erfolgreich gesendet!</span><span class="lang-en hidden">✓ Successfully sent!</span></div>
+                <div id="status-error" class="status-msg" style="background: rgba(231, 76, 60, 0.2); border: 1px solid #e74c3c; color: #e74c3c;"><span class="lang-de">⚠ Fehler beim Senden.</span><span class="lang-en hidden">⚠ Error during submission.</span></div>
             </form>
-
-            <h2 class="lang-de">Was mit Einreichungen geschieht</h2>
-            <h2 class="lang-en hidden">What happens to submissions</h2>
-            <p class="lang-de">Eingereichte Beiträge stehen unter derselben Lizenz wie das Buch: CC BY-NC-SA 4.0. Wer einreicht, ist einverstanden, dass der Beitrag unter dieser Lizenz in spätere Fassungen oder weitere Geschichten einfliessen kann — mit Namensnennung, wenn gewünscht. [PLATZHALTER: endgültige Formulierung nach Legal-Review]</p>
-            <p class="lang-en hidden">Submitted contributions stand under the same licence as the book: CC BY-NC-SA 4.0. Whoever submits agrees that the contribution may flow into later versions or further stories under this licence — with attribution, if desired. [PLACEHOLDER: final wording after legal review]</p>
-            
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:20px;" class="lang-de">[PLATZHALTER: Datenschutzhinweis zum Formular, nach Festlegung des Erscheinungslands]</p>
-            <p style="font-size:0.85rem; color:#94a3b8; margin-top:20px;" class="lang-en hidden">[PLACEHOLDER: data-protection notice for the form, once the country of publication is settled]</p>
         </div>
 
     </div>
 
-    <!-- GLOBALER FOOTER -->
     <footer class="footer">
-        <strong>Eintrag Null / Entry Zero</strong> · © 2026 Martin U G P · 
-        Lizenz: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de" target="_blank">CC BY-NC-SA 4.0</a> · 
-        Kontakt: <a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a> · 
-        <a href="#">Impressum</a> · <a href="#">Datenschutz — PLATZHALTER</a>
+        <strong>Eintrag Null / Entry Zero</strong> · © 2026 Martin U G P · <a href="#">Impressum</a> · <a href="#">Datenschutz</a>
     </footer>
 
-    <!-- INTERNE LOGIK & SPA ANSTEUERUNG -->
+    <!-- ================= DATEN & LOGIK DER BILANZBAHN v0.2 ================= -->
     <script>
-        // 1. GunDB Initialisierung über offizielle Relay-Knoten der Community
-        const gun = GUN([
-            'https://gun-manhattan.herokuapp.com/gun',
-            'https://gun-us.herokuapp.com/gun'
-        ]);
-        
-        // Fester, unverwechselbarer Daten-Knoten für Ihr Register im P2P-Raum
+        // Datenbank-Knoten initialisieren
+        const gun = GUN(['https://gun-manhattan.herokuapp.com/gun']);
         const submissionNode = gun.get('tsbl-entryzero-submissions-v1-2026');
 
-        // 2. SPA-Umschalter für die verschiedenen Inhalts-Panels
+        let currentLang = 'de';
+
+        const YEARS = [2030, 2040, 2050, 2060, 2070, 2080, 2090, 2100];
+        const ACCESSION = {
+            years: [2030, 2040, 2049, 2052, 2060, 2070, 2080, 2090, 2100],
+            vals:  [1, 3, 6, 15, 34, 58, 78, 90, 100]
+        };
+
+        const SERIES = {
+            versorgung:    [70, 80, 72, 78, 85, 88, 94, 100],
+            biosphaere:    [1.35, 1.62, 1.9, 1.88, 1.85, 1.83, 1.81, 1.8],
+            zeit:          [1950, 1800, 1650, 1450, 1250, 1120, 1040, 1000],
+            resilienz:     [20, 32, 40, 52, 66, 76, 88, 95],
+            gerechtigkeit: [8.0, 7.4, 5.6, 4.2, 3.4, 2.8, 2.0, 1.1],
+            lernen:        [1.2, 1.7, 2.3, 3.0, 3.8, 4.6, 5.3, 6.0]
+        };
+
+        const DATA_TEXTS = {
+            de: {
+                epigraph: "Sechs Felder, die wir zählen und mit Absicht nicht zu einer einzigen Zahl verrechnen — und ein siebtes, das wir führen, ohne es zu zählen.",
+                yearLabel: "Jahr:", sliderHint: "Man wählt das Jahr, nicht die Werte.",
+                accessionLabel: "Anteil der Regionen in der Föderation",
+                accessionCaption: "Region für Region: in den ersten Jahrzehnten flach, nach der Beitrittswelle steil — vollständig erst im Herbst 2100, mit der letzten Region.",
+                seventhTitle: "Das siebte Feld", seventhBody: "Es trägt eine Nummer wie die anderen, aber wir füllen es nicht. Keine Skala, in keinem Jahr. Es ist das Reifste, das wir können.",
+                events: { 2034: "Föderation", 2051: "Beitrittswelle", 2060: "Trendwende", 2100: "letzte Region" },
+                tensions: ["Spannung: die Versorgung, die an die Grenze der Biosphäre stösst", "Spannung: die Konvergenz, die noch eine Spreizung trägt"],
+                footer: "Ein Sinnesorgan, kein Souverän — der Bericht empfiehlt, er befiehlt nicht. Kein Feld wird mit einem anderen verrechnet. Verläufe zwischen 2030 und 2100 illustrativ; kanonisch sind nur die Endwerte des Jahres 2100.",
+                fields: {
+                    versorgung: { name: "Versorgung", sub: "Gemessen am Schlechtestversorgten — ein hoher Mittelwert heilt keinen einzigen Mangel.", note: "Der Wert sinkt, wenn Regionen beitreten: Gemessen wird am Schwächsten.", fmt: (v) => `${Math.round(v)} % des Korbs gedeckt`, min: 55, max: 106, limit: 100, limitLabel: "das Genug" },
+                    biosphaere: { name: "Biosphäre", sub: "Die einzige Grenze, die nicht verhandelbar ist. Geheilt, nicht heil.", fmt: (v) => `+${v.toFixed(2).replace(".", ",")} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "harte Grenze" },
+                    zeit: { name: "Zeitwohlstand", sub: "Nicht nur, wie viel Zeit frei wurde — auch, wie gleich die Last verteilt ist.", fmt: (v) => `${Math.round(v).toLocaleString("de-CH")} h notwendige Arbeit`, min: 900, max: 2050 },
+                    resilienz: { name: "Resilienz", sub: "Stärke liegt nicht im Wachstum, sondern im Federn — und darin, wie gut die Gemeinschaften einander halten.", fmt: (v) => (v < 40 ? "spröde" : v < 70 ? "tragend" : "federnd"), min: 0, max: 100 },
+                    gerechtigkeit: { name: "Gerechtigkeit", sub: "Wir messen die Spreizung, nicht den Durchschnitt. Konvergenz ist nicht dasselbe wie Eintracht.", fmt: (v) => `Spreizung ${v.toFixed(1).replace(".", ",")} : 1`, min: 0.6, max: 8.6 },
+                    lernen: { name: "Lernen", sub: "Vom Salzsee bis zur Pazifikküste: Wiederverwendung, nicht Patentzahl.", fmt: (v) => `${v.toFixed(1).replace(".", ",")} Klimazonen je Entwurf`, min: 0.8, max: 6.5 }
+                }
+            },
+            en: {
+                epigraph: "Six fields that we count and deliberately do not reckon into a single number — and a seventh that we keep without counting it.",
+                yearLabel: "Year:", sliderHint: "You choose the year, not the values.",
+                accessionLabel: "Share of regions inside the federation",
+                accessionCaption: "Region by region: flat for the first decades, steep after the accession wave — complete only in the autumn of 2100, with the last region.",
+                seventhTitle: "The seventh field", seventhBody: "It bears a number like the others, but we do not fill it. No scale, in no year. It is the most mature thing we are capable of.",
+                events: { 2034: "federation", 2051: "accession wave", 2060: "turning", 2100: "last region" },
+                tensions: ["Tension: the provision that strains against the limit of the biosphere", "Tension: the convergence that still carries a spread"],
+                footer: "A sense organ, not a sovereign — the report recommends, it does not command. No field is reckoned against another. Trajectories between 2030 and 2100 are illustrative; only the end values of the year 2100 are canonical.",
+                fields: {
+                    versorgung: { name: "Provision", sub: "Measured by the worst-provided — a high mean heals not a single want.", note: "The value falls when regions accede: it is measured at the weakest.", fmt: (v) => `${Math.round(v)} % of the basket covered`, min: 55, max: 106, limit: 100, limitLabel: "the Enough" },
+                    biosphaere: { name: "Biosphere", sub: "The only limit that is not negotiable. Healed, not whole.", fmt: (v) => `+${v.toFixed(2)} °C`, min: 1.2, max: 2.0, limit: 1.8, limitLabel: "hard limit" },
+                    zeit: { name: "Time-wealth", sub: "Not only how much time was freed — also how evenly the load is shared.", fmt: (v) => `${Math.round(v).toLocaleString("en-GB")} h of necessary labour`, min: 900, max: 2050 },
+                    resilienz: { name: "Resilience", sub: "Strength lies not in growth but in springing — and in how well the communities hold one another.", fmt: (v) => (v < 40 ? "brittle" : v < 70 ? "bearing" : "springing"), min: 0, max: 100 },
+                    gerechtigkeit: { name: "Justice", sub: "We measure the spread, not the average. Convergence is not the same as concord.", fmt: (v) => `spread ${v.toFixed(1)} : 1`, min: 0.6, max: 8.6 },
+                    lernen: { name: "Learning", sub: "From the salt lake to the Pacific coast: reuse, not patent counts.", fmt: (v) => `${v.toFixed(1)} climate zones per design`, min: 0.8, max: 6.5 }
+                }
+            }
+        };
+
+        function lerpXY(xs, ys, x) {
+            if (x <= xs[0]) return ys[0];
+            if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
+            let i = 0; while (xs[i + 1] < x) i++;
+            const f = (x - xs[i]) / (xs[i + 1] - xs[i]);
+            return ys[i] + (ys[i + 1] - ys[i]) * f;
+        }
+
+        function lerp(arr, year) {
+            const t = (year - 2030) / 10;
+            const i = Math.min(6, Math.floor(t));
+            return arr[i] + (arr[i + 1] - arr[i]) * (t - i);
+        }
+
+        // Rendert die echten Vektor-Grafiken (SVGs) dynamisch
+        function renderBilanz(year) {
+            const dataSet = DATA_TEXTS[currentLang];
+            document.getElementById('eb-year-display').textContent = year;
+            
+            // Epigraph & statische Texte laden
+            document.getElementById('eb-epigraph').textContent = dataSet.epigraph;
+            document.getElementById('lbl-year').textContent = dataSet.yearLabel;
+            document.getElementById('lbl-accession').textContent = dataSet.accessionLabel;
+            document.getElementById('eb-accession-caption').textContent = dataSet.accessionCaption;
+            document.getElementById('lbl-seventh-title').textContent = dataSet.seventhTitle;
+            document.getElementById('lbl-seventh-body').textContent = dataSet.seventhBody;
+            document.getElementById('eb-footer').textContent = dataSet.footer;
+
+            // 1. Beitritts-Band Kurve zeichnen
+            const currentAcc = lerpXY(ACCESSION.years, ACCESSION.vals, year);
+            document.getElementById('eb-accession-val').textContent = `${Math.round(currentAcc)} %`;
+            
+            const sW = 680, sH = 60;
+            const sX = (y) => ((y - 2030) / 70) * sW;
+            const sY = (v) => sH - 2 - (v / 100) * (sH - 10);
+            
+            let pts = ACCESSION.years.map((y, i) => `${sX(y).toFixed(1)},${sY(ACCESSION.vals[i]).toFixed(1)}`);
+            let linePath = pts.join(" ");
+            let areaPath = `${linePath} ${sW},${sH} 0,${sH}`;
+            
+            document.getElementById('svg-accession').innerHTML = `
+                <line x1="0" x2="${sW}" y1="${sY(100)}" y2="${sY(100)}" stroke="#3c3b36" stroke-width="1" stroke-dasharray="3 3" />
+                <polygon points="${areaPath}" fill="#1abc9c" opacity="0.12" />
+                <polyline points="${linePath}" fill="none" stroke="#1abc9c" stroke-width="2" stroke-linejoin="round" />
+                <circle cx="${sX(year)}" cy="${sY(currentAcc)}" r="5" fill="#1abc9c" stroke="#191918" stroke-width="2" />
+            `;
+
+            // 2. Zeitachsen-Ticks rendern
+            let ticksHtml = '';
+            Object.entries(dataSet.events).map(([y, label]) => {
+                const pos = ((y - 2030) / 70) * 100;
+                ticksHtml += `<span class="eb-tick" style="left: ${pos}%">| ${label}</span>`;
+            });
+            document.getElementById('eb-ticks-container').innerHTML = ticksHtml;
+
+            // 3. Die 6 Felder Grid mit Sparkline-Vektorgrafiken rendern
+            let gridHtml = '';
+            const keys = Object.keys(SERIES);
+            
+            keys.forEach((key, index) => {
+                const fieldData = dataSet.fields[key];
+                const rawValues = SERIES[key];
+                const currentVal = lerp(rawValues, year);
+                
+                const gW = 320, gH = 65, gP = 6;
+                const gX = (y) => gP + ((y - 2030) / 70) * (gW - 2 * gP);
+                const gY = (v) => gH - gP - ((v - fieldData.min) / (fieldData.max - fieldData.min)) * (gH - 2 * gP);
+                
+                let sparkPts = YEARS.map((y, i) => `${gX(y).toFixed(1)},${gY(rawValues[i]).toFixed(1)}`).join(" ");
+                
+                let limitLine = '';
+                if (fieldData.limit) {
+                    const lY = gY(fieldData.limit);
+                    limitLine = `
+                        <line x1="${gP}" x2="${gW - gP}" y1="${lY}" y2="${lY}" stroke="#d97a7a" stroke-width="1" stroke-dasharray="3 3" />
+                        <text x="${gW - gP}" y="${lY - 3}" text-anchor="end" font-size="9" fill="#d97a7a">${fieldData.limitLabel}</text>
+                    `;
+                }
+
+                gridHtml += `
+                    <div class="eb-card">
+                        <p style="font-size: 12px; color: #9b9a92; margin: 0 0 2px 0;">${index + 1} · ${fieldData.name}</p>
+                        <p style="font-size: 17px; font-weight: 500; margin: 0 0 8px 0; font-variant-numeric: tabular-nums; color:#ffffff;">${fieldData.fmt(currentVal)}</p>
+                        <svg viewBox="0 0 ${gW} ${gH}" width="100%" height="${gH}">
+                            ${limitLine}
+                            <polyline points="${sparkPts}" fill="none" stroke="#1abc9c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
+                            <circle cx="${gX(year)}" cy="${gY(currentVal)}" r="4.5" fill="#1abc9c" stroke="#191918" stroke-width="2" />
+                        </svg>
+                        <p style="font-size: 12.5px; color: #9b9a92; margin: 6px 0 0 0; line-height: 1.4; font-family: Georgia, serif;">${fieldData.sub}</p>
+                        ${fieldData.note && year < 2098 ? `<p style="font-size: 11px; color: #9b9a92; margin: 4px 0 0 0;">${fieldData.note}</p>` : ''}
+                    </div>
+                `;
+            });
+            document.getElementById('fields-grid').innerHTML = gridHtml;
+
+            // 4. Spannungen laden
+            let tensionsHtml = '';
+            dataSet.tensions.forEach(s => {
+                tensionsHtml += `<p style="font-size: 13px; color: #9b9a92; margin: 0; border-left: 2px solid #3c3b36; padding-left: 10px; font-family: Georgia, serif;">${s}</p>`;
+            });
+            document.getElementById('eb-tensions').innerHTML = tensionsHtml;
+        }
+
+        // SPA-Umschalter
         function switchTab(tabId) {
-            document.querySelectorAll('.content-panel').forEach(panel => {
-                panel.classList.remove('active-panel');
-            });
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
+            document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active-panel'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
 
             const targetPanel = document.getElementById('panel-' + tabId);
             if (targetPanel) targetPanel.classList.add('active-panel');
             
-            // Falls es sich um eine Unterseite (wie 2a) handelt, bleibt die Hauptkategorie aktiv
             const activeNavId = (tabId === 'bilanz-interaktiv') ? 'nav-grundlagen' : 'nav-' + tabId;
             const targetNav = document.getElementById(activeNavId);
-            if (targetNav) targetNav.classList.add('active');
+            if (targetNav) targetNav.add ? targetNav.classList.add('active') : targetNav.className += ' active';
             
+            if (tabId === 'bilanz-interaktiv') {
+                renderBilanz(document.getElementById('eb-year-slider').value);
+            }
             window.scrollTo(0,0);
         }
 
-        // 3. Sprachumschalter (DE / EN Mechanics)
+        // Sprach-Umschalter
         function setLanguage(lang) {
+            currentLang = lang;
             document.getElementById('btn-de').classList.toggle('active', lang === 'de');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
 
@@ -798,85 +711,44 @@
                 document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
                 document.querySelectorAll('.lang-de').forEach(el => el.classList.remove('hidden'));
             }
+            
+            // Wenn man sich auf dem Bilanz-Tab befindet, sofort neu zeichnen
+            if (document.getElementById('panel-bilanz-interaktiv').classList.contains('active-panel')) {
+                renderBilanz(document.getElementById('eb-year-slider').value);
+            }
         }
 
-        // 4. Formular-Submit: Schreibt parallel in GunDB und an die StaticForms API
+        // Formular-Absendung
         function executeFormSubmit(event) {
             event.preventDefault();
-            
             const contentText = document.getElementById('form-text').value;
             const authorName = document.getElementById('form-name').value || 'Anonym';
             const authorEmail = document.getElementById('form-email').value || 'Keine Angabe';
             const timestamp = new Date().toISOString();
 
-            const successAlert = document.getElementById('status-success');
-            const errorAlert = document.getElementById('status-error');
-            
-            successAlert.style.display = 'none';
-            errorAlert.style.display = 'none';
-
-            // STUFE A: Dezentrale P2P-Verankerung via GunDB
             try {
-                submissionNode.set({
-                    text: contentText,
-                    name: authorName,
-                    email: authorEmail,
-                    date: timestamp
-                });
-            } catch (err) {
-                console.error("GunDB Synchronisations-Fehler:", err);
-            }
+                submissionNode.set({ text: contentText, name: authorName, email: authorEmail, date: timestamp });
+            } catch (err) { console.error(err); }
 
-            // STUFE B: E-Mail Benachrichtigung an Ihr Postfach
             fetch('https://api.staticforms.dev/submit', {
                 method: 'POST',
                 body: JSON.stringify({
-                    accessKey: 'sf_58264c1f8a8ffd82d8e82ba6', 
+                    accessKey: 'sf_58264c1f8a8ffd82d8e82ba6',
                     subject: 'Neuer Register-Eintrag: ' + authorName,
-                    message: `Neuer Beitrag eingegangen:\n\nInhalt:\n${contentText}\n\nAbsender: ${authorName}\nE-Mail: ${authorEmail}\nZeitstempel: ${timestamp}`,
+                    message: `Inhalt:\n${contentText}\n\nAbsender: ${authorName}\nE-Mail: ${authorEmail}`,
                     replyTo: '@'
                 }),
                 headers: { 'Content-Type': 'application/json' }
-            })
-            .then(res => {
+            }).then(res => {
                 if (res.ok) {
-                    successAlert.style.display = 'block';
+                    document.getElementById('status-success').style.display = 'block';
                     document.getElementById('submission-form').reset();
                 } else {
-                    errorAlert.style.display = 'block';
+                    document.getElementById('status-error').style.display = 'block';
                 }
-            })
-            .catch(err => {
-                console.error("Mail-API-Fehler:", err);
-                errorAlert.style.display = 'block';
+            }).catch(() => {
+                document.getElementById('status-error').style.display = 'block';
             });
-        }
-
-        // 5. Interaktive BilanzBahn Simulation (Ebene 2a) basierend auf dem Zeitregler
-        function updateBilanzBahn(year) {
-            document.getElementById('year-val').textContent = year;
-            const marker = document.getElementById('event-marker-text');
-            const regBand = document.getElementById('region-band');
-            
-            if (year < 2045) {
-                regBand.textContent = "Regionen: " + Math.floor((year-2029)*1.5 + 5) + "%";
-                marker.innerHTML = `<strong>2029–2045 (Gen 1):</strong> Konflikte um die Umstellung. Erste autarke Cluster an der Pazifikküste stabilisieren sich.`;
-                document.getElementById('dim-1').textContent = "Aufbauend / Übergangsphase";
-                document.getElementById('dim-2').textContent = "Klimakristallisation spürbar";
-                document.getElementById('dim-3').textContent = "Traditionelle Strukturen weichen";
-            } else if (year >= 2045 && year < 2080) {
-                regBand.textContent = "Regionen: " + Math.floor((year-2045)*0.8 + 30) + "%";
-                marker.innerHTML = `<strong>2045–2080 (Gen 2):</strong> Konsolidierung. Die Föderation schlägt Brücken über den Atlantik in die Alpentäler.`;
-                document.getElementById('dim-1').textContent = "Gesichert / Bedarfsgesteuert";
-                document.getElementById('dim-2').textContent = "Emissionsstopp greift stufenweise";
-                document.getElementById('dim-3').textContent = "Zeitwohlstand hoch (Fokus Pflege/Kunst)";
-            } else {
-                regBand.textContent = "Regionen: " + Math.floor((year-2080)*0.5 + 60) + "%";
-                marker.innerHTML = `<strong>2080–2100 (Gen 3):</strong> Integrale Stabilisierung. Die Vernetzung erreicht Costa Rica und schließt den globalen Bogen.`;
-                document.getElementById('dim-1').textContent = "Vollständig dezentral / Gapless";
-                document.getElementById('dim-2').textContent = "Regeneration der Biosphäre messbar";
-                document.getElementById('dim-3').textContent = "Maximale Zeitsouveränität erreicht";
-            }
         }
     </script>
 </body>
