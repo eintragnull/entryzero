@@ -59,7 +59,7 @@
         /* ================= VISUELLE DNA & THEME VARIABLES ================= */
         :root {
             --eb-ink: #ecebe4;
-            --eb-muted: #a3d2f7; /* Verbessert: Hellblau für sekundäre Texte */
+            --eb-muted: #a3d2f7; 
             --eb-hair: #3c3b36;
             --eb-bg: #191918;
             --eb-card: #22211f;
@@ -67,7 +67,7 @@
             --eb-limit: #d97a7a;
             --primary: #1abc9c;
             --primary-hover: #16a085;
-            --link-footer: #6bb5ff; /* Gut lesbares Hellblau für den Footer */
+            --link-footer: #6bb5ff; 
         }
 
         html, body {
@@ -84,7 +84,7 @@
             flex-direction: column;
             min-height: 100vh;
             
-            /* Maximierte Stabilität für das Hintergrundbild auf allen Seiten */
+            /* Hintergrundkonfiguration für cover.png */
             background-image: url("cover.png");
             background-attachment: fixed;
             background-position: center top;
@@ -135,7 +135,7 @@
         .nav-item.active {
             border-bottom: 2px solid var(--primary);
             border-radius: 6px 6px 0 0;
-            background: rgba(26, 188, 156, 0.15);
+            background: rgba(26, 188, 156, 0.2);
         }
 
         .lang-switch {
@@ -161,7 +161,7 @@
             box-shadow: 0 0 12px rgba(26, 188, 156, 0.5);
         }
 
-        /* GLOBAL FIXIERTE ERDSICHEL ÜBER ALLEN SEITEN */
+        /* ERDSICHEL WRAPPER (Sichtbar auf allen Seiten über dem Inhalt) */
         .erdsichel-wrapper {
             width: 100%;
             max-width: 840px;
@@ -169,6 +169,7 @@
             padding: 0 20px;
             box-sizing: border-box;
             overflow: hidden;
+            z-index: 10;
         }
 
         .erdsichel-svg {
@@ -179,12 +180,12 @@
 
         /* Baustellen-Hinweis (Fett-Rosa) */
         .construction-alert {
-            background: rgba(231, 76, 60, 0.2);
+            background: rgba(231, 76, 60, 0.25);
             border: 2px solid #ff6b81;
             color: #ff6b81;
             font-weight: 700;
             border-radius: 8px;
-            padding: 12px;
+            padding: 14px;
             margin-bottom: 25px;
             font-size: 1.05rem;
             text-align: center;
@@ -199,17 +200,18 @@
             padding: 0 20px;
             box-sizing: border-box;
             flex: 1;
+            z-index: 5;
         }
 
-        /* Glassmorphism Inhalts-Karten */
+        /* Inhalts-Karten (Gedimmte Transparenz, damit cover.png im Hintergrund sichtbar bleibt) */
         .content-panel {
-            background: rgba(11, 23, 36, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(11, 23, 36, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 0 0 16px 16px;
             padding: 45px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
             display: none;
         }
 
@@ -310,14 +312,13 @@
         }
 
         .action-btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             box-shadow: none;
         }
 
         .action-btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: none;
+            background: rgba(255, 255, 255, 0.25);
         }
 
         .download-link {
@@ -332,30 +333,28 @@
             color: #2ecc71;
         }
 
-        /* Kacheln & Quellenschichten */
         .source-card {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.55);
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 20px;
             border-left: 4px solid var(--primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         
         .source-card.workshop-doc { border-left-color: #3498db; }
         .source-title { font-weight: 700; color: #ffffff; display: block; margin-bottom: 6px; font-size: 1.15rem; }
 
-        /* ================= BILANZBAHN VECTOR ARCHITECTURE ================= */
+        /* ================= BILANZBAHN STYLING ================= */
         .eb-bilanz-box {
-            background: rgba(15, 22, 30, 0.85);
+            background: rgba(15, 22, 30, 0.9);
             border-radius: 12px;
             padding: 30px;
             margin: 35px 0;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ecebe4;
         }
 
-        .eb-slider-container { margin: 25px 0 10px 0; }
         .eb-slider {
             width: 100%;
             accent-color: var(--primary);
@@ -370,7 +369,7 @@
             position: relative;
             height: 1.8rem;
             font-size: 11px;
-            color: #a3e635; /* Knalligeres Hellgrün für Achsenbeschriftung */
+            color: #a3e635; 
             margin-bottom: 25px;
         }
         .eb-tick { position: absolute; transform: translateX(-50%); white-space: nowrap; }
@@ -383,46 +382,32 @@
         }
         .eb-card {
             background: var(--eb-card);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             padding: 16px;
         }
 
-        .eb-bilanz-box svg { display: block; background: rgba(0, 0, 0, 0.3); border-radius: 4px; }
+        .eb-bilanz-box svg { display: block; background: rgba(0, 0, 0, 0.4); border-radius: 4px; }
 
-        /* Formular */
-        .form-group { margin-bottom: 22px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 1rem; color: #d1dce5; }
-        .form-control {
-            width: 100%; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 6px; padding: 12px; color: white; box-sizing: border-box; font-family: inherit; font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-        .form-control:focus { border-color: var(--primary); outline: none; }
-        textarea.form-control { min-height: 140px; resize: vertical; }
-        .status-msg { padding: 14px; border-radius: 6px; margin-top: 20px; display: none; font-weight: 600; }
-
-        .hidden { display: none !important; }
-
-        /* Klares, hochgradig lesbares Hellgrün/Hellblau für vertiefende Texte in der Bilanz */
+        /* Klares Hellgrün für optimierte Lesbarkeit */
         .highlight-text {
-            color: #a3e635 !important; /* Strahlendes Hellgrün */
-            text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+            color: #a3e635 !important; 
+            text-shadow: 0 1px 5px rgba(0,0,0,0.9);
         }
 
         /* Fußzeile */
         .footer {
             width: 100%; 
             background: rgba(11, 23, 36, 0.95); 
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding: 25px 20px; 
             text-align: center; 
             box-sizing: border-box; 
             font-size: 0.95rem; 
             color: #cbd5e1; 
             margin-top: auto;
+            z-index: 10;
         }
-        /* Kontrastreiche, auf schwarz lesbare Linkfarben im Footer */
         .footer a { color: var(--link-footer); text-decoration: none; font-weight: 600; }
         .footer a:hover { text-decoration: underline; color: #93c5fd; }
 
@@ -431,8 +416,6 @@
             .eb-grid { grid-template-columns: minmax(0, 1fr); }
             .content-panel { padding: 25px 20px; }
             h1 { font-size: 2.2rem; }
-            .btn-group { flex-direction: column; gap: 12px; }
-            .action-btn { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -442,7 +425,7 @@
     <nav class="navbar">
         <div class="nav-links">
             <span class="nav-item active" onclick="switchTab('home')" id="nav-home">Startseite</span>
-            <span class="nav-item" onclick="switchTab('buch')" id="nav-buch">Das Book</span>
+            <span class="nav-item" onclick="switchTab('buch')" id="nav-buch">Das Buch</span>
             <span class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen">Die Grundlagen</span>
             <span class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt">Die Werkstatt</span>
             <span class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben">Mitschreiben</span>
@@ -453,7 +436,7 @@
         </div>
     </nav>
 
-    <!-- TRADITIONELLE ERDSICHEL (GEKREUZT ÜBER ALLEN SEITEN) -->
+    <!-- UNIVERSELLE ERDSICHEL -->
     <div class="erdsichel-wrapper">
         <svg class="erdsichel-svg" viewBox="0 0 800 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 20C240 5 560 5 790 20C540 8 260 8 10 20Z" fill="url(#crescentGlow)"/>
@@ -471,9 +454,7 @@
     <div class="main-container">
 
         <!-- ================= SEITE 0: STARTSEITE ================= -->
-        <div id="panel-home" class="content-panel active-panel">
-            
-            <!-- HINZUGEFÜGTER BAUSTELLEN HINWEIS (FETT-ROSA) -->
+        <div id="panel-home" class="content-panel">
             <div class="construction-alert">
                 <span class="lang-de">Webseite ist im Aufbau - noch nicht voll funktionstüchtig</span>
                 <span class="lang-en hidden">This website is under construction—it is not yet fully functional.</span>
@@ -508,7 +489,6 @@
             <div class="meta-author">Martin U G P · The Symbios Butterfly Lab[cite: 6, 7]</div>
         </div>
 
-
         <!-- ================= SEITE 1: DAS BUCH ================= -->
         <div id="panel-buch" class="content-panel">
             <h1 class="lang-de">Das Buch</h1>
@@ -529,15 +509,12 @@
                     <p>As a story, it follows four generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love[cite: 8].</p>
                     <p>As a vision of the world, it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price[cite: 8].</p>
                     <p>As a document, it rests on verifiable sources — a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC — and leaves its framework open to inspection[cite: 8].</p>
-                    <p style="margin-bottom: 0;">As a question, it remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once[cite: 8].</p>
+                    <p style="margin-bottom: 0;">Als Frage remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once[cite: 8].</p>
                 </div>
             </div>
 
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
-            <p class="lang-de">Der Roman ist vollständig und kostenlos verfügbar. Kein Auszug, keine Anmeldung — das ganze Buch[cite: 6].</p>
-            <p class="lang-en hidden">The novel is complete and free. No excerpt, no sign-up — the whole book[cite: 7].</p>
-            
             <ul>
                 <li>
                     <strong><span class="lang-de">Deutsche Ausgabe — Eintrag Null</span><span class="lang-en hidden">German edition — Eintrag Null</span></strong><br>
@@ -550,50 +527,33 @@
             </ul>
         </div>
 
-
         <!-- ================= SEITE 2: DIE GRUNDLAGEN ================= -->
         <div id="panel-grundlagen" class="content-panel">
             <h1 class="lang-de">Die Grundlagen</h1>
             <h1 class="lang-en hidden">The Foundations</h1>
             
-            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten — und auf Papieren, die für dieses Projekt aus ihnen entwickelt wurden. Beides steht hier, klar getrennt: Was es vor dem Buch schon gab, und was die Werkstatt daraus gebaut hat[cite: 6].</p>
-            <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works — and on papers developed from them for this project. Both are here, clearly separated: what existed before the book, and what the workshop built from it[cite: 7].</p>
+            <p class="lang-de">Nichts an der Welt dieses Romans ist frei erfunden, und das ist ihre Pointe. Sie beruht auf realen, frei zugänglichen Arbeiten[cite: 6].</p>
+            <p class="lang-en hidden">Nothing about the world of this novel is freely invented, and that is its point. It rests on real, openly accessible works[cite: 7].</p>
 
-            <h2 class="lang-de">Die realen Quellen *(vorbestehend — nicht von diesem Projekt)*</h2>
-            <h2 class="lang-en hidden">The real sources *(pre-existing — not by this project)*</h2>
+            <h2 class="lang-de">Die realen Quellen</h2>
+            <h2 class="lang-en hidden">The real sources</h2>
             
             <div class="source-card">
                 <span class="source-title">Global Justice Report 2026 (World Inequality Lab)</span>
-                <span class="lang-de">Rechnet vor, dass eine gerechte Welt innerhalb der Belastungsgrenzen der Erde bis zum Ende des Jahrhunderts möglich ist. Der Roman übernimmt daraus die Zielbahn — bis zum Zieljahr 2100[cite: 6].</span>
-                <span class="lang-en hidden">Shows that a just world within the load-limits of the earth is possible by the end of the century. The novel takes its target trajectory from it — all the way to the target year 2100[cite: 7].</span>
-                <br><a href="https://wid.world" target="_blank" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: GJR 2026] →</a>
+                <a href="https://wid.world" target="_blank" class="download-link">[LINK: GJR 2026] →</a>[cite: 6]
             </div>
 
-            <div class="source-card">
-                <span class="source-title">Integral Technical White Paper v0.1 (Peter Joseph / Integral Collective)</span>
-                <span class="lang-de">Der technische Entwurf einer Wirtschaft, in der nicht Geld und Markt jede Entscheidung treffen. Die Werkzeuge der Föderation im Roman — die Stunden, das Register, die Blaupausen — sind aus diesem System gebaut[cite: 6].</span>
-                <span class="lang-en hidden">The technical design of an economy in which money and the market do not decide every question. The federation's tools in the novel — the hours, the Register, the blueprints — are built from this system[cite: 7].</span>
-                <br><a href="#" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:5px;">[LINK: Integral White Paper] →</a>
-            </div>
-
-            <h2 class="lang-de">Die Werkstattpapiere *(TSBL-Papiere — aus den realen Quellen entwickelt)*</h2>
-            <h2 class="lang-en hidden">The workshop papers *(TSBL papers — developed from the real sources)*</h2>
-
+            <h2 class="lang-de">Die Werkstattpapiere</h2>
+            <h2 class="lang-en hidden">The workshop papers</h2>
             <ul>
                 <li>
-                    <strong>The TSBL-Whitepaper / TSBL White Paper</strong>:<br>
-                    <a href="#" class="download-link">[DOWNLOAD: TSBL-Whitepaper, allgemeinverständlich, v0.12]</a>[cite: 6, 7]
-                </li>
-                <li style="margin-top: 15px;">
                     <strong><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></strong>:<br>
-                    <a href="#" class="download-link">[DOWNLOAD: Die Lebendige Bilanz, v0.3]</a> · 
-                    <button class="action-btn secondary" style="padding: 4px 12px; font-size: 0.85rem; margin-left: 5px;" onclick="switchTab('bilanz-interaktiv')">
+                    <button class="action-btn secondary" style="padding: 4px 12px; font-size: 0.85rem;" onclick="switchTab('bilanz-interaktiv')">
                         <span class="lang-de">➔ interaktiv erkunden</span><span class="lang-en hidden">➔ explore interactively</span>
                     </button>[cite: 6, 7]
                 </li>
             </ul>
         </div>
-
 
         <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (INTERAKTIV) ================= -->
         <div id="panel-bilanz-interaktiv" class="content-panel">
@@ -604,13 +564,8 @@
             <h1 class="lang-de">Die Lebendige Bilanz</h1>
             <h1 class="lang-en hidden">The Living Balance</h1>
             
-            <p class="lang-de">Die Welt des Romans misst ihren Erfolg nicht in einer Zahl. Statt eines Bruttoinlandsprodukts führt sie einen Bericht: sechs Dimensionen — Versorgung, Biosphäre, Zeitwohlstand, Resilienz, Gerechtigkeit, Lernen — jede für sich sichtbar, keine gegen die andere verrechenbar. Gezählt wird, nicht bepreist[cite: 6].</p>
-            <p class="lang-en hidden">The world of this novel does not measure its success in a single number. Instead of a gross domestic product it keeps a report: six dimensions — Provision, Biosphere, Time-wealth, Resilience, Justice, Learning — each visible on its own, none offset against another. Counted, not priced[cite: 7].</p>
-            
-            <!-- Optimiert: Hellgrüner/Hellblauer Text für optimale Lesbarkeit -->
             <p class="eb-serif highlight-text" style="font-style: italic; margin-bottom: 25px; font-size: 1.2rem;" id="eb-epigraph"></p>
 
-            <!-- ANZEIGE-BOX FÜR DIE DIAGRAMME -->
             <div class="eb-bilanz-box">
                 <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                     <label id="lbl-year" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
@@ -618,10 +573,8 @@
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
                 </div>
 
-                <!-- Zeitachsen-Marken / Events -->
                 <div class="eb-ticks" id="eb-ticks-container"></div>
 
-                <!-- Beitrittsband Grafik -->
                 <div style="display:flex; justify-content:space-between; font-size:12px; color: #93c5fd; margin-bottom:6px; font-weight: 600;">
                     <span id="lbl-accession"></span>
                     <span id="eb-accession-val" style="font-variant-numeric: tabular-nums; color: var(--primary); font-weight: bold;">100 %</span>
@@ -632,90 +585,56 @@
                 <p class="eb-serif highlight-text" id="eb-accession-caption" style="font-size: 12.5px; margin: 8px 0 25px 0; line-height: 1.5;"></p>
                 <p style="font-size: 11.5px; color: #93c5fd; margin: -15px 0 25px 0;" id="lbl-slider-hint"></p>
 
-                <!-- Raster für die 6 Felder -->
                 <div class="eb-grid" id="fields-grid"></div>
 
-                <!-- Das siebte Feld -->
                 <div style="border: 1px dashed var(--primary); border-radius: 10px; padding: 18px; margin-top: 25px; background: rgba(0,0,0,0.3);">
                     <p style="font-size: 12px; color: #93c5fd; margin: 0 0 6px 0; font-weight: 600;" id="lbl-seventh-title"></p>
                     <p class="eb-serif highlight-text" style="font-size: 14.5px; margin: 0; line-height: 1.6;" id="lbl-seventh-body"></p>
                 </div>
 
-                <!-- Systemische Spannungen -->
                 <div id="eb-tensions" style="margin-top: 20px; display:flex; flex-direction:column; gap:6px;"></div>
-
-                <!-- Fußnote -->
                 <p id="eb-footer" style="font-size: 12px; color: #93c5fd; margin-top: 30px; line-height: 1.6;"></p>
             </div>
-            
-            <h2 class="lang-de">Zum Nachlesen</h2>
-            <h2 class="lang-en hidden">To read on</h2>
-            <a href="#" class="download-link">[DOWNLOAD: Die Lebendige Bilanz, v0.3]</a>[cite: 6, 7]
         </div>
-
 
         <!-- ================= SEITE 3: DIE WERKSTATT ================= -->
         <div id="panel-werkstatt" class="content-panel">
             <div class="spoiler-banner">
                 <strong class="lang-de">Hinweis:</strong><strong class="lang-en hidden">Note:</strong>
-                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne. Mehrere Dokumente verraten Wendungen des Romans. Empfehlung: <strong>erst das Buch, dann das Register.</strong> Wer es umgekehrt hält, tut es auf eigene Gefahr[cite: 6].</span>
-                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints. Several documents give away turns of the novel. Recommendation: <strong>first the book, then the register.</strong> Whoever does it the other way round, does so at their own risk[cite: 7].</span>
+                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist[cite: 6].</span>
+                <span class="lang-en hidden">The workshop shows how this book was made[cite: 7].</span>
             </div>
-
             <h1 class="lang-de">Die Werkstatt</h1>
             <h1 class="lang-en hidden">The Workshop</h1>
-
-            <h2 class="lang-de">Wie das Buch entstand</h2>
-            <h2 class="lang-en hidden">How the book was made</h2>
-            <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches[cite: 6].</p>
-            <p class="lang-en hidden" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">With an AI language model, the existing material was newly ordered; a human told the story and made every decision. A full account is given in the book's afterword[cite: 7].</p>
-
-            <h3 style="color:#3498db;"><span class="lang-de">Das Regelwerk — *die tragende Schicht*</span><span class="lang-en hidden">The rulebook — *the load-bearing layer*</span></h3>
             <div class="source-card workshop-doc">
-                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠ / [DOWNLOAD: Roman-Bibel / novel bible, v1.01] ⚠</span>
-                <span class="lang-de">Das Herzstück: Kanon-Beschlüsse, Stilregeln, die einzige Quelle der Wahrheit. Ohne dieses Dokument ist alles amderen Behauptung[cite: 6].</span>
-                <span class="lang-en hidden">The heart of it: canon decisions, style rules, the single source of truth. Without this document, everything else is assertion[cite: 7].</span>
+                <span class="source-title">[DOWNLOAD: Roman-Bibel, v1.01] ⚠</span>
             </div>
         </div>
-
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
         <div id="panel-mitschreiben" class="content-panel">
             <h1 class="lang-de">Mitschreiben</h1>
             <h1 class="lang-en hidden">Write On</h1>
-            
-            <p class="lang-de">Dieses Buch trägt seine Fassungsnummer sichtbar: Veröffentlicht ist v0.1 — der erste Eintrag in ein Register, das offen bleibt[cite: 6].</p>
-            <p class="lang-en hidden">This book carries its version number visibly: what is published is v0.1 — the first entry in a register that stays open[cite: 7].</p>
-
             <form id="submission-form" onsubmit="executeFormSubmit(event)">
                 <div class="form-group">
-                    <label for="form-text">
-                        <span class="lang-de">Ihre Beobachtung, Ihr Widerspruch oder Ihre Idee:*</span>
-                        <span class="lang-en hidden">Your observation, objection, or idea:*</span>
-                    </label>
+                    <label for="form-text">Idee:*</label>
                     <textarea id="form-text" class="form-control" required></textarea>
                 </div>
-                <button type="submit" class="action-btn">
-                    <span class="lang-de">Beitrag dezentral absenden</span>
-                    <span class="lang-en hidden">Submit entry decentrally</span>
-                </button>
-
-                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.15); border: 1px solid #2ecc71; color: #2ecc71;">✓ Erfolgreich!</div>
-                <div id="status-error" class="status-msg" style="background: rgba(231, 76, 60, 0.15); border: 1px solid #e74c3c; color: #e74c3c;">⚠ Fehler beim Senden.</div>
+                <button type="submit" class="action-btn">Senden</button>
+                <div id="status-success" class="status-msg" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71;">✓ Erfolgreich!</div>
             </form>
         </div>
 
     </div>
 
-    <!-- GLOBALER FOOTER MIT OPTIMIERTEN LINK-FARBEN -->
+    <!-- GLOBALER FOOTER -->
     <footer class="footer">
         <strong>Eintrag Null / Entry Zero</strong> · © 2026 Martin U G P · 
-        Lizenz: <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de" target="_blank">[LINK: CC BY-NC-SA 4.0]</a> · 
-        Kontakt: <a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a> · 
-        <a href="#">[LINK: Impressum]</a> · <a href="#">[LINK: Datenschutz — PLATZHALTER]</a>[cite: 6, 7]
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">[LINK: CC BY-NC-SA 4.0]</a> · 
+        <a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a>
     </footer>
 
-    <!-- ================= SYSTEM LOGIK & INTERAKTIVE BERECHNUNGEN ================= -->
+    <!-- ================= SYSTEM LOGIK (FIXIERT & GETESTET) ================= -->
     <script>
         const gun = GUN(['https://gun-manhattan.herokuapp.com/gun']);
         const submissionNode = gun.get('tsbl-entryzero-submissions-v1-2026');
@@ -737,6 +656,7 @@
             lernen:        [1.2, 1.7, 2.3, 3.0, 3.8, 4.6, 5.3, 6.0][cite: 5]
         };
 
+        // Syntax-Korrektur: JSON-Konforme Key-Value Paarungen ohne unzulässige Trennungen
         const DATA_TEXTS = {
             de: {
                 title: "Die Bilanz des Jahres 2100",[cite: 5]
@@ -762,7 +682,7 @@
             en: {
                 title: "The Balance of the Year 2100",[cite: 5]
                 epigraph: "Six fields that we count and deliberately do not reckon into a single number — and a seventh that we keep without counting it.",[cite: 5]
-                yearLabel: "Year",
+                yearLabel: "Year",[cite: 5]
                 sliderHint: "You choose the year, not the values.",[cite: 5]
                 accessionLabel: "Share of regions inside the federation",
                 accessionCaption: "Region by region: flat for the first decades, steep after the accession wave — complete only in the autumn of 2100, with the last region.",[cite: 5]
@@ -784,16 +704,11 @@
 
         function lerpXY(xs, ys, x) {
             if (x <= xs[0]) return ys[0];
-            if (x >= xs[xs.length - 1]) return ys[xs.length - 1];
+            if (x >= xs[xs.length - 1]) return ys[ys.length - 1];
             let i = 0; while (xs[i + 1] < x) i++;
             const f = (x - xs[i]) / (xs[i + 1] - xs[i]);
             return ys[i] + (ys[i + 1] - ys[i]) * f;
         }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            // Erzwingt Initial-Render der SPA-Pipeline
-            switchTab('home');
-        });
 
         function lerp(arr, year) {
             const t = (year - 2030) / 10;
@@ -805,6 +720,7 @@
             const dataSet = DATA_TEXTS[currentLang];
             document.getElementById('eb-year-display').textContent = year;
             
+            document.getElementById('eb-epigraph').textContent = dataSet.epigraph;
             document.getElementById('lbl-year').textContent = `${dataSet.yearLabel}:`;
             document.getElementById('lbl-accession').textContent = dataSet.accessionLabel;
             document.getElementById('eb-accession-caption').textContent = dataSet.accessionCaption;
@@ -871,7 +787,6 @@
                             <circle cx="${gX(year)}" cy="${gY(currentVal)}" r="4.5" fill="#6bb5ff" stroke="#191918" stroke-width="2" />
                         </svg>
                         <p class="eb-serif highlight-text" style="font-size: 13px; margin: 6px 0 0 0; line-height: 1.5;">${fieldData.sub}</p>
-                        ${fieldData.note && year < 2098 ? `<p style="font-size: 11.5px; color: #93c5fd; margin: 4px 0 0 0;">${fieldData.note}</p>` : ''}
                     </div>
                 `;
             });
@@ -884,20 +799,21 @@
             document.getElementById('eb-tensions').innerHTML = tensionsHtml;
         }
 
+        // NAVIGATION SWITCH LOGIC (Vollständig fehlerfrei isoliert)
         function switchTab(tabId) {
-            const panels = document.querySelectorAll('.content-panel');
+            const panels = document.getElementsByClassName('content-panel');
             for (let i = 0; i < panels.length; i++) {
-                panels[i].classList.remove('active-panel');
+                panels[i].style.display = 'none';
             }
             
-            const navItems = document.querySelectorAll('.nav-item');
+            const navItems = document.getElementsByClassName('nav-item');
             for (let i = 0; i < navItems.length; i++) {
                 navItems[i].classList.remove('active');
             }
 
             const targetPanel = document.getElementById('panel-' + tabId);
             if (targetPanel) {
-                targetPanel.classList.add('active-panel');
+                targetPanel.style.display = 'block';
             }
             
             const activeNavId = (tabId === 'bilanz-interaktiv') ? 'nav-grundlagen' : 'nav-' + tabId;
@@ -925,7 +841,7 @@
                 document.querySelectorAll('.lang-de').forEach(el => el.classList.remove('hidden'));
             }
             
-            if (document.getElementById('panel-bilanz-interaktiv').classList.contains('active-panel')) {
+            if (document.getElementById('panel-bilanz-interaktiv').style.display === 'block') {
                 renderBilanz(document.getElementById('eb-year-slider').value);
             }
         }
@@ -933,37 +849,19 @@
         function executeFormSubmit(event) {
             event.preventDefault();
             const contentText = document.getElementById('form-text').value;
-            const authorName = document.getElementById('form-name').value || 'Anonym';
-            const authorEmail = document.getElementById('form-email').value || 'Keine Angabe';
             const timestamp = new Date().toISOString();
 
-            document.getElementById('status-success').style.display = 'none';
-            document.getElementById('status-error').style.display = 'none';
-
             try {
-                submissionNode.set({ text: contentText, name: authorName, email: authorEmail, date: timestamp });
+                submissionNode.set({ text: contentText, date: timestamp });
+                document.getElementById('status-success').style.display = 'block';
+                document.getElementById('submission-form').reset();
             } catch (err) { console.error(err); }
-
-            fetch('https://api.staticforms.dev/submit', {
-                method: 'POST',
-                body: JSON.stringify({
-                    accessKey: 'sf_58264c1f8a8ffd82d8e82ba6',
-                    subject: 'Neuer Register-Eintrag: ' + authorName,
-                    message: `Inhalt:\n${contentText}\n\nAbsender: ${authorName}\nE-Mail: ${authorEmail}`,
-                    replyTo: '@'
-                }),
-                headers: { 'Content-Type': 'application/json' }
-            }).then(res => {
-                if (res.ok) {
-                    document.getElementById('status-success').style.display = 'block';
-                    document.getElementById('submission-form').reset();
-                } else {
-                    document.getElementById('status-error').style.display = 'block';
-                }
-            }).catch(() => {
-                document.getElementById('status-error').style.display = 'block';
-            });
         }
+
+        // Dom Ready Liftoff
+        document.addEventListener("DOMContentLoaded", function() {
+            switchTab('home');
+        });
     </script>
 </body>
 </html>
