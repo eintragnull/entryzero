@@ -77,13 +77,18 @@
             scroll-behavior: smooth;
         }
 
+        /* Fallback-Schwarz auf html statt body: sonst verdeckt der
+           opake body-Hintergrund das Cover-Bild. */
+        html {
+            background-color: #000000;
+        }
+
         body {
             font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             color: #ffffff;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #000000; /* Tiefschwarz als nahtlose Verbindung zum Bild */
             position: relative;
         }
 
@@ -96,7 +101,7 @@
             height: 100vh;
             object-fit: cover; /* Skaliert das Bild perfekt über den Bildschirm */
             object-position: center top;
-            z-index: -1; /* Schiebt es unweigerlich in den Hintergrund */
+            z-index: 0; /* Hinter dem Inhalt (hoehere z-index-Werte), aber ueber dem html-Hintergrund */
             pointer-events: none; /* Macht das Bild für Klicks unsichtbar */
         }
 
