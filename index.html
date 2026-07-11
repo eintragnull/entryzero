@@ -83,23 +83,21 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #000000; /* Reines Tiefschwarz als Basis */
+            background-color: #000000; /* Tiefschwarz als nahtlose Verbindung zum Bild */
             position: relative;
         }
 
-        /* Unzerstörbarer Hintergrund-Layer: Umgeht alle Browser-Rendering-Bugs */
-        body::before {
-            content: "";
+        /* ABSOLUT UNZERSTÖRBARER BACKGROUND LAYER ALS ECHTES HTML ELEMENT */
+        .bg-cover-image {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-image: url("https://entryzero.vercel.app/cover.png");
-            background-position: center top;
-            background-repeat: no-repeat;
-            background-size: cover;
-            z-index: -1; /* Schiebt das Bild sicher hinter die Text-Panels */
+            object-fit: cover; /* Skaliert das Bild perfekt über den Bildschirm */
+            object-position: center top;
+            z-index: -1; /* Schiebt es unweigerlich in den Hintergrund */
+            pointer-events: none; /* Macht das Bild für Klicks unsichtbar */
         }
 
         /* Navigationsleiste */
@@ -212,7 +210,7 @@
             z-index: 5;
         }
 
-        /* Inhalts-Karten: Ruhiges Kinodunkel, damit die Erdsichel sauber heraussticht */
+        /* Inhalts-Karten: Ruhiges Kinodunkel */
         .content-panel {
             background: rgba(15, 15, 15, 0.75);
             backdrop-filter: blur(10px);
@@ -468,6 +466,9 @@
     </style>
 </head>
 <body>
+
+    <!-- ABSOLUTER HINTERGRUND-LAYER (ERZWINGT DAS BILD DURCH DEN BROWSER) -->
+    <img src="/cover.png" alt="Hintergrund" class="bg-cover-image">
 
     <!-- NAVIGATION BAR -->
     <nav class="navbar">
