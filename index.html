@@ -414,7 +414,7 @@
         }
 
         /* Jahresschieber bleibt beim Scrollen der Felder oben sichtbar */
-        .eb-slider-sticky {
+        .eb-sticky-head {
             position: sticky;
             top: var(--nav-h, 60px);
             z-index: 40;
@@ -422,7 +422,7 @@
             -webkit-backdrop-filter: blur(6px);
             backdrop-filter: blur(6px);
             margin: -30px -30px 18px -30px;
-            padding: 14px 30px;
+            padding: 14px 30px 16px 30px;
             border-radius: 12px 12px 0 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
@@ -695,7 +695,8 @@
             <p class="eb-serif highlight-text" style="font-style: italic; margin-bottom: 25px; font-size: 1.2rem;" id="eb-epigraph"></p>
 
             <div class="eb-bilanz-box">
-                <div class="eb-slider-sticky" style="display: flex; align-items: center; gap: 15px;">
+                <div class="eb-sticky-head">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                     <label id="lbl-year" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
                     <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)">
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
@@ -710,6 +711,7 @@
                 <div style="background: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
                     <svg id="svg-accession" viewBox="0 0 680 60" width="100%" height="60" preserveAspectRatio="none"></svg>
                 </div>
+                </div><!-- /eb-sticky-head -->
                 <p class="eb-serif highlight-text" id="eb-accession-caption" style="font-size: 12.5px; margin: 8px 0 25px 0; line-height: 1.5;"></p>
                 <p style="font-size: 11.5px; color: #93c5fd; margin: -15px 0 25px 0;" id="lbl-slider-hint"></p>
 
