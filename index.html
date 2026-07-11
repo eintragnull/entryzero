@@ -584,6 +584,16 @@
             .eb-grid { grid-template-columns: minmax(0, 1fr); }
             .content-panel { padding: 25px 20px; }
             h1 { font-size: 2.2rem; }
+
+            /* Kompakter Sticky-Kopf am Smartphone:
+               Jahresmarken und Beitrittskurve ausblenden,
+               nur Regler + Anteil-Zeile bleiben stehen. */
+            .eb-ticks { display: none; }
+            .eb-accession-chart { display: none; }
+            .eb-sticky-head { padding: 10px 30px 12px 30px; margin-bottom: 14px; }
+            .eb-slider-row { margin-bottom: 8px !important; }
+            #eb-year-display { font-size: 21px !important; min-width: 52px !important; }
+            #eb-accession-caption { margin-top: 4px !important; }
         }
     </style>
 </head>
@@ -798,7 +808,7 @@
 
             <div class="eb-bilanz-box">
                 <div class="eb-sticky-head">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <div class="eb-slider-row" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
                     <label id="lbl-year" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
                     <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)">
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
@@ -810,7 +820,7 @@
                     <span id="lbl-accession"></span>
                     <span id="eb-accession-val" style="font-variant-numeric: tabular-nums; color: var(--primary); font-weight: bold;">100 %</span>
                 </div>
-                <div style="background: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                <div class="eb-accession-chart" style="background: rgba(0,0,0,0.4); padding: 5px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);">
                     <svg id="svg-accession" viewBox="0 0 680 60" width="100%" height="60" preserveAspectRatio="none"></svg>
                 </div>
                 </div><!-- /eb-sticky-head -->
