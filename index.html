@@ -413,6 +413,21 @@
             cursor: pointer;
         }
 
+        /* Jahresschieber bleibt beim Scrollen der Felder oben sichtbar */
+        .eb-slider-sticky {
+            position: sticky;
+            top: var(--nav-h, 60px);
+            z-index: 40;
+            background: rgba(15, 22, 30, 0.97);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+            margin: -30px -30px 18px -30px;
+            padding: 14px 30px;
+            border-radius: 12px 12px 0 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+        }
+
         .eb-ticks {
             position: relative;
             height: 1.8rem;
@@ -680,7 +695,7 @@
             <p class="eb-serif highlight-text" style="font-style: italic; margin-bottom: 25px; font-size: 1.2rem;" id="eb-epigraph"></p>
 
             <div class="eb-bilanz-box">
-                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                <div class="eb-slider-sticky" style="display: flex; align-items: center; gap: 15px;">
                     <label id="lbl-year" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
                     <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)">
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
@@ -1027,9 +1042,16 @@
             } catch (err) { console.error(err); }
         }
 
+        function updateNavHeight() {
+            const nav = document.querySelector('.navbar');
+            if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             switchTab('home');
+            updateNavHeight();
         });
+        window.addEventListener("resize", updateNavHeight);
     </script>
 </body>
 </html>
