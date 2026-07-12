@@ -128,6 +128,24 @@
             flex-wrap: wrap;
         }
 
+        /* Menubutton: nur in der Smartphone-Ansicht sichtbar */
+        .nav-toggle {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .nav-toggle:hover { background: rgba(255, 255, 255, 0.12); }
+        .nav-toggle-icon { font-size: 1.15rem; line-height: 1; }
+
         .nav-item {
             color: #d1dce5;
             text-decoration: none;
@@ -580,7 +598,33 @@
         }
 
         @media (max-width: 680px) {
-            .navbar { flex-direction: column; gap: 12px; }
+            /* Navigation als aufklappbares Menue */
+            .navbar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+            .nav-toggle { display: inline-flex; }
+            .nav-links {
+                order: 3;
+                flex-basis: 100%;
+                width: 100%;
+                display: none;
+                flex-direction: column;
+                gap: 2px;
+                margin-top: 2px;
+                padding-top: 8px;
+                border-top: 1px solid rgba(255, 255, 255, 0.12);
+            }
+            .nav-links.open { display: flex; }
+            .nav-links .nav-item {
+                width: 100%;
+                box-sizing: border-box;
+                padding: 12px 14px;
+                font-size: 1rem;
+            }
             .eb-grid { grid-template-columns: minmax(0, 1fr); }
             .content-panel { padding: 25px 20px; }
             h1 { font-size: 2.2rem; }
@@ -604,12 +648,16 @@
 
     <!-- NAVIGATION BAR -->
     <nav class="navbar">
-        <div class="nav-links">
-            <span class="nav-item active" onclick="switchTab('home')" id="nav-home">Startseite</span>
-            <span class="nav-item" onclick="switchTab('buch')" id="nav-buch">Das Buch</span>
-            <span class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen">Die Grundlagen</span>
-            <span class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt">Die Werkstatt</span>
-            <span class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben">Mitschreiben</span>
+        <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-expanded="false" aria-controls="nav-links" aria-label="Menü">
+            <span class="nav-toggle-icon" id="nav-toggle-icon">☰</span>
+            <span class="lang-de">Menü</span><span class="lang-en hidden">Menu</span>
+        </button>
+        <div class="nav-links" id="nav-links">
+            <span class="nav-item active" onclick="switchTab('home')" id="nav-home"><span class="lang-de">Startseite</span><span class="lang-en hidden">Home</span></span>
+            <span class="nav-item" onclick="switchTab('buch')" id="nav-buch"><span class="lang-de">Das Buch</span><span class="lang-en hidden">The Book</span></span>
+            <span class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen"><span class="lang-de">Die Grundlagen</span><span class="lang-en hidden">The Foundations</span></span>
+            <span class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt"><span class="lang-de">Die Werkstatt</span><span class="lang-en hidden">The Workshop</span></span>
+            <span class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben"><span class="lang-de">Mitschreiben</span><span class="lang-en hidden">Write On</span></span>
         </div>
         <div class="lang-switch">
             <button id="btn-de" class="lang-btn active" onclick="setLanguage('de')">DE</button>
@@ -1195,6 +1243,7 @@
         }
 
         function switchTab(tabId) {
+            closeNav();
             const panels = document.getElementsByClassName('content-panel');
             for (let i = 0; i < panels.length; i++) {
                 panels[i].style.display = 'none';
@@ -1252,6 +1301,20 @@
                 document.getElementById('status-success').style.display = 'block';
                 document.getElementById('submission-form').reset();
             } catch (err) { console.error(err); }
+        }
+
+        function toggleNav() {
+            const links = document.getElementById('nav-links');
+            const btn = document.getElementById('nav-toggle');
+            const open = links.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            document.getElementById('nav-toggle-icon').textContent = open ? '✕' : '☰';
+            updateNavHeight();
+        }
+
+        function closeNav() {
+            const links = document.getElementById('nav-links');
+            if (links && links.classList.contains('open')) toggleNav();
         }
 
         function updateNavHeight() {
