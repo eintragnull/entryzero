@@ -2,11 +2,36 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.2  ·  2026-07-13
+  Fassung:  v0.4  ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.1 (Sitzung 13.07.2026, Beschluesse Martin 1-7):
+  Aenderungen gegenueber v0.3 (Sitzung 13.07.2026):
+  Buch-Seite, DE-Linktext: «kanonische Druckstrecke» gestrichen (Werkstattbegriff,
+  gehoert nicht auf die Verkaufsflaeche). Beide DE-Linktexte jetzt im EN-Muster:
+  Handlung — Format. Der EN-Linktext der englischen Ausgabe fuehrt «canonical
+  print layout» weiterhin (Entscheid Martin ausstehend).
+
+  Aenderungen v0.2 -> v0.3 (Sitzung 13.07.2026):
+  (A) FARBKONZEPT LINKS: Links dauerhaft unterstrichen (Linkfarbe = h2-Farbe;
+      Kontrast Link/Fliesstext nur 2.20 -> WCAG 1.4.1 verlangt zweites Merkmal).
+      Panel-Deckkraft 0.50 -> 0.78 (ueber hellen Stellen des Coverbilds fiel der
+      Linkkontrast auf 1.88; jetzt 4.53). h3 #3498db -> #5dade2. Fokusring gelb.
+  (B) BARRIEREFREIHEIT: Navigation von <span onclick> auf echte <button> (war per
+      Tastatur unerreichbar) + aria-current · Fokusfalle und Fokusrueckgabe im
+      Popup · Skip-Link + <main> · Regler mit label/for + aria · Symbole
+      (Menue, Pfeile, Plus) aria-hidden · Hinweis auf neue Tabs fuer Screenreader
+      · th scope · prefers-reduced-motion.
+  (C) SPOILER-HINWEIS (Beschluss Martin, Weg B): Alarmkasten ersetzt durch leise
+      Zeile. Begruendung: Pruefung der tatsaechlich publizierten Dokumente ergab
+      — die Novelle nennt keine einzige Romanfigur, die Texte und das Register
+      keine Handlung; einzig die Pol-Konsistenz-Pruefung nennt Figuren, Kapitel
+      und Motive. Der alte Wortlaut («einschliesslich seiner Baupläne»,
+      «mehrere Dokumente verraten Wendungen») war unzutreffend; zudem kollidiert
+      «Baupläne» mit dem Kanonbegriff «Blaupausen». Warnung jetzt dort, wo sie
+      hingehoert: am einzigen betroffenen Download.
+
+  Aenderungen v0.1 -> v0.2 (Beschluesse Martin 1-7):
   (1) Formular entfernt, GunDB-Skript entfernt — Mitschreiben laeuft ueber
       mailto:entry.zero@proton.me (datensparsamste Loesung, Linkliste FORM-01).
   (2) Keine Coverbilder; cover.png bleibt Hintergrundbild.
@@ -169,8 +194,13 @@
         .nav-toggle:hover { background: rgba(255, 255, 255, 0.12); }
         .nav-toggle-icon { font-size: 1.15rem; line-height: 1; }
 
+        /* Echte Buttons — mit <span onclick> war die Navigation per Tastatur
+           unerreichbar und fuer Screenreader kein Bedienelement. */
         .nav-item {
             color: #d1dce5;
+            background: transparent;
+            border: none;
+            font-family: inherit;
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
@@ -185,7 +215,7 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .nav-item.active {
+        .nav-item.active, .nav-item[aria-current="page"] {
             border-bottom: 2px solid var(--primary);
             border-radius: 6px 6px 0 0;
             background: rgba(26, 188, 156, 0.2);
@@ -259,7 +289,7 @@
 
         /* Inhalts-Karten */
         .content-panel {
-            background: rgba(15, 15, 15, 0.5);
+            background: rgba(15, 15, 15, 0.78);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -273,15 +303,21 @@
             display: block;
         }
 
-        /* Spoiler Warnbanner */
-        .spoiler-banner {
-            background: rgba(230, 126, 34, 0.15);
-            border: 1px solid #e67e22;
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin-bottom: 35px;
-            font-size: 0.95rem;
-            line-height: 1.6;
+        /* Leiser Hinweis (loest den orangen Alarmkasten ab, 13.07.2026) */
+        .quiet-note {
+            border-left: 3px solid rgba(230, 126, 34, 0.7);
+            padding: 4px 0 4px 18px;
+            margin: 0 0 35px 0;
+            font-size: 0.98rem;
+            line-height: 1.65;
+            color: var(--eb-muted);
+        }
+        .doc-caution {
+            display: block;
+            margin-top: 6px;
+            font-size: 0.92rem;
+            color: var(--eb-muted);
+            font-style: italic;
         }
 
         /* Typografie */
@@ -311,7 +347,7 @@
 
         h3 {
             font-size: 1.35rem;
-            color: #3498db;
+            color: #5dade2;
             margin-top: 30px;
             margin-bottom: 15px;
         }
@@ -381,16 +417,71 @@
             background: rgba(255, 255, 255, 0.25);
         }
 
-        .download-link {
+        /* Linkfarbe allein traegt das Signal nicht (Kontrast zum Fliesstext 2.20,
+           identisch mit der h2-Farbe) — darum sind Links immer unterstrichen. */
+        .download-link, .inline-link {
             color: var(--primary);
-            text-decoration: none;
             font-weight: 600;
-            transition: color 0.2s;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+            transition: color 0.2s, text-decoration-thickness 0.2s;
         }
 
-        .download-link:hover {
-            text-decoration: underline;
-            color: #2ecc71;
+        .download-link:hover, .inline-link:hover,
+        .download-link:focus-visible, .inline-link:focus-visible {
+            color: #7ff0d3;
+            text-decoration-thickness: 2px;
+        }
+
+        /* Sichtbarer Fokus fuer die Tastaturbedienung */
+        a:focus-visible,
+        button:focus-visible,
+        .nav-item:focus-visible,
+        .lang-btn:focus-visible,
+        .eb-card:focus-visible,
+        input:focus-visible {
+            outline: 2px solid #ffd633;
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* Nur fuer Screenreader */
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 300;
+            background: var(--primary);
+            color: #08201b;
+            font-weight: 700;
+            padding: 12px 20px;
+            border-radius: 0 0 8px 0;
+            text-decoration: none;
+        }
+        .skip-link:focus {
+            left: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html, body { scroll-behavior: auto; }
+            *, *::before, *::after {
+                transition-duration: 0.01ms !important;
+                animation-duration: 0.01ms !important;
+            }
+            .action-btn:hover, .eb-card:hover, .explore-btn:hover { transform: none; }
         }
 
         .source-card {
@@ -721,21 +812,23 @@
 </head>
 <body>
 
+    <a class="skip-link" href="#main"><span class="lang-de">Zum Inhalt springen</span><span class="lang-en hidden">Skip to content</span></a>
+
     <!-- HINTERGRUND-LAYER -->
     <img src="/cover.png" alt="" class="bg-cover-image">
 
     <!-- NAVIGATION BAR -->
     <nav class="navbar">
         <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-expanded="false" aria-controls="nav-links" aria-label="Menü">
-            <span class="nav-toggle-icon" id="nav-toggle-icon">☰</span>
+            <span class="nav-toggle-icon" id="nav-toggle-icon" aria-hidden="true">☰</span>
             <span class="lang-de">Menü</span><span class="lang-en hidden">Menu</span>
         </button>
         <div class="nav-links" id="nav-links">
-            <span class="nav-item active" onclick="switchTab('home')" id="nav-home"><span class="lang-de">Startseite</span><span class="lang-en hidden">Home</span></span>
-            <span class="nav-item" onclick="switchTab('buch')" id="nav-buch"><span class="lang-de">Das Buch</span><span class="lang-en hidden">The Book</span></span>
-            <span class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen"><span class="lang-de">Die Grundlagen</span><span class="lang-en hidden">The Foundations</span></span>
-            <span class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt"><span class="lang-de">Die Werkstatt</span><span class="lang-en hidden">The Workshop</span></span>
-            <span class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben"><span class="lang-de">Mitschreiben</span><span class="lang-en hidden">Write On</span></span>
+            <button type="button" class="nav-item active" onclick="switchTab('home')" id="nav-home"><span class="lang-de">Startseite</span><span class="lang-en hidden">Home</span></button>
+            <button type="button" class="nav-item" onclick="switchTab('buch')" id="nav-buch"><span class="lang-de">Das Buch</span><span class="lang-en hidden">The Book</span></button>
+            <button type="button" class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen"><span class="lang-de">Die Grundlagen</span><span class="lang-en hidden">The Foundations</span></button>
+            <button type="button" class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt"><span class="lang-de">Die Werkstatt</span><span class="lang-en hidden">The Workshop</span></button>
+            <button type="button" class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben"><span class="lang-de">Mitschreiben</span><span class="lang-en hidden">Write On</span></button>
         </div>
         <div class="lang-switch">
             <button id="btn-de" class="lang-btn active" onclick="setLanguage('de')">DE</button>
@@ -758,7 +851,7 @@
     </div>
 
     <!-- MAIN CONTAINER -->
-    <div class="main-container">
+    <main class="main-container" id="main" tabindex="-1">
 
         <!-- ================= SEITE 0: STARTSEITE ================= -->
         <div id="panel-home" class="content-panel">
@@ -784,8 +877,8 @@
             </div>
 
             <p style="font-size: 1rem; margin-top: 45px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 25px; text-align: center;">
-                <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" onclick="switchTab('werkstatt'); return false;" style="color: var(--primary); text-decoration: none; font-weight: 600;">Die Werkstatt</a> erzählt es — als Novelle.</span>
-                <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" onclick="switchTab('werkstatt'); return false;" style="color: var(--primary); text-decoration: none; font-weight: 600;">The Workshop</a> tells it — as a novella.</span>
+                <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" class="inline-link" onclick="switchTab('werkstatt'); return false;">Die Werkstatt</a> erzählt es — als Novelle.</span>
+                <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" class="inline-link" onclick="switchTab('werkstatt'); return false;">The Workshop</a> tells it — as a novella.</span>
             </p>
 
             <div class="meta-author">Martin U G P · The Symbios Butterfly Lab</div>
@@ -824,7 +917,7 @@
             <ul class="lang-de">
                 <li>
                     <strong>Deutsche Ausgabe — Eintrag Null</strong><br>
-                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — kanonische Druckstrecke, A4</a>
+                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — A4</a>
                 </li>
                 <li>
                     <strong>Englische Ausgabe — Entry Zero</strong><br>
@@ -921,7 +1014,7 @@
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Download — The Living Balance, EN v0.1 (PDF)</a>
                 <br>
                 <button class="explore-btn" onclick="switchTab('bilanz-interaktiv')">
-                    <span class="lang-de">➔ Interaktiv erkunden</span><span class="lang-en hidden">➔ Explore interactively</span>
+                    <span aria-hidden="true">➔</span> <span class="lang-de">Interaktiv erkunden</span><span class="lang-en hidden">Explore interactively</span>
                 </button>
             </div>
 
@@ -947,7 +1040,7 @@
         <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (INTERAKTIV) ================= -->
         <div id="panel-bilanz-interaktiv" class="content-panel">
             <button class="action-btn secondary" style="padding: 6px 14px; font-size: 0.9rem; margin-bottom: 25px;" onclick="switchTab('grundlagen')">
-                <span class="lang-de">← Zurück zu Die Grundlagen</span><span class="lang-en hidden">← Back to The Foundations</span>
+                <span aria-hidden="true">←</span> <span class="lang-de">Zurück zu Die Grundlagen</span><span class="lang-en hidden">Back to The Foundations</span>
             </button>
 
             <h1 class="lang-de">Die Lebendige Bilanz</h1>
@@ -964,8 +1057,8 @@
             <div class="eb-bilanz-box">
                 <div class="eb-sticky-head">
                 <div class="eb-slider-row" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                    <label id="lbl-year" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
-                    <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)">
+                    <label id="lbl-year" for="eb-year-slider" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
+                    <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)" aria-valuetext="2100">
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
                 </div>
 
@@ -1006,18 +1099,15 @@
             </p>
             <p>
                 <a href="#" class="download-link" onclick="switchTab('grundlagen'); return false;">
-                    <span class="lang-de">← zurück zu Die Grundlagen</span><span class="lang-en hidden">← back to The Foundations</span>
+                    <span aria-hidden="true">←</span> <span class="lang-de">zurück zu Die Grundlagen</span><span class="lang-en hidden">back to The Foundations</span>
                 </a>
             </p>
         </div>
 
         <!-- ================= SEITE 3: DIE WERKSTATT ================= -->
         <div id="panel-werkstatt" class="content-panel">
-            <div class="spoiler-banner">
-                <strong class="lang-de">Hinweis:</strong><strong class="lang-en hidden">Note:</strong>
-                <span class="lang-de">Die Werkstatt zeigt, wie dieses Buch entstanden ist — einschliesslich seiner Baupläne. Mehrere Dokumente verraten Wendungen des Romans. Empfehlung: <strong>erst das Buch, dann das Register.</strong> Wer es umgekehrt hält, tut es auf eigene Gefahr.</span>
-                <span class="lang-en hidden">The workshop shows how this book was made — including its blueprints. Several documents give away turns of the novel. Recommendation: <strong>first the book, then the register.</strong> Whoever does it the other way round, does so at their own risk.</span>
-            </div>
+            <p class="quiet-note lang-de">Diese Seite erzählt, wie das Buch entstand — nicht, was darin geschieht. Die Novelle und die Texte kommen ohne die Handlung des Romans aus. Ein einziger Download, die Pol-Konsistenz-Prüfung, nennt Figuren, Kapitel und einzelne Motive; wer ganz unvorbelastet lesen will, hebt ihn sich für nachher auf.</p>
+            <p class="quiet-note lang-en hidden">This page tells how the book was made — not what happens in it. The novella and the texts do without the novel's plot. A single download, the pole-consistency check, names characters, chapters and individual motifs; if you would rather come to the book unprepared, save it for afterwards.</p>
 
             <h1 class="lang-de">Die Werkstatt</h1>
             <h1 class="lang-en hidden">The Workshop</h1>
@@ -1125,6 +1215,8 @@
             <p>
                 <a class="lang-de download-link" href="https://drive.proton.me/urls/0CS65XY3F8#PajTXWCi0Rkx" target="_blank" rel="noopener">Pol-Konsistenz-Prüfung, v0.2 (PDF)</a>
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/PZG6Q6C8Y0#atLrN7b6DGb2" target="_blank" rel="noopener">Pole-consistency check, EN v0.1 (PDF)</a>
+                <span class="doc-caution lang-de">Nennt Figuren, Kapitel und einzelne Motive — besser nach der Lektüre.</span>
+                <span class="doc-caution lang-en hidden">Names characters, chapters and individual motifs — better read after the novel.</span>
             </p>
 
             <!-- ---------- Das Register der Entstehung ---------- -->
@@ -1141,7 +1233,7 @@
             <div class="reg-wrap lang-de">
                 <table class="reg-table">
                     <thead>
-                        <tr><th>Ebene</th><th>begonnen</th><th style="text-align:right;">Fassungen</th><th>Stand</th></tr>
+                        <tr><th scope="col">Ebene</th><th scope="col">begonnen</th><th scope="col" style="text-align:right;">Fassungen</th><th scope="col">Stand</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>Das Exposé</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
@@ -1170,7 +1262,7 @@
             <div class="reg-wrap lang-en hidden">
                 <table class="reg-table">
                     <thead>
-                        <tr><th>Layer</th><th>begun</th><th style="text-align:right;">Versions</th><th>As of</th></tr>
+                        <tr><th scope="col">Layer</th><th scope="col">begun</th><th scope="col" style="text-align:right;">Versions</th><th scope="col">As of</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>The synopsis</td><td class="when">June 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
@@ -1220,7 +1312,7 @@
             <p class="lang-en hidden">Submitted contributions stand under the same licence as the book: CC BY-NC-SA 4.0. Whoever submits agrees that the contribution may flow into later versions or further stories under this licence — with attribution, if desired.</p>
         </div>
 
-    </div>
+    </main>
 
     <!-- GLOBALER FOOTER -->
     <footer class="footer">
@@ -1366,6 +1458,8 @@
             }
         };
 
+        let lastFocus = null;
+
         function openFieldModal(key) {
             const d = FIELD_DETAILS[currentLang][key];
             const f = DATA_TEXTS[currentLang].fields[key];
@@ -1380,19 +1474,49 @@
             const noteEl = document.getElementById('eb-modal-note');
             if (d.note) { noteEl.textContent = d.note; noteEl.style.display = 'block'; }
             else { noteEl.style.display = 'none'; }
+            lastFocus = document.activeElement;
             document.getElementById('eb-modal-overlay').classList.add('open');
             document.body.style.overflow = 'hidden';
+            document.querySelector('.eb-modal-close').focus();
         }
 
         function closeFieldModal(event) {
             if (event) event.stopPropagation();
-            document.getElementById('eb-modal-overlay').classList.remove('open');
+            const overlay = document.getElementById('eb-modal-overlay');
+            if (!overlay.classList.contains('open')) return;
+            overlay.classList.remove('open');
             document.body.style.overflow = '';
+            if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+            lastFocus = null;
         }
 
+        // Escape schliesst, Tab bleibt im Popup gefangen
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeFieldModal();
+            const overlay = document.getElementById('eb-modal-overlay');
+            if (!overlay.classList.contains('open')) return;
+            if (e.key === 'Escape') { closeFieldModal(); return; }
+            if (e.key === 'Tab') {
+                const f = overlay.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+                if (!f.length) { e.preventDefault(); return; }
+                const first = f[0], last = f[f.length - 1];
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            }
         });
+
+        // Screenreader-Hinweis auf Links, die einen neuen Tab oeffnen
+        const EXT_NOTE = { de: ' (öffnet in neuem Tab)', en: ' (opens in a new tab)' };
+        function markExternalLinks() {
+            document.querySelectorAll('a[target="_blank"]').forEach(a => {
+                let s = a.querySelector('.ext-note');
+                if (!s) {
+                    s = document.createElement('span');
+                    s.className = 'sr-only ext-note';
+                    a.appendChild(s);
+                }
+                s.textContent = EXT_NOTE[currentLang];
+            });
+        }
 
         function lerpXY(xs, ys, x) {
             if (x <= xs[0]) return ys[0];
@@ -1411,6 +1535,7 @@
         function renderBilanz(year) {
             const dataSet = DATA_TEXTS[currentLang];
             document.getElementById('eb-year-display').textContent = year;
+            document.getElementById('eb-year-slider').setAttribute('aria-valuetext', String(year));
 
             document.getElementById('eb-epigraph').textContent = dataSet.epigraph;
             document.getElementById('lbl-year').textContent = `${dataSet.yearLabel}:`;
@@ -1479,7 +1604,7 @@
                             <circle cx="${gX(year)}" cy="${gY(currentVal)}" r="4.5" fill="#6bb5ff" stroke="#191918" stroke-width="2" />
                         </svg>
                         <p class="eb-serif highlight-text" style="font-size: 13px; margin: 6px 0 0 0; line-height: 1.5;">${fieldData.sub}</p>
-                        <span class="eb-card-more">${currentLang === 'de' ? '➕ was hier gezählt wird' : '➕ what is counted here'}</span>
+                        <span class="eb-card-more"><span aria-hidden="true">➕</span> ${currentLang === 'de' ? 'was hier gezählt wird' : 'what is counted here'}</span>
                     </div>
                 `;
             });
@@ -1503,6 +1628,7 @@
             const navItems = document.getElementsByClassName('nav-item');
             for (let i = 0; i < navItems.length; i++) {
                 navItems[i].classList.remove('active');
+                navItems[i].removeAttribute('aria-current');
             }
 
             const targetPanel = document.getElementById('panel-' + tabId);
@@ -1515,6 +1641,7 @@
             const targetNav = document.getElementById(activeNavId);
             if (targetNav) {
                 targetNav.classList.add('active');
+                targetNav.setAttribute('aria-current', 'page');
             }
 
             if (tabId === 'bilanz-interaktiv') {
@@ -1537,6 +1664,8 @@
                 document.querySelectorAll('.lang-en').forEach(el => el.classList.add('hidden'));
                 document.querySelectorAll('.lang-de').forEach(el => el.classList.remove('hidden'));
             }
+
+            markExternalLinks();
 
             if (document.getElementById('panel-bilanz-interaktiv').style.display === 'block') {
                 renderBilanz(document.getElementById('eb-year-slider').value);
@@ -1565,6 +1694,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             switchTab('home');
             updateNavHeight();
+            markExternalLinks();
         });
         window.addEventListener("resize", updateNavHeight);
     </script>
