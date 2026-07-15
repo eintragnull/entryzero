@@ -2,11 +2,17 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.7  ·  2026-07-13
+  Fassung:  v0.8  ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.6 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.7 (Sitzung 13.07.2026):
+  Buch-Seite: Bild nach rechts (Text links, Bild rechts). Das Bild traegt jetzt
+  lang-de und erscheint nur auf der deutschen Seite — fuer die englische Seite
+  liegt noch kein Bild vor. Der Fassungs-/Lizenzabsatz (v0.1 · CC BY-NC-SA) ist
+  in die linke Textspalte gewandert; er bleibt zweisprachig.
+
+  Aenderungen v0.6 -> v0.7 (Sitzung 13.07.2026):
   Buch-Seite: Bild /book-on-table.png links neben den Download-Block gestellt
   (Zweispalten-Layout, auf schmalen Schirmen gestapelt, Bild oben). Bild liegt
   im Vercel-/public wie /cover.png. Hinweis Martin: die genannte Datei hiess im
@@ -978,9 +984,6 @@
             <h2 class="lang-en hidden">Download</h2>
 
             <div class="book-download-layout">
-              <figure class="book-download-figure">
-                <img src="/book-on-table.png" alt="Eintrag Null / Entry Zero — das gedruckte Buch auf einem Tisch">
-              </figure>
               <div class="book-download-text">
             <p class="lang-de">Der Roman ist vollständig und kostenlos verfügbar. Kein Auszug, keine Anmeldung — das ganze Buch.</p>
             <p class="lang-en hidden">The novel is complete and free. No excerpt, no sign-up — the whole book.</p>
@@ -1010,13 +1013,18 @@
 
             <p class="lang-de">Weitere Formate folgen.</p>
             <p class="lang-en hidden">More formats to follow.</p>
-              </div><!-- /book-download-text -->
-            </div><!-- /book-download-layout -->
 
             <p style="font-size: 0.95rem; color: var(--eb-muted);">
                 <span class="lang-de">Fassung v0.1 — der erste Eintrag.<br>Lizenz: CC BY-NC-SA 4.0 — das Buch darf geteilt und nicht-kommerziell weitergegeben werden, unter Namensnennung und gleichen Bedingungen. Einzelheiten im Impressum.</span>
                 <span class="lang-en hidden">Version v0.1 — the first entry.<br>Licence: CC BY-NC-SA 4.0 — the book may be shared and passed on non-commercially, with attribution and under the same terms. Details in the imprint.</span>
             </p>
+              </div><!-- /book-download-text -->
+
+              <!-- Bild rechts; nur DE (fuer EN liegt noch kein Bild vor) -->
+              <figure class="book-download-figure lang-de">
+                <img src="/book-on-table.png" alt="Eintrag Null — das gedruckte Buch auf einem Tisch">
+              </figure>
+            </div><!-- /book-download-layout -->
 
             <h2 class="lang-de">Print-Ausgabe</h2>
             <h2 class="lang-en hidden">Print edition</h2>
