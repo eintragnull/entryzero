@@ -2,11 +2,33 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.8  ·  2026-07-13
+  Fassung:  v0.10 ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.7 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.9 (Sitzung 13.07.2026):
+  Social-Vorschau: Bild von book-on-table.png (Hochformat 1152x2048) auf den
+  eigens erzeugten Querzuschnitt book-on-table-og.png (1200x630, Variante A,
+  Buchmitte mit Titel + Erdsichel) umgestellt. Grund: Hochformat wird in der
+  grossen Karte (summary_large_image) beschnitten/klein dargestellt. Das
+  Hochformat book-on-table.png bleibt das Bild AUF der Buch-Seite. Zwei Dateien,
+  je ein Zweck; beide muessen im Vercel-/public liegen.
+
+  Aenderungen v0.8 -> v0.9 (Sitzung 13.07.2026):
+  (1) Sprach-Automatik: Beim Laden wird die Browsersprache gelesen
+      (navigator.languages). Beginnt sie mit «de» -> DE, sonst -> EN? Nein:
+      Default bleibt DE; nur klar englischsprachige Browser bekommen EN.
+      Die einmal getroffene Nutzerwahl (Klick DE/EN) wird in localStorage
+      gemerkt ('ez_lang') und schlaegt beim naechsten Besuch die Browsersprache.
+      Datensparsam: ein einziger Wert, kein Tracking, kein Cookie-Banner.
+      Faellt localStorage aus (Privatmodus), greift still die Browsersprache.
+  (2) Social-Media-Vorschau: og:image / twitter:image von cover.png auf
+      book-on-table.png umgestellt (absolute URL, /public). Zusaetzlich
+      og:image:alt, og:locale (de_DE) + og:locale:alternate (en_US) und
+      og:image:width/height (1200x630 als Zielmass — Datei entsprechend
+      bereitstellen, sonst zeigt die Plattform sie kleiner/beschnitten).
+
+  Aenderungen v0.7 -> v0.8 (Sitzung 13.07.2026):
   Buch-Seite: Bild nach rechts (Text links, Bild rechts). Das Bild traegt jetzt
   lang-de und erscheint nur auf der deutschen Seite — fuer die englische Seite
   liegt noch kein Bild vor. Der Fassungs-/Lizenzabsatz (v0.1 · CC BY-NC-SA) ist
@@ -98,14 +120,20 @@
     <meta property="og:url" content="https://entryzero.vercel.app/">
     <meta property="og:title" content="Eintrag Null / Entry Zero — Ein Roman (2029–2100)">
     <meta property="og:description" content="Ein frei verfügbarer Roman über den Wandel einer Gesellschaft jenseits des Geldes — mit den Quellen und der Werkstatt dahinter.">
-    <meta property="og:image" content="https://entryzero.vercel.app/cover.png">
+    <meta property="og:image" content="https://entryzero.vercel.app/book-on-table-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Eintrag Null / Entry Zero — das gedruckte Buch auf einem Tisch">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:locale:alternate" content="en_US">
 
     <!-- Twitter / X Cards -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://entryzero.vercel.app/">
     <meta property="twitter:title" content="Eintrag Null / Entry Zero — Ein Roman">
     <meta property="twitter:description" content="Frei verfügbarer Roman über den Wandel an der kanadischen Pazifikküste.">
-    <meta property="twitter:image" content="https://entryzero.vercel.app/cover.png">
+    <meta property="twitter:image" content="https://entryzero.vercel.app/book-on-table-og.png">
+    <meta property="twitter:image:alt" content="Eintrag Null / Entry Zero — das gedruckte Buch auf einem Tisch">
 
     <!-- Strukturierte JSON-LD Daten -->
     <script type="application/ld+json">
@@ -1750,8 +1778,33 @@
             window.scrollTo(0, 0);
         }
 
-        function setLanguage(lang) {
+        const LANG_KEY = 'ez_lang';
+
+        // Ermittelt die Startsprache: 1. gemerkte Nutzerwahl, 2. Browsersprache,
+        // Default DE. localStorage kann im Privatmodus werfen -> abgefangen.
+        function initialLang() {
+            try {
+                const saved = localStorage.getItem(LANG_KEY);
+                if (saved === 'de' || saved === 'en') return saved;
+            } catch (e) { /* localStorage nicht verfuegbar */ }
+            const prefs = (navigator.languages && navigator.languages.length)
+                ? navigator.languages : [navigator.language || 'de'];
+            for (const p of prefs) {
+                if (!p) continue;
+                const code = p.toLowerCase();
+                if (code.startsWith('de')) return 'de';
+                if (code.startsWith('en')) return 'en';
+            }
+            return 'de'; // alles Uebrige: deutsche Seite
+        }
+
+        // 'auto' = Startaufruf ohne Klick: Sprache setzen, aber NICHT als Wahl merken.
+        function setLanguage(lang, opts) {
+            const remember = !(opts && opts.auto);
             currentLang = lang;
+            if (remember) {
+                try { localStorage.setItem(LANG_KEY, lang); } catch (e) { /* ignorieren */ }
+            }
             document.getElementById('btn-de').classList.toggle('active', lang === 'de');
             document.getElementById('btn-en').classList.toggle('active', lang === 'en');
             document.documentElement.lang = lang;
@@ -1792,6 +1845,8 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
+            const start = initialLang();
+            if (start !== 'de') setLanguage(start, { auto: true }); // DE ist Default im Markup
             switchTab('home');
             updateNavHeight();
             markExternalLinks();
