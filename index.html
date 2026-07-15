@@ -2,11 +2,29 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.4  ·  2026-07-13
+  Fassung:  v0.6  ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.3 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.5 (Sitzung 13.07.2026):
+  Popup des siebten Felds: Kicker jetzt nur «Dimension 7» ohne «von 7»/«of 7»
+  (das siebte Feld steht bewusst ausserhalb der gezaehlten sechs). Die sechs
+  Dimensionen behalten «von 6»/«of 6».
+
+  Aenderungen v0.4 -> v0.5 (Sitzung 13.07.2026):
+  (1) Bilanz-Unterseite: Das siebte Feld ist jetzt anklickbar und oeffnet — wie
+      die sechs Dimensionen — ein Popup (FIELD_DETAILS['de'/'en'].ungemessen).
+      Aufbau analog: Kicker «Dimension 7», Titel, Leitfrage, Aufzaehlung, Schluss-
+      note. Tastatur-/Screenreader-bedienbar (role=button, Enter/Space).
+  (2) LINKFARBE: durchgehend Hellblau #6bb5ff (wie Fusszeile), unterstrichen.
+      Bisher trugen Inhalts-Links Teal (= Farbe der h2-Titel); Hover war Hellgruen
+      #7ff0d3, was mit dem Lime der Bilanz-Zahlen konkurrierte. Jetzt heben sich
+      Links farblich klar von den gruenen Titeln ab. Fusszeile unveraendert.
+  (3) Buch-Seite, EN-Linktext der englischen Ausgabe: «canonical print layout»
+      gestrichen (Werkstattbegriff; nach der DE-Seite jetzt auch hier). Alle vier
+      Linktexte nennen nur noch Handlung — Format.
+
+  Aenderungen v0.3 -> v0.4 (Sitzung 13.07.2026):
   Buch-Seite, DE-Linktext: «kanonische Druckstrecke» gestrichen (Werkstattbegriff,
   gehoert nicht auf die Verkaufsflaeche). Beide DE-Linktexte jetzt im EN-Muster:
   Handlung — Format. Der EN-Linktext der englischen Ausgabe fuehrt «canonical
@@ -417,10 +435,11 @@
             background: rgba(255, 255, 255, 0.25);
         }
 
-        /* Linkfarbe allein traegt das Signal nicht (Kontrast zum Fliesstext 2.20,
-           identisch mit der h2-Farbe) — darum sind Links immer unterstrichen. */
+        /* Links durchgehend Hellblau (wie die Fusszeile), immer unterstrichen.
+           So heben sie sich klar von den teal/gruenen Titeln ab; die Unterstreichung
+           traegt zusaetzlich das Linksignal. */
         .download-link, .inline-link {
-            color: var(--primary);
+            color: var(--link-footer);
             font-weight: 600;
             text-decoration: underline;
             text-decoration-thickness: 1px;
@@ -431,7 +450,7 @@
 
         .download-link:hover, .inline-link:hover,
         .download-link:focus-visible, .inline-link:focus-visible {
-            color: #7ff0d3;
+            color: #93c5fd;
             text-decoration-thickness: 2px;
         }
 
@@ -711,6 +730,17 @@
             letter-spacing: 0.02em;
         }
 
+        /* Das siebte Feld — anklickbar wie die sechs Dimensionen */
+        .eb-seventh {
+            transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+        }
+        .eb-seventh:hover, .eb-seventh:focus-visible {
+            border-color: #ffd633 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+            outline: none;
+        }
+
         /* Popup zu den sechs Dimensionen */
         .eb-modal-overlay {
             position: fixed;
@@ -928,7 +958,7 @@
             <ul class="lang-en hidden">
                 <li>
                     <strong>English edition — Entry Zero</strong><br>
-                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">Read / download PDF — canonical print layout, Letter</a>
+                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">Read / download PDF — Letter</a>
                 </li>
                 <li>
                     <strong>German edition — Eintrag Null</strong><br>
@@ -1077,9 +1107,10 @@
 
                 <div class="eb-grid" id="fields-grid"></div>
 
-                <div style="border: 1px dashed var(--primary); border-radius: 10px; padding: 18px; margin-top: 25px; background: rgba(0,0,0,0.3);">
+                <div class="eb-seventh" role="button" tabindex="0" onclick="openFieldModal('ungemessen')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFieldModal('ungemessen');}" style="border: 1px dashed var(--primary); border-radius: 10px; padding: 18px; margin-top: 25px; background: rgba(0,0,0,0.3); cursor: pointer;">
                     <p style="font-size: 12px; color: #93c5fd; margin: 0 0 6px 0; font-weight: 600;" id="lbl-seventh-title"></p>
                     <p class="eb-serif highlight-text" style="font-size: 14.5px; margin: 0; line-height: 1.6;" id="lbl-seventh-body"></p>
+                    <span class="eb-card-more" id="lbl-seventh-more" style="margin-top: 10px;"></span>
                 </div>
 
                 <div id="eb-tensions" style="margin-top: 20px; display:flex; flex-direction:column; gap:6px;"></div>
@@ -1422,6 +1453,12 @@
                     q: "Verbessert sich das System aus eigener Kraft?",
                     list: "Zurückgespielte Blaupausen-Verbesserungen, wie oft und über wie viele verschiedene Klimazonen/Kontexte ein Entwurf wiederverwendet wird, gelöste gegenüber wiederkehrenden Engpässen, Geschwindigkeit der Korrektur nach einer Fehlmeldung.",
                     note: null
+                },
+                ungemessen: {
+                    name: "Das Ungemessene",
+                    q: "Was bleibt, wenn das Verzeichnis schweigt?",
+                    list: "Gewonnene Zeit, die niemand einträgt; Sorge am Rand des Gezählten; Vertrauen ohne Prüfung; die Kulturtechnik dieses Jahrhunderts: gemeinsam aufmerksam sein.",
+                    note: "Nicht gemessen — als Lücke aus Wahl, nicht aus Versäumnis."
                 }
             },
             en: {
@@ -1454,6 +1491,12 @@
                     q: "Does the system improve under its own power?",
                     list: "Blueprint improvements fed back, how often and across how many different climate zones/contexts a design is reused, solved versus recurring bottlenecks, speed of correction after a fault report.",
                     note: null
+                },
+                ungemessen: {
+                    name: "The Unmeasured",
+                    q: "What remains when the ledger falls silent?",
+                    list: "Time won that no one records; care on the margins of the counted; trust without scrutiny; the cultural technique of this century: being mindful together.",
+                    note: "Not measured — as a gap of choice, not of neglect."
                 }
             }
         };
@@ -1462,13 +1505,16 @@
 
         function openFieldModal(key) {
             const d = FIELD_DETAILS[currentLang][key];
-            const f = DATA_TEXTS[currentLang].fields[key];
-            if (!d || !f) return;
+            if (!d) return;
+            const f = DATA_TEXTS[currentLang].fields[key]; // undefined beim siebten Feld
             const keys = Object.keys(SERIES);
-            const idx = keys.indexOf(key) + 1;
-            document.getElementById('eb-modal-kicker').textContent =
-                'Dimension ' + idx + (currentLang === 'de' ? ' von ' : ' of ') + keys.length;
-            document.getElementById('eb-modal-title').textContent = f.name;
+            // Das siebte Feld steht ausserhalb der gezaehlten sechs.
+            const seventh = (key === 'ungemessen');
+            const idx = seventh ? 7 : keys.indexOf(key) + 1;
+            document.getElementById('eb-modal-kicker').textContent = seventh
+                ? 'Dimension 7'
+                : 'Dimension ' + idx + (currentLang === 'de' ? ' von ' : ' of ') + keys.length;
+            document.getElementById('eb-modal-title').textContent = f ? f.name : d.name;
             document.getElementById('eb-modal-q').textContent = d.q;
             document.getElementById('eb-modal-list').textContent = d.list;
             const noteEl = document.getElementById('eb-modal-note');
@@ -1544,6 +1590,8 @@
             document.getElementById('lbl-slider-hint').textContent = dataSet.sliderHint;
             document.getElementById('lbl-seventh-title').textContent = `7 · ${dataSet.seventhTitle}`;
             document.getElementById('lbl-seventh-body').textContent = dataSet.seventhBody;
+            document.getElementById('lbl-seventh-more').innerHTML =
+                '<span aria-hidden="true">➕</span> ' + (currentLang === 'de' ? 'was hier <em>nicht</em> gezählt wird' : 'what is <em>not</em> counted here');
             document.getElementById('eb-footer').textContent = dataSet.footer;
 
             const currentAcc = lerpXY(ACCESSION.years, ACCESSION.vals, year);
