@@ -2,11 +2,18 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.6  ·  2026-07-13
+  Fassung:  v0.7  ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.5 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.6 (Sitzung 13.07.2026):
+  Buch-Seite: Bild /book-on-table.png links neben den Download-Block gestellt
+  (Zweispalten-Layout, auf schmalen Schirmen gestapelt, Bild oben). Bild liegt
+  im Vercel-/public wie /cover.png. Hinweis Martin: die genannte Datei hiess im
+  Fliesstext «book_on_table.png», die verlinkte URL «book-on-table.png» — ich
+  folge der URL (Bindestriche), das ist die tatsaechlich ausgelieferte Datei.
+
+  Aenderungen v0.5 -> v0.6 (Sitzung 13.07.2026):
   Popup des siebten Felds: Kicker jetzt nur «Dimension 7» ohne «von 7»/«of 7»
   (das siebte Feld steht bewusst ausserhalb der gezaehlten sechs). Die sechs
   Dimensionen behalten «von 6»/«of 6».
@@ -513,6 +520,35 @@
         }
 
         .source-card.workshop-doc { border-left-color: #3498db; }
+
+        /* Buch-Seite: Bild links, Download-Text rechts */
+        .book-download-layout {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            align-items: flex-start;
+            margin-top: 15px;
+        }
+        .book-download-figure {
+            flex: 0 1 260px;
+            margin: 0;
+            min-width: 200px;
+        }
+        .book-download-figure img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+        }
+        .book-download-text {
+            flex: 1 1 300px;
+            min-width: 260px;
+        }
+        .book-download-text > p:first-child { margin-top: 0; }
+        @media (max-width: 680px) {
+            .book-download-figure { flex-basis: 100%; max-width: 320px; }
+        }
         .source-title { font-weight: 700; color: #ffffff; display: block; margin-bottom: 6px; font-size: 1.15rem; }
         .source-card p { margin: 0 0 8px 0; font-size: 1.05rem; }
 
@@ -940,6 +976,12 @@
 
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
+
+            <div class="book-download-layout">
+              <figure class="book-download-figure">
+                <img src="/book-on-table.png" alt="Eintrag Null / Entry Zero — das gedruckte Buch auf einem Tisch">
+              </figure>
+              <div class="book-download-text">
             <p class="lang-de">Der Roman ist vollständig und kostenlos verfügbar. Kein Auszug, keine Anmeldung — das ganze Buch.</p>
             <p class="lang-en hidden">The novel is complete and free. No excerpt, no sign-up — the whole book.</p>
 
@@ -968,6 +1010,8 @@
 
             <p class="lang-de">Weitere Formate folgen.</p>
             <p class="lang-en hidden">More formats to follow.</p>
+              </div><!-- /book-download-text -->
+            </div><!-- /book-download-layout -->
 
             <p style="font-size: 0.95rem; color: var(--eb-muted);">
                 <span class="lang-de">Fassung v0.1 — der erste Eintrag.<br>Lizenz: CC BY-NC-SA 4.0 — das Buch darf geteilt und nicht-kommerziell weitergegeben werden, unter Namensnennung und gleichen Bedingungen. Einzelheiten im Impressum.</span>
