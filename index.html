@@ -2,11 +2,47 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.10 ·  2026-07-13
+  Fassung:  v0.13 ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.9 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.12 (Sitzung 13.07.2026):
+  Werkstatt-Seite uebersichtlicher (Beschluss Martin: Variante 1+4+6).
+  Ausgangslage gemessen: DE 1601 Woerter / EN 1774, davon 61 % in zwei
+  eingebetteten Volltexten (Befund 577, Landschaft 404 Woerter, DE-Strang);
+  vier weitere Abschnitte nur 46-76 Woerter.
+  (1) Die beiden Volltexte stehen jetzt in <details>/<summary> — zugeklappt
+      sichtbar ~620 statt 1601 Woerter. Nativ, ohne JS, Tastatur und
+      Screenreader von Haus aus. Kein Text gekuerzt, keine Zweitabschrift
+      (Regel Webtext DE v0.12: Befund woertlich, keine Zweitabschrift).
+  (4) Uebersicht am Seitenkopf mit sechs Sprungmarken.
+  (6) Dachzeile je Abschnitt (Gattungswort) + sprachneutrale Ankerpunkte.
+  Reihenfolge NICHT geaendert: die Zaehlung bleibt am Schluss, ist ueber die
+  Uebersicht aber sofort erreichbar. Abschnittsnamen unveraendert (Beschluss
+  Martin: die beiden «Register» bleiben stehen).
+
+  Aenderungen v0.11 -> v0.12 (Sitzung 13.07.2026):
+  Farbtrennung Titel/Links: Blau ist jetzt den Links vorbehalten, alle Titel
+  und Feldbeschriftungen sind gruen (var(--primary)). Betroffen:
+  h3 (#5dade2), Tabellenkopf des Fassungsregisters (#93c5fd), Kicker im Popup
+  («Dimension N»), Titel der sechs Bilanz-Kacheln, Titel des siebten Felds,
+  Beschriftungen «Jahr» und «Anteil der Regionen». Nicht angetastet: Hinweis-
+  und Fussnotenzeilen der Bilanz sowie der Schliessen-Knopf des Popups (keine
+  Titel), Diagrammlinien (#6bb5ff) und die dekorativen Randstreifen.
+
+  Aenderungen v0.10 -> v0.11 (Sitzung 13.07.2026):
+  (1) Grundlagen- und Werkstatt-Seite: alle Links auf Projekt-PDFs im
+      einheitlichen Muster «PDF lesen / herunterladen — <Dokumentname>» bzw.
+      «Read / download PDF — <document name>». Ohne Fassungsnummer, ohne
+      Sprachkuerzel, ohne «(PDF)»-Anhang. Vorteil: die Linktexte muessen bei
+      jeder neuen Dokumentfassung nicht mehr nachgefuehrt werden.
+      Die vier externen Quellen (GJR, Integral, Roadmap, IPCC) behalten ihre
+      Titel-Links — sie sind keine Projekt-PDFs, sondern fremde Webseiten.
+  (2) Novelle liegt jetzt auch englisch vor: Sprachvermerk «available in German
+      only» entfernt, EN-Link auf die englische Lesefassung umgestellt
+      (V3HCXKWC38). Der DE-Link bleibt auf der deutschen Lesefassung.
+
+  Aenderungen v0.9 -> v0.10 (Sitzung 13.07.2026):
   Social-Vorschau: Bild von book-on-table.png (Hochformat 1152x2048) auf den
   eigens erzeugten Querzuschnitt book-on-table-og.png (1200x630, Variante A,
   Buchmitte mit Titel + Erdsichel) umgestellt. Grund: Hochformat wird in der
@@ -362,6 +398,108 @@
             display: block;
         }
 
+        /* --- Werkstatt-Seite: Uebersicht, Dachzeilen, aufklappbare Volltexte --- */
+
+        /* Sprachneutrale Ankerpunkte (IDs duerfen nicht je Sprache doppelt sein) */
+        .sec-anchor {
+            display: block;
+            height: 0;
+            scroll-margin-top: calc(var(--nav-h, 60px) + 20px);
+        }
+
+        .page-toc {
+            margin: 0 0 40px 0;
+            padding: 18px 22px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+        }
+        .page-toc h2 {
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--eb-muted);
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-weight: 600;
+            margin: 0 0 12px 0;
+            padding: 0;
+            border: none;
+        }
+        .page-toc ol {
+            margin: 0;
+            padding: 0 0 0 20px;
+            columns: 2;
+            column-gap: 28px;
+        }
+        .page-toc li {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            break-inside: avoid;
+        }
+        .page-toc .toc-kind {
+            display: block;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--eb-muted);
+            font-weight: 600;
+        }
+        @media (max-width: 680px) {
+            .page-toc ol { columns: 1; }
+        }
+
+        /* Dachzeile ueber den Abschnittstiteln */
+        .sec-kicker {
+            display: block;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--eb-muted);
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            font-weight: 600;
+            margin: 45px 0 0 0;
+        }
+        .sec-kicker + h2 { margin-top: 4px; }
+
+        /* Aufklappbare Volltexte */
+        .embed-details {
+            margin: 20px 0 25px 0;
+            border-left: 3px solid rgba(26, 188, 156, 0.55);
+            padding-left: 20px;
+        }
+        .embed-details > summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--link-footer);
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+            padding: 6px 0;
+            list-style: none;
+        }
+        .embed-details > summary::-webkit-details-marker { display: none; }
+        .embed-details > summary::before {
+            content: "\25B8";
+            display: inline-block;
+            width: 1em;
+            margin-right: 6px;
+            transition: transform 0.18s ease;
+        }
+        .embed-details[open] > summary::before { transform: rotate(90deg); }
+        .embed-details > summary:hover { color: #93c5fd; }
+        .embed-details > summary:focus-visible {
+            outline: 2px solid #ffd633;
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+        /* Innerer Textblock ohne zweiten Randstreifen */
+        .embed-details .embed-text {
+            border-left: none;
+            padding-left: 0;
+            margin: 10px 0 8px 0;
+        }
+
         /* Leiser Hinweis (loest den orangen Alarmkasten ab, 13.07.2026) */
         .quiet-note {
             border-left: 3px solid rgba(230, 126, 34, 0.7);
@@ -406,7 +544,7 @@
 
         h3 {
             font-size: 1.35rem;
-            color: #5dade2;
+            color: var(--primary);
             margin-top: 30px;
             margin-bottom: 15px;
         }
@@ -632,7 +770,7 @@
             text-align: left;
             font-family: Georgia, serif;
             font-weight: 600;
-            color: #93c5fd;
+            color: var(--primary);
             font-size: 0.85rem;
             letter-spacing: 0.03em;
             padding: 12px 14px;
@@ -851,7 +989,7 @@
             padding: 4px 8px;
         }
         .eb-modal-close:hover { color: #ffd633; }
-        .eb-modal-kicker { font-size: 12px; color: #93c5fd; font-weight: 600; margin: 0 0 4px 0; }
+        .eb-modal-kicker { font-size: 12px; color: var(--primary); font-weight: 600; margin: 0 0 4px 0; }
         .eb-modal h3 { margin: 0 0 14px 0; color: var(--primary); font-size: 1.5rem; }
         .eb-modal-q { font-family: Georgia, serif; font-size: 1.12rem; color: #a3e635; line-height: 1.55; margin: 0 0 14px 0; }
         .eb-modal-list { font-size: 0.95rem; color: #cbd5e1; line-height: 1.65; margin: 0 0 14px 0; }
@@ -1111,8 +1249,8 @@
                 <span class="lang-de">Das Warum und das Was: die Idee der Föderation, für ein breites Publikum geschrieben.</span>
                 <span class="lang-en hidden">The why and the what: the idea of the federation, written for a broad audience.</span>
                 <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/CQGGTDFGR0#20C1p95asGHw" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Herunterladen — TSBL-Whitepaper, v0.12 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/RSZF7QSMZW#8sw63BIGmZKH" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Download — TSBL White Paper, plain language, EN v0.11 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/CQGGTDFGR0#20C1p95asGHw" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — TSBL-Whitepaper</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/RSZF7QSMZW#8sw63BIGmZKH" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — TSBL White Paper</a>
             </div>
 
             <div class="source-card workshop-doc">
@@ -1120,8 +1258,8 @@
                 <span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — ein Bericht statt einer Punktzahl.</span>
                 <span class="lang-en hidden">What a world without gross domestic product measures its success by — a report, not a score.</span>
                 <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Herunterladen — Die Lebendige Bilanz, v0.4 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Download — The Living Balance, EN v0.1 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Die Lebendige Bilanz</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Living Balance</a>
                 <br>
                 <button class="explore-btn" onclick="switchTab('bilanz-interaktiv')">
                     <span aria-hidden="true">➔</span> <span class="lang-de">Interaktiv erkunden</span><span class="lang-en hidden">Explore interactively</span>
@@ -1133,8 +1271,8 @@
                 <span class="lang-de">Die Detailebene darunter: wie sich «gerechter Wohlstand» messen lässt, ohne ihn zu bepreisen.</span>
                 <span class="lang-en hidden">The layer of detail beneath it: how "just prosperity" can be measured without pricing it.</span>
                 <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/BX08H3C338#FdZyf2YhBs5k" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Herunterladen — Der Versorgungskorb, v0.3 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/SB7F01FSA0#Rf00Y4lsZsqr" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Download — The Provision Basket, EN v0.1 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/BX08H3C338#FdZyf2YhBs5k" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Der Versorgungskorb</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/SB7F01FSA0#Rf00Y4lsZsqr" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Provision Basket</a>
             </div>
 
             <div class="source-card workshop-doc">
@@ -1142,8 +1280,8 @@
                 <span class="lang-de">Warum so gebaut und nicht anders: die sieben Gründungsentscheidungen hinter dem System, samt dokumentierten Zweifeln.</span>
                 <span class="lang-en hidden">Why built this way and not otherwise: the seven founding decisions behind the system, documented doubts included.</span>
                 <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/61RMF3GV54#qbC1tYzM05u1" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Herunterladen — Design Rationale, v0.5 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/NRKQ1GB180#4u4JOPQgt7fD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Download — Design Rationale, EN v0.5 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/61RMF3GV54#qbC1tYzM05u1" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Design Rationale</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/NRKQ1GB180#4u4JOPQgt7fD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — Design Rationale</a>
             </div>
         </div>
 
@@ -1167,14 +1305,14 @@
             <div class="eb-bilanz-box">
                 <div class="eb-sticky-head">
                 <div class="eb-slider-row" style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
-                    <label id="lbl-year" for="eb-year-slider" style="font-size: 14px; color: #93c5fd; font-weight: 600;"></label>
+                    <label id="lbl-year" for="eb-year-slider" style="font-size: 14px; color: var(--primary); font-weight: 600;"></label>
                     <input class="eb-slider" type="range" min="2030" max="2100" step="1" value="2100" id="eb-year-slider" oninput="renderBilanz(this.value)" aria-valuetext="2100">
                     <span id="eb-year-display" style="font-size: 26px; font-weight: bold; color: var(--primary); min-width: 60px; text-align: right; font-variant-numeric: tabular-nums;">2100</span>
                 </div>
 
                 <div class="eb-ticks" id="eb-ticks-container"></div>
 
-                <div style="display:flex; justify-content:space-between; font-size:12px; color: #93c5fd; margin-bottom:6px; font-weight: 600;">
+                <div style="display:flex; justify-content:space-between; font-size:12px; color: var(--primary); margin-bottom:6px; font-weight: 600;">
                     <span id="lbl-accession"></span>
                     <span id="eb-accession-val" style="font-variant-numeric: tabular-nums; color: var(--primary); font-weight: bold;">100 %</span>
                 </div>
@@ -1188,7 +1326,7 @@
                 <div class="eb-grid" id="fields-grid"></div>
 
                 <div class="eb-seventh" role="button" tabindex="0" onclick="openFieldModal('ungemessen')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFieldModal('ungemessen');}" style="border: 1px dashed var(--primary); border-radius: 10px; padding: 18px; margin-top: 25px; background: rgba(0,0,0,0.3); cursor: pointer;">
-                    <p style="font-size: 12px; color: #93c5fd; margin: 0 0 6px 0; font-weight: 600;" id="lbl-seventh-title"></p>
+                    <p style="font-size: 12px; color: var(--primary); margin: 0 0 6px 0; font-weight: 600;" id="lbl-seventh-title"></p>
                     <p class="eb-serif highlight-text" style="font-size: 14.5px; margin: 0; line-height: 1.6;" id="lbl-seventh-body"></p>
                     <span class="eb-card-more" id="lbl-seventh-more" style="margin-top: 10px;"></span>
                 </div>
@@ -1205,8 +1343,8 @@
             <p class="lang-de">Das Werkstattpapier hinter dieser Seite: wie die Lebendige Bilanz gedacht ist, Dimension für Dimension, samt der Frage, warum ein Bericht ehrlicher ist als eine Punktzahl.</p>
             <p class="lang-en hidden">The workshop paper behind this page: how the Living Balance is thought through, dimension by dimension, including the question of why a report is more honest than a score.</p>
             <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener">Herunterladen — Die Lebendige Bilanz, v0.4 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener">Download — The Living Balance, EN v0.1 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener">PDF lesen / herunterladen — Die Lebendige Bilanz</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener">Read / download PDF — The Living Balance</a>
             </p>
             <p>
                 <a href="#" class="download-link" onclick="switchTab('grundlagen'); return false;">
@@ -1223,6 +1361,31 @@
             <h1 class="lang-de">Die Werkstatt</h1>
             <h1 class="lang-en hidden">The Workshop</h1>
 
+            <nav class="page-toc lang-de" aria-label="Übersicht dieser Seite">
+                <h2>Auf dieser Seite</h2>
+                <ol>
+                    <li><a class="inline-link" href="#w-entstehung">Wie das Buch entstand</a><span class="toc-kind">Offenlegung</span></li>
+                    <li><a class="inline-link" href="#w-novelle">Die Novelle</a><span class="toc-kind">Erzählung</span></li>
+                    <li><a class="inline-link" href="#w-landschaft">Die Landschaft des Möglichen</a><span class="toc-kind">Werkstatttext</span></li>
+                    <li><a class="inline-link" href="#w-essay">Das Feuer, das antwortet</a><span class="toc-kind">Essay</span></li>
+                    <li><a class="inline-link" href="#w-pruefung">Aus dem Register</a><span class="toc-kind">Prüfung</span></li>
+                    <li><a class="inline-link" href="#w-register">Das Register der Entstehung</a><span class="toc-kind">Zählung</span></li>
+                </ol>
+            </nav>
+            <nav class="page-toc lang-en hidden" aria-label="Overview of this page">
+                <h2>On this page</h2>
+                <ol>
+                    <li><a class="inline-link" href="#w-entstehung">How the book was made</a><span class="toc-kind">Disclosure</span></li>
+                    <li><a class="inline-link" href="#w-novelle">The novella</a><span class="toc-kind">Narrative</span></li>
+                    <li><a class="inline-link" href="#w-landschaft">The Landscape of the Possible</a><span class="toc-kind">Workshop text</span></li>
+                    <li><a class="inline-link" href="#w-essay">The Fire That Answers</a><span class="toc-kind">Essay</span></li>
+                    <li><a class="inline-link" href="#w-pruefung">From the register</a><span class="toc-kind">Check</span></li>
+                    <li><a class="inline-link" href="#w-register">The Register of the Making</a><span class="toc-kind">Count</span></li>
+                </ol>
+            </nav>
+
+            <span class="sec-anchor" id="w-entstehung" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Offenlegung</span><span class="sec-kicker lang-en hidden">Disclosure</span>
             <h2 class="lang-de">Wie das Buch entstand</h2>
             <h2 class="lang-en hidden">How the book was made</h2>
             <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.</p>
@@ -1232,16 +1395,16 @@
             <p class="lang-en hidden">This page grants a look inside the workshop — told in a novella, considered in two texts, tested by an inventory that found nothing. It is a beginning, not a final state: what stands here can grow; further documents from the workshop will follow.</p>
 
             <!-- ---------- Die Novelle ---------- -->
+            <span class="sec-anchor" id="w-novelle" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Erzählung</span><span class="sec-kicker lang-en hidden">Narrative</span>
             <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
             <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
 
             <p class="lang-de">Wer die Werkstatt lieber erzählt bekommt, statt sie zu durchsuchen, beginnt hier: Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand — gegen den Widerstand ihres Professors. Fünf Kapitel.</p>
             <p class="lang-en hidden">If you would rather have the workshop told than searched, begin here: a student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model — against the resistance of her professor. Five chapters.</p>
-            <p class="lang-en hidden lead-note">The novella is currently available in German only; an English edition is planned.</p>
-
             <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/KSZB0BPFE0#SYyKpwIdHeV7" target="_blank" rel="noopener">Novelle als PDF lesen — Lesefassung v0.6</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/KSZB0BPFE0#SYyKpwIdHeV7" target="_blank" rel="noopener">Read the novella as PDF — reading edition v0.6 (German)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/KSZB0BPFE0#SYyKpwIdHeV7" target="_blank" rel="noopener">PDF lesen / herunterladen — Die Novelle</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/V3HCXKWC38#yTAwBaCa0KBr" target="_blank" rel="noopener">Read / download PDF — The Novella</a>
             </p>
 
             <h3 class="lang-de">Der Befund: sechs Bedingungen</h3>
@@ -1250,7 +1413,9 @@
             <p class="lang-en hidden">If you want only the findings, they are here; if you want to see how Noa arrives at them, read the novella first.</p>
 
             <!-- Sechs Bedingungen DE — woertlich aus TSBL_Eintrag_Null_Novelle_Sechs_Bedingungen_DE_EN_v0_2.md -->
-            <div class="embed-text lang-de">
+            <details class="embed-details lang-de">
+                <summary>Die sechs Bedingungen lesen <span style="font-weight:400; opacity:.75;">(rund 600 Wörter)</span></summary>
+                <div class="embed-text">
                 <p style="font-weight: 600; color: var(--primary);">Sechs Bedingungen, unter denen Erzählen mit einem Sprachmodell Literatur wird, die trägt</p>
                 <p class="lead-note">Aus der Masterthesis von Noa Lindt, 2050 — dem Befund ihrer viermonatigen Untersuchung eines Romans aus dem Sommer 2026.</p>
                 <p class="lead-note">Vorab, für alle ohne Vorwissen: Ein Sprachmodell — englisch Large Language Model, kurz LLM — ist ein Computerprogramm, das aus sehr grossen Textmengen gelernt hat, Sprache vorherzusagen und fortzuschreiben; im Alltag sagte man 2026 meist einfach «KI» dazu (künstliche Intelligenz). In jenem Jahr wurden solche Systeme zum ersten Mal breit zum Schreiben benutzt. «Trägt» heisst dabei: Die Sprache ist auf Seite zweihundert noch so frisch wie auf Seite acht; die Fäden der Geschichte erfüllen sich; die Welt bleibt stehen, ohne dass sie erklärt werden muss.</p>
@@ -1261,10 +1426,13 @@
                 <p class="cond"><strong>5 — Die neu geeichte Zeit.</strong> Das Sprachmodell senkte den Preis des Weges — also die Zeit und Mühe, einen Text überhaupt herzustellen: Was früher Jahrzehnte gekostet hätte, wurde in Monaten gehbar. Was es nie senkte, ist der Preis des Urteils — die Arbeit, zu erkennen, was davon gut ist, und alles andere wegzuwerfen. Wer beides verwechselt, bekommt Durchschnitt in hoher Auflage. Wer es begriff, dem gehörte zum ersten Mal, was jahrhundertelang Höfen, Klöstern und Verlagen gehört hatte: die Mittel, eine Welt zu bauen. Im Jahr 2026 lagen sie auf einem Küchentisch.</p>
                 <p class="cond"><strong>6 — Das Einstehen.</strong> Am Ende legt ein Mensch genau eine Fassung fest — so und nicht anders —, setzt seinen Namen darunter und beginnt seine Rechenschaft mit dem Teil, der ihm schaden kann — bei diesem Buch: mit der Auskunft, dass ein KI-Sprachmodell als Werkzeug diente. Denn Autorschaft war nie eine Aussage darüber, wie viele Hände — oder welche Werkzeuge — am Text mitgeschrieben haben. Sie ist eine Aussage über Haftung, also darüber, wer dafür geradesteht: Es gibt eine Person, die man fragen kann.</p>
                 <p class="closing">Und die Frage, die nach diesen sechs Bedingungen übrig bleibt, ist nicht mehr «Hat eine Maschine mitgeschrieben?» und auch nicht «War es wirklich einer?». Sie lautet: Wer steht für diese Fassung gerade — und kann man ihn fragen? Wenn die Antwort «niemand genau» heisst, gibt es keine Autorin. Nicht als Strafe. Als Definition.</p>
-            </div>
+                </div>
+            </details>
 
             <!-- Six conditions EN — verbatim -->
-            <div class="embed-text lang-en hidden">
+            <details class="embed-details lang-en hidden">
+                <summary>Read the six conditions <span style="font-weight:400; opacity:.75;">(about 650 words)</span></summary>
+                <div class="embed-text">
                 <p style="font-weight: 600; color: var(--primary);">Six conditions under which storytelling with a language model becomes literature that holds</p>
                 <p class="lead-note">From the master's thesis of Noa Lindt, 2050 — the findings of her four-month investigation into a novel from the summer of 2026.</p>
                 <p class="lead-note">First, for readers without background: a language model — a Large Language Model, or LLM — is a computer program that has learned from vast amounts of text to predict and continue language; in everyday speech, people in 2026 mostly just said "AI" (artificial intelligence). That year, such systems were used for writing at scale for the first time. "Holds" means: the language on page two hundred is as fresh as on page eight; the story's threads pay off; the world stands on its own, without ever being explained.</p>
@@ -1275,13 +1443,18 @@
                 <p class="cond"><strong>5 — Time, recalibrated.</strong> The language model lowered the price of the path — that is, the time and effort of producing text at all: what would once have cost decades became walkable in months. What it never lowered is the price of judgement — the work of recognising what is good, and discarding all the rest. Confuse the two, and you get mediocrity in high print runs. Understand it, and you own, for the first time, what for centuries belonged to courts, monasteries and publishing houses: the means to build a world. In 2026, they lay on a kitchen table.</p>
                 <p class="cond"><strong>6 — Standing behind it.</strong> In the end, one human being fixes exactly one version — this one and no other —, puts their name beneath it, and opens their account of the work with the part that could harm them — in this book's case: with the disclosure that an AI language model served as a tool. Because authorship was never a statement about how many hands — or which tools — helped write the text. It is a statement about accountability, about who answers for it: there is a person you can ask.</p>
                 <p class="closing">And the question that remains after these six conditions is no longer "Did a machine help write it?" nor "Was it really one person?". It is: Who stands behind this version — and can you ask them? If the answer is "no one exactly", there is no author. Not as a punishment. As a definition.</p>
-            </div>
+                </div>
+            </details>
 
             <!-- ---------- Die Landschaft des Moeglichen ---------- -->
+            <span class="sec-anchor" id="w-landschaft" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Werkstatttext</span><span class="sec-kicker lang-en hidden">Workshop text</span>
             <h2 class="lang-de">Die Landschaft des Möglichen</h2>
             <h2 class="lang-en hidden">The Landscape of the Possible</h2>
 
-            <div class="embed-text lang-de">
+            <details class="embed-details lang-de">
+                <summary>Den ganzen Text lesen <span style="font-weight:400; opacity:.75;">(rund 400 Wörter)</span></summary>
+                <div class="embed-text">
                 <p>Am Anfang jeder Arbeitsstunde an diesem Buch stand eine Frage an eine Maschine, die aus Millionen von Büchern, Berichten und Aufsätzen gelernt hat. Man kann sich diese Maschine als vieles vorstellen. Am ehrlichsten ist vielleicht dieses Bild: Sie ist keine Feder, die schreibt. Sie ist eine Landschaft.</p>
                 <p>Eine Landschaft aus allem, was Menschen je aufgeschrieben haben — mit Tälern, in denen die vertrauten Geschichten liegen, mit Graten, hinter denen unerwartete Wendungen warten, mit Wegen ohne Zahl. Wer ihr eine Frage stellt, schickt einen Wanderer los. Zwei fast gleiche Fragen, und der Wanderer nimmt zwei völlig verschiedene Wege. Derselbe Weg wird nie zweimal gegangen; die Landschaft wiederholt sich nicht. Aber sie ist auch nicht grenzenlos: Was Sinn ergibt, hält zusammen wie ein Tal seine Wasser.</p>
                 <p>Geschrieben wird ein Buch in dieser Landschaft nicht vom Wanderer. Geschrieben wird es von dem, der die Wege beurteilt. Hunderte Male hiess das hier: losschicken, ansehen, verwerfen. Einen Schritt behalten, zehn verwerfen. Wieder losschicken, von einem anderen Punkt aus, mit einer anderen Frage. Damit sich das Buch dabei nicht verläuft, führte es sein eigenes Kartenwerk: ein Regelbuch, in dem jede Figur, jeder Ort, jedes Jahr und jede Entscheidung festgehalten ist — der Talrand, der alle Wege im Land dieses einen Buches hält.</p>
@@ -1289,9 +1462,12 @@
                 <p>Und am Ende geschah das Wichtigste: Aus unzähligen möglichen Wegen wurde genau einer gewählt und festgelegt. Gedruckt. So und nicht anders. Das ist es, was ein Buch in einer Zeit bedeutet, in der jede Geschichte tausend Fassungen haben könnte: Es ist kein Weg unter vielen mehr. Es ist der Weg, für den jemand geradesteht.</p>
                 <p>Im Impressum dieses Buches steht dafür ein einziger Satz: <em>Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch.</em> Die Landschaft gehört allen. Der Weg gehört dem, der ihn gegangen ist — und der sagen kann, warum.</p>
                 <p>Wer tiefer schauen will: Im Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt» erklären wir, was die Forschung über diese Landschaft inzwischen weiss. Und im Nachwort des Buches steht die ganze Rechenschaft.</p>
-            </div>
+                </div>
+            </details>
 
-            <div class="embed-text lang-en hidden">
+            <details class="embed-details lang-en hidden">
+                <summary>Read the whole text <span style="font-weight:400; opacity:.75;">(about 450 words)</span></summary>
+                <div class="embed-text">
                 <p>At the beginning of every working hour on this book stood a question put to a machine that has learned from millions of books, reports and essays. One can picture such a machine in many ways. Perhaps the most honest picture is this: it is not a pen that writes. It is a landscape.</p>
                 <p>A landscape made of everything people have ever written down — with valleys where the familiar stories lie, with ridges behind which unexpected turns are waiting, with paths beyond counting. To put a question to it is to send out a walker. Two almost identical questions, and the walker takes two entirely different paths. The same path is never walked twice; the landscape does not repeat itself. But neither is it boundless: what makes sense holds together the way a valley holds its waters.</p>
                 <p>A book in this landscape is not written by the walker. It is written by the one who judges the paths. Hundreds of times over, that meant here: send out, look, discard. Keep one step, discard ten. Send out again, from another point, with another question. So that the book would not lose its way, it kept a set of maps of its own: a rulebook in which every character, every place, every year and every decision is held fast — the valley wall that keeps every path inside the land of this one book.</p>
@@ -1299,38 +1475,45 @@
                 <p>And in the end the most important thing happened: out of countless possible paths, exactly one was chosen and fixed. Printed. This one and no other. That is what a book means in an age in which every story could have a thousand versions: it is no longer one path among many. It is the path someone answers for.</p>
                 <p>In the imprint of this book, a single sentence stands for that: <em>With an AI language model, the existing material was newly ordered; a human told the story and made every decision.</em> The landscape belongs to everyone. The path belongs to the one who walked it — and who can say why.</p>
                 <p>For a closer look: the workshop text "Why the Machine Never Writes the Same Text Twice" sets out what research now knows about this landscape. And the full account is given in the book's afterword.</p>
-            </div>
+                </div>
+            </details>
 
             <p class="lang-de">Der vollständige Text, mit den Belegen daneben:<br>
-                <a class="download-link" href="https://drive.proton.me/urls/D4RFSY1HKR#chwnJkUd36ny" target="_blank" rel="noopener">Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt», v0.3 (PDF)</a>
+                <a class="download-link" href="https://drive.proton.me/urls/D4RFSY1HKR#chwnJkUd36ny" target="_blank" rel="noopener">PDF lesen / herunterladen — «Warum die Maschine nie denselben Text zweimal schreibt»</a>
             </p>
             <p class="lang-en hidden">The full text, with the evidence beside it:<br>
-                <a class="download-link" href="https://drive.proton.me/urls/W9ZAYCZKKG#bH7eUEneY3aa" target="_blank" rel="noopener">Workshop text — <em>Why the Machine Never Writes the Same Text Twice</em>, EN v0.1 (PDF)</a>
+                <a class="download-link" href="https://drive.proton.me/urls/W9ZAYCZKKG#bH7eUEneY3aa" target="_blank" rel="noopener">Read / download PDF — <em>Why the Machine Never Writes the Same Text Twice</em></a>
             </p>
 
             <!-- ---------- Der Essay ---------- -->
+            <span class="sec-anchor" id="w-essay" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Essay</span><span class="sec-kicker lang-en hidden">Essay</span>
             <h2 class="lang-de">Das Feuer, das antwortet</h2>
             <h2 class="lang-en hidden">The Fire That Answers</h2>
             <p class="lang-de"><em>Erzählen mit dem Gedächtnis der Welt — einstehen muss ein Mensch.</em> Ein Essay über das Erzählen im Zeitalter der Maschinen — und über die ältere Frage, die keine Maschine beantworten kann: wer einsteht.</p>
             <p class="lang-en hidden"><em>Telling with the memory of the world — a human must answer for it.</em> An essay on storytelling in the age of machines — and on the older question no machine can answer: who is answerable.</p>
             <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/7HXXX7XZBC#pjKsBiLq573B" target="_blank" rel="noopener">Das Feuer, das antwortet, v0.6 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/4VPBN58E6R#1JeYP1MbzREb" target="_blank" rel="noopener">The Fire That Answers, EN v0.3 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/7HXXX7XZBC#pjKsBiLq573B" target="_blank" rel="noopener">PDF lesen / herunterladen — Das Feuer, das antwortet</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/4VPBN58E6R#1JeYP1MbzREb" target="_blank" rel="noopener">Read / download PDF — The Fire That Answers</a>
             </p>
 
             <!-- ---------- Aus dem Register ---------- -->
+            <span class="sec-anchor" id="w-pruefung" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Prüfung</span><span class="sec-kicker lang-en hidden">Check</span>
             <h2 class="lang-de">Aus dem Register</h2>
             <h2 class="lang-en hidden">From the register</h2>
             <p class="lang-de">Nicht jede Prüfung findet etwas. Eine Inventur ging durch alle Kapitel und fragte, ob Tiere, Pflanzen, Klima und Requisiten zu ihrem Ort gehören — von der Zeder an der Pazifikküste bis zum Faultier im Guanacaste. Sie fand nichts. Auch das gehört ins Register: Was geprüft und für richtig befunden wurde, ist eine Auskunft wie jede andere.</p>
             <p class="lang-en hidden">Not every check finds something. One inventory went through every chapter and asked whether the animals, plants, climate and props belong where they stand — from the cedar on the Pacific coast to the sloth in the guanacaste. It found nothing. That belongs in the register too: what has been checked and found sound is a piece of information like any other.</p>
             <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/0CS65XY3F8#PajTXWCi0Rkx" target="_blank" rel="noopener">Pol-Konsistenz-Prüfung, v0.2 (PDF)</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/PZG6Q6C8Y0#atLrN7b6DGb2" target="_blank" rel="noopener">Pole-consistency check, EN v0.1 (PDF)</a>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/0CS65XY3F8#PajTXWCi0Rkx" target="_blank" rel="noopener">PDF lesen / herunterladen — Pol-Konsistenz-Prüfung</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/PZG6Q6C8Y0#atLrN7b6DGb2" target="_blank" rel="noopener">Read / download PDF — Pole-consistency check</a>
                 <span class="doc-caution lang-de">Nennt Figuren, Kapitel und einzelne Motive — besser nach der Lektüre.</span>
                 <span class="doc-caution lang-en hidden">Names characters, chapters and individual motifs — better read after the novel.</span>
             </p>
 
             <!-- ---------- Das Register der Entstehung ---------- -->
+            <span class="sec-anchor" id="w-register" aria-hidden="true"></span>
+            <span class="sec-kicker lang-de">Zählung</span><span class="sec-kicker lang-en hidden">Count</span>
             <h2 class="lang-de">Das Register der Entstehung</h2>
             <h2 class="lang-en hidden">The Register of the Making</h2>
 
@@ -1724,7 +1907,7 @@
 
                 gridHtml += `
                     <div class="eb-card" role="button" tabindex="0" onclick="openFieldModal('${key}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFieldModal('${key}');}">
-                        <p style="font-size: 12px; color: #93c5fd; margin: 0 0 2px 0; font-weight:600;">${index + 1} · ${fieldData.name}</p>
+                        <p style="font-size: 12px; color: var(--primary); margin: 0 0 2px 0; font-weight:600;">${index + 1} · ${fieldData.name}</p>
                         <p style="font-size: 17px; font-weight: bold; margin: 0 0 6px 0; font-variant-numeric: tabular-nums; color:#a3e635;">${fieldData.fmt(currentVal)}</p>
                         <svg viewBox="0 0 ${gW} ${gH}" width="100%" height="${gH}">
                             ${limitLine}
