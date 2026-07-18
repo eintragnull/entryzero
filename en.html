@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  entryzero.vercel.app/en.html — Teilseite fuer englischsprachige Netzwerke
+  Fassung:  v0.1  ·  2026-07-13
+  VARIANTE OHNE ORDNER: diese Datei kommt als «en.html» neben die index.html
+  in die Wurzel und laesst sich normal hochladen. Inhaltsgleich mit der
+  Ordner-Variante en/index.html, nur die eigene Adresse lautet anders.
+
+  Zweck: LinkedIn, Facebook und X lesen nur den rohen Quelltext und fuehren
+  kein JavaScript aus. Die Sprachautomatik der Hauptseite sehen sie nicht,
+  und og:image gibt es nur einmal pro Adresse. Diese Datei ist darum eine
+  zweite Adresse mit englischen Vorschau-Angaben — mehr nicht.
+
+  Menschen, die den geteilten Link anklicken, werden sofort auf die
+  Hauptseite weitergeleitet, dort auf Englisch: /?lang=en
+
+  WICHTIG, falls diese Datei je bearbeitet wird:
+  - KEIN rel="canonical" auf "/" einbauen. LinkedIn folgt der kanonischen
+    Adresse und wuerde dann wieder das deutsche Vorschaubild ziehen.
+  - KEINE serverseitige Weiterleitung (301/302) einrichten. Die Scraper
+    folgen ihr und lesen die Tags der Hauptseite. Die Weiterleitung muss
+    per JavaScript geschehen, damit die Scraper hier stehen bleiben.
+  - Diese Datei enthaelt bewusst keinen Inhalt der Webseite. Sie muss bei
+    Textaenderungen nicht nachgefuehrt werden — nur wenn sich Titel,
+    Beschreibung oder Vorschaubild aendern sollen.
+
+  Ablage im Repository (Wurzel, neben index.html):
+      en.html
+  Geteilt wird dann: https://entryzero.vercel.app/en.html
+  ================================================================
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entry Zero — A novel. Between 2029 and 2100.</title>
+    <meta name="description" content="Entry Zero — a novel by Martin U G P, freely available in English and German, with the sources and the workshop behind it.">
+    <meta name="author" content="Martin U G P">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:type" content="book">
+    <meta property="og:url" content="https://entryzero.vercel.app/en.html">
+    <meta property="og:title" content="Entry Zero — A novel. Between 2029 and 2100.">
+    <meta property="og:description" content="On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. A freely available novel, with the sources and the workshop behind it.">
+    <meta property="og:image" content="https://entryzero.vercel.app/BookOnTable_EN-og.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Entry Zero — the printed book on a table">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="de_DE">
+
+    <!-- Twitter / X -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://entryzero.vercel.app/en.html">
+    <meta property="twitter:title" content="Entry Zero — A novel">
+    <meta property="twitter:description" content="A freely available novel about a society that organizes its provision without money deciding every question.">
+    <meta property="twitter:image" content="https://entryzero.vercel.app/BookOnTable_EN-og.png">
+    <meta property="twitter:image:alt" content="Entry Zero — the printed book on a table">
+
+    <style>
+        html { background-color: #000000; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #191918;
+            color: #ecebe4;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            text-align: center;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            margin: 0 0 14px 0;
+        }
+        p { color: #cbd5e1; line-height: 1.7; margin: 0 0 22px 0; }
+        a {
+            color: #6bb5ff;
+            font-weight: 600;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Entry Zero</h1>
+        <p>Taking you to the book&nbsp;…</p>
+        <p><a href="/?lang=en">Continue to entryzero.vercel.app</a></p>
+    </main>
+
+    <script>
+        // Weiterleitung per JavaScript: Scraper fuehren kein JS aus und bleiben
+        // hier stehen, lesen also die englischen Vorschau-Angaben oben.
+        // replace() statt href, damit der Zurueck-Knopf nicht in eine Schleife laeuft.
+        window.location.replace('/?lang=en');
+    </script>
+</body>
+</html>
