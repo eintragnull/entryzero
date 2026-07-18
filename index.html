@@ -2,11 +2,53 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.13 ·  2026-07-13
+  Fassung:  v0.18 ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.12 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.17 (Sitzung 13.07.2026):
+  Sprachwahl per Adresse: initialLang() liest zusaetzlich ?lang=de / ?lang=en
+  und stellt das ueber gemerkte Wahl und Browsersprache. Damit laesst sich ein
+  gezielt deutscher oder englischer Link verschicken.
+  Die Angabe wird NICHT gemerkt — wer spaeter selbst auf DE/EN klickt, dessen
+  Wahl gilt weiter. Gebraucht wird das von der neuen Teilseite /en, die
+  englischsprachigen Netzwerken ein eigenes Vorschaubild liefert
+  (BookOnTable_EN-og.png) und Menschen auf /?lang=en weiterleitet.
+
+  Aenderungen v0.16 -> v0.17 (Sitzung 13.07.2026):
+  Buch-Seite, englische Fassung: Bild /BookOnTable_EN.png rechts neben den
+  Download-Block, spiegelgleich zur deutschen Seite. Beide Bilder liegen in
+  derselben Spalte, je Sprache eingeblendet (lang-de / lang-en).
+  Hinweis zur Dateibenennung: das deutsche Bild heisst book-on-table.png
+  (Bindestriche, klein), das englische BookOnTable_EN.png — beide Namen sind
+  so uebernommen, wie sie im /public liegen.
+
+  Aenderungen v0.15 -> v0.16 (Sitzung 13.07.2026):
+  Erster Abschnitt «Wie das Buch entstand» ohne Klammer (Beschluss Martin):
+  er ist die Einleitung der Seite, nicht eines ihrer Werkstuecke. Die Klammern
+  tragen jetzt genau die fuenf Dokumentabschnitte. Dachzeile und Sprungmarke
+  bleiben; die Dachzeile bekommt oben weniger Abstand, weil die Polsterung der
+  Klammer entfaellt (.sec-kicker--lead).
+
+  Aenderungen v0.14 -> v0.15 (Sitzung 13.07.2026):
+  Abschnittsklammer der Werkstatt-Seite jetzt im selben Stil wie die
+  Quellenkarten der Grundlagen (.source-card): Hintergrund rgba(0,0,0,.55),
+  padding 20px, border-radius 8px, border-left 4px gruen, Schlagschatten.
+  Die abgerundete Ecke laesst den gruenen Balken an beiden Enden schmaler
+  auslaufen — das ist die «Spitze» aus dem Screenshot.
+  Damit im Innern keine Kaesten uebereinander liegen: die Registertabelle
+  (.reg-wrap) und die Zitatmarke am Offenlegungssatz werden innerhalb einer
+  Klammer transparent gestellt, ihre Rahmen bleiben.
+
+  Aenderungen v0.13 -> v0.14 (Sitzung 13.07.2026):
+  Werkstatt-Seite: jeder der sechs Abschnitte steht jetzt in einem
+  <section class="work-section"> mit gruenem Randstreifen links — analog zu den
+  Quellenkarten der Grundlagen-Seite (.source-card). Damit ist auf einen Blick
+  zu sehen, wo ein Abschnitt beginnt und endet. Die beiden inneren gruenen
+  Randstreifen der aufklappbaren Volltexte entfallen dabei (kein doppelter
+  Balken); der blaue Streifen am Offenlegungssatz bleibt als Zitatmarke.
+
+  Aenderungen v0.12 -> v0.13 (Sitzung 13.07.2026):
   Werkstatt-Seite uebersichtlicher (Beschluss Martin: Variante 1+4+6).
   Ausgangslage gemessen: DE 1601 Woerter / EN 1774, davon 61 % in zwei
   eingebetteten Volltexten (Befund 577, Landschaft 404 Woerter, DE-Strang);
@@ -448,6 +490,30 @@
             .page-toc ol { columns: 1; }
         }
 
+        /* Abschnittsklammer — derselbe Stil wie die Quellenkarten der Grundlagen.
+           Der border-radius laesst den gruenen Balken oben und unten schmaler
+           auslaufen; das ergibt die abgerundete Spitze. */
+        .work-section {
+            background: rgba(0, 0, 0, 0.55);
+            padding: 20px 22px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            margin: 0 0 26px 0;
+        }
+        .work-section > .sec-kicker { margin-top: 0; }
+        .work-section > h2:first-child { margin-top: 0; }
+        /* Innerhalb der Klammer kein zweiter gruener Balken */
+        .work-section .embed-details {
+            border-left: none;
+            padding-left: 0;
+        }
+        /* und keine Kaesten im Kasten */
+        .work-section .reg-wrap { background: transparent; }
+        @media (max-width: 680px) {
+            .work-section { padding: 18px 16px; margin-bottom: 22px; }
+        }
+
         /* Dachzeile ueber den Abschnittstiteln */
         .sec-kicker {
             display: block;
@@ -460,6 +526,8 @@
             margin: 45px 0 0 0;
         }
         .sec-kicker + h2 { margin-top: 4px; }
+        /* Dachzeile des einleitenden Abschnitts (steht ohne Klammer) */
+        .sec-kicker--lead { margin-top: 0; }
 
         /* Aufklappbare Volltexte */
         .embed-details {
@@ -1186,9 +1254,12 @@
             </p>
               </div><!-- /book-download-text -->
 
-              <!-- Bild rechts; nur DE (fuer EN liegt noch kein Bild vor) -->
+              <!-- Bild rechts, je Sprache -->
               <figure class="book-download-figure lang-de">
                 <img src="/book-on-table.png" alt="Eintrag Null — das gedruckte Buch auf einem Tisch">
+              </figure>
+              <figure class="book-download-figure lang-en hidden">
+                <img src="/BookOnTable_EN.png" alt="Entry Zero — the printed book on a table">
               </figure>
             </div><!-- /book-download-layout -->
 
@@ -1385,7 +1456,7 @@
             </nav>
 
             <span class="sec-anchor" id="w-entstehung" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Offenlegung</span><span class="sec-kicker lang-en hidden">Disclosure</span>
+            <span class="sec-kicker sec-kicker--lead lang-de">Offenlegung</span><span class="sec-kicker sec-kicker--lead lang-en hidden">Disclosure</span>
             <h2 class="lang-de">Wie das Buch entstand</h2>
             <h2 class="lang-en hidden">How the book was made</h2>
             <p class="lang-de" style="font-style: italic; border-left: 3px solid #3498db; padding-left: 15px; background: rgba(52, 152, 219, 0.05); padding-top: 10px; padding-bottom: 10px;">Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch. Eine ausführliche Darstellung steht im Nachwort des Buches.</p>
@@ -1395,191 +1466,207 @@
             <p class="lang-en hidden">This page grants a look inside the workshop — told in a novella, considered in two texts, tested by an inventory that found nothing. It is a beginning, not a final state: what stands here can grow; further documents from the workshop will follow.</p>
 
             <!-- ---------- Die Novelle ---------- -->
+
             <span class="sec-anchor" id="w-novelle" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Erzählung</span><span class="sec-kicker lang-en hidden">Narrative</span>
-            <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
-            <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Erzählung</span><span class="sec-kicker lang-en hidden">Narrative</span>
+                <h2 class="lang-de">Die Novelle: «Wie man 2026 ein gutes Buch schrieb»</h2>
+                <h2 class="lang-en hidden">The novella: «How a Good Book Was Written in 2026»</h2>
 
-            <p class="lang-de">Wer die Werkstatt lieber erzählt bekommt, statt sie zu durchsuchen, beginnt hier: Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand — gegen den Widerstand ihres Professors. Fünf Kapitel.</p>
-            <p class="lang-en hidden">If you would rather have the workshop told than searched, begin here: a student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model — against the resistance of her professor. Five chapters.</p>
-            <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/KSZB0BPFE0#SYyKpwIdHeV7" target="_blank" rel="noopener">PDF lesen / herunterladen — Die Novelle</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/V3HCXKWC38#yTAwBaCa0KBr" target="_blank" rel="noopener">Read / download PDF — The Novella</a>
-            </p>
+                <p class="lang-de">Wer die Werkstatt lieber erzählt bekommt, statt sie zu durchsuchen, beginnt hier: Eine Studentin im Jahr 2050 untersucht für ihre Masterarbeit, wie dieses Buch 2026 mit einem KI-Sprachmodell wirklich entstand — gegen den Widerstand ihres Professors. Fünf Kapitel.</p>
+                <p class="lang-en hidden">If you would rather have the workshop told than searched, begin here: a student in the year 2050 investigates for her master's thesis how this book was really made in 2026 with an AI language model — against the resistance of her professor. Five chapters.</p>
+                <p>
+                    <a class="lang-de download-link" href="https://drive.proton.me/urls/KSZB0BPFE0#SYyKpwIdHeV7" target="_blank" rel="noopener">PDF lesen / herunterladen — Die Novelle</a>
+                    <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/V3HCXKWC38#yTAwBaCa0KBr" target="_blank" rel="noopener">Read / download PDF — The Novella</a>
+                </p>
 
-            <h3 class="lang-de">Der Befund: sechs Bedingungen</h3>
-            <h3 class="lang-en hidden">The findings: six conditions</h3>
-            <p class="lang-de">Wer nur den Befund will, findet ihn hier; wer wissen will, wie Noa dazu kommt, liest zuerst die Novelle.</p>
-            <p class="lang-en hidden">If you want only the findings, they are here; if you want to see how Noa arrives at them, read the novella first.</p>
+                <h3 class="lang-de">Der Befund: sechs Bedingungen</h3>
+                <h3 class="lang-en hidden">The findings: six conditions</h3>
+                <p class="lang-de">Wer nur den Befund will, findet ihn hier; wer wissen will, wie Noa dazu kommt, liest zuerst die Novelle.</p>
+                <p class="lang-en hidden">If you want only the findings, they are here; if you want to see how Noa arrives at them, read the novella first.</p>
 
-            <!-- Sechs Bedingungen DE — woertlich aus TSBL_Eintrag_Null_Novelle_Sechs_Bedingungen_DE_EN_v0_2.md -->
-            <details class="embed-details lang-de">
-                <summary>Die sechs Bedingungen lesen <span style="font-weight:400; opacity:.75;">(rund 600 Wörter)</span></summary>
-                <div class="embed-text">
-                <p style="font-weight: 600; color: var(--primary);">Sechs Bedingungen, unter denen Erzählen mit einem Sprachmodell Literatur wird, die trägt</p>
-                <p class="lead-note">Aus der Masterthesis von Noa Lindt, 2050 — dem Befund ihrer viermonatigen Untersuchung eines Romans aus dem Sommer 2026.</p>
-                <p class="lead-note">Vorab, für alle ohne Vorwissen: Ein Sprachmodell — englisch Large Language Model, kurz LLM — ist ein Computerprogramm, das aus sehr grossen Textmengen gelernt hat, Sprache vorherzusagen und fortzuschreiben; im Alltag sagte man 2026 meist einfach «KI» dazu (künstliche Intelligenz). In jenem Jahr wurden solche Systeme zum ersten Mal breit zum Schreiben benutzt. «Trägt» heisst dabei: Die Sprache ist auf Seite zweihundert noch so frisch wie auf Seite acht; die Fäden der Geschichte erfüllen sich; die Welt bleibt stehen, ohne dass sie erklärt werden muss.</p>
-                <p class="cond"><strong>1 — Offenes Material.</strong> Das Wissen, aus dem das Buch gebaut wurde, lag frei zugänglich vor jedermann: Berichte, Entwürfe, Szenarien, Forschung. Was Bibliotheken und Ausbildungen jahrhundertelang verschlossen hielten, war offen — nur verstanden werden musste es noch. Oder in Noas Worten: <em>Das Schloss war nie die Tür. Das Schloss war die Zeit.</em></p>
-                <p class="cond"><strong>2 — Ein Motiv.</strong> Niemand schneidet eine Tür in ein Haus, das ihm egal ist. Am Anfang eines Buches, das trägt, steht keine Geschäftsidee und kein Experiment, sondern ein Es-geht-so-nicht-weiter — ein Grund, der auch dann noch trägt, wenn niemand zuschaut und nichts dabei zu verdienen ist.</p>
-                <p class="cond"><strong>3 — Ein Regelwerk gegen den eigenen Kopf.</strong> Wer mit einem Sprachmodell arbeitet, arbeitet mit etwas, das jede Sitzung neu beginnt und alles Mögliche schreiben kann. Dagegen hilft nur ein selbst gebautes Regelbuch — Figuren, Jahre, Weltregeln, Entscheidungen, alles aufgeschrieben, jede Änderung begründet. Nicht aus Ordnungsliebe, sondern aus Statik: Das eigene Gedächtnis ist keine tragende Wand. Das Regelbuch legt keinen einzigen Satz fest — aber es hält jeden Entwurf in der Welt dieses einen Buches: bei seinen Figuren, seinen Jahren, seinem Ton.</p>
-                <p class="cond"><strong>4 — Das Verwerfen.</strong> Das Sprachmodell liefert auf jede Anfrage unzählige mögliche Fassungen; die eigentliche Arbeit ist das Nein. Zehntausendfach: ansehen, wägen, wegwerfen, neu ansetzen — und das Weggeworfene aufheben, mit Datum und Grund. Denn das Verworfene ist der ehrlichste Beleg, den es gibt: <em>Niemand wirft für ein Publikum weg.</em></p>
-                <p class="cond"><strong>5 — Die neu geeichte Zeit.</strong> Das Sprachmodell senkte den Preis des Weges — also die Zeit und Mühe, einen Text überhaupt herzustellen: Was früher Jahrzehnte gekostet hätte, wurde in Monaten gehbar. Was es nie senkte, ist der Preis des Urteils — die Arbeit, zu erkennen, was davon gut ist, und alles andere wegzuwerfen. Wer beides verwechselt, bekommt Durchschnitt in hoher Auflage. Wer es begriff, dem gehörte zum ersten Mal, was jahrhundertelang Höfen, Klöstern und Verlagen gehört hatte: die Mittel, eine Welt zu bauen. Im Jahr 2026 lagen sie auf einem Küchentisch.</p>
-                <p class="cond"><strong>6 — Das Einstehen.</strong> Am Ende legt ein Mensch genau eine Fassung fest — so und nicht anders —, setzt seinen Namen darunter und beginnt seine Rechenschaft mit dem Teil, der ihm schaden kann — bei diesem Buch: mit der Auskunft, dass ein KI-Sprachmodell als Werkzeug diente. Denn Autorschaft war nie eine Aussage darüber, wie viele Hände — oder welche Werkzeuge — am Text mitgeschrieben haben. Sie ist eine Aussage über Haftung, also darüber, wer dafür geradesteht: Es gibt eine Person, die man fragen kann.</p>
-                <p class="closing">Und die Frage, die nach diesen sechs Bedingungen übrig bleibt, ist nicht mehr «Hat eine Maschine mitgeschrieben?» und auch nicht «War es wirklich einer?». Sie lautet: Wer steht für diese Fassung gerade — und kann man ihn fragen? Wenn die Antwort «niemand genau» heisst, gibt es keine Autorin. Nicht als Strafe. Als Definition.</p>
-                </div>
-            </details>
+                <!-- Sechs Bedingungen DE — woertlich aus TSBL_Eintrag_Null_Novelle_Sechs_Bedingungen_DE_EN_v0_2.md -->
+                <details class="embed-details lang-de">
+                    <summary>Die sechs Bedingungen lesen <span style="font-weight:400; opacity:.75;">(rund 600 Wörter)</span></summary>
+                    <div class="embed-text">
+                    <p style="font-weight: 600; color: var(--primary);">Sechs Bedingungen, unter denen Erzählen mit einem Sprachmodell Literatur wird, die trägt</p>
+                    <p class="lead-note">Aus der Masterthesis von Noa Lindt, 2050 — dem Befund ihrer viermonatigen Untersuchung eines Romans aus dem Sommer 2026.</p>
+                    <p class="lead-note">Vorab, für alle ohne Vorwissen: Ein Sprachmodell — englisch Large Language Model, kurz LLM — ist ein Computerprogramm, das aus sehr grossen Textmengen gelernt hat, Sprache vorherzusagen und fortzuschreiben; im Alltag sagte man 2026 meist einfach «KI» dazu (künstliche Intelligenz). In jenem Jahr wurden solche Systeme zum ersten Mal breit zum Schreiben benutzt. «Trägt» heisst dabei: Die Sprache ist auf Seite zweihundert noch so frisch wie auf Seite acht; die Fäden der Geschichte erfüllen sich; die Welt bleibt stehen, ohne dass sie erklärt werden muss.</p>
+                    <p class="cond"><strong>1 — Offenes Material.</strong> Das Wissen, aus dem das Buch gebaut wurde, lag frei zugänglich vor jedermann: Berichte, Entwürfe, Szenarien, Forschung. Was Bibliotheken und Ausbildungen jahrhundertelang verschlossen hielten, war offen — nur verstanden werden musste es noch. Oder in Noas Worten: <em>Das Schloss war nie die Tür. Das Schloss war die Zeit.</em></p>
+                    <p class="cond"><strong>2 — Ein Motiv.</strong> Niemand schneidet eine Tür in ein Haus, das ihm egal ist. Am Anfang eines Buches, das trägt, steht keine Geschäftsidee und kein Experiment, sondern ein Es-geht-so-nicht-weiter — ein Grund, der auch dann noch trägt, wenn niemand zuschaut und nichts dabei zu verdienen ist.</p>
+                    <p class="cond"><strong>3 — Ein Regelwerk gegen den eigenen Kopf.</strong> Wer mit einem Sprachmodell arbeitet, arbeitet mit etwas, das jede Sitzung neu beginnt und alles Mögliche schreiben kann. Dagegen hilft nur ein selbst gebautes Regelbuch — Figuren, Jahre, Weltregeln, Entscheidungen, alles aufgeschrieben, jede Änderung begründet. Nicht aus Ordnungsliebe, sondern aus Statik: Das eigene Gedächtnis ist keine tragende Wand. Das Regelbuch legt keinen einzigen Satz fest — aber es hält jeden Entwurf in der Welt dieses einen Buches: bei seinen Figuren, seinen Jahren, seinem Ton.</p>
+                    <p class="cond"><strong>4 — Das Verwerfen.</strong> Das Sprachmodell liefert auf jede Anfrage unzählige mögliche Fassungen; die eigentliche Arbeit ist das Nein. Zehntausendfach: ansehen, wägen, wegwerfen, neu ansetzen — und das Weggeworfene aufheben, mit Datum und Grund. Denn das Verworfene ist der ehrlichste Beleg, den es gibt: <em>Niemand wirft für ein Publikum weg.</em></p>
+                    <p class="cond"><strong>5 — Die neu geeichte Zeit.</strong> Das Sprachmodell senkte den Preis des Weges — also die Zeit und Mühe, einen Text überhaupt herzustellen: Was früher Jahrzehnte gekostet hätte, wurde in Monaten gehbar. Was es nie senkte, ist der Preis des Urteils — die Arbeit, zu erkennen, was davon gut ist, und alles andere wegzuwerfen. Wer beides verwechselt, bekommt Durchschnitt in hoher Auflage. Wer es begriff, dem gehörte zum ersten Mal, was jahrhundertelang Höfen, Klöstern und Verlagen gehört hatte: die Mittel, eine Welt zu bauen. Im Jahr 2026 lagen sie auf einem Küchentisch.</p>
+                    <p class="cond"><strong>6 — Das Einstehen.</strong> Am Ende legt ein Mensch genau eine Fassung fest — so und nicht anders —, setzt seinen Namen darunter und beginnt seine Rechenschaft mit dem Teil, der ihm schaden kann — bei diesem Buch: mit der Auskunft, dass ein KI-Sprachmodell als Werkzeug diente. Denn Autorschaft war nie eine Aussage darüber, wie viele Hände — oder welche Werkzeuge — am Text mitgeschrieben haben. Sie ist eine Aussage über Haftung, also darüber, wer dafür geradesteht: Es gibt eine Person, die man fragen kann.</p>
+                    <p class="closing">Und die Frage, die nach diesen sechs Bedingungen übrig bleibt, ist nicht mehr «Hat eine Maschine mitgeschrieben?» und auch nicht «War es wirklich einer?». Sie lautet: Wer steht für diese Fassung gerade — und kann man ihn fragen? Wenn die Antwort «niemand genau» heisst, gibt es keine Autorin. Nicht als Strafe. Als Definition.</p>
+                    </div>
+                </details>
 
-            <!-- Six conditions EN — verbatim -->
-            <details class="embed-details lang-en hidden">
-                <summary>Read the six conditions <span style="font-weight:400; opacity:.75;">(about 650 words)</span></summary>
-                <div class="embed-text">
-                <p style="font-weight: 600; color: var(--primary);">Six conditions under which storytelling with a language model becomes literature that holds</p>
-                <p class="lead-note">From the master's thesis of Noa Lindt, 2050 — the findings of her four-month investigation into a novel from the summer of 2026.</p>
-                <p class="lead-note">First, for readers without background: a language model — a Large Language Model, or LLM — is a computer program that has learned from vast amounts of text to predict and continue language; in everyday speech, people in 2026 mostly just said "AI" (artificial intelligence). That year, such systems were used for writing at scale for the first time. "Holds" means: the language on page two hundred is as fresh as on page eight; the story's threads pay off; the world stands on its own, without ever being explained.</p>
-                <p class="cond"><strong>1 — Open material.</strong> The knowledge the book was built from lay freely available to everyone: reports, blueprints, scenarios, research. What libraries and formal training had kept locked for centuries was open — it only still had to be understood. Or in Noa's words: <em>The lock was never the door. The lock was the time.</em></p>
-                <p class="cond"><strong>2 — A motive.</strong> Nobody cuts a door into a house they don't care about. At the beginning of a book that holds stands no business idea and no experiment, but a this-cannot-go-on — a reason that keeps carrying even when nobody is watching and there is nothing to be earned.</p>
-                <p class="cond"><strong>3 — A rulebook against one's own head.</strong> To work with a language model is to work with something that starts every session from zero and can write anything at all. The only remedy is a rulebook of one's own making — characters, years, world rules, decisions, all written down, every change with its reason. Not out of tidiness, but out of statics: one's own memory is not a load-bearing wall. The rulebook fixes not a single sentence — but it keeps every draft inside the world of this one book: with its characters, its years, its tone.</p>
-                <p class="cond"><strong>4 — The discarding.</strong> For every request, the language model offers countless possible drafts; the real work is the No. Ten thousand times over: look, weigh, throw away, start again — and keep what was thrown away, dated and reasoned. Because the discarded material is the most honest evidence there is: <em>Nobody discards for an audience.</em></p>
-                <p class="cond"><strong>5 — Time, recalibrated.</strong> The language model lowered the price of the path — that is, the time and effort of producing text at all: what would once have cost decades became walkable in months. What it never lowered is the price of judgement — the work of recognising what is good, and discarding all the rest. Confuse the two, and you get mediocrity in high print runs. Understand it, and you own, for the first time, what for centuries belonged to courts, monasteries and publishing houses: the means to build a world. In 2026, they lay on a kitchen table.</p>
-                <p class="cond"><strong>6 — Standing behind it.</strong> In the end, one human being fixes exactly one version — this one and no other —, puts their name beneath it, and opens their account of the work with the part that could harm them — in this book's case: with the disclosure that an AI language model served as a tool. Because authorship was never a statement about how many hands — or which tools — helped write the text. It is a statement about accountability, about who answers for it: there is a person you can ask.</p>
-                <p class="closing">And the question that remains after these six conditions is no longer "Did a machine help write it?" nor "Was it really one person?". It is: Who stands behind this version — and can you ask them? If the answer is "no one exactly", there is no author. Not as a punishment. As a definition.</p>
-                </div>
-            </details>
+                <!-- Six conditions EN — verbatim -->
+                <details class="embed-details lang-en hidden">
+                    <summary>Read the six conditions <span style="font-weight:400; opacity:.75;">(about 650 words)</span></summary>
+                    <div class="embed-text">
+                    <p style="font-weight: 600; color: var(--primary);">Six conditions under which storytelling with a language model becomes literature that holds</p>
+                    <p class="lead-note">From the master's thesis of Noa Lindt, 2050 — the findings of her four-month investigation into a novel from the summer of 2026.</p>
+                    <p class="lead-note">First, for readers without background: a language model — a Large Language Model, or LLM — is a computer program that has learned from vast amounts of text to predict and continue language; in everyday speech, people in 2026 mostly just said "AI" (artificial intelligence). That year, such systems were used for writing at scale for the first time. "Holds" means: the language on page two hundred is as fresh as on page eight; the story's threads pay off; the world stands on its own, without ever being explained.</p>
+                    <p class="cond"><strong>1 — Open material.</strong> The knowledge the book was built from lay freely available to everyone: reports, blueprints, scenarios, research. What libraries and formal training had kept locked for centuries was open — it only still had to be understood. Or in Noa's words: <em>The lock was never the door. The lock was the time.</em></p>
+                    <p class="cond"><strong>2 — A motive.</strong> Nobody cuts a door into a house they don't care about. At the beginning of a book that holds stands no business idea and no experiment, but a this-cannot-go-on — a reason that keeps carrying even when nobody is watching and there is nothing to be earned.</p>
+                    <p class="cond"><strong>3 — A rulebook against one's own head.</strong> To work with a language model is to work with something that starts every session from zero and can write anything at all. The only remedy is a rulebook of one's own making — characters, years, world rules, decisions, all written down, every change with its reason. Not out of tidiness, but out of statics: one's own memory is not a load-bearing wall. The rulebook fixes not a single sentence — but it keeps every draft inside the world of this one book: with its characters, its years, its tone.</p>
+                    <p class="cond"><strong>4 — The discarding.</strong> For every request, the language model offers countless possible drafts; the real work is the No. Ten thousand times over: look, weigh, throw away, start again — and keep what was thrown away, dated and reasoned. Because the discarded material is the most honest evidence there is: <em>Nobody discards for an audience.</em></p>
+                    <p class="cond"><strong>5 — Time, recalibrated.</strong> The language model lowered the price of the path — that is, the time and effort of producing text at all: what would once have cost decades became walkable in months. What it never lowered is the price of judgement — the work of recognising what is good, and discarding all the rest. Confuse the two, and you get mediocrity in high print runs. Understand it, and you own, for the first time, what for centuries belonged to courts, monasteries and publishing houses: the means to build a world. In 2026, they lay on a kitchen table.</p>
+                    <p class="cond"><strong>6 — Standing behind it.</strong> In the end, one human being fixes exactly one version — this one and no other —, puts their name beneath it, and opens their account of the work with the part that could harm them — in this book's case: with the disclosure that an AI language model served as a tool. Because authorship was never a statement about how many hands — or which tools — helped write the text. It is a statement about accountability, about who answers for it: there is a person you can ask.</p>
+                    <p class="closing">And the question that remains after these six conditions is no longer "Did a machine help write it?" nor "Was it really one person?". It is: Who stands behind this version — and can you ask them? If the answer is "no one exactly", there is no author. Not as a punishment. As a definition.</p>
+                    </div>
+                </details>
 
-            <!-- ---------- Die Landschaft des Moeglichen ---------- -->
+                <!-- ---------- Die Landschaft des Moeglichen ---------- -->
+            </section>
+
             <span class="sec-anchor" id="w-landschaft" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Werkstatttext</span><span class="sec-kicker lang-en hidden">Workshop text</span>
-            <h2 class="lang-de">Die Landschaft des Möglichen</h2>
-            <h2 class="lang-en hidden">The Landscape of the Possible</h2>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Werkstatttext</span><span class="sec-kicker lang-en hidden">Workshop text</span>
+                <h2 class="lang-de">Die Landschaft des Möglichen</h2>
+                <h2 class="lang-en hidden">The Landscape of the Possible</h2>
 
-            <details class="embed-details lang-de">
-                <summary>Den ganzen Text lesen <span style="font-weight:400; opacity:.75;">(rund 400 Wörter)</span></summary>
-                <div class="embed-text">
-                <p>Am Anfang jeder Arbeitsstunde an diesem Buch stand eine Frage an eine Maschine, die aus Millionen von Büchern, Berichten und Aufsätzen gelernt hat. Man kann sich diese Maschine als vieles vorstellen. Am ehrlichsten ist vielleicht dieses Bild: Sie ist keine Feder, die schreibt. Sie ist eine Landschaft.</p>
-                <p>Eine Landschaft aus allem, was Menschen je aufgeschrieben haben — mit Tälern, in denen die vertrauten Geschichten liegen, mit Graten, hinter denen unerwartete Wendungen warten, mit Wegen ohne Zahl. Wer ihr eine Frage stellt, schickt einen Wanderer los. Zwei fast gleiche Fragen, und der Wanderer nimmt zwei völlig verschiedene Wege. Derselbe Weg wird nie zweimal gegangen; die Landschaft wiederholt sich nicht. Aber sie ist auch nicht grenzenlos: Was Sinn ergibt, hält zusammen wie ein Tal seine Wasser.</p>
-                <p>Geschrieben wird ein Buch in dieser Landschaft nicht vom Wanderer. Geschrieben wird es von dem, der die Wege beurteilt. Hunderte Male hiess das hier: losschicken, ansehen, verwerfen. Einen Schritt behalten, zehn verwerfen. Wieder losschicken, von einem anderen Punkt aus, mit einer anderen Frage. Damit sich das Buch dabei nicht verläuft, führte es sein eigenes Kartenwerk: ein Regelbuch, in dem jede Figur, jeder Ort, jedes Jahr und jede Entscheidung festgehalten ist — der Talrand, der alle Wege im Land dieses einen Buches hält.</p>
-                <p>Die Werkzeuge dieser Jahre sind dabei rasch besser geworden, und was «besser» heisst, lässt sich im selben Bild sagen: Ein besseres Werkzeug ist eine Landschaft mit tieferen Tälern und längeren Wegen — mehr erreichbare Frische, weniger Abdrift zur Mitte, längerer Atem im gewählten Ton. Was es nicht ist: ein Wanderer mit eigenem Ziel. Lesenswert wurde dieses Buch dort, wo jemand wusste, welchen Weg er sucht — und alle anderen verwarf.</p>
-                <p>Und am Ende geschah das Wichtigste: Aus unzähligen möglichen Wegen wurde genau einer gewählt und festgelegt. Gedruckt. So und nicht anders. Das ist es, was ein Buch in einer Zeit bedeutet, in der jede Geschichte tausend Fassungen haben könnte: Es ist kein Weg unter vielen mehr. Es ist der Weg, für den jemand geradesteht.</p>
-                <p>Im Impressum dieses Buches steht dafür ein einziger Satz: <em>Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch.</em> Die Landschaft gehört allen. Der Weg gehört dem, der ihn gegangen ist — und der sagen kann, warum.</p>
-                <p>Wer tiefer schauen will: Im Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt» erklären wir, was die Forschung über diese Landschaft inzwischen weiss. Und im Nachwort des Buches steht die ganze Rechenschaft.</p>
-                </div>
-            </details>
+                <details class="embed-details lang-de">
+                    <summary>Den ganzen Text lesen <span style="font-weight:400; opacity:.75;">(rund 400 Wörter)</span></summary>
+                    <div class="embed-text">
+                    <p>Am Anfang jeder Arbeitsstunde an diesem Buch stand eine Frage an eine Maschine, die aus Millionen von Büchern, Berichten und Aufsätzen gelernt hat. Man kann sich diese Maschine als vieles vorstellen. Am ehrlichsten ist vielleicht dieses Bild: Sie ist keine Feder, die schreibt. Sie ist eine Landschaft.</p>
+                    <p>Eine Landschaft aus allem, was Menschen je aufgeschrieben haben — mit Tälern, in denen die vertrauten Geschichten liegen, mit Graten, hinter denen unerwartete Wendungen warten, mit Wegen ohne Zahl. Wer ihr eine Frage stellt, schickt einen Wanderer los. Zwei fast gleiche Fragen, und der Wanderer nimmt zwei völlig verschiedene Wege. Derselbe Weg wird nie zweimal gegangen; die Landschaft wiederholt sich nicht. Aber sie ist auch nicht grenzenlos: Was Sinn ergibt, hält zusammen wie ein Tal seine Wasser.</p>
+                    <p>Geschrieben wird ein Buch in dieser Landschaft nicht vom Wanderer. Geschrieben wird es von dem, der die Wege beurteilt. Hunderte Male hiess das hier: losschicken, ansehen, verwerfen. Einen Schritt behalten, zehn verwerfen. Wieder losschicken, von einem anderen Punkt aus, mit einer anderen Frage. Damit sich das Buch dabei nicht verläuft, führte es sein eigenes Kartenwerk: ein Regelbuch, in dem jede Figur, jeder Ort, jedes Jahr und jede Entscheidung festgehalten ist — der Talrand, der alle Wege im Land dieses einen Buches hält.</p>
+                    <p>Die Werkzeuge dieser Jahre sind dabei rasch besser geworden, und was «besser» heisst, lässt sich im selben Bild sagen: Ein besseres Werkzeug ist eine Landschaft mit tieferen Tälern und längeren Wegen — mehr erreichbare Frische, weniger Abdrift zur Mitte, längerer Atem im gewählten Ton. Was es nicht ist: ein Wanderer mit eigenem Ziel. Lesenswert wurde dieses Buch dort, wo jemand wusste, welchen Weg er sucht — und alle anderen verwarf.</p>
+                    <p>Und am Ende geschah das Wichtigste: Aus unzähligen möglichen Wegen wurde genau einer gewählt und festgelegt. Gedruckt. So und nicht anders. Das ist es, was ein Buch in einer Zeit bedeutet, in der jede Geschichte tausend Fassungen haben könnte: Es ist kein Weg unter vielen mehr. Es ist der Weg, für den jemand geradesteht.</p>
+                    <p>Im Impressum dieses Buches steht dafür ein einziger Satz: <em>Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet; erzählt und entschieden hat ein Mensch.</em> Die Landschaft gehört allen. Der Weg gehört dem, der ihn gegangen ist — und der sagen kann, warum.</p>
+                    <p>Wer tiefer schauen will: Im Werkstatttext «Warum die Maschine nie denselben Text zweimal schreibt» erklären wir, was die Forschung über diese Landschaft inzwischen weiss. Und im Nachwort des Buches steht die ganze Rechenschaft.</p>
+                    </div>
+                </details>
 
-            <details class="embed-details lang-en hidden">
-                <summary>Read the whole text <span style="font-weight:400; opacity:.75;">(about 450 words)</span></summary>
-                <div class="embed-text">
-                <p>At the beginning of every working hour on this book stood a question put to a machine that has learned from millions of books, reports and essays. One can picture such a machine in many ways. Perhaps the most honest picture is this: it is not a pen that writes. It is a landscape.</p>
-                <p>A landscape made of everything people have ever written down — with valleys where the familiar stories lie, with ridges behind which unexpected turns are waiting, with paths beyond counting. To put a question to it is to send out a walker. Two almost identical questions, and the walker takes two entirely different paths. The same path is never walked twice; the landscape does not repeat itself. But neither is it boundless: what makes sense holds together the way a valley holds its waters.</p>
-                <p>A book in this landscape is not written by the walker. It is written by the one who judges the paths. Hundreds of times over, that meant here: send out, look, discard. Keep one step, discard ten. Send out again, from another point, with another question. So that the book would not lose its way, it kept a set of maps of its own: a rulebook in which every character, every place, every year and every decision is held fast — the valley wall that keeps every path inside the land of this one book.</p>
-                <p>The tools of these years grew better quickly, and what "better" means can be said in the same image: a better tool is a landscape with deeper valleys and longer paths — more reachable freshness, less drift toward the middle, a longer breath in the chosen tone. What it is not: a walker with a destination of its own. This book became worth reading where someone knew which path he was looking for — and discarded all the others.</p>
-                <p>And in the end the most important thing happened: out of countless possible paths, exactly one was chosen and fixed. Printed. This one and no other. That is what a book means in an age in which every story could have a thousand versions: it is no longer one path among many. It is the path someone answers for.</p>
-                <p>In the imprint of this book, a single sentence stands for that: <em>With an AI language model, the existing material was newly ordered; a human told the story and made every decision.</em> The landscape belongs to everyone. The path belongs to the one who walked it — and who can say why.</p>
-                <p>For a closer look: the workshop text "Why the Machine Never Writes the Same Text Twice" sets out what research now knows about this landscape. And the full account is given in the book's afterword.</p>
-                </div>
-            </details>
+                <details class="embed-details lang-en hidden">
+                    <summary>Read the whole text <span style="font-weight:400; opacity:.75;">(about 450 words)</span></summary>
+                    <div class="embed-text">
+                    <p>At the beginning of every working hour on this book stood a question put to a machine that has learned from millions of books, reports and essays. One can picture such a machine in many ways. Perhaps the most honest picture is this: it is not a pen that writes. It is a landscape.</p>
+                    <p>A landscape made of everything people have ever written down — with valleys where the familiar stories lie, with ridges behind which unexpected turns are waiting, with paths beyond counting. To put a question to it is to send out a walker. Two almost identical questions, and the walker takes two entirely different paths. The same path is never walked twice; the landscape does not repeat itself. But neither is it boundless: what makes sense holds together the way a valley holds its waters.</p>
+                    <p>A book in this landscape is not written by the walker. It is written by the one who judges the paths. Hundreds of times over, that meant here: send out, look, discard. Keep one step, discard ten. Send out again, from another point, with another question. So that the book would not lose its way, it kept a set of maps of its own: a rulebook in which every character, every place, every year and every decision is held fast — the valley wall that keeps every path inside the land of this one book.</p>
+                    <p>The tools of these years grew better quickly, and what "better" means can be said in the same image: a better tool is a landscape with deeper valleys and longer paths — more reachable freshness, less drift toward the middle, a longer breath in the chosen tone. What it is not: a walker with a destination of its own. This book became worth reading where someone knew which path he was looking for — and discarded all the others.</p>
+                    <p>And in the end the most important thing happened: out of countless possible paths, exactly one was chosen and fixed. Printed. This one and no other. That is what a book means in an age in which every story could have a thousand versions: it is no longer one path among many. It is the path someone answers for.</p>
+                    <p>In the imprint of this book, a single sentence stands for that: <em>With an AI language model, the existing material was newly ordered; a human told the story and made every decision.</em> The landscape belongs to everyone. The path belongs to the one who walked it — and who can say why.</p>
+                    <p>For a closer look: the workshop text "Why the Machine Never Writes the Same Text Twice" sets out what research now knows about this landscape. And the full account is given in the book's afterword.</p>
+                    </div>
+                </details>
 
-            <p class="lang-de">Der vollständige Text, mit den Belegen daneben:<br>
-                <a class="download-link" href="https://drive.proton.me/urls/D4RFSY1HKR#chwnJkUd36ny" target="_blank" rel="noopener">PDF lesen / herunterladen — «Warum die Maschine nie denselben Text zweimal schreibt»</a>
-            </p>
-            <p class="lang-en hidden">The full text, with the evidence beside it:<br>
-                <a class="download-link" href="https://drive.proton.me/urls/W9ZAYCZKKG#bH7eUEneY3aa" target="_blank" rel="noopener">Read / download PDF — <em>Why the Machine Never Writes the Same Text Twice</em></a>
-            </p>
+                <p class="lang-de">Der vollständige Text, mit den Belegen daneben:<br>
+                    <a class="download-link" href="https://drive.proton.me/urls/D4RFSY1HKR#chwnJkUd36ny" target="_blank" rel="noopener">PDF lesen / herunterladen — «Warum die Maschine nie denselben Text zweimal schreibt»</a>
+                </p>
+                <p class="lang-en hidden">The full text, with the evidence beside it:<br>
+                    <a class="download-link" href="https://drive.proton.me/urls/W9ZAYCZKKG#bH7eUEneY3aa" target="_blank" rel="noopener">Read / download PDF — <em>Why the Machine Never Writes the Same Text Twice</em></a>
+                </p>
 
-            <!-- ---------- Der Essay ---------- -->
+                <!-- ---------- Der Essay ---------- -->
+            </section>
+
             <span class="sec-anchor" id="w-essay" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Essay</span><span class="sec-kicker lang-en hidden">Essay</span>
-            <h2 class="lang-de">Das Feuer, das antwortet</h2>
-            <h2 class="lang-en hidden">The Fire That Answers</h2>
-            <p class="lang-de"><em>Erzählen mit dem Gedächtnis der Welt — einstehen muss ein Mensch.</em> Ein Essay über das Erzählen im Zeitalter der Maschinen — und über die ältere Frage, die keine Maschine beantworten kann: wer einsteht.</p>
-            <p class="lang-en hidden"><em>Telling with the memory of the world — a human must answer for it.</em> An essay on storytelling in the age of machines — and on the older question no machine can answer: who is answerable.</p>
-            <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/7HXXX7XZBC#pjKsBiLq573B" target="_blank" rel="noopener">PDF lesen / herunterladen — Das Feuer, das antwortet</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/4VPBN58E6R#1JeYP1MbzREb" target="_blank" rel="noopener">Read / download PDF — The Fire That Answers</a>
-            </p>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Essay</span><span class="sec-kicker lang-en hidden">Essay</span>
+                <h2 class="lang-de">Das Feuer, das antwortet</h2>
+                <h2 class="lang-en hidden">The Fire That Answers</h2>
+                <p class="lang-de"><em>Erzählen mit dem Gedächtnis der Welt — einstehen muss ein Mensch.</em> Ein Essay über das Erzählen im Zeitalter der Maschinen — und über die ältere Frage, die keine Maschine beantworten kann: wer einsteht.</p>
+                <p class="lang-en hidden"><em>Telling with the memory of the world — a human must answer for it.</em> An essay on storytelling in the age of machines — and on the older question no machine can answer: who is answerable.</p>
+                <p>
+                    <a class="lang-de download-link" href="https://drive.proton.me/urls/7HXXX7XZBC#pjKsBiLq573B" target="_blank" rel="noopener">PDF lesen / herunterladen — Das Feuer, das antwortet</a>
+                    <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/4VPBN58E6R#1JeYP1MbzREb" target="_blank" rel="noopener">Read / download PDF — The Fire That Answers</a>
+                </p>
 
-            <!-- ---------- Aus dem Register ---------- -->
+                <!-- ---------- Aus dem Register ---------- -->
+            </section>
+
             <span class="sec-anchor" id="w-pruefung" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Prüfung</span><span class="sec-kicker lang-en hidden">Check</span>
-            <h2 class="lang-de">Aus dem Register</h2>
-            <h2 class="lang-en hidden">From the register</h2>
-            <p class="lang-de">Nicht jede Prüfung findet etwas. Eine Inventur ging durch alle Kapitel und fragte, ob Tiere, Pflanzen, Klima und Requisiten zu ihrem Ort gehören — von der Zeder an der Pazifikküste bis zum Faultier im Guanacaste. Sie fand nichts. Auch das gehört ins Register: Was geprüft und für richtig befunden wurde, ist eine Auskunft wie jede andere.</p>
-            <p class="lang-en hidden">Not every check finds something. One inventory went through every chapter and asked whether the animals, plants, climate and props belong where they stand — from the cedar on the Pacific coast to the sloth in the guanacaste. It found nothing. That belongs in the register too: what has been checked and found sound is a piece of information like any other.</p>
-            <p>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/0CS65XY3F8#PajTXWCi0Rkx" target="_blank" rel="noopener">PDF lesen / herunterladen — Pol-Konsistenz-Prüfung</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/PZG6Q6C8Y0#atLrN7b6DGb2" target="_blank" rel="noopener">Read / download PDF — Pole-consistency check</a>
-                <span class="doc-caution lang-de">Nennt Figuren, Kapitel und einzelne Motive — besser nach der Lektüre.</span>
-                <span class="doc-caution lang-en hidden">Names characters, chapters and individual motifs — better read after the novel.</span>
-            </p>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Prüfung</span><span class="sec-kicker lang-en hidden">Check</span>
+                <h2 class="lang-de">Aus dem Register</h2>
+                <h2 class="lang-en hidden">From the register</h2>
+                <p class="lang-de">Nicht jede Prüfung findet etwas. Eine Inventur ging durch alle Kapitel und fragte, ob Tiere, Pflanzen, Klima und Requisiten zu ihrem Ort gehören — von der Zeder an der Pazifikküste bis zum Faultier im Guanacaste. Sie fand nichts. Auch das gehört ins Register: Was geprüft und für richtig befunden wurde, ist eine Auskunft wie jede andere.</p>
+                <p class="lang-en hidden">Not every check finds something. One inventory went through every chapter and asked whether the animals, plants, climate and props belong where they stand — from the cedar on the Pacific coast to the sloth in the guanacaste. It found nothing. That belongs in the register too: what has been checked and found sound is a piece of information like any other.</p>
+                <p>
+                    <a class="lang-de download-link" href="https://drive.proton.me/urls/0CS65XY3F8#PajTXWCi0Rkx" target="_blank" rel="noopener">PDF lesen / herunterladen — Pol-Konsistenz-Prüfung</a>
+                    <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/PZG6Q6C8Y0#atLrN7b6DGb2" target="_blank" rel="noopener">Read / download PDF — Pole-consistency check</a>
+                    <span class="doc-caution lang-de">Nennt Figuren, Kapitel und einzelne Motive — besser nach der Lektüre.</span>
+                    <span class="doc-caution lang-en hidden">Names characters, chapters and individual motifs — better read after the novel.</span>
+                </p>
 
-            <!-- ---------- Das Register der Entstehung ---------- -->
+                <!-- ---------- Das Register der Entstehung ---------- -->
+            </section>
+
             <span class="sec-anchor" id="w-register" aria-hidden="true"></span>
-            <span class="sec-kicker lang-de">Zählung</span><span class="sec-kicker lang-en hidden">Count</span>
-            <h2 class="lang-de">Das Register der Entstehung</h2>
-            <h2 class="lang-en hidden">The Register of the Making</h2>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Zählung</span><span class="sec-kicker lang-en hidden">Count</span>
+                <h2 class="lang-de">Das Register der Entstehung</h2>
+                <h2 class="lang-en hidden">The Register of the Making</h2>
 
-            <p class="lang-de">Ein Buch entsteht nicht in einer Fassung. Dieses hier begann im Juni 2026 mit einem Exposé und wurde von da an Ebene um Ebene neu geschrieben: erst der Plan, dann das Kanonbuch, das jede Figur und jede Jahreszahl festhält, dann die Kapitel, dann die englische Ausgabe, dann die Werkstatt, die davon erzählt.</p>
-            <p class="lang-en hidden">A book does not come into being in one version. This one began in June 2026 with a synopsis and was rewritten from then on, layer by layer: first the plan, then the canon book that holds every character and every year, then the chapters, then the English edition, then the workshop that tells of it.</p>
+                <p class="lang-de">Ein Buch entsteht nicht in einer Fassung. Dieses hier begann im Juni 2026 mit einem Exposé und wurde von da an Ebene um Ebene neu geschrieben: erst der Plan, dann das Kanonbuch, das jede Figur und jede Jahreszahl festhält, dann die Kapitel, dann die englische Ausgabe, dann die Werkstatt, die davon erzählt.</p>
+                <p class="lang-en hidden">A book does not come into being in one version. This one began in June 2026 with a synopsis and was rewritten from then on, layer by layer: first the plan, then the canon book that holds every character and every year, then the chapters, then the English edition, then the workshop that tells of it.</p>
 
-            <p class="lang-de">Was hier steht, ist keine Erklärung. Es ist eine Zählung.</p>
-            <p class="lang-en hidden">What stands here is not an explanation. It is a count.</p>
+                <p class="lang-de">Was hier steht, ist keine Erklärung. Es ist eine Zählung.</p>
+                <p class="lang-en hidden">What stands here is not an explanation. It is a count.</p>
 
-            <!-- Fassungsregister DE -->
-            <div class="reg-wrap lang-de">
-                <table class="reg-table">
-                    <thead>
-                        <tr><th scope="col">Ebene</th><th scope="col">begonnen</th><th scope="col" style="text-align:right;">Fassungen</th><th scope="col">Stand</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Das Exposé</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                        <tr><td>Die Roman-Bibel — das Kanonbuch, in dem jede Figur, jedes Jahr und jede Weltregel steht</td><td class="when">13. Juni 2026</td><td class="num">105</td><td class="when">v1.05 · 12. Juli 2026</td></tr>
-                        <tr><td>Kapitelstruktur und Szenenliste</td><td class="when">Juni 2026</td><td class="num">10</td><td class="when">v0.10 · 23. Juni 2026</td></tr>
-                        <tr><td>Die 28 Kapitel, deutsch</td><td class="when">Juni 2026</td><td class="num">109</td><td class="when">zuletzt 11. Juli 2026</td></tr>
-                        <tr><td>Die zwölf Belege und Übergänge, deutsch</td><td class="when">Juni 2026</td><td class="num">47</td><td class="when">zuletzt Juli 2026</td></tr>
-                        <tr><td>Nachwort, Impressum, Anhänge, Covertexte (beide Ausgaben)</td><td class="when">Juni 2026</td><td class="num">55</td><td class="when">zuletzt 11. Juli 2026</td></tr>
-                        <tr><td>Das Gesamtmanuskript, deutsch</td><td class="when">Juni 2026</td><td class="num">13</td><td class="when">v0.13 · 11. Juli 2026</td></tr>
-                        <tr><td>Die Translation Bible — das Kanonbuch der englischen Ausgabe</td><td class="when">25. Juni 2026</td><td class="num">51</td><td class="when">v0.51 · 12. Juli 2026</td></tr>
-                        <tr><td>Die 28 Kapitel, englisch</td><td class="when">Juni 2026</td><td class="num">56</td><td class="when">zuletzt Juli 2026</td></tr>
-                        <tr><td>Die zehn Belege, englisch</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">zuletzt Juli 2026</td></tr>
-                        <tr><td>Das Gesamtmanuskript, englisch</td><td class="when">Juni 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                        <tr><td>Die vier Werkstattpapiere (alle vier auch englisch)</td><td class="when">17. Juni 2026</td><td class="num">42</td><td class="when">zuletzt 12. Juli 2026</td></tr>
-                        <tr><td>Die beiden Werkstatttexte</td><td class="when">17. Juni 2026</td><td class="num">7</td><td class="when">zuletzt 12. Juli 2026</td></tr>
-                        <tr><td>Der Essay, deutsch und englisch</td><td class="when">5. Juli 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12. Juli 2026</td></tr>
-                        <tr><td>Die Novelle</td><td class="when">Juli 2026</td><td class="num">6</td><td class="when">v0.6 · 12. Juli 2026</td></tr>
-                        <tr><td>Diese Webseite</td><td class="when">10. Juli 2026</td><td class="num">22</td><td class="when">12. Juli 2026</td></tr>
-                        <tr class="reg-book"><td>Das Buch</td><td class="when"></td><td class="num">v0.1</td><td class="when">der erste Eintrag</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="reg-sum lang-de"><strong>Zusammen: 575 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
+                <!-- Fassungsregister DE -->
+                <div class="reg-wrap lang-de">
+                    <table class="reg-table">
+                        <thead>
+                            <tr><th scope="col">Ebene</th><th scope="col">begonnen</th><th scope="col" style="text-align:right;">Fassungen</th><th scope="col">Stand</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Das Exposé</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
+                            <tr><td>Die Roman-Bibel — das Kanonbuch, in dem jede Figur, jedes Jahr und jede Weltregel steht</td><td class="when">13. Juni 2026</td><td class="num">105</td><td class="when">v1.05 · 12. Juli 2026</td></tr>
+                            <tr><td>Kapitelstruktur und Szenenliste</td><td class="when">Juni 2026</td><td class="num">10</td><td class="when">v0.10 · 23. Juni 2026</td></tr>
+                            <tr><td>Die 28 Kapitel, deutsch</td><td class="when">Juni 2026</td><td class="num">109</td><td class="when">zuletzt 11. Juli 2026</td></tr>
+                            <tr><td>Die zwölf Belege und Übergänge, deutsch</td><td class="when">Juni 2026</td><td class="num">47</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Nachwort, Impressum, Anhänge, Covertexte (beide Ausgaben)</td><td class="when">Juni 2026</td><td class="num">55</td><td class="when">zuletzt 11. Juli 2026</td></tr>
+                            <tr><td>Das Gesamtmanuskript, deutsch</td><td class="when">Juni 2026</td><td class="num">13</td><td class="when">v0.13 · 11. Juli 2026</td></tr>
+                            <tr><td>Die Translation Bible — das Kanonbuch der englischen Ausgabe</td><td class="when">25. Juni 2026</td><td class="num">51</td><td class="when">v0.51 · 12. Juli 2026</td></tr>
+                            <tr><td>Die 28 Kapitel, englisch</td><td class="when">Juni 2026</td><td class="num">56</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Die zehn Belege, englisch</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Das Gesamtmanuskript, englisch</td><td class="when">Juni 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
+                            <tr><td>Die vier Werkstattpapiere (alle vier auch englisch)</td><td class="when">17. Juni 2026</td><td class="num">42</td><td class="when">zuletzt 12. Juli 2026</td></tr>
+                            <tr><td>Die beiden Werkstatttexte</td><td class="when">17. Juni 2026</td><td class="num">7</td><td class="when">zuletzt 12. Juli 2026</td></tr>
+                            <tr><td>Der Essay, deutsch und englisch</td><td class="when">5. Juli 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12. Juli 2026</td></tr>
+                            <tr><td>Die Novelle</td><td class="when">Juli 2026</td><td class="num">6</td><td class="when">v0.6 · 12. Juli 2026</td></tr>
+                            <tr><td>Diese Webseite</td><td class="when">10. Juli 2026</td><td class="num">22</td><td class="when">12. Juli 2026</td></tr>
+                            <tr class="reg-book"><td>Das Buch</td><td class="when"></td><td class="num">v0.1</td><td class="when">der erste Eintrag</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="reg-sum lang-de"><strong>Zusammen: 575 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
 
-            <!-- Register of the Making EN -->
-            <div class="reg-wrap lang-en hidden">
-                <table class="reg-table">
-                    <thead>
-                        <tr><th scope="col">Layer</th><th scope="col">begun</th><th scope="col" style="text-align:right;">Versions</th><th scope="col">As of</th></tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>The synopsis</td><td class="when">June 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                        <tr><td>The novel bible — the canon book holding every character, every year, every law of the world</td><td class="when">13 June 2026</td><td class="num">105</td><td class="when">v1.05 · 12 July 2026</td></tr>
-                        <tr><td>Chapter structure and scene list</td><td class="when">June 2026</td><td class="num">10</td><td class="when">v0.10 · 23 June 2026</td></tr>
-                        <tr><td>The 28 chapters, German</td><td class="when">June 2026</td><td class="num">109</td><td class="when">last 11 July 2026</td></tr>
-                        <tr><td>The twelve exhibits and transitions, German</td><td class="when">June 2026</td><td class="num">47</td><td class="when">last July 2026</td></tr>
-                        <tr><td>Afterword, imprint, appendices, cover texts (both editions)</td><td class="when">June 2026</td><td class="num">55</td><td class="when">last 11 July 2026</td></tr>
-                        <tr><td>The full manuscript, German</td><td class="when">June 2026</td><td class="num">13</td><td class="when">v0.13 · 11 July 2026</td></tr>
-                        <tr><td>The Translation Bible — the canon book of the English edition</td><td class="when">25 June 2026</td><td class="num">51</td><td class="when">v0.51 · 12 July 2026</td></tr>
-                        <tr><td>The 28 chapters, English</td><td class="when">June 2026</td><td class="num">56</td><td class="when">last July 2026</td></tr>
-                        <tr><td>The ten exhibits, English</td><td class="when">June 2026</td><td class="num">18</td><td class="when">last July 2026</td></tr>
-                        <tr><td>The full manuscript, English</td><td class="when">June 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                        <tr><td>The four workshop papers (all four also in English)</td><td class="when">17 June 2026</td><td class="num">42</td><td class="when">last 12 July 2026</td></tr>
-                        <tr><td>The two workshop texts</td><td class="when">17 June 2026</td><td class="num">7</td><td class="when">last 12 July 2026</td></tr>
-                        <tr><td>The essay, German and English</td><td class="when">5 July 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12 July 2026</td></tr>
-                        <tr><td>The novella</td><td class="when">July 2026</td><td class="num">6</td><td class="when">v0.6 · 12 July 2026</td></tr>
-                        <tr><td>This website</td><td class="when">10 July 2026</td><td class="num">22</td><td class="when">12 July 2026</td></tr>
-                        <tr class="reg-book"><td>The book</td><td class="when"></td><td class="num">v0.1</td><td class="when">the first entry</td></tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="reg-sum lang-en hidden"><strong>Altogether: 575 versions.</strong> The book that came of it carries the number v0.1.</p>
+                <!-- Register of the Making EN -->
+                <div class="reg-wrap lang-en hidden">
+                    <table class="reg-table">
+                        <thead>
+                            <tr><th scope="col">Layer</th><th scope="col">begun</th><th scope="col" style="text-align:right;">Versions</th><th scope="col">As of</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>The synopsis</td><td class="when">June 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
+                            <tr><td>The novel bible — the canon book holding every character, every year, every law of the world</td><td class="when">13 June 2026</td><td class="num">105</td><td class="when">v1.05 · 12 July 2026</td></tr>
+                            <tr><td>Chapter structure and scene list</td><td class="when">June 2026</td><td class="num">10</td><td class="when">v0.10 · 23 June 2026</td></tr>
+                            <tr><td>The 28 chapters, German</td><td class="when">June 2026</td><td class="num">109</td><td class="when">last 11 July 2026</td></tr>
+                            <tr><td>The twelve exhibits and transitions, German</td><td class="when">June 2026</td><td class="num">47</td><td class="when">last July 2026</td></tr>
+                            <tr><td>Afterword, imprint, appendices, cover texts (both editions)</td><td class="when">June 2026</td><td class="num">55</td><td class="when">last 11 July 2026</td></tr>
+                            <tr><td>The full manuscript, German</td><td class="when">June 2026</td><td class="num">13</td><td class="when">v0.13 · 11 July 2026</td></tr>
+                            <tr><td>The Translation Bible — the canon book of the English edition</td><td class="when">25 June 2026</td><td class="num">51</td><td class="when">v0.51 · 12 July 2026</td></tr>
+                            <tr><td>The 28 chapters, English</td><td class="when">June 2026</td><td class="num">56</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The ten exhibits, English</td><td class="when">June 2026</td><td class="num">18</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The full manuscript, English</td><td class="when">June 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
+                            <tr><td>The four workshop papers (all four also in English)</td><td class="when">17 June 2026</td><td class="num">42</td><td class="when">last 12 July 2026</td></tr>
+                            <tr><td>The two workshop texts</td><td class="when">17 June 2026</td><td class="num">7</td><td class="when">last 12 July 2026</td></tr>
+                            <tr><td>The essay, German and English</td><td class="when">5 July 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12 July 2026</td></tr>
+                            <tr><td>The novella</td><td class="when">July 2026</td><td class="num">6</td><td class="when">v0.6 · 12 July 2026</td></tr>
+                            <tr><td>This website</td><td class="when">10 July 2026</td><td class="num">22</td><td class="when">12 July 2026</td></tr>
+                            <tr class="reg-book"><td>The book</td><td class="when"></td><td class="num">v0.1</td><td class="when">the first entry</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="reg-sum lang-en hidden"><strong>Altogether: 575 versions.</strong> The book that came of it carries the number v0.1.</p>
+            </section>
+
         </div>
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
@@ -1963,9 +2050,15 @@
 
         const LANG_KEY = 'ez_lang';
 
-        // Ermittelt die Startsprache: 1. gemerkte Nutzerwahl, 2. Browsersprache,
-        // Default DE. localStorage kann im Privatmodus werfen -> abgefangen.
+        // Ermittelt die Startsprache: 1. Angabe in der Adresse (?lang=), 2. gemerkte
+        // Nutzerwahl, 3. Browsersprache, Default DE. localStorage kann im
+        // Privatmodus werfen -> abgefangen.
         function initialLang() {
+            // 1. ?lang=de / ?lang=en — schlaegt alles andere, wird aber nicht gemerkt
+            try {
+                const q = new URLSearchParams(window.location.search).get('lang');
+                if (q === 'de' || q === 'en') return q;
+            } catch (e) { /* URLSearchParams nicht verfuegbar */ }
             try {
                 const saved = localStorage.getItem(LANG_KEY);
                 if (saved === 'de' || saved === 'en') return saved;
