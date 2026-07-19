@@ -2,11 +2,21 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.18 ·  2026-07-13
+  Fassung:  v0.19 ·  2026-07-13
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.17 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.18 (Sitzung 13.07.2026):
+  Neues Werkstattpapier «Das Fundament» / «The Foundation» aufgenommen
+  (DE v0.6 / EN v0.1, Proton 35K8M336TM / 3BR55P5M9C):
+  (1) Werkstatt-Seite: eigener Abschnitt mit Klammer, Dachzeile «Analyse»,
+      Anker w-fundament, eingeordnet zwischen Essay und Pol-Pruefung
+      (Analyse -> Pruefung -> Zaehlung). Uebersicht auf sieben Eintraege.
+  (2) Grundlagen-Seite: Querverweis am Fuss der Werkstattpapiere, mit
+      Sprung direkt auf den Abschnitt (neue Hilfsfunktion goToSection()).
+  Damit fuehrt die Seite 19 Proton-Downloads.
+
+  Aenderungen v0.17 -> v0.18 (Sitzung 13.07.2026):
   Sprachwahl per Adresse: initialLang() liest zusaetzlich ?lang=de / ?lang=en
   und stellt das ueber gemerkte Wahl und Browsersprache. Damit laesst sich ein
   gezielt deutscher oder englischer Link verschicken.
@@ -1354,6 +1364,14 @@
                 <a class="lang-de download-link" href="https://drive.proton.me/urls/61RMF3GV54#qbC1tYzM05u1" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Design Rationale</a>
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/NRKQ1GB180#4u4JOPQgt7fD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — Design Rationale</a>
             </div>
+
+            <p class="lang-de">Wie diese Quellen und Papiere zusammenhängen — was jede beisteuert, an welche Forschung sie anschliesst und wo die Konstruktion offen bleibt —, führt <strong>Das Fundament</strong> einzeln auf. Es steht in der Werkstatt.</p>
+            <p class="lang-en hidden">How these sources and papers hang together — what each contributes, which research it connects to, and where the construction stays open — is set out one by one in <strong>The Foundation</strong>. It stands in the workshop.</p>
+            <p>
+                <a href="#" class="inline-link" onclick="goToSection('werkstatt', 'w-fundament'); return false;">
+                    <span class="lang-de">Zu «Das Fundament» in der Werkstatt</span><span class="lang-en hidden">To «The Foundation» in the workshop</span>
+                </a>
+            </p>
         </div>
 
         <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (INTERAKTIV) ================= -->
@@ -1439,6 +1457,7 @@
                     <li><a class="inline-link" href="#w-novelle">Die Novelle</a><span class="toc-kind">Erzählung</span></li>
                     <li><a class="inline-link" href="#w-landschaft">Die Landschaft des Möglichen</a><span class="toc-kind">Werkstatttext</span></li>
                     <li><a class="inline-link" href="#w-essay">Das Feuer, das antwortet</a><span class="toc-kind">Essay</span></li>
+                    <li><a class="inline-link" href="#w-fundament">Das Fundament</a><span class="toc-kind">Analyse</span></li>
                     <li><a class="inline-link" href="#w-pruefung">Aus dem Register</a><span class="toc-kind">Prüfung</span></li>
                     <li><a class="inline-link" href="#w-register">Das Register der Entstehung</a><span class="toc-kind">Zählung</span></li>
                 </ol>
@@ -1450,6 +1469,7 @@
                     <li><a class="inline-link" href="#w-novelle">The novella</a><span class="toc-kind">Narrative</span></li>
                     <li><a class="inline-link" href="#w-landschaft">The Landscape of the Possible</a><span class="toc-kind">Workshop text</span></li>
                     <li><a class="inline-link" href="#w-essay">The Fire That Answers</a><span class="toc-kind">Essay</span></li>
+                    <li><a class="inline-link" href="#w-fundament">The Foundation</a><span class="toc-kind">Analysis</span></li>
                     <li><a class="inline-link" href="#w-pruefung">From the register</a><span class="toc-kind">Check</span></li>
                     <li><a class="inline-link" href="#w-register">The Register of the Making</a><span class="toc-kind">Count</span></li>
                 </ol>
@@ -1577,6 +1597,20 @@
                 </p>
 
                 <!-- ---------- Aus dem Register ---------- -->
+            </section>
+
+            <!-- ---------- Das Fundament ---------- -->
+            <span class="sec-anchor" id="w-fundament" aria-hidden="true"></span>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Analyse</span><span class="sec-kicker lang-en hidden">Analysis</span>
+                <h2 class="lang-de">Das Fundament</h2>
+                <h2 class="lang-en hidden">The Foundation</h2>
+                <p class="lang-de"><em>Worauf die Welt von «Eintrag Null» gebaut ist.</em> Vier reale Arbeiten stehen unter dieser Welt, dazu sieben Gründungsentscheidungen und eine private fünfte Quelle. Dieses Papier führt sie einzeln auf: was jede beisteuert, an welche Forschung sie anschliesst — und wo die Konstruktion offen bleibt. Für alle geschrieben, die es nachprüfen wollen; Fachbegriffe werden erklärt, Vorwissen wird nicht vorausgesetzt.</p>
+                <p class="lang-en hidden"><em>What the world of «Entry Zero» is built on.</em> Four real works lie beneath this world, together with seven founding decisions and a private fifth source. This paper sets them out one by one: what each contributes, which research it connects to — and where the construction stays open. Written for anyone who wants to check; technical terms are explained, no prior knowledge assumed.</p>
+                <p>
+                    <a class="lang-de download-link" href="https://drive.proton.me/urls/35K8M336TM#oiKgoLbZa3Sr" target="_blank" rel="noopener">PDF lesen / herunterladen — Das Fundament</a>
+                    <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/3BR55P5M9C#En5LDoaXAtuD" target="_blank" rel="noopener">Read / download PDF — The Foundation</a>
+                </p>
             </section>
 
             <span class="sec-anchor" id="w-pruefung" aria-hidden="true"></span>
@@ -2075,6 +2109,15 @@
         }
 
         // 'auto' = Startaufruf ohne Klick: Sprache setzen, aber NICHT als Wahl merken.
+        // Panelwechsel mit Sprung auf einen Abschnitt (switchTab scrollt nach oben)
+        function goToSection(tabId, anchorId) {
+            switchTab(tabId);
+            const el = document.getElementById(anchorId);
+            if (el && el.scrollIntoView) {
+                requestAnimationFrame(function () { el.scrollIntoView({ block: 'start' }); });
+            }
+        }
+
         function setLanguage(lang, opts) {
             const remember = !(opts && opts.auto);
             currentLang = lang;
