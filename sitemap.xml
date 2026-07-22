@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  sitemap.xml — entryzero.vercel.app
+  Fassung v0.1 · 2026-07-22
+
+  Die Webseite traegt ihren gesamten Inhalt unter einer Adresse; die vier
+  Rubriken werden im Browser umgeschaltet, nicht nachgeladen. Darum steht hier
+  ein Eintrag und nicht fuenf.
+
+  /en.html fehlt mit Absicht: die Datei leitet nur weiter und hat keinen
+  eigenen Inhalt. Sie bleibt abrufbar (siehe robots.txt), soll aber nicht als
+  eigene Seite indexiert werden.
+
+  <lastmod> bei jeder inhaltlichen Aenderung der index.html nachfuehren.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://entryzero.vercel.app/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
