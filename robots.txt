@@ -1,0 +1,15 @@
+# robots.txt — entryzero.vercel.app
+# Fassung v0.1 · 2026-07-22
+#
+# Alles ist zum Lesen freigegeben. Der eigentliche Zweck dieser Datei ist die
+# Sitemap-Zeile: Sie ist der Ort, an dem jeder Suchdienst nachsieht.
+#
+# Hinweis zu /en.html: bewusst NICHT gesperrt. Die Seite traegt die englischen
+# Vorschau-Angaben fuer LinkedIn und Facebook, und deren Abrufprogramme halten
+# sich an diese Datei — eine Sperre wuerde die Vorschau zerstoeren. Sie steht
+# dafuer nicht in der Sitemap, weil sie nur weiterleitet und keinen Inhalt hat.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://entryzero.vercel.app/sitemap.xml
