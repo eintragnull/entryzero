@@ -2,11 +2,29 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.19 ·  2026-07-13
+  Fassung:  v0.20 ·  2026-07-22
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.18 (Sitzung 13.07.2026):
+  Aenderungen gegenueber v0.19 (Sitzung 22.07.2026):
+  Auffindbarkeit. Zwei Ergaenzungen im Kopfbereich, nichts am Inhalt:
+  (1) rel="canonical" auf https://entryzero.vercel.app/ — noetig, seit ?lang=
+      eingefuehrt wurde: /, /?lang=de und /?lang=en sind sonst drei Adressen
+      mit gleichem Inhalt. Die kanonische Angabe buendelt sie auf eine.
+  (2) JSON-LD erweitert. Der Block war bereits vorhanden und gueltig; ergaenzt
+      wurden Lizenz (CC BY-NC-SA 4.0), isAccessibleForFree, url, image,
+      alternateName, bookEdition, copyrightYear/-holder; bookFormat auf die
+      volle schema.org-Adresse gesetzt; ein WebSite-Knoten kommt dazu (@graph).
+      Alle Angaben aus Impressum v0.9 belegt; ISBN dort noch Platzhalter,
+      steht daher NICHT drin.
+  ⚠ NICHT angetastet: die Beschreibung nennt «vier Generationen». Das ist der
+      dokumentierte offene Kanon-Punkt (Schulblatt-Pilot v0.3 § 6 K1;
+      Webseiten-Texte DE v0.15 Befund B4): U4 v0.3 zaehlt vier, Expose,
+      Webtexte und Serien-Treatment zaehlen drei. Kein eigenmaechtiger Eingriff
+      — Entscheid Martin ausstehend.
+  Dazu ausserhalb dieser Datei: robots.txt und sitemap.xml (neu).
+
+  Aenderungen v0.18 -> v0.19 (Sitzung 13.07.2026):
   Neues Werkstattpapier «Das Fundament» / «The Foundation» aufgenommen
   (DE v0.6 / EN v0.1, Proton 35K8M336TM / 3BR55P5M9C):
   (1) Werkstatt-Seite: eigener Abschnitt mit Klammer, Dachzeile «Analyse»,
@@ -202,6 +220,8 @@
     <meta name="keywords" content="Eintrag Null, Entry Zero, Martin U G P, Roman, Post-Growth, Föderation, Symbios Butterfly Lab, Open Access Buch, Alternative Ökonomie">
     <meta name="robots" content="index, follow">
     <meta name="author" content="Martin U G P">
+    <!-- Kanonische Adresse: buendelt /, /?lang=de und /?lang=en auf eine Seite -->
+    <link rel="canonical" href="https://entryzero.vercel.app/">
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="book">
@@ -223,30 +243,61 @@
     <meta property="twitter:image" content="https://entryzero.vercel.app/book-on-table-og.png">
     <meta property="twitter:image:alt" content="Eintrag Null / Entry Zero — das gedruckte Buch auf einem Tisch">
 
-    <!-- Strukturierte JSON-LD Daten -->
+    <!-- Strukturierte JSON-LD Daten. Angaben belegt aus Impressum v0.9
+         (1. Auflage · 2026 · v0.1 · CC BY-NC-SA 4.0). ISBN dort noch
+         Platzhalter und darum hier nicht gefuehrt. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Book",
-      "name": "Eintrag Null / Entry Zero",
-      "author": {
-        "@type": "Person",
-        "name": "Martin U G P"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "The Symbios Butterfly Lab"
-      },
-      "datePublished": "2026",
-      "inLanguage": ["de", "en"],
-      "bookFormat": "EBook",
-      "description": "Ein Roman über vier Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0.00",
-        "priceCurrency": "CHF",
-        "availability": "https://schema.org/InStock"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://entryzero.vercel.app/#webseite",
+          "url": "https://entryzero.vercel.app/",
+          "name": "Eintrag Null / Entry Zero",
+          "inLanguage": ["de", "en"],
+          "about": { "@id": "https://entryzero.vercel.app/#buch" },
+          "publisher": { "@id": "https://entryzero.vercel.app/#tsbl" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://entryzero.vercel.app/#autor",
+          "name": "Martin U G P"
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://entryzero.vercel.app/#tsbl",
+          "name": "The Symbios Butterfly Lab",
+          "alternateName": "TSBL",
+          "url": "https://entryzero.vercel.app/"
+        },
+        {
+          "@type": "Book",
+          "@id": "https://entryzero.vercel.app/#buch",
+          "name": "Eintrag Null",
+          "alternateName": "Entry Zero",
+          "url": "https://entryzero.vercel.app/",
+          "image": "https://entryzero.vercel.app/book-on-table-og.png",
+          "author": { "@id": "https://entryzero.vercel.app/#autor" },
+          "publisher": { "@id": "https://entryzero.vercel.app/#tsbl" },
+          "copyrightHolder": { "@id": "https://entryzero.vercel.app/#autor" },
+          "datePublished": "2026",
+          "copyrightYear": 2026,
+          "bookEdition": "1. Auflage · v0.1",
+          "inLanguage": ["de", "en"],
+          "bookFormat": "https://schema.org/EBook",
+          "isAccessibleForFree": true,
+          "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+          "description": "Ein Roman über vier Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0.00",
+            "priceCurrency": "CHF",
+            "availability": "https://schema.org/InStock",
+            "url": "https://entryzero.vercel.app/"
+          }
+        }
+      ]
     }
     </script>
 
