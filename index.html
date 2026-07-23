@@ -2,11 +2,30 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.20 ·  2026-07-22
+  Fassung:  v0.21 ·  2026-07-23
   Grundlage: Webseiten_Texte_DE_v0_12 · Webseiten_Texte_EN_v0_10
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.19 (Sitzung 22.07.2026):
+  Aenderungen gegenueber v0.20 (Sitzung 23.07.2026):
+  Farbkontrast der Knoepfe (WCAG 1.4.3). Gemessener Befund: weisse Schrift auf
+  der gruenen Flaeche erreichte 2,41:1, noetig sind 4,5:1 — bei den beiden
+  Regeln .lang-btn.active und .action-btn. Der Ueberfahr-Zustand
+  (--primary-hover) lag mit 3,28:1 ebenfalls darunter; Pruefprogramme melden
+  ihn nicht, weil sie nicht mit der Maus fahren.
+  Beschluss Martin: Weg A — dunkle Schrift auf der gruenen Flaeche, statt die
+  Flaeche abzudunkeln. Das Gruen selbst bleibt unangetastet, damit Titel,
+  Abschnittsklammern und Tabellenkoepfe unveraendert bleiben (dort steht das
+  Gruen als Schrift auf dunklem Grund und erreicht 8,17:1).
+  Verwendet wird #08201b — genau die Farbe, die der Skip-Link auf derselben
+  gruenen Flaeche seit v0.3 traegt. Keine neue Farbe, sondern dieselbe Regel,
+  nun auch auf die Knoepfe angewandt. Ergebnis: 7,07:1 normal, 5,19:1 beim
+  Ueberfahren. Dasselbe Muster loest .explore-btn:hover bereits auf Gelb.
+  ⚠ Mitgenommen: .action-btn.secondary erbte die weisse Schrift von .action-btn
+  und haette sonst dunkle Schrift auf heller Flaeche bekommen — sie behaelt
+  ihr Weiss jetzt ausdruecklich (heller Schleier auf dunklem Grund).
+  Nicht angetastet: der inaktive Sprachknopf (weiss auf dunkel, 19,44:1).
+
+  Aenderungen v0.19 -> v0.20 (Sitzung 22.07.2026):
   Auffindbarkeit. Zwei Ergaenzungen im Kopfbereich, nichts am Inhalt:
   (1) rel="canonical" auf https://entryzero.vercel.app/ — noetig, seit ?lang=
       eingefuehrt wurde: /, /?lang=de und /?lang=en sind sonst drei Adressen
@@ -439,6 +458,9 @@
         .lang-btn.active {
             background: var(--primary);
             border-color: var(--primary);
+            /* Dunkle Schrift auf der gruenen Flaeche: 7,07:1 statt 2,41:1
+               mit Weiss. Gleiche Farbe wie beim Skip-Link. */
+            color: #08201b;
             box-shadow: 0 0 12px rgba(26, 188, 156, 0.5);
         }
 
@@ -714,7 +736,9 @@
 
         .action-btn {
             background: var(--primary);
-            color: white;
+            /* Dunkle Schrift auf Gruen: 7,07:1 normal, 5,19:1 beim Ueberfahren.
+               Weiss lag bei 2,41:1 bzw. 3,28:1 und fiel durch. */
+            color: #08201b;
             padding: 14px 28px;
             border-radius: 8px;
             text-decoration: none;
@@ -736,6 +760,9 @@
         .action-btn.secondary {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.25);
+            /* Keine gruene Flaeche, sondern ein heller Schleier auf dunklem
+               Grund — hier bleibt Weiss die lesbare Wahl. */
+            color: #ffffff;
             box-shadow: none;
         }
 
