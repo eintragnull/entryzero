@@ -2,11 +2,19 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.26 ·  2026-07-26
+  Fassung:  v0.27 ·  2026-07-27
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.25 (Sitzung 26.07.2026):
+  Aenderungen gegenueber v0.26 (Sitzung 27.07.2026):
+  Startseite: die beiden Knoepfe («Das Buch lesen» / «Die Welt dahinter»)
+  ruecken nach oben — direkt hinter den Pitch-Absatz («...bis zum Jahr 2100.»)
+  und vor den Existenzgrund-Absatz («Berichte und Entwuerfe...»). Reine
+  Umstellung des vorhandenen btn-group-Blocks; Knoepfe, Beschriftungen, Ziele
+  und Stil unveraendert. Reihenfolge neu:
+  Pitch -> [Knoepfe] -> Existenzgrund -> «frei verfuegbar» -> Werkstatt-Zeile.
+
+  Aenderungen v0.25 -> v0.26 (Sitzung 26.07.2026):
   Favicon aus dem Morpho-Falter (Skizze Teil4 Falter v0.3). Der weisse Grund
   wurde freigestellt (transparent), damit das Icon auf hellen wie dunklen Tabs
   ohne Kasten steht; quadratisch um den Falter zugeschnitten.
@@ -1328,13 +1336,6 @@
             <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über drei Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100.</p>
             <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across three generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100.</p>
 
-            <p class="lang-de">Berichte und Entwürfe rechnen längst vor, dass eine gerechte, ökologisch tragfähige Wirtschaft möglich wäre. Warum wird sie dann nicht gebaut? Dieser Roman stellt die andere Frage — nicht <em>ob</em> sie möglich ist, sondern wie es wäre, in ihr zu leben. Und eine zweite, die im Erzählen selbst steckt: ob sich einer solchen Welt mit den Sprachmodellen von heute Leben einhauchen lässt.</p>
-
-            <p class="lang-de">Das Buch ist frei verfügbar, auf Deutsch und auf Englisch.</p>
-            <p class="lang-en hidden">Reports and blueprints have long shown that a just, ecologically viable economy would be possible. So why is it not being built? This novel asks the other question — not <em>whether</em> it is possible, but what it would be like to live in it. And a second one, lodged in the telling itself: whether such a world can be given life with the language models of today.</p>
-
-            <p class="lang-en hidden">The book is freely available, in English and in German.</p>
-
             <div class="btn-group" style="justify-content: center;">
                 <button class="action-btn" onclick="switchTab('buch')">
                     <span class="lang-de">Das Buch lesen</span><span class="lang-en hidden">Read the book</span>
@@ -1343,6 +1344,13 @@
                     <span class="lang-de">Die Welt dahinter</span><span class="lang-en hidden">The world behind it</span>
                 </button>
             </div>
+
+            <p class="lang-de">Berichte und Entwürfe rechnen längst vor, dass eine gerechte, ökologisch tragfähige Wirtschaft möglich wäre. Warum wird sie dann nicht gebaut? Dieser Roman stellt die andere Frage — nicht <em>ob</em> sie möglich ist, sondern wie es wäre, in ihr zu leben. Und eine zweite, die im Erzählen selbst steckt: ob sich einer solchen Welt mit den Sprachmodellen von heute Leben einhauchen lässt.</p>
+
+            <p class="lang-de">Das Buch ist frei verfügbar, auf Deutsch und auf Englisch.</p>
+            <p class="lang-en hidden">Reports and blueprints have long shown that a just, ecologically viable economy would be possible. So why is it not being built? This novel asks the other question — not <em>whether</em> it is possible, but what it would be like to live in it. And a second one, lodged in the telling itself: whether such a world can be given life with the language models of today.</p>
+
+            <p class="lang-en hidden">The book is freely available, in English and in German.</p>
 
             <p style="font-size: 1rem; margin-top: 45px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 25px; text-align: center;">
                 <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" class="inline-link" onclick="switchTab('werkstatt'); return false;">Die Werkstatt</a> erzählt es — als Novelle.</span>
