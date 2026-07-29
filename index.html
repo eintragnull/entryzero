@@ -2,11 +2,19 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.25 ·  2026-07-26
+  Fassung:  v0.26 ·  2026-07-26
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.24 (Sitzung 26.07.2026):
+  Aenderungen gegenueber v0.25 (Sitzung 26.07.2026):
+  Favicon aus dem Morpho-Falter (Skizze Teil4 Falter v0.3). Der weisse Grund
+  wurde freigestellt (transparent), damit das Icon auf hellen wie dunklen Tabs
+  ohne Kasten steht; quadratisch um den Falter zugeschnitten.
+  Neue Dateien (in die Wurzel): favicon.ico (16/32/48), favicon-16/32/48/192/
+  512.png, apple-touch-icon.png (180, dunkler Grund gegen iOS-Schwarz),
+  site.webmanifest. Im Kopf verlinkt; nur <link>/<meta>-Zeilen, sonst nichts.
+
+  Aenderungen v0.24 -> v0.25 (Sitzung 26.07.2026):
   Zweite Frage am Existenzgrund-Absatz der Startseite (Beschluss Martin,
   Formulierung 1, «leise/verklammert»). DE/EN, als Anschlusssatz an den
   bestehenden Absatz. Inhalt: ob sich einer solchen Welt mit den Sprachmodellen
@@ -295,6 +303,14 @@
     <meta name="author" content="Martin U G P">
     <!-- Kanonische Adresse: buendelt /, /?lang=de und /?lang=en auf eine Seite -->
     <link rel="canonical" href="https://entryzero.vercel.app/">
+
+    <!-- Favicon (Morpho-Falter, freigestellt) -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#1abc9c">
 
     <!-- Open Graph / Facebook / LinkedIn -->
     <meta property="og:type" content="book">
