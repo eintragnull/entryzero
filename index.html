@@ -2,11 +2,43 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.29 ·  2026-07-29
+  Fassung:  v0.31 ·  2026-07-31
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.28 (Sitzung 29.07.2026):
+  Aenderungen gegenueber v0.30 (Sitzung 31.07.2026):
+  A) Generationen-Zaehlung vereinheitlicht auf DREI (Beschluss Martin):
+     durchgehend «drei Generationen» wie der Rueckseitentext U4. Grund: das
+     Kind von Naia und Esra spielt im Roman keine wesentliche Rolle und hat
+     keinen Namen. Geaendert: Erzaehl-Absatz Buch-Seite (DE+EN) «vier -> drei»
+     und JSON-LD-description. Der Startseiten-Untertitel sagte bereits «drei»;
+     der Widerspruch stand also INNERHALB der Seite (U4 drei vs. Buch-Seite/
+     JSON-LD vier) und ist damit aufgeloest. Der offene Kanon-Punkt 3/4 ist
+     fuer die Webseite entschieden.
+  B) Register der Entstehung (Werkstatt) auf Fassungsregister v0.4 gebracht
+     (Stand 30. Juli, im Projektordner). Alle Zeilen und die Summe neu:
+     Roman-Bibel 112, Kapitel DE 159, Belege DE 52, Paratexte 70, Gesamtms DE
+     24, Translation Bible 55, Kapitel EN 105, Belege EN 21, Gesamtms EN 19,
+     Werkstattpapiere 44 (korrigiert, war 40/31 — Skript uebersah EN-Whitepaper
+     und EN-Lebendige-Bilanz), Werkstatttexte 11, Essay 10, Novelle 7.
+     Webseite-Zeile GESTRICHEN (Auslage, keine Werk-Ebene). Summe 575 -> 717.
+     Staende (Stand-Spalte) auf die aktuellen Versionen gebracht.
+
+  Aenderungen v0.29 -> v0.30 (Sitzung 30.07.2026):
+  Datenschutzhinweis in der Fussleiste (rechts, hinter der Kontaktadresse),
+  DE/EN. Oeffnet ein natives <dialog> mit dem kurzen Hinweistext (Vercel-
+  Hosting, keine Analyse-Tools/Cookies/Werbeskripte, minimale Server-Logs,
+  keine personenbezogenen Daten). Nativ, tastatur- und screenreadertauglich,
+  ESC/Klick-ausserhalb schliesst.
+  VORPRUEFUNG (Anlass des Hinweises): Seite auf Analyse-/Tracking-Code geprueft
+  — kein Google Analytics/gtag/Tag Manager, keine Mess-ID, keine Tracking-
+  Cookies, keine externen Skripte/Pixel/Fonts, keine Fremdverbindungen. Der
+  Hinweis deckt sich mit dem Ist-Zustand; nichts zu entfernen. Die Google-
+  Search-Console-Bestaetigung ist eine separate Datei (google...html) in der
+  Wurzel, KEIN Tracker (sammelt nichts, kein Skript, kein Cookie) und
+  widerspricht dem Hinweis nicht.
+
+  Aenderungen v0.28 -> v0.29 (Sitzung 29.07.2026):
   Buch-Seite, Hoerbuch: der zweite Weg zeigt neu auf eine mp3-Datei
   (OneDrive/1drv.ms) statt auf audio.com. Link-Text «Auf audio.com hoeren»
   -> «Buch hoeren». Weil es nun eine Datei ist (kein Streaming), wurde der
@@ -410,7 +442,7 @@
           "bookFormat": "https://schema.org/EBook",
           "isAccessibleForFree": true,
           "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-          "description": "Ein Roman über vier Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
+          "description": "Ein Roman über drei Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
           "offers": {
             "@type": "Offer",
             "price": "0.00",
@@ -1081,6 +1113,37 @@
         }
         .footer a { color: var(--link-footer); text-decoration: none; font-weight: 600; }
         .footer a:hover { text-decoration: underline; color: #93c5fd; }
+        .footer .footer-link {
+            background: none; border: none; padding: 0;
+            font: inherit; color: var(--link-footer); font-weight: 600;
+            text-decoration: none; cursor: pointer;
+        }
+        .footer .footer-link:hover { text-decoration: underline; color: #93c5fd; }
+
+        .privacy-dialog {
+            max-width: 560px; width: calc(100% - 40px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            background: #0b1724;
+            color: #d7dee6;
+            padding: 26px 28px 22px;
+            font-size: 0.95rem; line-height: 1.6;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+        }
+        .privacy-dialog::backdrop { background: rgba(0,0,0,0.6); }
+        .privacy-dialog h2 {
+            margin: 0 0 12px; padding: 0; border: none;
+            font-size: 1.15rem; color: var(--primary);
+        }
+        .privacy-dialog p { margin: 0 0 12px; }
+        .privacy-dialog .pd-close {
+            margin-top: 6px;
+            background: var(--primary); color: #08201b;
+            border: none; border-radius: 6px;
+            padding: 8px 18px; font: inherit; font-weight: 600;
+            cursor: pointer;
+        }
+        .privacy-dialog .pd-close:hover { background: var(--primary-hover); }
 
         .hidden {
             display: none !important;
@@ -1394,7 +1457,7 @@
                 <div class="lang-de">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">EINTRAG NULL — Martin U G P</p>
                     <p style="font-style: italic;">Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.</p>
-                    <p>Als Erzählung folgt er vier Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.</p>
+                    <p>Als Erzählung folgt er drei Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.</p>
                     <p>Als Weltentwurf zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.</p>
                     <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.</p>
                     <p style="margin-bottom: 0;">Als Frage bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.</p>
@@ -1402,7 +1465,7 @@
                 <div class="lang-en hidden">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">ENTRY ZERO — Martin U G P</p>
                     <p style="font-style: italic;">The novel can be read on several levels — and it lays each of them open.</p>
-                    <p>As a story, it follows four generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.</p>
+                    <p>As a story, it follows three generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.</p>
                     <p>As a vision of the world, it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price.</p>
                     <p>As a document, it rests on verifiable sources — a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC — and leaves its framework open to inspection.</p>
                     <p style="margin-bottom: 0;">As a question, it remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once.</p>
@@ -1846,26 +1909,25 @@
                         </thead>
                         <tbody>
                             <tr><td>Das Exposé</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                            <tr><td>Die Roman-Bibel — das Kanonbuch, in dem jede Figur, jedes Jahr und jede Weltregel steht</td><td class="when">13. Juni 2026</td><td class="num">105</td><td class="when">v1.05 · 12. Juli 2026</td></tr>
+                            <tr><td>Die Roman-Bibel — das Kanonbuch, in dem jede Figur, jedes Jahr und jede Weltregel steht</td><td class="when">13. Juni 2026</td><td class="num">112</td><td class="when">v1.12</td></tr>
                             <tr><td>Kapitelstruktur und Szenenliste</td><td class="when">Juni 2026</td><td class="num">10</td><td class="when">v0.10 · 23. Juni 2026</td></tr>
-                            <tr><td>Die 28 Kapitel, deutsch</td><td class="when">Juni 2026</td><td class="num">109</td><td class="when">zuletzt 11. Juli 2026</td></tr>
-                            <tr><td>Die zwölf Belege und Übergänge, deutsch</td><td class="when">Juni 2026</td><td class="num">47</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Nachwort, Impressum, Anhänge, Covertexte (beide Ausgaben)</td><td class="when">Juni 2026</td><td class="num">55</td><td class="when">zuletzt 11. Juli 2026</td></tr>
-                            <tr><td>Das Gesamtmanuskript, deutsch</td><td class="when">Juni 2026</td><td class="num">13</td><td class="when">v0.13 · 11. Juli 2026</td></tr>
-                            <tr><td>Die Translation Bible — das Kanonbuch der englischen Ausgabe</td><td class="when">25. Juni 2026</td><td class="num">51</td><td class="when">v0.51 · 12. Juli 2026</td></tr>
-                            <tr><td>Die 28 Kapitel, englisch</td><td class="when">Juni 2026</td><td class="num">56</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Die zehn Belege, englisch</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Das Gesamtmanuskript, englisch</td><td class="when">Juni 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                            <tr><td>Die vier Werkstattpapiere (alle vier auch englisch)</td><td class="when">17. Juni 2026</td><td class="num">42</td><td class="when">zuletzt 12. Juli 2026</td></tr>
-                            <tr><td>Die beiden Werkstatttexte</td><td class="when">17. Juni 2026</td><td class="num">7</td><td class="when">zuletzt 12. Juli 2026</td></tr>
-                            <tr><td>Der Essay, deutsch und englisch</td><td class="when">5. Juli 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12. Juli 2026</td></tr>
-                            <tr><td>Die Novelle</td><td class="when">Juli 2026</td><td class="num">6</td><td class="when">v0.6 · 12. Juli 2026</td></tr>
-                            <tr><td>Diese Webseite</td><td class="when">10. Juli 2026</td><td class="num">22</td><td class="when">12. Juli 2026</td></tr>
+                            <tr><td>Die 28 Kapitel, deutsch</td><td class="when">Juni 2026</td><td class="num">159</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Die zwölf Belege und Übergänge, deutsch</td><td class="when">Juni 2026</td><td class="num">52</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Nachwort, Impressum, Anhänge, Covertexte (beide Ausgaben)</td><td class="when">Juni 2026</td><td class="num">70</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Das Gesamtmanuskript, deutsch</td><td class="when">Juni 2026</td><td class="num">24</td><td class="when">v0.24</td></tr>
+                            <tr><td>Die Translation Bible — das Kanonbuch der englischen Ausgabe</td><td class="when">25. Juni 2026</td><td class="num">55</td><td class="when">v0.55</td></tr>
+                            <tr><td>Die 28 Kapitel, englisch</td><td class="when">Juni 2026</td><td class="num">105</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Die zehn Belege, englisch</td><td class="when">Juni 2026</td><td class="num">21</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Das Gesamtmanuskript, englisch</td><td class="when">Juni 2026</td><td class="num">19</td><td class="when">v0.19</td></tr>
+                            <tr><td>Die vier Werkstattpapiere (alle vier auch englisch)</td><td class="when">17. Juni 2026</td><td class="num">44</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Die beiden Werkstatttexte</td><td class="when">17. Juni 2026</td><td class="num">11</td><td class="when">zuletzt Juli 2026</td></tr>
+                            <tr><td>Der Essay, deutsch und englisch</td><td class="when">5. Juli 2026</td><td class="num">10</td><td class="when">v0.7 / v0.3</td></tr>
+                            <tr><td>Die Novelle</td><td class="when">Juli 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
                             <tr class="reg-book"><td>Das Buch</td><td class="when"></td><td class="num">v0.1</td><td class="when">der erste Eintrag</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="reg-sum lang-de"><strong>Zusammen: 575 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
+                <p class="reg-sum lang-de"><strong>Zusammen: 717 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
 
                 <!-- Register of the Making EN -->
                 <div class="reg-wrap lang-en hidden">
@@ -1875,26 +1937,25 @@
                         </thead>
                         <tbody>
                             <tr><td>The synopsis</td><td class="when">June 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                            <tr><td>The novel bible — the canon book holding every character, every year, every law of the world</td><td class="when">13 June 2026</td><td class="num">105</td><td class="when">v1.05 · 12 July 2026</td></tr>
+                            <tr><td>The novel bible — the canon book holding every character, every year, every law of the world</td><td class="when">13 June 2026</td><td class="num">112</td><td class="when">v1.12</td></tr>
                             <tr><td>Chapter structure and scene list</td><td class="when">June 2026</td><td class="num">10</td><td class="when">v0.10 · 23 June 2026</td></tr>
-                            <tr><td>The 28 chapters, German</td><td class="when">June 2026</td><td class="num">109</td><td class="when">last 11 July 2026</td></tr>
-                            <tr><td>The twelve exhibits and transitions, German</td><td class="when">June 2026</td><td class="num">47</td><td class="when">last July 2026</td></tr>
-                            <tr><td>Afterword, imprint, appendices, cover texts (both editions)</td><td class="when">June 2026</td><td class="num">55</td><td class="when">last 11 July 2026</td></tr>
-                            <tr><td>The full manuscript, German</td><td class="when">June 2026</td><td class="num">13</td><td class="when">v0.13 · 11 July 2026</td></tr>
-                            <tr><td>The Translation Bible — the canon book of the English edition</td><td class="when">25 June 2026</td><td class="num">51</td><td class="when">v0.51 · 12 July 2026</td></tr>
-                            <tr><td>The 28 chapters, English</td><td class="when">June 2026</td><td class="num">56</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The ten exhibits, English</td><td class="when">June 2026</td><td class="num">18</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The full manuscript, English</td><td class="when">June 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                            <tr><td>The four workshop papers (all four also in English)</td><td class="when">17 June 2026</td><td class="num">42</td><td class="when">last 12 July 2026</td></tr>
-                            <tr><td>The two workshop texts</td><td class="when">17 June 2026</td><td class="num">7</td><td class="when">last 12 July 2026</td></tr>
-                            <tr><td>The essay, German and English</td><td class="when">5 July 2026</td><td class="num">9</td><td class="when">v0.6 / v0.3 · 12 July 2026</td></tr>
-                            <tr><td>The novella</td><td class="when">July 2026</td><td class="num">6</td><td class="when">v0.6 · 12 July 2026</td></tr>
-                            <tr><td>This website</td><td class="when">10 July 2026</td><td class="num">22</td><td class="when">12 July 2026</td></tr>
+                            <tr><td>The 28 chapters, German</td><td class="when">June 2026</td><td class="num">159</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The twelve exhibits and transitions, German</td><td class="when">June 2026</td><td class="num">52</td><td class="when">last July 2026</td></tr>
+                            <tr><td>Afterword, imprint, appendices, cover texts (both editions)</td><td class="when">June 2026</td><td class="num">70</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The full manuscript, German</td><td class="when">June 2026</td><td class="num">24</td><td class="when">v0.24</td></tr>
+                            <tr><td>The Translation Bible — the canon book of the English edition</td><td class="when">25 June 2026</td><td class="num">55</td><td class="when">v0.55</td></tr>
+                            <tr><td>The 28 chapters, English</td><td class="when">June 2026</td><td class="num">105</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The ten exhibits, English</td><td class="when">June 2026</td><td class="num">21</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The full manuscript, English</td><td class="when">June 2026</td><td class="num">19</td><td class="when">v0.19</td></tr>
+                            <tr><td>The four workshop papers (all four also in English)</td><td class="when">17 June 2026</td><td class="num">44</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The two workshop texts</td><td class="when">17 June 2026</td><td class="num">11</td><td class="when">last July 2026</td></tr>
+                            <tr><td>The essay, German and English</td><td class="when">5 July 2026</td><td class="num">10</td><td class="when">v0.7 / v0.3</td></tr>
+                            <tr><td>The novella</td><td class="when">July 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
                             <tr class="reg-book"><td>The book</td><td class="when"></td><td class="num">v0.1</td><td class="when">the first entry</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="reg-sum lang-en hidden"><strong>Altogether: 575 versions.</strong> The book that came of it carries the number v0.1.</p>
+                <p class="reg-sum lang-en hidden"><strong>Altogether: 717 versions.</strong> The book that came of it carries the number v0.1.</p>
             </section>
 
         </div>
@@ -1929,8 +1990,18 @@
     <footer class="footer">
         <strong>Eintrag Null / Entry Zero</strong> · © 2026 Martin U G P ·
         <span class="lang-de"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.de" target="_blank" rel="noopener">Lizenz CC BY-NC-SA 4.0</a></span><span class="lang-en hidden"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener">Licence CC BY-NC-SA 4.0</a></span> ·
-        <span class="lang-de">Kontakt: </span><span class="lang-en hidden">Contact: </span><a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a>
+        <span class="lang-de">Kontakt: </span><span class="lang-en hidden">Contact: </span><a href="mailto:entry.zero@proton.me">entry.zero@proton.me</a> ·
+        <button type="button" class="footer-link" onclick="document.getElementById('privacy-dialog').showModal()">
+            <span class="lang-de">Datenschutzhinweis</span><span class="lang-en hidden">Privacy Notice</span>
+        </button>
     </footer>
+
+    <dialog id="privacy-dialog" class="privacy-dialog" aria-labelledby="pd-title">
+        <h2 id="pd-title"><span class="lang-de">Datenschutzhinweis</span><span class="lang-en hidden">Privacy Notice</span></h2>
+        <p class="lang-de">Diese Website wird über Vercel Inc., USA, gehostet. Es werden keine Analyse-Tools, Tracking-Cookies oder Werbeskripte verwendet. Im Rahmen des normalen Hosting-Betriebs können serverseitig minimale Logdaten (z.&nbsp;B. Zeitstempel, abgerufene Ressource) verarbeitet werden. Es werden keine personenbezogenen Daten durch diese Website erhoben oder gespeichert.</p>
+        <p class="lang-en hidden">This website is hosted by Vercel Inc., USA. No analytics tools, tracking cookies, or advertising scripts are used. Vercel may process minimal server-side log data (e.g. timestamp, requested resource) as part of standard hosting operations. No personal data is collected or stored by this website.</p>
+        <button type="button" class="pd-close" onclick="document.getElementById('privacy-dialog').close()"><span class="lang-de">Schliessen</span><span class="lang-en hidden">Close</span></button>
+    </dialog>
 
     <!-- ================= SYSTEM LOGIK ================= -->
     <script>
