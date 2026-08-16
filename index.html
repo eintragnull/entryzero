@@ -2,11 +2,31 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.31 ·  2026-07-31
+  Fassung:  v0.33 ·  2026-08-02
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.30 (Sitzung 31.07.2026):
+  Aenderungen gegenueber v0.32 (Sitzung 02.08.2026):
+  Buch-Seite: die Zeile «Weitere Formate folgen. / More formats to follow.»
+  entfernt (Beschluss Martin) — mit PDF, EPUB und Hoerbuch sind die Formate
+  jetzt da, der Ausblick ist ueberholt.
+
+  Aenderungen v0.31 -> v0.32 (Sitzung 01.08.2026):
+  Buch-Seite, drei Praezisierungen (Beschluss Martin):
+  1) EPUB (eReader) ergaenzt — je Ausgabe eine zweite Download-Zeile unter dem
+     PDF. DE Proton 1GP0BJCNMR, EN Proton 3PPQ5V969C. In beiden Sprachlisten,
+     jeweils in der dortigen Ausgaben-Reihenfolge. Damit 23 Proton-Downloads.
+  2) Generationen-Zaehlung ZURUECK auf VIER (Korrektur der v0.31-Aenderung).
+     Grund Martin: der Buchumschlag (U4) gilt und nennt vier Generationen.
+     «drei -> vier» / «three -> four» an allen sichtbaren Stellen: Startseite
+     (Untertitel-Absatz DE+EN), Buch-Seite (Erzaehl-Absatz DE+EN), JSON-LD.
+     Der Kanon-Punkt 3/4 ist damit fuer die Webseite auf VIER entschieden.
+  3) Sprung-Link «Direkt zum Download / Straight to the download» unter dem
+     Buch-Titel, fuehrt zum Download-Abschnitt (neuer Anker id=buch-download).
+     Grund: die lange Buchbeschreibung schiebt den Download nach unten; der
+     Sprung holt ungeduldige Besucher direkt hin.
+
+  Aenderungen v0.30 -> v0.31 (Sitzung 31.07.2026):
   A) Generationen-Zaehlung vereinheitlicht auf DREI (Beschluss Martin):
      durchgehend «drei Generationen» wie der Rueckseitentext U4. Grund: das
      Kind von Naia und Esra spielt im Roman keine wesentliche Rolle und hat
@@ -442,7 +462,7 @@
           "bookFormat": "https://schema.org/EBook",
           "isAccessibleForFree": true,
           "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-          "description": "Ein Roman über drei Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
+          "description": "Ein Roman über vier Generationen einer Familie zwischen 2029 und 2100 — von der kanadischen Pazifikküste über die Alpen bis nach Costa Rica.",
           "offers": {
             "@type": "Offer",
             "price": "0.00",
@@ -1421,8 +1441,8 @@
             <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-de">Ein Roman. Zwischen 2029 und 2100.</p>
             <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-en hidden">A novel. Between 2029 and 2100.</p>
 
-            <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über drei Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100.</p>
-            <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across three generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100.</p>
+            <p class="lang-de">An der kanadischen Pazifikküste beginnen Menschen, ihre Versorgung anders zu organisieren — ohne dass Geld jede Entscheidung trifft. <em>Eintrag Null</em> erzählt, was daraus wird: über vier Generationen einer Gründungsfamilie, von der Pazifikküste über die Alpen bis nach Costa Rica, bis zum Jahr 2100.</p>
+            <p class="lang-en hidden">On the Canadian Pacific coast, people begin to organize their provision differently — without money deciding every question. <em>Entry Zero</em> tells what becomes of it: across four generations of a founding family, from the Pacific coast over the Alps to Costa Rica, all the way to the year 2100.</p>
 
             <div class="btn-group" style="justify-content: center;">
                 <button class="action-btn" onclick="switchTab('buch')">
@@ -1453,11 +1473,15 @@
             <h1 class="lang-de">Das Buch</h1>
             <h1 class="lang-en hidden">The Book</h1>
 
+            <p style="margin-top: -8px;">
+                <a href="#buch-download" class="inline-link"><span class="lang-de">↓ Direkt zum Download</span><span class="lang-en hidden">↓ Straight to the download</span></a>
+            </p>
+
             <div class="source-card" style="border-left-color: #f39c12; background: rgba(243, 156, 18, 0.05); padding: 25px;">
                 <div class="lang-de">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">EINTRAG NULL — Martin U G P</p>
                     <p style="font-style: italic;">Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.</p>
-                    <p>Als Erzählung folgt er drei Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.</p>
+                    <p>Als Erzählung folgt er vier Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Regenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.</p>
                     <p>Als Weltentwurf zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.</p>
                     <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.</p>
                     <p style="margin-bottom: 0;">Als Frage bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.</p>
@@ -1465,13 +1489,14 @@
                 <div class="lang-en hidden">
                     <p style="margin-top: 0; font-weight: bold; letter-spacing: 1px; color: #f39c12;">ENTRY ZERO — Martin U G P</p>
                     <p style="font-style: italic;">The novel can be read on several levels — and it lays each of them open.</p>
-                    <p>As a story, it follows three generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.</p>
+                    <p>As a story, it follows four generations of a family between 2029 and 2100: across an island off Canada's Pacific coast, a Swiss alpine valley, and a Costa Rican rainforest. Carried by a love spanning fifty years across the divide between two economic orders, and by a secret older than that love.</p>
                     <p>As a vision of the world, it shows how a society without money might work: with no central power, within the limits set by our one and only planet. Yet the passage there comes at a price.</p>
                     <p>As a document, it rests on verifiable sources — a report on global justice, a white paper on networked coordination, a climate scenario from the IPCC — and leaves its framework open to inspection.</p>
                     <p style="margin-bottom: 0;">As a question, it remains: whether a just order can do without innocence — and whether a society that no longer tolerates a centre can endure holding that very power in a hundred hands at once.</p>
                 </div>
             </div>
 
+            <span class="sec-anchor" id="buch-download" aria-hidden="true"></span>
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
 
@@ -1484,27 +1509,29 @@
             <ul class="lang-de">
                 <li>
                     <strong>Deutsche Ausgabe — Eintrag Null</strong><br>
-                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — A4</a>
+                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — A4</a><br>
+                    <a href="https://drive.proton.me/urls/1GP0BJCNMR#US5wXxFA49ZR" target="_blank" rel="noopener" class="download-link">EPUB lesen / herunterladen — für eReader</a>
                 </li>
                 <li>
                     <strong>Englische Ausgabe — Entry Zero</strong><br>
-                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — Letter</a>
+                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — Letter</a><br>
+                    <a href="https://drive.proton.me/urls/3PPQ5V969C#FE3yuKZKl5gP" target="_blank" rel="noopener" class="download-link">EPUB lesen / herunterladen — für eReader</a>
                 </li>
             </ul>
             <!-- EN-Reihenfolge: englische Ausgabe zuerst -->
             <ul class="lang-en hidden">
                 <li>
                     <strong>English edition — Entry Zero</strong><br>
-                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">Read / download PDF — Letter</a>
+                    <a href="https://drive.proton.me/urls/0TH2F8WRKM#JjPXQ7yeIQdG" target="_blank" rel="noopener" class="download-link">Read / download PDF — Letter</a><br>
+                    <a href="https://drive.proton.me/urls/3PPQ5V969C#FE3yuKZKl5gP" target="_blank" rel="noopener" class="download-link">Read / download EPUB — for eReaders</a>
                 </li>
                 <li>
                     <strong>German edition — Eintrag Null</strong><br>
-                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">Read / download PDF — A4</a>
+                    <a href="https://drive.proton.me/urls/EN5N2RZMT8#g0OtEFmMGhkP" target="_blank" rel="noopener" class="download-link">Read / download PDF — A4</a><br>
+                    <a href="https://drive.proton.me/urls/1GP0BJCNMR#US5wXxFA49ZR" target="_blank" rel="noopener" class="download-link">Read / download EPUB — for eReaders</a>
                 </li>
             </ul>
 
-            <p class="lang-de">Weitere Formate folgen.</p>
-            <p class="lang-en hidden">More formats to follow.</p>
 
             <p style="font-size: 0.95rem; color: var(--eb-muted);">
                 <span class="lang-de">Fassung v0.1 — der erste Eintrag.<br>Lizenz: CC BY-NC-SA 4.0 — das Buch darf geteilt und nicht-kommerziell weitergegeben werden, unter Namensnennung und gleichen Bedingungen. Einzelheiten im Impressum.</span>
