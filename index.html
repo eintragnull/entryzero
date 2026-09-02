@@ -2,11 +2,30 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.33 ·  2026-08-02
+  Fassung:  v0.34 ·  2026-08-03
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.32 (Sitzung 02.08.2026):
+  Aenderungen gegenueber v0.33 (Sitzung 03.08.2026):
+  NEUE SEITE «Das Manifest» (Beschluss Martin, Weg A). Das Begleitpapier
+  «Manifest Foederation» (DE v0.14 / EN v0.1) wird als lesbare Webseite
+  gesetzt — nicht als PDF-Download —, damit es die Idee ohne Roman und ohne
+  Downloadhuerde vermittelt (Zielgruppe: wer das Buch nicht lesen mag).
+  - Neues Panel panel-manifest: Intro, ueberfliegbares Geruest der zehn Titel
+    (Sprungmarken m1–m10), die zehn Punkte als Fliesstext (Werkstatt-Wortlaut
+    DE v0.14 / EN v0.1, gekuerzte Intro-Absaetze), Schluss, Quellen, CTA.
+  - Titel datiert: «Nach dem Sommer 2026» / «After the Summer of 2026»
+    (Beschluss Martin — veraltet nicht wie «diesem Sommer»).
+  - Startseite: dritte Tuer «Das Manifest» als zweite gleichwertige Eingangs-
+    tuer neben «Das Buch lesen» (Weg A). KEIN neuer Menuepunkt in der Haupt-
+    navigation (wie panel-bilanz-interaktiv ein «stilles» Panel).
+  - Kanon: nennt keine KI (G3 unberuehrt), «vier Generationen» (Stand v0.32),
+    keine «Zusammenarbeit». Begriffe nach TB v0.55 (Register, Stunden,
+    Rueckmeldung/band). Norm B.
+  - KEIN Manifest-PDF verlinkt (kein Proton-Link vorhanden); Seite rendert den
+    Volltext. PDF-Knopf spaeter ergaenzbar.
+
+  Aenderungen v0.32 -> v0.33 (Sitzung 02.08.2026):
   Buch-Seite: die Zeile «Weitere Formate folgen. / More formats to follow.»
   entfernt (Beschluss Martin) — mit PDF, EPUB und Hoerbuch sind die Formate
   jetzt da, der Ausblick ist ueberholt.
@@ -764,6 +783,49 @@
             margin: 45px 0 0 0;
         }
         .sec-kicker + h2 { margin-top: 4px; }
+
+        /* --- Manifest-Seite --- */
+        .page-kicker {
+            font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--eb-muted); font-family: ui-sans-serif, system-ui, sans-serif;
+            font-weight: 600; margin: 0 0 6px 0;
+        }
+        .manifest-lead {
+            font-size: 1.2rem; color: var(--primary);
+            font-weight: 600; margin: 0 0 28px 0;
+        }
+        .manifest-overview { list-style: none; padding-left: 0; margin: 0; columns: 1; }
+        .manifest-overview li {
+            padding: 7px 0; border-bottom: 0.5px solid rgba(255,255,255,0.10);
+            font-size: 1.02rem; line-height: 1.4;
+        }
+        .manifest-overview li:last-child { border-bottom: none; }
+        .manifest-point {
+            display: flex; gap: 20px; align-items: baseline;
+            margin: 34px 0 0 0; padding-top: 22px;
+            border-top: 0.5px solid rgba(255,255,255,0.10);
+        }
+        .manifest-point:first-of-type { border-top: none; }
+        .mp-num {
+            font-family: Georgia, serif; font-size: 2rem; line-height: 1;
+            color: var(--primary); min-width: 48px; text-align: right; flex: 0 0 auto;
+        }
+        .mp-body { flex: 1; }
+        .mp-body h3 { margin: 0 0 8px 0; }
+        .mp-body p { margin: 0; }
+        .manifest-close {
+            margin: 44px 0 0 0; padding: 26px 28px;
+            background: rgba(0,0,0,0.55); border-radius: 8px;
+            border-left: 4px solid var(--primary); box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .manifest-close p:last-child { margin-bottom: 0; }
+        .manifest-sources { margin-top: 34px; font-size: 0.95rem; color: var(--eb-muted); }
+        .manifest-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 22px; }
+        @media (max-width: 680px) {
+            .manifest-point { gap: 12px; }
+            .mp-num { font-size: 1.5rem; min-width: 32px; }
+            .manifest-close { padding: 20px 16px; }
+        }
         /* Dachzeile des einleitenden Abschnitts (steht ohne Klammer) */
         .sec-kicker--lead { margin-top: 0; }
 
@@ -1448,6 +1510,9 @@
                 <button class="action-btn" onclick="switchTab('buch')">
                     <span class="lang-de">Das Buch lesen</span><span class="lang-en hidden">Read the book</span>
                 </button>
+                <button class="action-btn secondary" onclick="switchTab('manifest')">
+                    <span class="lang-de">Das Manifest</span><span class="lang-en hidden">The manifesto</span>
+                </button>
                 <button class="action-btn secondary" onclick="switchTab('grundlagen')">
                     <span class="lang-de">Die Welt dahinter</span><span class="lang-en hidden">The world behind it</span>
                 </button>
@@ -1985,6 +2050,185 @@
                 <p class="reg-sum lang-en hidden"><strong>Altogether: 717 versions.</strong> The book that came of it carries the number v0.1.</p>
             </section>
 
+        </div>
+
+        <!-- ================= SEITE: DAS MANIFEST ================= -->
+        <div id="panel-manifest" class="content-panel">
+            <p class="page-kicker lang-de">Nach dem Sommer 2026</p>
+            <p class="page-kicker lang-en hidden">After the Summer of 2026</p>
+            <h1 class="lang-de">Ein neues Betriebssystem für die Erde?</h1>
+            <h1 class="lang-en hidden">A new operating system for the Earth?</h1>
+            <p class="manifest-lead lang-de">Die Föderation. Ein Manifest in zehn Punkten.</p>
+            <p class="manifest-lead lang-en hidden">The Federation. A manifesto in ten points.</p>
+
+            <p class="lang-de">Dieser Sommer — der Sommer 2026 — hat auf mehreren Kontinenten dasselbe gezeigt. In Westeuropa der heisseste Früh- und Hochsommer seit Messbeginn, eine Hitzewelle nach der anderen; Wälder brannten von Portugal bis Griechenland, ganze Landstriche wurden evakuiert. Der Rauch kanadischer Brände hing tagelang über New York. In Asien wechselten sich Rekordhitze und schwere Überschwemmungen ab, von Pakistan bis Japan. Im Himalaya riss eine Sturzflut ganze Dörfer mit sich. Nichts davon ist einzeln neu. Neu ist die Gleichzeitigkeit.</p>
+            <p class="lang-en hidden">This summer — the summer of 2026 — showed the same thing on several continents. In western Europe, the hottest early and high summer since records began, one heat wave after another; forests burned from Portugal to Greece, whole stretches of country were evacuated. The smoke of Canadian fires hung over New York for days. Across Asia, record heat alternated with severe flooding, from Pakistan to Japan. In the Himalayas, a flash flood swept away entire villages. None of this is new on its own. What is new is the simultaneity.</p>
+
+            <p class="lang-de">Die Antworten darauf sind bekannt und vernünftig — Klimaanlagen, Frühwarnsysteme, Dämme, Rückzug aus gefährdeten Tälern. Sie haben eines gemeinsam: Sie richten sich auf die Folgen ein und lassen die Ursache, wie sie ist — eine Wirtschaft, die wachsen muss, um zu funktionieren, und die dafür weiter verbraucht, wovon sie lebt. So wächst eine Frage, die schon immer als Träumerei galt: Gibt es ein neues Betriebssystem für die Erde — eines, mit dem sich ein gutes Leben weiterführen lässt, ohne die eigenen Grundlagen weiter zu gefährden?</p>
+            <p class="lang-en hidden">The responses are familiar and sensible — air conditioning, early-warning systems, dykes, retreat from exposed valleys. They have one thing in common: they prepare for the consequences and leave the cause as it is — an economy that must grow in order to function, and that keeps consuming what it lives on in order to do so. And so a question grows that has always been dismissed as dreaming: is there a new operating system for the Earth — one that lets a good life continue without further endangering its own foundations?</p>
+
+            <p class="lang-de">Die Antwort verlangt eine Reise in die Zukunft. Reisen Sie mit — ins Jahr 2100, in eine Welt, die ein neues Betriebssystem gefunden hat. Es heisst Föderation. Die zehn Punkte, die folgen, sind seine Grundsätze.</p>
+            <p class="lang-en hidden">The answer requires a journey into the future. Come along — to the year 2100, to a world that has found a new operating system. It is called the Federation. The ten points that follow are its principles.</p>
+
+            <nav class="page-toc lang-de" aria-label="Die zehn Punkte">
+                <h2>Die zehn Punkte</h2>
+                <ol class="manifest-overview">
+                    <li><a class="inline-link" href="#m1">1. Ein Preis hat kein Sinnesorgan für die Erde.</a></li>
+                    <li><a class="inline-link" href="#m2">2. Sie ist kein Staat. Sie ist ein Netz aus Orten.</a></li>
+                    <li><a class="inline-link" href="#m3">3. Das Lebensnotwendige hängt an keiner Bedingung.</a></li>
+                    <li><a class="inline-link" href="#m4">4. Der Korb sichert nicht das Minimum, sondern das Genug.</a></li>
+                    <li><a class="inline-link" href="#m5">5. Erfolg wird berichtet, nicht benotet.</a></li>
+                    <li><a class="inline-link" href="#m6">6. Hilfe braucht kein Geld, nur Sichtbarkeit.</a></li>
+                    <li><a class="inline-link" href="#m7">7. Der Übergang wird von einem Fonds getragen, der sich selbst abschafft.</a></li>
+                    <li><a class="inline-link" href="#m8">8. Was die Erde davon hat.</a></li>
+                    <li><a class="inline-link" href="#m9">9. Was die Menschen davon haben.</a></li>
+                    <li><a class="inline-link" href="#m10">10. Sie wächst Knoten für Knoten — über vier Generationen.</a></li>
+                </ol>
+            </nav>
+            <nav class="page-toc lang-en hidden" aria-label="The ten points">
+                <h2>The ten points</h2>
+                <ol class="manifest-overview">
+                    <li><a class="inline-link" href="#m1">1. A price has no sense organ for the Earth.</a></li>
+                    <li><a class="inline-link" href="#m2">2. It is not a state. It is a network of places.</a></li>
+                    <li><a class="inline-link" href="#m3">3. The necessities of life hang on no condition.</a></li>
+                    <li><a class="inline-link" href="#m4">4. The basket secures not the minimum, but the Enough.</a></li>
+                    <li><a class="inline-link" href="#m5">5. Success is reported, not graded.</a></li>
+                    <li><a class="inline-link" href="#m6">6. Help needs no money, only visibility.</a></li>
+                    <li><a class="inline-link" href="#m7">7. The transition is carried by a fund that abolishes itself.</a></li>
+                    <li><a class="inline-link" href="#m8">8. What the Earth gains.</a></li>
+                    <li><a class="inline-link" href="#m9">9. What the people gain.</a></li>
+                    <li><a class="inline-link" href="#m10">10. It grows node by node — across four generations.</a></li>
+                </ol>
+            </nav>
+
+            <span class="sec-anchor" id="m1" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">1</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Ein Preis hat kein Sinnesorgan für die Erde.</h3>
+                    <h3 class="lang-en hidden">A price has no sense organ for the Earth.</h3>
+                    <p class="lang-de">Holz aus einem zerstörten Urwald und Holz aus gepflegtem Wald können dasselbe kosten. Die Natur kennt den Unterschied, der Markt nicht. Solange Wohlstand daran gemessen wird, wie viel Geld fliesst, sehen ein gutes Leben und eine verbrauchte Welt in der Rechnung gleich aus. Die Föderation beginnt darum mit einem anderen Massstab: Gezählt wird, was wirklich verbraucht wird — nicht, was es kostet. Eine Gemeinschaft weiss am Jahresende, wie viele Arbeitsstunden, Kilowattstunden, Hektaren und Tonnen sie verbraucht hat. Die Föderation lehnt keine Technik ab und keinen Handel; sie lehnt den Massstab ab.</p>
+                    <p class="lang-en hidden">Wood from a razed primeval forest and wood from a tended one can cost the same. Nature knows the difference; the market does not. As long as prosperity is measured by how much money flows, a good life and a used-up world look the same in the accounts. The Federation therefore begins with a different measure: what is counted is what is actually consumed — not what it costs. A community knows at year’s end how many working hours, kilowatt hours, hectares and tonnes it has consumed. The Federation rejects no technology and no trade; it rejects the measure.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m2" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">2</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Sie ist kein Staat. Sie ist ein Netz aus Orten.</h3>
+                    <h3 class="lang-en hidden">It is not a state. It is a network of places.</h3>
+                    <p class="lang-de">Die kleinste Einheit ist der Knoten: Menschen an einem Ort, die einander kennen und mittragen. Knoten schliessen sich zu Verbünden zusammen, Verbünde zu einem weltweiten Netz; eine Mitte, die befiehlt, gibt es nicht. Drei Werkzeuge halten das Netz zusammen: das <strong>Register</strong>, in dem jede Entscheidung samt Begründung offen steht; die <strong>Stunden</strong>, ein Verzeichnis geleisteter Arbeitsstunden — keine Währung, nicht handelbar, nicht ansparbar; und die <strong>Rückmeldung</strong>, die Muster erkennt und empfiehlt, aber nie befiehlt. Dazu kommen ein freier Katalog erprobter Baupläne und eine Zuteilung, die Arbeit ohne Vorgesetzte verteilt.</p>
+                    <p class="lang-en hidden">The smallest unit is the node: people in one place who know one another and carry one another. Nodes join into unions, unions into a worldwide network; there is no centre that commands. Three tools hold the network together: the <strong>Register</strong>, where every decision stands open, together with its reasons; the <strong>hours</strong>, a ledger of work performed — not a currency: it cannot be traded or saved up; and the <strong>band</strong>, which reads patterns and recommends — but never commands. Added to these are a free catalogue of proven blueprints and an allocation that distributes work without supervisors.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m3" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">3</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Das Lebensnotwendige hängt an keiner Bedingung.</h3>
+                    <h3 class="lang-en hidden">The necessities of life hang on no condition.</h3>
+                    <p class="lang-de">Was ein Mensch zum Leben braucht, ist von den Stunden abgekoppelt. Niemand muss arbeiten, um essen zu können. Die Stunden regeln den Beitrag zum Gemeinsamen, nicht den Zugang zum Notwendigen. Wer mehr beiträgt, mehrt nicht seinen Anspruch, der ihm ohnehin zusteht, sondern seinen Spielraum darüber.</p>
+                    <p class="lang-en hidden">What a person needs in order to live is decoupled from the hours. No one has to work in order to eat. The hours govern the contribution to what is shared, not access to what is needed. Whoever contributes more does not enlarge a claim that is theirs in any case, but the room above it.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m4" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">4</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Der Korb sichert nicht das Minimum, sondern das Genug.</h3>
+                    <h3 class="lang-en hidden">The basket secures not the minimum, but the Enough.</h3>
+                    <p class="lang-de">Die Föderation hat ihren Massstab für ein würdiges Leben nicht erfunden. Sie nahm eine fertige, redlich erarbeitete Liste aus der alten Welt — den Warenkorb, an dem ein Sozialstaat einst bemass, was ein Mensch braucht — und befreite sie von ihrer Enge. Jenes alte Mass war so knapp, dass man sich nie alles zugleich leisten konnte; seine Knappheit war dem Geld geschuldet, nicht dem Bedarf. Ohne Geld wurde aus dem Existenzminimum das Genug: Nahrung und Wohnung, Wärme und Kleidung, Pflege und Bildung, Transport und Kommunikation, Anteil am gemeinsamen Leben. Der Korb hört an einer Schwelle bewusst auf. Was darüber liegt, ist nicht verboten — es ist nur nicht mehr Sache des Korbes. Und der Korb wächst mit dem, was eine Gesellschaft normal macht.</p>
+                    <p class="lang-en hidden">The Federation did not invent its measure of a dignified life. It took a finished, honestly compiled list from the old world — the basket a welfare state once used to gauge what a person needs — and freed it from its narrowness. That old measure was so tight that no one relying on it could ever afford everything at once; its scarcity was owed to money, not to need. Without money, the subsistence minimum became the Enough: food and housing, warmth and clothing, care and education, transport and communication, a share in common life. The basket deliberately stops at a threshold. What lies above it is not forbidden — it is simply no longer the basket’s business. And the basket grows with what a society makes normal.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m5" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">5</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Erfolg wird berichtet, nicht benotet.</h3>
+                    <h3 class="lang-en hidden">Success is reported, not graded.</h3>
+                    <p class="lang-de">An die Stelle des Bruttoinlandsprodukts tritt die Lebendige Bilanz: sechs Felder nebeneinander — Versorgung, Biosphäre, Zeitwohlstand, Resilienz, Gerechtigkeit, Lernen —, die ausdrücklich nicht zu einer Zahl verrechnet werden. Sobald man Gesundheit gegen Natur gegen freie Zeit in einer Note verrechnet, hat man wieder einen Preis erfunden, nur unter anderem Namen. Zwei Felder zählen mehr als die anderen. Die Belastbarkeit der Biosphäre ist die einzige harte Grenze: Reisst ein Knoten sie, rechtfertigt das keine noch so gute Versorgung. Und die Versorgung wird am Schwächsten gemessen, nie am Durchschnitt, weil ein hoher Durchschnitt keinen einzigen Mangel heilt. Niemand wird gegen den Nachbarn gereiht. Ein Knoten wird verglichen mit sich selbst über die Zeit — und mit dem Weg, den man sich vorgenommen hat. Alte Bilanzen bleiben stehen; nichts wird überschrieben.</p>
+                    <p class="lang-en hidden">In place of gross domestic product stands the Living Balance: six fields side by side — Provision, Biosphere, Time-wealth, Resilience, Justice, Learning — which are expressly not merged into a single number. The moment health is netted against nature against free time in one grade, a price has been invented again, under another name. Two fields count for more than the others. The carrying capacity of the biosphere is the only hard limit: if a node breaches it, no provision, however good, justifies it. And provision is measured at the worst-off person, never at the average, because a high average heals not a single shortage. No one is ranked against their neighbour. A node is compared with itself over time — and with the path it set for itself. Old balances remain standing; nothing is overwritten.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m6" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">6</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Hilfe braucht kein Geld, nur Sichtbarkeit.</h3>
+                    <h3 class="lang-en hidden">Help needs no money, only visibility.</h3>
+                    <p class="lang-de">In einer Geldwirtschaft wird Bedarf erst sichtbar, wenn jemand ihn bezahlen kann. In der Föderation wird ein Mangel gemeldet, und ein Nachbarknoten deckt ihn — Pumpen gegen Pflegekapazität, Meeresfrüchte gegen Spezialbeton, über Jahre in beide Richtungen. Es entsteht kein Schuldenstand. Was das Netz beobachtet, ist nur, ob der Fluss lebendig bleibt: Bleibt die Hilfe über Jahre einseitig, ist das ein Warnzeichen — entweder steckt ein Knoten in Not, oder es entsteht eine Abhängigkeit.</p>
+                    <p class="lang-en hidden">In a money economy, need becomes visible only when someone can pay for it. In the Federation, a shortage is reported, and a neighbouring node covers it — pumps for care capacity, seafood for specialty concrete, over years and in both directions. No debt balance arises. All the network watches is whether the flow stays alive: if help runs one way for years, that is a warning sign — either a node is in trouble, or a dependency is forming.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m7" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">7</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Der Übergang wird von einem Fonds getragen, der sich selbst abschafft.</h3>
+                    <h3 class="lang-en hidden">The transition is carried by a fund that abolishes itself.</h3>
+                    <p class="lang-de">Die alte Welt endet nicht über Nacht, und der Übergang braucht keinen Umsturz und keine Enteignung. Ein Übergangsfonds nimmt privates Kapital der alten Welt und verwandelt es unwiderruflich in Gemeingüter: Land, Werkzeuge, Infrastruktur. Wer zeichnet, erhält keine Rendite, sondern Versorgungszusagen. Sobald das Bleibende gebaut ist, verliert das Geld seine Bedeutung. Der Fonds finanziert seinen eigenen Abschied.</p>
+                    <p class="lang-en hidden">The old world does not end overnight, and the transition needs no overthrow and no expropriation. A transition fund takes private capital of the old world and converts it irrevocably into commons: land, tools, infrastructure. Those who subscribe receive no return, but pledges of provision. Once the lasting things are built, money loses its meaning. The fund finances its own farewell.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m8" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">8</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Was die Erde davon hat.</h3>
+                    <h3 class="lang-en hidden">What the Earth gains.</h3>
+                    <p class="lang-de">Die Klimakurve des Entwurfs folgt einem wissenschaftlich beschriebenen Pfad: Die Erwärmung erreicht um 2050 ihren Höhepunkt knapp unter zwei Grad, dreht um 2060 und pendelt sich bis 2100 auf 1,8 Grad ein. Die Wälder stehen wieder auf dem Stand von 1900. Das ist kein Paradies. Der Meeresspiegel steigt noch, manche Tier- und Pflanzenart hat die Schwelle überschritten, hinter der es kein Zurück gibt. Geheilt, nicht heil — ein mühsam gehaltenes Gleichgewicht. Und eine Lehre, die teuer war: Viele gehaltene örtliche Grenzen ergeben noch kein gehaltenes Ganzes. Erst als das Netz eine Obergrenze für die Erde als Ganze festlegte und sie auf die Knoten verteilte, schloss sich die Lücke.</p>
+                    <p class="lang-en hidden">The design’s climate curve follows a scientifically described path: warming peaks around 2050 just under two degrees, turns around 2060, and settles at 1.8 degrees by 2100. The forests stand again as they stood in 1900. This is no paradise. Sea levels are still rising; some animal and plant species have crossed the threshold behind which there is no way back. Healed, not whole — a laboriously held equilibrium. And a lesson that came at a price: many locally held limits do not yet make a held whole. Only when the network set a ceiling for the Earth as a whole and distributed it among the nodes did the gap close.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m9" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">9</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Was die Menschen davon haben.</h3>
+                    <h3 class="lang-en hidden">What the people gain.</h3>
+                    <p class="lang-de">Rund tausend Arbeitsstunden im Jahr — etwa die Hälfte von heute —, weil der Gewinn an Produktivität nicht in mehr Konsum fliesst, sondern in Zeit. Die Arbeit verschiebt sich von der Herstellung von Dingen hin zu Pflege, Bildung, Gestaltung. Der technische Fortschritt trägt seinen Teil dazu bei: Maschinen übernehmen, was sich automatisieren lässt. Entscheidungen werden beraten, bis sie getragen werden, statt niedergestimmt; Einwände werden gezählt und aufbewahrt. Und die gewonnene Zeit wird nicht protokolliert. Das Verzeichnis zählt den Beitrag und lässt das Leben in Ruhe. Diese Lücke ist keine Schwäche des Systems. Sie ist seine Wahl.</p>
+                    <p class="lang-en hidden">Around a thousand working hours a year — roughly half of today’s — because the gains of productivity flow not into more consumption but into time. Work shifts from the making of things towards care, education, design. Technical progress plays its part: machines take over whatever can be automated. Decisions are deliberated until they are carried, rather than voted down; objections are counted and kept. And the time gained is not logged. The ledger counts the contribution and leaves life alone. This gap is not a weakness of the system. It is its choice.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m10" aria-hidden="true"></span>
+            <div class="manifest-point">
+                <div class="mp-num">10</div>
+                <div class="mp-body">
+                    <h3 class="lang-de">Sie wächst Knoten für Knoten — über vier Generationen.</h3>
+                    <h3 class="lang-en hidden">It grows node by node — across four generations.</h3>
+                    <p class="lang-de">Nicht über Nacht, und nicht durch Beschluss. Die Föderation beginnt als Labor: An mindestens drei Orten in verschiedenen Klimazonen — freiwillig, innerhalb bestehender Staaten, etwa als abgegrenzte Sonderzonen, die mit dem Regelwerk der Föderation ausgestattet sind — wird ab 2030 dasselbe integrale Wirtschaftssystem erprobt, wissenschaftlich begleitet und Schritt für Schritt aus den Ergebnissen weiterentwickelt. Was an allen Orten trägt, taugt zur Übertragung; was nur an einem trägt, wird verändert oder verworfen. Geld und das Verzeichnis der Arbeitsstunden laufen jahrzehntelang nebeneinander; die Föderation wächst dort, wo sie Menschen konkret nützt, Knoten für Knoten. Neue Regionen kommen dazu, wenn sie es brauchen und wenn das Netz sie tragen kann, nicht wenn sie reich sind. Im Jahr 2100 tritt die letzte bei.</p>
+                    <p class="lang-en hidden">Not overnight, and not by decree. The Federation begins as a laboratory: in at least three places in different climate zones — voluntarily, within existing states, for instance as demarcated special zones equipped with the Federation’s rulebook — the same integral economic system is tested from 2030 on, accompanied by science and developed step by step from the results. What holds in all places is fit for transfer; what holds in only one is changed or discarded. Money and the ledger of working hours run side by side for decades; the Federation grows where it is of concrete use to people, node by node. New regions join when they need it and when the network can carry them, not when they are rich. In the year 2100, the last one joins.</p>
+                </div>
+            </div>
+
+            <span class="sec-anchor" id="m-schluss" aria-hidden="true"></span>
+            <div class="manifest-close">
+                <p class="lang-de">Die Föderation verbietet nicht. Sie macht sichtbar und zwingt zur Aushandlung. Ihre Werkzeuge messen und empfehlen; entschieden wird von Menschen. Sie ist ein Sinnesorgan — kein Souverän.</p>
+                <p class="lang-en hidden">The Federation forbids nothing. It makes things visible and forces negotiation. Its tools measure and recommend; people decide. It is a sense organ — not a sovereign.</p>
+                <p class="lang-de">Damit die Föderation des Jahres 2100 sich beweisen kann, müssen ihre ersten Labore um 2030 stehen. Sie zu bauen kostet einen Bruchteil dessen, was Staaten jährlich für Verteidigung ausgeben — und nichts verdient das Wort wörtlicher: die Verteidigung der Grundlagen, von denen alle leben.</p>
+                <p class="lang-en hidden">For the Federation of the year 2100 to prove itself, its first laboratories must be standing by 2030. Building them costs a fraction of what states spend on defence every year — and nothing earns that word more literally: the defence of the foundations everyone lives on.</p>
+                <p class="lang-de"><em>Nichts auf diesen zwei Seiten ist Prognose. Es ist ein Entwurf, zu Ende gedacht.</em></p>
+                <p class="lang-en hidden"><em>Nothing on these two pages is a forecast. It is a design, thought through to the end.</em></p>
+            </div>
+
+            <div class="manifest-sources">
+                <p class="lang-de">Die Föderation ist die Welt des Romans <em>Eintrag Null</em> (vier Generationen, 2030–2100). Der Entwurf stützt sich auf den <em>Global Justice Report 2026</em> (World Inequality Lab), das technische Whitepaper des <em>Integral Collective</em>, die <em>Roadmap for Eradicating Poverty Beyond Growth</em> (2026) und den Klimapfad SSP1-2.6 des IPCC.</p>
+                <p class="lang-en hidden">The Federation is the world of the novel <em>Entry Zero</em> (four generations, 2030–2100). The design draws on the <em>Global Justice Report 2026</em> (World Inequality Lab), the technical white paper of the <em>Integral Collective</em>, the <em>Roadmap for Eradicating Poverty Beyond Growth</em> (2026), and the IPCC climate pathway SSP1-2.6.</p>
+                <p class="manifest-cta">
+                    <button class="action-btn" onclick="switchTab('buch')"><span class="lang-de">Das Buch lesen</span><span class="lang-en hidden">Read the book</span></button>
+                    <button class="action-btn secondary" onclick="switchTab('grundlagen')"><span class="lang-de">Die Quellen ansehen</span><span class="lang-en hidden">See the sources</span></button>
+                </p>
+            </div>
         </div>
 
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
