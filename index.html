@@ -2,11 +2,47 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.40 ·  2026-09-04
+  Fassung:  v0.42 ·  2026-09-05
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.39 (Sitzung 04.09.2026):
+  Aenderungen gegenueber v0.41 (Sitzung 05.09.2026):
+  Weg C: «Was traegt» war mit 2682 Woertern die laengste Seite der Website —
+  laenger als die Werkstatt, die bei 1651 aufklappbar gemacht wurde. Die zehn
+  Begruendungen stehen jetzt in <details>/<summary>: sichtbar bleiben Nummer,
+  Titel und die beiden Einstufungs-Marker, die Begruendung oeffnet auf Klick.
+  Zugeklappt rund 900 statt 2682 Woerter. Nativ, ohne JS, tastaturbedienbar.
+  Die Marker im MANIFEST bleiben unveraendert klickbar (Popup) — dort ist die
+  Begruendung ohnehin nur einen Klick entfernt.
+
+  Aenderungen v0.40 -> v0.41 (Sitzung 05.09.2026):
+  STRUKTURPRUEFUNG UND UMBAU (Weg A, Beschluss Martin).
+  Befund der Messung: 60 % des Inhalts lagen ausserhalb der Navigation —
+  «Was traegt» (2682 Woerter) und «Das Manifest» (1828) sind die beiden
+  groessten Seiten und standen in keinem Menue. Dazu drei Einzelbefunde:
+  das Manifest war von den Grundlagen aus GAR NICHT erreichbar; das Menue
+  markierte auf diesen Seiten keinen Punkt (Besucher ohne Ortsangabe);
+  «Das Fundament» sass in der WERKSTATT (Ebene 3 «wie ist das Buch
+  entstanden»), handelt aber davon, worauf die WELT gebaut ist (Ebene 2).
+  Umbau:
+  (1) Die A/B-Trennung bleibt unangetastet — sie ordnet nach HERKUNFT
+      (vorbestehend vs. projekteigen) und ist Kanon-Pflicht. Die Reihe ordnet
+      nach TIEFE und liegt vollstaendig INNERHALB von B. Zwei Achsen, die
+      ineinanderliegen, kein Widerspruch.
+  (2) B umbenannt: «Die Werkstattpapiere» -> «Die Papiere dieses Projekts».
+      Grund: Manifest und «Was traegt» sind keine Werkstattpapiere im Sinne
+      der Rubrik «Die Werkstatt»; das Wort trug auf der Seite zwei Bedeutungen.
+      Die Klammer mit der Wahrheitsgrenze bleibt woertlich erhalten.
+  (3) B beginnt neu mit der REIHE als vier Karten: Das Manifest · Was traegt ·
+      Das Fundament · Die Lebendige Bilanz. Darunter die drei uebrigen Papiere
+      als Downloads (Whitepaper, Versorgungskorb, Design-Begruendung).
+  (4) «Das Fundament» ZIEHT UM: Werkstatt -> Grundlagen. Die Werkstatt behaelt
+      fuenf Abschnitte und handelt damit durchgehend von der Entstehung des
+      Buchs. Der bisherige Querverweis entfaellt (das Papier steht jetzt dort).
+  (5) switchTab markiert bei manifest/traegt/bilanz-interaktiv den Menuepunkt
+      «Die Grundlagen» als aktiv — die drei Seiten liegen auf dieser Ebene.
+
+  Aenderungen v0.39 -> v0.40 (Sitzung 04.09.2026):
   (A) Register: Das Manifest aufgenommen (DE v0.17=17 · EN v0.3=3 = 20 Fassungen,
       eigene Zeile). Summe 744 -> 764, beide Sprachtabellen. Es stand als
       einziges veroeffentlichtes Papier ausserhalb der Zaehlung.
@@ -903,6 +939,54 @@
             font: inherit; font-weight: 600; cursor: pointer;
         }
 
+        /* --- Aufklappbare Begruendungen auf «Was traegt» --- */
+        .g-details { margin-top: 10px; }
+        .g-details > summary {
+            cursor: pointer; list-style: none;
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--link-footer);
+            text-decoration: underline; text-underline-offset: 3px;
+            padding: 4px 0;
+        }
+        .g-details > summary::-webkit-details-marker { display: none; }
+        .g-details > summary::before {
+            content: "\25B8"; display: inline-block; width: 1em; margin-right: 5px;
+            transition: transform 0.18s ease;
+        }
+        .g-details[open] > summary::before { transform: rotate(90deg); }
+        .g-details > summary:hover { color: #93c5fd; }
+        .g-details > summary:focus-visible { outline: 2px solid #ffd633; outline-offset: 3px; border-radius: 4px; }
+        .g-details > div { margin-top: 8px; }
+
+        /* --- Die Reihe: vier Karten auf den Grundlagen --- */
+        .reihe { display: flex; flex-direction: column; gap: 12px; margin: 22px 0 34px; }
+        .reihe-karte {
+            display: flex; gap: 18px; align-items: flex-start;
+            width: 100%; text-align: left; font: inherit; cursor: pointer;
+            background: rgba(0, 0, 0, 0.55);
+            border: none; border-left: 4px solid var(--primary);
+            border-radius: 8px; padding: 18px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            color: inherit;
+        }
+        .reihe-karte:hover { background: rgba(0, 0, 0, 0.72); }
+        .reihe-karte:focus-visible { outline: 2px solid #ffd633; outline-offset: 3px; }
+        .rk-nr {
+            font-family: Georgia, serif; font-size: 1.9rem; line-height: 1;
+            color: var(--primary); flex: 0 0 auto; min-width: 34px; text-align: right;
+        }
+        .rk-body { display: flex; flex-direction: column; gap: 5px; }
+        .rk-titel { font-family: Georgia, serif; font-size: 1.2rem; color: var(--primary); }
+        .rk-text { font-size: 0.97rem; line-height: 1.55; }
+        .rk-meta {
+            font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--eb-muted); font-weight: 600;
+        }
+        @media (max-width: 680px) {
+            .reihe-karte { gap: 12px; padding: 15px 14px; }
+            .rk-nr { font-size: 1.4rem; min-width: 24px; }
+        }
+
         /* --- Manifest-Seite --- */
         .page-kicker {
             font-size: 0.8rem; letter-spacing: 0.16em; text-transform: uppercase;
@@ -1784,12 +1868,50 @@
                 <br><a href="https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-4/" target="_blank" rel="noopener" class="download-link" style="font-size:0.9rem; display:inline-block; margin-top:8px;">IPCC AR6, WG1, Kapitel 4 →</a>
             </div>
 
-            <h2 class="lang-de">Die Werkstattpapiere <em style="font-size: 1.1rem; color: var(--eb-muted);">(TSBL-Papiere — aus den realen Quellen entwickelt, keine vorbestehenden Dokumente)</em></h2>
-            <h2 class="lang-en hidden">The workshop papers <em style="font-size: 1.1rem; color: var(--eb-muted);">(TSBL papers — developed from the real sources; not pre-existing documents)</em></h2>
+            <h2 class="lang-de">Die Papiere dieses Projekts <em style="font-size: 1.1rem; color: var(--eb-muted);">(TSBL-Papiere — aus den realen Quellen entwickelt, keine vorbestehenden Dokumente)</em></h2>
+            <h2 class="lang-en hidden">The papers of this project <em style="font-size: 1.1rem; color: var(--eb-muted);">(TSBL papers — developed from the real sources; not pre-existing documents)</em></h2>
 
-            <p class="lang-de">Wer nach der Lektüre wissen will, wie die Welt des Romans im Einzelnen gedacht ist, findet es hier — vier Papiere, vom Zugänglichen zum Technischen.</p>
-            <p class="lang-en hidden">If, after reading, you want to know how the world of the novel is thought through in detail, it is here — four papers, from the accessible to the technical.</p>
-            <p class="lang-en hidden lead-note">All four workshop papers are available in English.</p>
+            <p class="lang-de">Wer wissen will, wie die Welt des Romans im Einzelnen gedacht ist, findet es hier — geordnet vom Zugänglichen zum Technischen. Die ersten vier bauen aufeinander auf: Das Manifest behauptet, «Was trägt» prüft, «Das Fundament» begründet, «Die Lebendige Bilanz» misst.</p>
+            <p class="lang-en hidden">If you want to know how the world of the novel is thought through in detail, it is here — ordered from the accessible to the technical. The first four build on one another: the manifesto claims, «What Holds» examines, «The Foundation» argues, «The Living Balance» measures.</p>
+
+            <div class="reihe">
+                <button type="button" class="reihe-karte" onclick="switchTab('manifest')">
+                    <span class="rk-nr">1</span>
+                    <span class="rk-body">
+                        <span class="rk-titel"><span class="lang-de">Das Manifest</span><span class="lang-en hidden">The Manifesto</span></span>
+                        <span class="rk-text"><span class="lang-de">Die Idee in zehn Punkten. Zwei Seiten, ohne eine Zeile Roman.</span><span class="lang-en hidden">The idea in ten points. Two pages, without a line of the novel.</span></span>
+                        <span class="rk-meta"><span class="lang-de">auf dieser Webseite lesbar</span><span class="lang-en hidden">readable on this website</span></span>
+                    </span>
+                </button>
+                <button type="button" class="reihe-karte" onclick="switchTab('traegt')">
+                    <span class="rk-nr">2</span>
+                    <span class="rk-body">
+                        <span class="rk-titel"><span class="lang-de">Was trägt</span><span class="lang-en hidden">What Holds</span></span>
+                        <span class="rk-text"><span class="lang-de">Was von den zehn Punkten belegt ist, was erst ein Labor zeigen kann und was auch das nicht beantwortet.</span><span class="lang-en hidden">What of the ten points is supported, what only a laboratory can show, and what even that cannot answer.</span></span>
+                        <span class="rk-meta"><span class="lang-de">auf dieser Webseite lesbar · auch als PDF</span><span class="lang-en hidden">readable on this website · also as PDF</span></span>
+                    </span>
+                </button>
+                <button type="button" class="reihe-karte" onclick="goToSection('grundlagen','g-fundament')">
+                    <span class="rk-nr">3</span>
+                    <span class="rk-body">
+                        <span class="rk-titel"><span class="lang-de">Das Fundament</span><span class="lang-en hidden">The Foundation</span></span>
+                        <span class="rk-text"><span class="lang-de">Die ausführliche Prüfung: was jede Quelle beisteuert und wo die Konstruktion offen bleibt.</span><span class="lang-en hidden">The detailed examination: what each source contributes and where the construction stays open.</span></span>
+                        <span class="rk-meta"><span class="lang-de">PDF</span><span class="lang-en hidden">PDF</span></span>
+                    </span>
+                </button>
+                <button type="button" class="reihe-karte" onclick="switchTab('bilanz-interaktiv')">
+                    <span class="rk-nr">4</span>
+                    <span class="rk-body">
+                        <span class="rk-titel"><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></span>
+                        <span class="rk-text"><span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — sechs Felder, nie zu einer Zahl verrechnet.</span><span class="lang-en hidden">What a world without gross domestic product measures its success by — six fields, never merged into one number.</span></span>
+                        <span class="rk-meta"><span class="lang-de">interaktiv · auch als PDF</span><span class="lang-en hidden">interactive · also as PDF</span></span>
+                    </span>
+                </button>
+            </div>
+
+            <h3 class="lang-de">Die übrigen Papiere</h3>
+            <h3 class="lang-en hidden">The remaining papers</h3>
+            <p class="lang-en hidden lead-note">All of them are available in English.</p>
 
             <div class="source-card workshop-doc">
                 <span class="source-title"><span class="lang-de">Das TSBL-Whitepaper <em>(allgemeinverständlich)</em></span><span class="lang-en hidden">The TSBL White Paper <em>(plain language)</em></span></span>
@@ -1831,21 +1953,15 @@
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/NRKQ1GB180#4u4JOPQgt7fD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — Design Rationale</a>
             </div>
 
-            <p class="lang-de">Wie diese Quellen und Papiere zusammenhängen — was jede beisteuert, an welche Forschung sie anschliesst und wo die Konstruktion offen bleibt —, führt <strong>Das Fundament</strong> einzeln auf. Es steht in der Werkstatt.</p>
-            <p class="lang-en hidden">How these sources and papers hang together — what each contributes, which research it connects to, and where the construction stays open — is set out one by one in <strong>The Foundation</strong>. It stands in the workshop.</p>
-            <p>
-                <a href="#" class="inline-link" onclick="goToSection('werkstatt', 'w-fundament'); return false;">
-                    <span class="lang-de">Zu «Das Fundament» in der Werkstatt</span><span class="lang-en hidden">To «The Foundation» in the workshop</span>
-                </a>
-            </p>
-
-            <p class="lang-de">Eine Ebene darüber, in einfacher Sprache: <strong>Was trägt — und was ein Labor erst zeigen muss</strong> sortiert die zehn Grundsätze danach, was belegt ist, was erst ein Versuch zeigen kann und was auch der beste Versuch nicht beantwortet.</p>
-            <p class="lang-en hidden">One level above, in plain language: <strong>What Holds — and What Only a Laboratory Can Show</strong> sorts the ten principles by what is supported, what only an attempt can show, and what even the best attempt cannot answer.</p>
-            <p>
-                <a href="#" class="inline-link" onclick="switchTab('traegt'); return false;">
-                    <span class="lang-de">Zu «Was trägt»</span><span class="lang-en hidden">To «What Holds»</span>
-                </a>
-            </p>
+            <span class="sec-anchor" id="g-fundament" aria-hidden="true"></span>
+            <div class="source-card workshop-doc">
+                <span class="source-title"><span class="lang-de">Das Fundament</span><span class="lang-en hidden">The Foundation</span></span>
+                <span class="lang-de"><em>Worauf die Welt von «Eintrag Null» gebaut ist.</em> Vier reale Arbeiten stehen unter dieser Welt, dazu sieben Gründungsentscheidungen und eine private fünfte Quelle. Dieses Papier führt sie einzeln auf: was jede beisteuert, an welche Forschung sie anschliesst — und wo die Konstruktion offen bleibt. Für alle geschrieben, die es nachprüfen wollen; Fachbegriffe werden erklärt, Vorwissen wird nicht vorausgesetzt.</span>
+                <span class="lang-en hidden"><em>What the world of «Entry Zero» is built on.</em> Four real works lie beneath this world, together with seven founding decisions and a private fifth source. This paper sets them out one by one: what each contributes, which research it connects to — and where the construction stays open. Written for anyone who wants to check; technical terms are explained, no prior knowledge assumed.</span>
+                <br>
+                <a class="lang-de download-link" href="https://drive.proton.me/urls/35K8M336TM#oiKgoLbZa3Sr" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Das Fundament</a>
+                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/3BR55P5M9C#En5LDoaXAtuD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Foundation</a>
+            </div>
         </div>
 
         <!-- ================= SEITE 2a: DIE LEBENDIGE BILANZ (INTERAKTIV) ================= -->
@@ -1931,7 +2047,6 @@
                     <li><a class="inline-link" href="#w-novelle">Die Novelle</a><span class="toc-kind">Erzählung</span></li>
                     <li><a class="inline-link" href="#w-landschaft">Die Landschaft des Möglichen</a><span class="toc-kind">Werkstatttext</span></li>
                     <li><a class="inline-link" href="#w-essay">Das Feuer, das antwortet</a><span class="toc-kind">Essay</span></li>
-                    <li><a class="inline-link" href="#w-fundament">Das Fundament</a><span class="toc-kind">Analyse</span></li>
                     <li><a class="inline-link" href="#w-pruefung">Aus dem Register</a><span class="toc-kind">Prüfung</span></li>
                     <li><a class="inline-link" href="#w-register">Das Register der Entstehung</a><span class="toc-kind">Zählung</span></li>
                 </ol>
@@ -1943,7 +2058,6 @@
                     <li><a class="inline-link" href="#w-novelle">The novella</a><span class="toc-kind">Narrative</span></li>
                     <li><a class="inline-link" href="#w-landschaft">The Landscape of the Possible</a><span class="toc-kind">Workshop text</span></li>
                     <li><a class="inline-link" href="#w-essay">The Fire That Answers</a><span class="toc-kind">Essay</span></li>
-                    <li><a class="inline-link" href="#w-fundament">The Foundation</a><span class="toc-kind">Analysis</span></li>
                     <li><a class="inline-link" href="#w-pruefung">From the register</a><span class="toc-kind">Check</span></li>
                     <li><a class="inline-link" href="#w-register">The Register of the Making</a><span class="toc-kind">Count</span></li>
                 </ol>
@@ -2075,20 +2189,6 @@
                 </p>
 
                 <!-- ---------- Aus dem Register ---------- -->
-            </section>
-
-            <!-- ---------- Das Fundament ---------- -->
-            <span class="sec-anchor" id="w-fundament" aria-hidden="true"></span>
-            <section class="work-section">
-                <span class="sec-kicker lang-de">Analyse</span><span class="sec-kicker lang-en hidden">Analysis</span>
-                <h2 class="lang-de">Das Fundament</h2>
-                <h2 class="lang-en hidden">The Foundation</h2>
-                <p class="lang-de"><em>Worauf die Welt von «Eintrag Null» gebaut ist.</em> Vier reale Arbeiten stehen unter dieser Welt, dazu sieben Gründungsentscheidungen und eine private fünfte Quelle. Dieses Papier führt sie einzeln auf: was jede beisteuert, an welche Forschung sie anschliesst — und wo die Konstruktion offen bleibt. Für alle geschrieben, die es nachprüfen wollen; Fachbegriffe werden erklärt, Vorwissen wird nicht vorausgesetzt.</p>
-                <p class="lang-en hidden"><em>What the world of «Entry Zero» is built on.</em> Four real works lie beneath this world, together with seven founding decisions and a private fifth source. This paper sets them out one by one: what each contributes, which research it connects to — and where the construction stays open. Written for anyone who wants to check; technical terms are explained, no prior knowledge assumed.</p>
-                <p>
-                    <a class="lang-de download-link" href="https://drive.proton.me/urls/35K8M336TM#oiKgoLbZa3Sr" target="_blank" rel="noopener">PDF lesen / herunterladen — Das Fundament</a>
-                    <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/3BR55P5M9C#En5LDoaXAtuD" target="_blank" rel="noopener">Read / download PDF — The Foundation</a>
-                </p>
             </section>
 
             <span class="sec-anchor" id="w-pruefung" aria-hidden="true"></span>
@@ -2452,8 +2552,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Zählen, was verbraucht wird, nicht was es kostet</h3>
                     <h3 class="lang-en hidden">Counting what is consumed, not what it costs</h3>
-                    <p class="lang-de">Dass der Preis ein schlechtes Mass für Wohlstand ist, wissen Ökonomen seit Jahrzehnten. Eine Kommission unter den Nobelpreisträgern Joseph Stiglitz und Amartya Sen hat 2009 empfohlen, Fortschritt nicht mehr am Bruttoinlandsprodukt allein zu messen. Stunden, Kilowattstunden, Hektaren und Tonnen zu zählen — das nennt die Wissenschaft «physische Rechnungslegung» und tut es längst.</p>
-                    <p class="lang-en hidden">That price is a poor measure of prosperity has been known to economists for decades. A commission under the Nobel laureates Joseph Stiglitz and Amartya Sen recommended in 2009 that progress no longer be measured by gross domestic product alone. Counting hours, kilowatt hours, hectares and tonnes — science calls this «physical accounting» and has long done it.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Dass der Preis ein schlechtes Mass für Wohlstand ist, wissen Ökonomen seit Jahrzehnten. Eine Kommission unter den Nobelpreisträgern Joseph Stiglitz und Amartya Sen hat 2009 empfohlen, Fortschritt nicht mehr am Bruttoinlandsprodukt allein zu messen. Stunden, Kilowattstunden, Hektaren und Tonnen zu zählen — das nennt die Wissenschaft «physische Rechnungslegung» und tut es längst.</p>
+                    <p class="lang-en hidden">That price is a poor measure of prosperity has been known to economists for decades. A commission under the Nobel laureates Joseph Stiglitz and Amartya Sen recommended in 2009 that progress no longer be measured by gross domestic product alone. Counting hours, kilowatt hours, hectares and tonnes — science calls this «physical accounting» and has long done it.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">belegt</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">supported</span></div>
                     <p class="lang-de td-note">Offen ist nicht das Zählen, sondern ob man eine ganze Wirtschaft allein damit steuern kann (siehe Grundsatz 6).</p>
                     <p class="lang-en hidden td-note">What is open is not the counting, but whether a whole economy can be steered by it alone (see Principle 6).</p>
@@ -2466,8 +2569,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Ein Netz aus Orten, keine befehlende Mitte</h3>
                     <h3 class="lang-en hidden">A network of places, no commanding centre</h3>
-                    <p class="lang-de">Die Nobelpreisträgerin Elinor Ostrom hat in jahrzehntelanger Feldforschung gezeigt, dass Gemeinschaften ihre gemeinsamen Güter — Wälder, Fischgründe, Bewässerungssysteme — sehr wohl selbst verwalten können, ohne Staat und ohne Markt. Sie hat auch beschrieben, wie: in überschaubaren Einheiten, die sich zu grösseren Verbünden schachteln. Genau so ist die Föderation gebaut. Ostrom hat aber auch gewarnt: Es gibt kein Patentrezept. Drei Dinge weiss die Forschung, die der Entwurf ernst nehmen muss. Erstens: Menschen können sich nur mit rund 150 anderen wirklich kennen und mit etwa 1500 noch Gesichter zuordnen (Robin Dunbar). Ein Knoten von wenigen tausend Menschen ist deshalb ein Ort des <em>Erkennens</em>, nicht des engen Kennens — darum spricht das Manifest von Menschen, die «einander erkennen und füreinander einstehen». Das engere Mittragen geschieht in kleineren Kreisen, die keine Instanz sind. Wann ein Knoten zu gross wird, legt keine Regel fest; seine eigene Bilanz zeigt es, und dann teilt er sich. Ob dieses Signal rechtzeitig anschlägt — und ob ein Knoten, dessen Beratung schon erlahmt, die Kraft zur Teilung noch hat —, ist eine der Fragen, die nur ein Labor beantwortet. Zweitens: Beratung, bis eine Entscheidung getragen wird, funktioniert in kleinen Runden. Ein Verbund aus 300 Knoten kann nicht mehr alle miteinander reden lassen; dort wird aus Beratung Delegation. Das Fundament sagt das offen. Drittens: Auch wo jede Entscheidung offen im Register steht, bleibt unsichtbar, was in Freundeskreisen und Beziehungsnetzen <em>vorher</em> schon feststand. Die Soziologin Jo Freeman hat 1972 gezeigt, dass Gruppen ohne formale Macht nicht machtfrei sind, sondern unsichtbare Macht haben. Der Roman macht genau diese Lücke zu seinem Hauptkonflikt.</p>
-                    <p class="lang-en hidden">The Nobel laureate Elinor Ostrom showed, in decades of field research, that communities can indeed manage their common goods themselves — forests, fisheries, irrigation systems — without state and without market. She also described how: in surveyable units that nest into larger unions. That is exactly how the Federation is built. But Ostrom also warned: there is no patent recipe. Research knows three things the design must take seriously. First: people can truly know only around 150 others, and still place the faces of about 1,500 (Robin Dunbar). A node of a few thousand people is therefore a place of recognizing, not of close knowing — which is why the manifesto speaks of people who «recognize one another and stand up for one another». The closer carrying happens in smaller circles that are not an authority. When a node grows too large is fixed by no rule; its own balance shows it, and then it divides. Whether that signal sounds in time — and whether a node whose deliberation is already faltering still has the strength to divide — is one of the questions only a laboratory answers. Second: deliberation until a decision is carried works in small rounds. A union of 300 nodes can no longer let everyone speak with everyone; there, deliberation becomes delegation. The Foundation says so openly. Third: even where every decision stands open in the Register, what was already settled in circles of friends and networks of relationships remains invisible. The sociologist Jo Freeman showed in 1972 that groups without formal power are not free of power, but hold invisible power. The novel makes precisely this gap its central conflict.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Die Nobelpreisträgerin Elinor Ostrom hat in jahrzehntelanger Feldforschung gezeigt, dass Gemeinschaften ihre gemeinsamen Güter — Wälder, Fischgründe, Bewässerungssysteme — sehr wohl selbst verwalten können, ohne Staat und ohne Markt. Sie hat auch beschrieben, wie: in überschaubaren Einheiten, die sich zu grösseren Verbünden schachteln. Genau so ist die Föderation gebaut. Ostrom hat aber auch gewarnt: Es gibt kein Patentrezept. Drei Dinge weiss die Forschung, die der Entwurf ernst nehmen muss. Erstens: Menschen können sich nur mit rund 150 anderen wirklich kennen und mit etwa 1500 noch Gesichter zuordnen (Robin Dunbar). Ein Knoten von wenigen tausend Menschen ist deshalb ein Ort des <em>Erkennens</em>, nicht des engen Kennens — darum spricht das Manifest von Menschen, die «einander erkennen und füreinander einstehen». Das engere Mittragen geschieht in kleineren Kreisen, die keine Instanz sind. Wann ein Knoten zu gross wird, legt keine Regel fest; seine eigene Bilanz zeigt es, und dann teilt er sich. Ob dieses Signal rechtzeitig anschlägt — und ob ein Knoten, dessen Beratung schon erlahmt, die Kraft zur Teilung noch hat —, ist eine der Fragen, die nur ein Labor beantwortet. Zweitens: Beratung, bis eine Entscheidung getragen wird, funktioniert in kleinen Runden. Ein Verbund aus 300 Knoten kann nicht mehr alle miteinander reden lassen; dort wird aus Beratung Delegation. Das Fundament sagt das offen. Drittens: Auch wo jede Entscheidung offen im Register steht, bleibt unsichtbar, was in Freundeskreisen und Beziehungsnetzen <em>vorher</em> schon feststand. Die Soziologin Jo Freeman hat 1972 gezeigt, dass Gruppen ohne formale Macht nicht machtfrei sind, sondern unsichtbare Macht haben. Der Roman macht genau diese Lücke zu seinem Hauptkonflikt.</p>
+                    <p class="lang-en hidden">The Nobel laureate Elinor Ostrom showed, in decades of field research, that communities can indeed manage their common goods themselves — forests, fisheries, irrigation systems — without state and without market. She also described how: in surveyable units that nest into larger unions. That is exactly how the Federation is built. But Ostrom also warned: there is no patent recipe. Research knows three things the design must take seriously. First: people can truly know only around 150 others, and still place the faces of about 1,500 (Robin Dunbar). A node of a few thousand people is therefore a place of recognizing, not of close knowing — which is why the manifesto speaks of people who «recognize one another and stand up for one another». The closer carrying happens in smaller circles that are not an authority. When a node grows too large is fixed by no rule; its own balance shows it, and then it divides. Whether that signal sounds in time — and whether a node whose deliberation is already faltering still has the strength to divide — is one of the questions only a laboratory answers. Second: deliberation until a decision is carried works in small rounds. A union of 300 nodes can no longer let everyone speak with everyone; there, deliberation becomes delegation. The Foundation says so openly. Third: even where every decision stands open in the Register, what was already settled in circles of friends and networks of relationships remains invisible. The sociologist Jo Freeman showed in 1972 that groups without formal power are not free of power, but hold invisible power. The novel makes precisely this gap its central conflict.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">Bauprinzip belegt</span><span class="mk mk-im-labor">Ob es im Grossen trägt: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">building principle supported</span><span class="mk mk-im-labor">Whether it holds at scale: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m2'); return false;"><span class="lang-de">↑ Punkt 2 im Manifest</span><span class="lang-en hidden">↑ Point 2 in the manifesto</span></a></p>
                 </div>
@@ -2478,8 +2584,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Niemand muss arbeiten, um essen zu können</h3>
                     <h3 class="lang-en hidden">No one has to work in order to eat</h3>
-                    <p class="lang-de">Das ist der Grundsatz, zu dem die meisten Menschen spontan sagen: Dann arbeitet doch keiner mehr. Die Forschung sagt etwas anderes. Die grösste Studie zu bedingungslosem Einkommen — 3000 Menschen in den USA, drei Jahre lang, 1000 Dollar im Monat, veröffentlicht 2024 — fand: Die Empfänger arbeiteten pro Woche gut eine Stunde weniger. Nicht null Stunden. Eine Stunde. Ein Überblick über 38 Studien weltweit fand nirgends einen nennenswerten Rückzug aus der Arbeit. Das finnische Experiment zeigte mehr Wohlbefinden bei gleicher Beschäftigung. Was die Forschung <em>nicht</em> zeigt: was über Jahrzehnte geschieht, wenn eine ganze Gemeinschaft so lebt, nicht einzelne Personen für drei Jahre.</p>
-                    <p class="lang-en hidden">This is the principle to which most people spontaneously say: then nobody will work any more. The research says otherwise. The largest study on unconditional income — 3,000 people in the USA, three years, 1,000 dollars a month, published in 2024 — found: recipients worked a good hour less per week. Not zero hours. One hour. A review of 38 studies worldwide found no appreciable withdrawal from work anywhere. The Finnish experiment showed greater well-being at unchanged employment. What the research does not show: what happens over decades when a whole community lives this way, rather than individuals for three years.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Das ist der Grundsatz, zu dem die meisten Menschen spontan sagen: Dann arbeitet doch keiner mehr. Die Forschung sagt etwas anderes. Die grösste Studie zu bedingungslosem Einkommen — 3000 Menschen in den USA, drei Jahre lang, 1000 Dollar im Monat, veröffentlicht 2024 — fand: Die Empfänger arbeiteten pro Woche gut eine Stunde weniger. Nicht null Stunden. Eine Stunde. Ein Überblick über 38 Studien weltweit fand nirgends einen nennenswerten Rückzug aus der Arbeit. Das finnische Experiment zeigte mehr Wohlbefinden bei gleicher Beschäftigung. Was die Forschung <em>nicht</em> zeigt: was über Jahrzehnte geschieht, wenn eine ganze Gemeinschaft so lebt, nicht einzelne Personen für drei Jahre.</p>
+                    <p class="lang-en hidden">This is the principle to which most people spontaneously say: then nobody will work any more. The research says otherwise. The largest study on unconditional income — 3,000 people in the USA, three years, 1,000 dollars a month, published in 2024 — found: recipients worked a good hour less per week. Not zero hours. One hour. A review of 38 studies worldwide found no appreciable withdrawal from work anywhere. The Finnish experiment showed greater well-being at unchanged employment. What the research does not show: what happens over decades when a whole community lives this way, rather than individuals for three years.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">belegt für Einzelpersonen und mittlere Fristen</span><span class="mk mk-im-labor">Langzeitwirkung auf ganze Gemeinschaften: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">supported for individuals and medium terms</span><span class="mk mk-im-labor">Long-term effect on whole communities: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m3'); return false;"><span class="lang-de">↑ Punkt 3 im Manifest</span><span class="lang-en hidden">↑ Point 3 in the manifesto</span></a></p>
                 </div>
@@ -2490,8 +2599,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Das Genug, nicht das Minimum</h3>
                     <h3 class="lang-en hidden">The Enough, not the minimum</h3>
-                    <p class="lang-de">Wie viel braucht ein Mensch für ein gutes Leben? Ein Forschungsteam um Joel Millward-Hopkins und Julia Steinberger hat das 2020 ausgerechnet: rund 15 Gigajoule Energie pro Person und Jahr — etwa ein Zehntel dessen, was ein Mensch in der Schweiz heute verbraucht — reichen für Wohnung, Wärme, Ernährung, Gesundheit, Bildung, Mobilität und Kommunikation für alle Menschen auf der Erde. Voraussetzung ist der Einsatz der besten verfügbaren Technik. Dass der Korb der Föderation aus dem realen Warenkorb der Schweizer Sozialhilfe abgeleitet ist und «mitwächst», entspricht dem, was die Armutsforschung seit Peter Townsend weiss: Dazugehören bemisst sich am Üblichen einer Gesellschaft, nicht an einer festen Schwelle. Den Begriff des Genug — nicht das Minimum — entnimmt der Entwurf der UN-Roadmap «Eradicating Poverty Beyond Growth» von 2026. Auch sie ist, wie der Global Justice Report, eine Position in einer laufenden Debatte, nicht deren Ergebnis.</p>
-                    <p class="lang-en hidden">How much does a person need for a good life? A research team around Joel Millward-Hopkins and Julia Steinberger calculated this in 2020: around 15 gigajoules of energy per person per year — about a tenth of what a person in Switzerland consumes today — suffices for housing, warmth, nutrition, health, education, mobility and communication for every human being on Earth. The precondition is the use of the best available technology. That the Federation's basket is derived from the real provision basket of Swiss social assistance and «grows along» corresponds to what poverty research has known since Peter Townsend: belonging is measured against what is customary in a society, not against a fixed threshold. The design takes the notion of the Enough — not the minimum — from the UN roadmap «Eradicating Poverty Beyond Growth» of 2026. It too is, like the Global Justice Report, a position in an ongoing debate, not its result.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Wie viel braucht ein Mensch für ein gutes Leben? Ein Forschungsteam um Joel Millward-Hopkins und Julia Steinberger hat das 2020 ausgerechnet: rund 15 Gigajoule Energie pro Person und Jahr — etwa ein Zehntel dessen, was ein Mensch in der Schweiz heute verbraucht — reichen für Wohnung, Wärme, Ernährung, Gesundheit, Bildung, Mobilität und Kommunikation für alle Menschen auf der Erde. Voraussetzung ist der Einsatz der besten verfügbaren Technik. Dass der Korb der Föderation aus dem realen Warenkorb der Schweizer Sozialhilfe abgeleitet ist und «mitwächst», entspricht dem, was die Armutsforschung seit Peter Townsend weiss: Dazugehören bemisst sich am Üblichen einer Gesellschaft, nicht an einer festen Schwelle. Den Begriff des Genug — nicht das Minimum — entnimmt der Entwurf der UN-Roadmap «Eradicating Poverty Beyond Growth» von 2026. Auch sie ist, wie der Global Justice Report, eine Position in einer laufenden Debatte, nicht deren Ergebnis.</p>
+                    <p class="lang-en hidden">How much does a person need for a good life? A research team around Joel Millward-Hopkins and Julia Steinberger calculated this in 2020: around 15 gigajoules of energy per person per year — about a tenth of what a person in Switzerland consumes today — suffices for housing, warmth, nutrition, health, education, mobility and communication for every human being on Earth. The precondition is the use of the best available technology. That the Federation's basket is derived from the real provision basket of Swiss social assistance and «grows along» corresponds to what poverty research has known since Peter Townsend: belonging is measured against what is customary in a society, not against a fixed threshold. The design takes the notion of the Enough — not the minimum — from the UN roadmap «Eradicating Poverty Beyond Growth» of 2026. It too is, like the Global Justice Report, a position in an ongoing debate, not its result.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">belegt als Konzept und Grössenordnung</span><span class="mk mk-im-labor">Wie der Korb konkret aussieht und ob Menschen eine Obergrenze akzeptieren: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">supported as concept and order of magnitude</span><span class="mk mk-im-labor">What the basket looks like in detail, and whether people accept a ceiling: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m4'); return false;"><span class="lang-de">↑ Punkt 4 im Manifest</span><span class="lang-en hidden">↑ Point 4 in the manifesto</span></a></p>
                 </div>
@@ -2502,8 +2614,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Erfolg wird berichtet, nicht benotet</h3>
                     <h3 class="lang-en hidden">Success is reported, not graded</h3>
-                    <p class="lang-de">Die Lebendige Bilanz — sechs Felder nebeneinander, nie zu einer Zahl verrechnet — ist genau das, was die Stiglitz-Sen-Kommission vorgeschlagen hat: ein Armaturenbrett statt einer einzigen Note. Die OECD macht es mit ihrem «Better Life Index» ähnlich, die Ökonomin Kate Raworth mit ihrem «Donut». Zwei Regeln der Bilanz gehen über die übliche Praxis hinaus. Erstens: Versorgung wird an den am schlechtesten Versorgten gemessen, nie am Durchschnitt — und zwar mit einem Verfahren, das die UNO für ihren Armutsindex benutzt. Die Messung hat eine bewusste Grenze: In einem Knoten von einigen hundert Menschen würde eine Zahl über die Schwächsten faktisch Namen nennen. Darum wird sie erst ab einer Mindestgrösse berichtet und sonst auf der Ebene des Verbunds gebildet; wie hoch diese Schwelle liegt, muss ein Labor vor der ersten Messung festlegen. Zweitens: Ausgestossenes und wieder eingefangenes CO₂ werden getrennt gebucht und nie gegeneinander verrechnet, damit ein Versprechen für morgen nicht die Verschmutzung von heute rechtfertigt. Klimaforscher fordern genau diese Trennung seit 2019 — die meisten realen Klimaziele haben sie nicht. Eine Grenze bleibt: Jedes Messsystem verführt dazu, die Zahl zu frisieren statt die Sache zu verbessern. Die Bilanz schützt sich davor nicht durch ihre Bauweise, sondern durch eine Regel: Kein Knoten wird gegen einen anderen gereiht. Wer niemanden übertreffen muss, hat weniger Grund zu schummeln. Ob das reicht, wird sich zeigen.</p>
-                    <p class="lang-en hidden">The Living Balance — six fields side by side, never merged into a single number — is exactly what the Stiglitz-Sen commission proposed: a dashboard instead of a single grade. The OECD does something similar with its «Better Life Index», the economist Kate Raworth with her «Doughnut». Two rules of the Balance go beyond usual practice. First: provision is measured at the worst-off person, never at the average — and by a procedure the UN uses for its poverty index. The measurement has a deliberate limit: in a node of a few hundred people, a figure about the worst-off would in effect name names. It is therefore reported only above a minimum size, and otherwise formed at the level of the union; how high that threshold lies must be fixed by a laboratory before the first measurement. Second: emitted and recaptured CO₂ are booked separately and never netted against one another, so that a promise for tomorrow cannot justify today's pollution. Climate researchers have demanded precisely this separation since 2019 — most real climate targets do not have it. One limit remains: every measurement system tempts one to dress up the figure instead of improving the matter. The Balance protects itself against this not by its construction but by a rule: no node is ranked against another. Whoever need not outdo anyone has less reason to cheat. Whether that suffices will show.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Die Lebendige Bilanz — sechs Felder nebeneinander, nie zu einer Zahl verrechnet — ist genau das, was die Stiglitz-Sen-Kommission vorgeschlagen hat: ein Armaturenbrett statt einer einzigen Note. Die OECD macht es mit ihrem «Better Life Index» ähnlich, die Ökonomin Kate Raworth mit ihrem «Donut». Zwei Regeln der Bilanz gehen über die übliche Praxis hinaus. Erstens: Versorgung wird an den am schlechtesten Versorgten gemessen, nie am Durchschnitt — und zwar mit einem Verfahren, das die UNO für ihren Armutsindex benutzt. Die Messung hat eine bewusste Grenze: In einem Knoten von einigen hundert Menschen würde eine Zahl über die Schwächsten faktisch Namen nennen. Darum wird sie erst ab einer Mindestgrösse berichtet und sonst auf der Ebene des Verbunds gebildet; wie hoch diese Schwelle liegt, muss ein Labor vor der ersten Messung festlegen. Zweitens: Ausgestossenes und wieder eingefangenes CO₂ werden getrennt gebucht und nie gegeneinander verrechnet, damit ein Versprechen für morgen nicht die Verschmutzung von heute rechtfertigt. Klimaforscher fordern genau diese Trennung seit 2019 — die meisten realen Klimaziele haben sie nicht. Eine Grenze bleibt: Jedes Messsystem verführt dazu, die Zahl zu frisieren statt die Sache zu verbessern. Die Bilanz schützt sich davor nicht durch ihre Bauweise, sondern durch eine Regel: Kein Knoten wird gegen einen anderen gereiht. Wer niemanden übertreffen muss, hat weniger Grund zu schummeln. Ob das reicht, wird sich zeigen.</p>
+                    <p class="lang-en hidden">The Living Balance — six fields side by side, never merged into a single number — is exactly what the Stiglitz-Sen commission proposed: a dashboard instead of a single grade. The OECD does something similar with its «Better Life Index», the economist Kate Raworth with her «Doughnut». Two rules of the Balance go beyond usual practice. First: provision is measured at the worst-off person, never at the average — and by a procedure the UN uses for its poverty index. The measurement has a deliberate limit: in a node of a few hundred people, a figure about the worst-off would in effect name names. It is therefore reported only above a minimum size, and otherwise formed at the level of the union; how high that threshold lies must be fixed by a laboratory before the first measurement. Second: emitted and recaptured CO₂ are booked separately and never netted against one another, so that a promise for tomorrow cannot justify today's pollution. Climate researchers have demanded precisely this separation since 2019 — most real climate targets do not have it. One limit remains: every measurement system tempts one to dress up the figure instead of improving the matter. The Balance protects itself against this not by its construction but by a rule: no node is ranked against another. Whoever need not outdo anyone has less reason to cheat. Whether that suffices will show.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">belegt als Messmethode</span><span class="mk mk-im-labor">Ob sie zur Steuerung taugt: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">supported as a measurement method</span><span class="mk mk-im-labor">Whether it serves for steering: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m5'); return false;"><span class="lang-de">↑ Punkt 5 im Manifest</span><span class="lang-en hidden">↑ Point 5 in the manifesto</span></a></p>
                 </div>
@@ -2514,8 +2629,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Hilfe braucht kein Geld, nur Sichtbarkeit</h3>
                     <h3 class="lang-en hidden">Help needs no money, only visibility</h3>
-                    <p class="lang-de">Das ist die härteste Frage des Entwurfs, und das Manifest sagt es selbst. Dass Gemeinschaften ohne Geld füreinander sorgen, wissen Anthropologen seit Marcel Mauss: Gaben werden erinnert, nicht verrechnet. In Nachbarschaften, Dörfern und nach Katastrophen funktioniert das nachweislich. Ob es zwischen Millionen Menschen und Millionen Gütern funktioniert, ist seit hundert Jahren umstritten. Die Ökonomen Ludwig von Mises und Friedrich Hayek haben argumentiert, dass nur Preise das verstreute Wissen darüber bündeln, was gerade knapp ist. Ihre Gegner verweisen darauf, dass Konzerne wie Walmart intern längst ohne Preise planen — nur planen diese Konzerne <em>innerhalb</em> eines Marktes, der ihnen die Knappheitsinformation liefert. Dazu kommt ein zweites Problem: Was, wenn jemand nicht beiträgt? Der Entwurf setzt auf Sichtbarkeit statt Sanktion. Die experimentelle Ökonomik (Ernst Fehr, Simon Gächter) hat gezeigt, dass Zusammenarbeit ohne die Möglichkeit, Trittbrettfahrer zu bestrafen, über die Zeit zerfällt — und mit ihr stabil bleibt. Ostroms funktionierende Gemeinschaften kennen alle abgestufte Sanktionen.</p>
-                    <p class="lang-en hidden">This is the hardest question of the design, and the manifesto says so itself. That communities care for one another without money has been known to anthropologists since Marcel Mauss: gifts are remembered, not reckoned. In neighbourhoods, villages and after disasters this demonstrably works. Whether it works between millions of people and millions of goods has been disputed for a hundred years. The economists Ludwig von Mises and Friedrich Hayek argued that only prices bundle the scattered knowledge of what is currently scarce. Their opponents point out that corporations such as Walmart have long planned internally without prices — but these corporations plan inside a market that supplies them with the scarcity information. A second problem is added: what if someone does not contribute? The design relies on visibility instead of sanction. Experimental economics (Ernst Fehr, Simon Gächter) has shown that cooperation without the possibility of punishing free riders decays over time — and stays stable with it. Ostrom's functioning communities all know graduated sanctions.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Das ist die härteste Frage des Entwurfs, und das Manifest sagt es selbst. Dass Gemeinschaften ohne Geld füreinander sorgen, wissen Anthropologen seit Marcel Mauss: Gaben werden erinnert, nicht verrechnet. In Nachbarschaften, Dörfern und nach Katastrophen funktioniert das nachweislich. Ob es zwischen Millionen Menschen und Millionen Gütern funktioniert, ist seit hundert Jahren umstritten. Die Ökonomen Ludwig von Mises und Friedrich Hayek haben argumentiert, dass nur Preise das verstreute Wissen darüber bündeln, was gerade knapp ist. Ihre Gegner verweisen darauf, dass Konzerne wie Walmart intern längst ohne Preise planen — nur planen diese Konzerne <em>innerhalb</em> eines Marktes, der ihnen die Knappheitsinformation liefert. Dazu kommt ein zweites Problem: Was, wenn jemand nicht beiträgt? Der Entwurf setzt auf Sichtbarkeit statt Sanktion. Die experimentelle Ökonomik (Ernst Fehr, Simon Gächter) hat gezeigt, dass Zusammenarbeit ohne die Möglichkeit, Trittbrettfahrer zu bestrafen, über die Zeit zerfällt — und mit ihr stabil bleibt. Ostroms funktionierende Gemeinschaften kennen alle abgestufte Sanktionen.</p>
+                    <p class="lang-en hidden">This is the hardest question of the design, and the manifesto says so itself. That communities care for one another without money has been known to anthropologists since Marcel Mauss: gifts are remembered, not reckoned. In neighbourhoods, villages and after disasters this demonstrably works. Whether it works between millions of people and millions of goods has been disputed for a hundred years. The economists Ludwig von Mises and Friedrich Hayek argued that only prices bundle the scattered knowledge of what is currently scarce. Their opponents point out that corporations such as Walmart have long planned internally without prices — but these corporations plan inside a market that supplies them with the scarcity information. A second problem is added: what if someone does not contribute? The design relies on visibility instead of sanction. Experimental economics (Ernst Fehr, Simon Gächter) has shown that cooperation without the possibility of punishing free riders decays over time — and stays stable with it. Ostrom's functioning communities all know graduated sanctions.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">im Kleinen belegt</span><span class="mk mk-im-labor">Im Grossen die offenste Frage des ganzen Entwurfs</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">supported at small scale</span><span class="mk mk-im-labor">At large scale the most open question of the whole design</span></div>
                     <p class="lang-de td-note">Ein Labor kann prüfen, ob Knoten untereinander ohne Geld auskommen. Ob eine ganze Gesellschaft es kann, kann kein Labor prüfen, solange es mit einer Geldwirtschaft Handel treibt.</p>
                     <p class="lang-en hidden td-note">A laboratory can test whether nodes get by among themselves without money. Whether a whole society can, no laboratory can test as long as it trades with a money economy.</p>
@@ -2528,8 +2646,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Ein Fonds, der sich selbst abschafft</h3>
                     <h3 class="lang-en hidden">A fund that abolishes itself</h3>
-                    <p class="lang-de">Die Bausteine gibt es: Bodenstiftungen, die Land dauerhaft dem Markt entziehen; Unternehmen in Verantwortungseigentum; Genossenschaften; gemeinnütziger Wohnungsbau. Sie zeigen, dass man Eigentum unwiderruflich in Gemeingut verwandeln kann. Was es nicht gibt, ist ein Beispiel dafür in der Grösse einer Volkswirtschaft — und keinen Beleg dafür, dass genug Kapitalbesitzer freiwillig auf Rendite verzichten. Das Fundament nennt die Herkunft des Kapitals darum ausdrücklich als ungeklärt und macht sie zu einer der ersten Messgrössen eines Labors: Wie viel lässt sich unter welchen Bedingungen unwiderruflich umwandeln, und wer wandelt um. Wichtig ist, was der Entwurf <em>nicht</em> sagt: Er schafft Geld nicht ab. Geld und Stundenverzeichnis laufen jahrzehntelang nebeneinander; Geld verliert in der Föderation seine Rolle für die Versorgung, bleibt aber Recheneinheit im Handel mit der Aussenwelt. Historische Versuche, Geld über Nacht abzuschaffen, sind gescheitert — aber das ist nicht, was hier vorgeschlagen wird. Und ein Detail, das reale Politik oft vergisst: Wer baut, muss auch unterhalten. Ein bis drei Prozent des Wiederbeschaffungswerts jährlich, so die Faustregel für Infrastruktur. Der Fonds finanziert den Bau; den Unterhalt tragen die Stunden.</p>
-                    <p class="lang-en hidden">The building blocks exist: land trusts that permanently withdraw land from the market; companies in steward-ownership; cooperatives; non-profit housing. They show that property can be irrevocably converted into commons. What does not exist is an example on the scale of a national economy — and no evidence that enough capital owners will voluntarily forgo return. The Foundation therefore names the origin of the capital expressly as unresolved and makes it one of the first metrics of a laboratory: how much can be irrevocably converted, under what conditions, and who converts. What matters is what the design does not say: it does not abolish money. Money and the hours, the ledger of work performed, run side by side for decades; in the Federation money loses its role for provision, but remains a unit of account in trade with the outside world. Historical attempts to abolish money overnight have failed — but that is not what is proposed here. And a detail that real politics often forgets: whoever builds must also maintain. One to three per cent of replacement value annually, so the rule of thumb for infrastructure. The fund finances the building; the hours carry the upkeep.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Die Bausteine gibt es: Bodenstiftungen, die Land dauerhaft dem Markt entziehen; Unternehmen in Verantwortungseigentum; Genossenschaften; gemeinnütziger Wohnungsbau. Sie zeigen, dass man Eigentum unwiderruflich in Gemeingut verwandeln kann. Was es nicht gibt, ist ein Beispiel dafür in der Grösse einer Volkswirtschaft — und keinen Beleg dafür, dass genug Kapitalbesitzer freiwillig auf Rendite verzichten. Das Fundament nennt die Herkunft des Kapitals darum ausdrücklich als ungeklärt und macht sie zu einer der ersten Messgrössen eines Labors: Wie viel lässt sich unter welchen Bedingungen unwiderruflich umwandeln, und wer wandelt um. Wichtig ist, was der Entwurf <em>nicht</em> sagt: Er schafft Geld nicht ab. Geld und Stundenverzeichnis laufen jahrzehntelang nebeneinander; Geld verliert in der Föderation seine Rolle für die Versorgung, bleibt aber Recheneinheit im Handel mit der Aussenwelt. Historische Versuche, Geld über Nacht abzuschaffen, sind gescheitert — aber das ist nicht, was hier vorgeschlagen wird. Und ein Detail, das reale Politik oft vergisst: Wer baut, muss auch unterhalten. Ein bis drei Prozent des Wiederbeschaffungswerts jährlich, so die Faustregel für Infrastruktur. Der Fonds finanziert den Bau; den Unterhalt tragen die Stunden.</p>
+                    <p class="lang-en hidden">The building blocks exist: land trusts that permanently withdraw land from the market; companies in steward-ownership; cooperatives; non-profit housing. They show that property can be irrevocably converted into commons. What does not exist is an example on the scale of a national economy — and no evidence that enough capital owners will voluntarily forgo return. The Foundation therefore names the origin of the capital expressly as unresolved and makes it one of the first metrics of a laboratory: how much can be irrevocably converted, under what conditions, and who converts. What matters is what the design does not say: it does not abolish money. Money and the hours, the ledger of work performed, run side by side for decades; in the Federation money loses its role for provision, but remains a unit of account in trade with the outside world. Historical attempts to abolish money overnight have failed — but that is not what is proposed here. And a detail that real politics often forgets: whoever builds must also maintain. One to three per cent of replacement value annually, so the rule of thumb for infrastructure. The fund finances the building; the hours carry the upkeep.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">Bausteine belegt</span><span class="mk mk-im-labor">Grössenordnung und Kapitalbeschaffung: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">building blocks supported</span><span class="mk mk-im-labor">Order of magnitude and capital raising: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m7'); return false;"><span class="lang-de">↑ Punkt 7 im Manifest</span><span class="lang-en hidden">↑ Point 7 in the manifesto</span></a></p>
                 </div>
@@ -2540,8 +2661,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Was die Erde davon hat</h3>
                     <h3 class="lang-en hidden">What the Earth gains</h3>
-                    <p class="lang-de">Die Zahlen — 1,8 Grad im Jahr 2100, Wälder auf dem Stand von 1900 — hat die Föderation nicht erfunden. Sie stammen aus dem <em>Global Justice Report</em> 2026, den das World Inequality Lab um Thomas Piketty und Lucas Chancel im Juni 2026 veröffentlicht hat. Der Report rechnet vor, dass ein gutes Leben für alle innerhalb der Belastungsgrenzen der Erde möglich ist — und sagt selbst, dass nicht Technik, sondern «politische Wahl» das Hindernis sei. Diese Ziele haben Bedingungen, die man kennen muss. Der Klimapfad setzt einen schnellen Ausstieg aus fossilen Energien voraus <em>und</em> dass ein Teil des CO₂ wieder aus der Luft geholt wird — mit Technik, deren Skalierbarkeit umstritten ist. Die Wälder wachsen nur, wenn Rodung stoppt und deutlich weniger Fleisch gegessen wird, weil Weideland frei werden muss. Und der Report ist selbst Gegenstand fachlicher Kritik. Eine Lehre des Romans ist wissenschaftlich besonders gut begründet: Viele gehaltene örtliche Grenzen ergeben kein gehaltenes Ganzes. Ein Klimabudget ist eine endliche Gesamtmenge; sie muss von oben gesetzt und verteilt werden. Wie man sie <em>gerecht</em> verteilt — nach Köpfen, nach Geschichte, nach Fähigkeit — ist die Frage, an der die reale Klimapolitik bisher scheitert. Der Entwurf neigt der Verteilung nach Köpfen zu, weil sie zu seiner Gerechtigkeitsdimension passt; festgelegt hat er sie nicht.</p>
-                    <p class="lang-en hidden">The figures — 1.8 degrees in the year 2100, forests at the level of 1900 — the Federation did not invent. They come from the Global Justice Report 2026, which the World Inequality Lab around Thomas Piketty and Lucas Chancel published in June 2026. The report calculates that a good life for all within the Earth's carrying capacity is possible — and says itself that the obstacle is not technology but «political choice». These targets have conditions one must know. The climate pathway presupposes a rapid exit from fossil energy and that part of the CO₂ is drawn back out of the air — with technology whose scalability is disputed. The forests grow only if clearing stops and considerably less meat is eaten, because pasture must be freed. And the report is itself the object of scholarly criticism. One lesson of the novel is especially well grounded scientifically: many locally held limits do not make a held whole. A climate budget is a finite total; it must be set from above and distributed. How to distribute it fairly — by heads, by history, by capacity — is the question on which real climate policy has so far failed. The design inclines towards distribution by heads, because that fits its dimension of justice; it has not fixed it.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Die Zahlen — 1,8 Grad im Jahr 2100, Wälder auf dem Stand von 1900 — hat die Föderation nicht erfunden. Sie stammen aus dem <em>Global Justice Report</em> 2026, den das World Inequality Lab um Thomas Piketty und Lucas Chancel im Juni 2026 veröffentlicht hat. Der Report rechnet vor, dass ein gutes Leben für alle innerhalb der Belastungsgrenzen der Erde möglich ist — und sagt selbst, dass nicht Technik, sondern «politische Wahl» das Hindernis sei. Diese Ziele haben Bedingungen, die man kennen muss. Der Klimapfad setzt einen schnellen Ausstieg aus fossilen Energien voraus <em>und</em> dass ein Teil des CO₂ wieder aus der Luft geholt wird — mit Technik, deren Skalierbarkeit umstritten ist. Die Wälder wachsen nur, wenn Rodung stoppt und deutlich weniger Fleisch gegessen wird, weil Weideland frei werden muss. Und der Report ist selbst Gegenstand fachlicher Kritik. Eine Lehre des Romans ist wissenschaftlich besonders gut begründet: Viele gehaltene örtliche Grenzen ergeben kein gehaltenes Ganzes. Ein Klimabudget ist eine endliche Gesamtmenge; sie muss von oben gesetzt und verteilt werden. Wie man sie <em>gerecht</em> verteilt — nach Köpfen, nach Geschichte, nach Fähigkeit — ist die Frage, an der die reale Klimapolitik bisher scheitert. Der Entwurf neigt der Verteilung nach Köpfen zu, weil sie zu seiner Gerechtigkeitsdimension passt; festgelegt hat er sie nicht.</p>
+                    <p class="lang-en hidden">The figures — 1.8 degrees in the year 2100, forests at the level of 1900 — the Federation did not invent. They come from the Global Justice Report 2026, which the World Inequality Lab around Thomas Piketty and Lucas Chancel published in June 2026. The report calculates that a good life for all within the Earth's carrying capacity is possible — and says itself that the obstacle is not technology but «political choice». These targets have conditions one must know. The climate pathway presupposes a rapid exit from fossil energy and that part of the CO₂ is drawn back out of the air — with technology whose scalability is disputed. The forests grow only if clearing stops and considerably less meat is eaten, because pasture must be freed. And the report is itself the object of scholarly criticism. One lesson of the novel is especially well grounded scientifically: many locally held limits do not make a held whole. A climate budget is a finite total; it must be set from above and distributed. How to distribute it fairly — by heads, by history, by capacity — is the question on which real climate policy has so far failed. The design inclines towards distribution by heads, because that fits its dimension of justice; it has not fixed it.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">Zielgrössen belegt als ehrgeiziges, deklariertes Szenario</span><span class="mk mk-nicht-testbar">Der Verteilungsschlüssel: nicht im Labor testbar, weil er die ganze Welt betrifft</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">target figures supported as an ambitious, declared scenario</span><span class="mk mk-nicht-testbar">The distribution key: not testable in a laboratory, because it concerns the whole world</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m8'); return false;"><span class="lang-de">↑ Punkt 8 im Manifest</span><span class="lang-en hidden">↑ Point 8 in the manifesto</span></a></p>
                 </div>
@@ -2552,8 +2676,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Tausend Arbeitsstunden im Jahr</h3>
                     <h3 class="lang-en hidden">A thousand working hours a year</h3>
-                    <p class="lang-de">Auch diese Zahl kommt aus dem <em>Global Justice Report</em>: von heute rund 2100 auf 1000 Stunden pro Erwerbstätigem bis 2100. Zum Vergleich: In Deutschland sind es heute rund 1340 Stunden, in der Schweiz und den USA etwa 1800. Die Richtung ist belegt. Die grösste Studie zur Vier-Tage-Woche — fast 3000 Beschäftigte in 141 Firmen in sechs Ländern, veröffentlicht 2025 in <em>Nature Human Behaviour</em> — fand weniger Erschöpfung, bessere Gesundheit und keine Einbusse an Produktivität. Aber: sechs Monate, freiwillige Firmen, meist kleine Dienstleister. Von dort bis zu einer halbierten Arbeitszeit für alle ist ein weiter Weg. Ein bekanntes Risiko: Wer mehr freie Zeit hat, konsumiert oft mehr. Der Entwurf antwortet darauf nicht mit Effizienz, sondern mit einer harten Obergrenze für die Biosphäre — was wieder auf Grundsatz 8 zurückführt.</p>
-                    <p class="lang-en hidden">This figure too comes from the Global Justice Report: from around 2,100 today to 1,000 hours per working person by 2100. For comparison: in Germany it is around 1,340 hours today, in Switzerland and the USA about 1,800. The direction is supported. The largest study on the four-day week — almost 3,000 employees in 141 firms across six countries, published in 2025 in <em>Nature Human Behaviour</em> — found less exhaustion, better health and no loss of productivity. But: six months, firms that took part voluntarily, mostly small service providers. From there to halved working time for everyone is a long way. A known risk: whoever has more free time often consumes more. The design answers this not with efficiency but with a hard ceiling for the biosphere — which leads back again to Principle 8.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Auch diese Zahl kommt aus dem <em>Global Justice Report</em>: von heute rund 2100 auf 1000 Stunden pro Erwerbstätigem bis 2100. Zum Vergleich: In Deutschland sind es heute rund 1340 Stunden, in der Schweiz und den USA etwa 1800. Die Richtung ist belegt. Die grösste Studie zur Vier-Tage-Woche — fast 3000 Beschäftigte in 141 Firmen in sechs Ländern, veröffentlicht 2025 in <em>Nature Human Behaviour</em> — fand weniger Erschöpfung, bessere Gesundheit und keine Einbusse an Produktivität. Aber: sechs Monate, freiwillige Firmen, meist kleine Dienstleister. Von dort bis zu einer halbierten Arbeitszeit für alle ist ein weiter Weg. Ein bekanntes Risiko: Wer mehr freie Zeit hat, konsumiert oft mehr. Der Entwurf antwortet darauf nicht mit Effizienz, sondern mit einer harten Obergrenze für die Biosphäre — was wieder auf Grundsatz 8 zurückführt.</p>
+                    <p class="lang-en hidden">This figure too comes from the Global Justice Report: from around 2,100 today to 1,000 hours per working person by 2100. For comparison: in Germany it is around 1,340 hours today, in Switzerland and the USA about 1,800. The direction is supported. The largest study on the four-day week — almost 3,000 employees in 141 firms across six countries, published in 2025 in <em>Nature Human Behaviour</em> — found less exhaustion, better health and no loss of productivity. But: six months, firms that took part voluntarily, mostly small service providers. From there to halved working time for everyone is a long way. A known risk: whoever has more free time often consumes more. The design answers this not with efficiency but with a hard ceiling for the biosphere — which leads back again to Principle 8.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">Richtung belegt</span><span class="mk mk-im-labor">Der Zielwert: im Labor zu klären</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">direction supported</span><span class="mk mk-im-labor">The target figure: to be settled in a laboratory</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m9'); return false;"><span class="lang-de">↑ Punkt 9 im Manifest</span><span class="lang-en hidden">↑ Point 9 in the manifesto</span></a></p>
                 </div>
@@ -2564,8 +2691,11 @@
                 <div class="mp-body">
                     <h3 class="lang-de">Knoten für Knoten, vier Generationen</h3>
                     <h3 class="lang-en hidden">Node by node, four generations</h3>
-                    <p class="lang-de">Dass man neue Gesellschaftsformen in abgegrenzten Zonen erprobt, ist eine anerkannte Methode — in der Wissenschaft heisst das Reallabor. Sie hat eine belastete Geschichte: Manche Sonderzonen, etwa Próspera in Honduras, sind zu Recht in der Kritik, weil sie Demokratie einschränken und Investoren schützen. Die Föderation unterscheidet sich in drei Punkten: Sie ist freiwillig, jederzeit verlassbar und kennt keinen Investorenschutz. Die schwerste Prüfung ist nicht das erste Jahrzehnt, sondern der Generationenwechsel. Die israelischen Kibbuzim, jahrzehntelang das erfolgreichste Beispiel gelebter Gütergemeinschaft, haben sie ab den 1980er-Jahren mehrheitlich aufgegeben — nicht weil sie scheiterten, sondern weil die Kinder anders wählten als die Gründer. Der Roman spielt genau diesen Übergang durch. Ein reales Programm müsste ihn messen, und das dauert Jahrzehnte.</p>
-                    <p class="lang-en hidden">That new forms of society are tried out in demarcated zones is a recognized method — science calls it a real-world laboratory. It has a burdened history: some special zones, such as Próspera in Honduras, are rightly criticized for restricting democracy and protecting investors. The Federation differs in three points: it is voluntary, can be left at any time, and knows no investor protection. The severest test is not the first decade but the change of generations. The Israeli kibbutzim, for decades the most successful example of lived communal ownership, largely gave it up from the 1980s onward — not because they failed, but because the children chose differently from the founders. The novel plays through exactly this transition. A real programme would have to measure it, and that takes decades.</p>
+                    <details class="g-details">
+                        <summary><span class="lang-de">Begründung lesen</span><span class="lang-en hidden">Read the reasoning</span></summary>
+                        <div><p class="lang-de">Dass man neue Gesellschaftsformen in abgegrenzten Zonen erprobt, ist eine anerkannte Methode — in der Wissenschaft heisst das Reallabor. Sie hat eine belastete Geschichte: Manche Sonderzonen, etwa Próspera in Honduras, sind zu Recht in der Kritik, weil sie Demokratie einschränken und Investoren schützen. Die Föderation unterscheidet sich in drei Punkten: Sie ist freiwillig, jederzeit verlassbar und kennt keinen Investorenschutz. Die schwerste Prüfung ist nicht das erste Jahrzehnt, sondern der Generationenwechsel. Die israelischen Kibbuzim, jahrzehntelang das erfolgreichste Beispiel gelebter Gütergemeinschaft, haben sie ab den 1980er-Jahren mehrheitlich aufgegeben — nicht weil sie scheiterten, sondern weil die Kinder anders wählten als die Gründer. Der Roman spielt genau diesen Übergang durch. Ein reales Programm müsste ihn messen, und das dauert Jahrzehnte.</p>
+                    <p class="lang-en hidden">That new forms of society are tried out in demarcated zones is a recognized method — science calls it a real-world laboratory. It has a burdened history: some special zones, such as Próspera in Honduras, are rightly criticized for restricting democracy and protecting investors. The Federation differs in three points: it is voluntary, can be left at any time, and knows no investor protection. The severest test is not the first decade but the change of generations. The Israeli kibbutzim, for decades the most successful example of lived communal ownership, largely gave it up from the 1980s onward — not because they failed, but because the children chose differently from the founders. The novel plays through exactly this transition. A real programme would have to measure it, and that takes decades.</p></div>
+                    </details>
                     <div class="mk-row lang-de"><span class="mk mk-belegt">Methode belegt</span><span class="mk mk-im-labor">Vier Generationen: im Labor zu klären, historisch belastet</span></div><div class="mk-row lang-en hidden"><span class="mk mk-belegt">method supported</span><span class="mk mk-im-labor">Four generations: to be settled in a laboratory, historically burdened</span></div>
                     <p class="mp-back"><a class="inline-link" href="#" onclick="goToSection('manifest','m10'); return false;"><span class="lang-de">↑ Punkt 10 im Manifest</span><span class="lang-en hidden">↑ Point 10 in the manifesto</span></a></p>
                 </div>
@@ -2998,13 +3128,19 @@
                 navItems[i].removeAttribute('aria-current');
             }
 
+            // Die drei Seiten ohne eigenen Menuepunkt liegen auf der Ebene
+            // «Die Grundlagen» — deren Punkt bleibt markiert, damit der
+            // Besucher sieht, wo er ist (sonst waere gar nichts markiert).
+            const EBENE = { manifest: 'grundlagen', traegt: 'grundlagen', 'bilanz-interaktiv': 'grundlagen' };
+            const markiere = EBENE[tabId] || tabId;
+
             const targetPanel = document.getElementById('panel-' + tabId);
             if (targetPanel) {
                 targetPanel.style.display = 'block';
                 targetPanel.classList.add('active-panel');
             }
 
-            const activeNavId = (tabId === 'bilanz-interaktiv') ? 'nav-grundlagen' : 'nav-' + tabId;
+            const activeNavId = 'nav-' + markiere;
             const targetNav = document.getElementById(activeNavId);
             if (targetNav) {
                 targetNav.classList.add('active');
