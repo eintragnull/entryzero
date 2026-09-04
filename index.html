@@ -2,11 +2,65 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.42 ·  2026-09-05
+  Fassung:  v0.45 ·  2026-09-05
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
-  Aenderungen gegenueber v0.41 (Sitzung 05.09.2026):
+  Aenderungen gegenueber v0.44 (Sitzung 05.09.2026):
+  REGISTER DER ENTSTEHUNG GRUNDLEGEND NEU (Fassungsregister v0.7).
+  Befund: Das Register zaehlte 764 von rund 1275 vorhandenen Fassungen, ohne
+  erkennbares Prinzip — die zwei Werkstatttexte ja, die 24 Werkstattnotizen
+  nein; der Bau des Gesamtmanuskripts ja, die uebrigen Bauskripte nein. Dazu
+  waren drei Zeilen veraltet (Roman-Bibel stand bei 112, das Projekt fuehrt
+  v1.15), weil v0.5 und v0.6 nur neue Zeilen ergaenzt und die bestehenden
+  ausdruecklich nicht nachgemessen hatten.
+  Neu: FUENF GRUPPEN mit Zwischensummen, alle 214 versionierten Dokumente
+  erfasst, keines mehr aussen vor:
+    A Das Buch 482 · B Die Steuerungsdokumente 206 ·
+    C Die veroeffentlichten Papiere 160 · D Die Werkstatt 149 ·
+    E Die Bauwerkzeuge 278  =  1275
+  Beschluesse Martin: Novelle mit Einzelkapiteln (7 -> 40); Bauwerkzeuge
+  zaehlen mit, aber als eigene, erkennbare Gruppe — so kann niemand die 238
+  Bauskript-Fassungen fuer geschriebene Seiten halten.
+  Die Zeile «Die vier Werkstattpapiere» entfaellt: die Papiere stehen in
+  Gruppe C einzeln, unter den Namen, die auch auf den Grundlagen stehen.
+
+  Aenderungen v0.43 -> v0.44 (Sitzung 05.09.2026):
+  BARRIEREFREIHEITS-PRUEFUNG der seit v0.36 hinzugekommenen Elemente
+  (Einstufungs-Marker, Reihen-Karten, Aufklapper, Popup). Ergebnis: Kontraste
+  alle ueber der Schwelle (schwaechster Wert 7,07:1 bei 4,5 noetig),
+  Ueberschriften ohne Sprung, Tastaturbedienung vollstaendig, Bilder mit alt,
+  beide Popup-Elemente mit aria-labelledby. Zwei echte Befunde behoben:
+  (1) Die Hauptnavigation trug als einzige der sieben Navigationen kein
+      aria-label — bei mehreren Navigationen auf einer Seite kann ein
+      Screenreader sie sonst nicht unterscheiden. Neu: «Hauptnavigation».
+  (2) Die Einstufungs-Marker oeffnen ein Popup, kuendigten das aber nicht an.
+      Neu: aria-haspopup="dialog" auf allen 38 Marker-Knoepfen im Manifest.
+
+  Aenderungen v0.42 -> v0.43 (Sitzung 05.09.2026):
+  NACHPRUEFUNG DES UMBAUS — drei Folgefehler behoben, die der Umzug des
+  Fundaments (v0.41) hinterlassen hatte. Alle drei von Martin gefunden bzw.
+  bei der angeforderten Gesamtpruefung aufgedeckt:
+  (1) TOTES POPUP-ZIEL. Im Manifest fuehrte der Vertiefungsverweis bei Punkt 6
+      (und 8) auf ['werkstatt','w-fundament'] — diesen Anker gibt es seit dem
+      Umzug nicht mehr. Die Zuordnung steckte in der JS-Struktur
+      TRAEGT_PAPIER, nicht in einem goToSection-Aufruf, und entging daher der
+      Sprungziel-Pruefung. Neu: ['grundlagen','g-fundament'].
+  (2) DOPPELUNG auf den Grundlagen. «Das Fundament» und «Die Lebendige Bilanz»
+      standen je ZWEIMAL — einmal als Karte der Reihe, einmal als Download-
+      Karte mit abweichendem Text — und die Fundament-Karte sass hinter
+      «Die uebrigen Papiere», also an falscher Stelle. Abschnitt B ist neu
+      gebaut: jedes Papier genau einmal, die vier der Reihe als Karten MIT
+      ihren Zugaengen (Seite und/oder PDF), darunter die drei uebrigen.
+  (4) «Wie es weitergeht» auf der Seite «Was traegt» nannte die beiden
+      vertiefenden Papiere nur im Fliesstext, obwohl der Absatz den Leser
+      ausdruecklich dorthin schickt. Beide Namen sind jetzt anklickbar
+      (Wortlaut unveraendert; DE zusaetzlich fett wie die EN-Fassung).
+  (3) KARTEN WAREN BUTTONS. Damit liessen sich keine Links hineinsetzen
+      (verschachtelte interaktive Elemente sind ungueltig). Die Karten sind
+      jetzt <div> mit Titel-Link und einer Zugangszeile.
+
+  Aenderungen v0.41 -> v0.42 (Sitzung 05.09.2026):
   Weg C: «Was traegt» war mit 2682 Woertern die laengste Seite der Website —
   laenger als die Werkstatt, die bei 1651 aufklappbar gemacht wurde. Die zehn
   Begruendungen stehen jetzt in <details>/<summary>: sichtbar bleiben Nummer,
@@ -903,6 +957,13 @@
         }
         .sec-kicker + h2 { margin-top: 4px; }
 
+        .reg-table tr.reg-group td {
+            font-family: Georgia, serif; font-weight: 700;
+            color: var(--primary); padding-top: 18px;
+            border-bottom: 1px solid rgba(26, 188, 156, 0.35);
+        }
+        .reg-table tr.reg-group td.num { font-size: 1.05rem; }
+
         /* --- Einstufungs-Marker --- */
         .mk-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
         .mk {
@@ -962,22 +1023,20 @@
         .reihe { display: flex; flex-direction: column; gap: 12px; margin: 22px 0 34px; }
         .reihe-karte {
             display: flex; gap: 18px; align-items: flex-start;
-            width: 100%; text-align: left; font: inherit; cursor: pointer;
             background: rgba(0, 0, 0, 0.55);
-            border: none; border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--primary);
             border-radius: 8px; padding: 18px 20px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            color: inherit;
         }
-        .reihe-karte:hover { background: rgba(0, 0, 0, 0.72); }
-        .reihe-karte:focus-visible { outline: 2px solid #ffd633; outline-offset: 3px; }
+        .rk-zugang { display: flex; gap: 18px; flex-wrap: wrap; margin: 10px 0 0 0; }
+        .rk-zugang a { font-size: 0.92rem; }
         .rk-nr {
             font-family: Georgia, serif; font-size: 1.9rem; line-height: 1;
             color: var(--primary); flex: 0 0 auto; min-width: 34px; text-align: right;
         }
         .rk-body { display: flex; flex-direction: column; gap: 5px; }
-        .rk-titel { font-family: Georgia, serif; font-size: 1.2rem; color: var(--primary); }
-        .rk-text { font-size: 0.97rem; line-height: 1.55; }
+        .rk-titel { font-family: Georgia, serif; font-size: 1.2rem; color: var(--primary); margin: 0 0 6px 0; }
+        .rk-text { font-size: 0.97rem; line-height: 1.55; margin: 0; }
         .rk-meta {
             font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
             color: var(--eb-muted); font-weight: 600;
@@ -1663,7 +1722,7 @@
     <img src="/cover.png" alt="" class="bg-cover-image">
 
     <!-- NAVIGATION BAR -->
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Hauptnavigation">
         <button class="nav-toggle" id="nav-toggle" onclick="toggleNav()" aria-expanded="false" aria-controls="nav-links" aria-label="Menü">
             <span class="nav-toggle-icon" id="nav-toggle-icon" aria-hidden="true">☰</span>
             <span class="lang-de">Menü</span><span class="lang-en hidden">Menu</span>
@@ -1875,70 +1934,81 @@
             <p class="lang-en hidden">If you want to know how the world of the novel is thought through in detail, it is here — ordered from the accessible to the technical. The first four build on one another: the manifesto claims, «What Holds» examines, «The Foundation» argues, «The Living Balance» measures.</p>
 
             <div class="reihe">
-                <button type="button" class="reihe-karte" onclick="switchTab('manifest')">
+
+                <div class="reihe-karte">
                     <span class="rk-nr">1</span>
-                    <span class="rk-body">
-                        <span class="rk-titel"><span class="lang-de">Das Manifest</span><span class="lang-en hidden">The Manifesto</span></span>
-                        <span class="rk-text"><span class="lang-de">Die Idee in zehn Punkten. Zwei Seiten, ohne eine Zeile Roman.</span><span class="lang-en hidden">The idea in ten points. Two pages, without a line of the novel.</span></span>
-                        <span class="rk-meta"><span class="lang-de">auf dieser Webseite lesbar</span><span class="lang-en hidden">readable on this website</span></span>
-                    </span>
-                </button>
-                <button type="button" class="reihe-karte" onclick="switchTab('traegt')">
+                    <div class="rk-body">
+                        <h3 class="rk-titel"><span class="lang-de">Das Manifest</span><span class="lang-en hidden">The Manifesto</span></h3>
+                        <p class="rk-text lang-de">Die Idee in zehn Punkten — was gezählt wird, wie entschieden wird, wovon die Föderation lebt. Zwei Seiten, ohne eine Zeile Roman.</p>
+                        <p class="rk-text lang-en hidden">The idea in ten points — what is counted, how decisions are made, what the Federation lives on. Two pages, without a line of the novel.</p>
+                        <p class="rk-zugang">
+                            <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;"><span class="lang-de">Auf dieser Webseite lesen →</span><span class="lang-en hidden">Read on this website →</span></a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reihe-karte">
                     <span class="rk-nr">2</span>
-                    <span class="rk-body">
-                        <span class="rk-titel"><span class="lang-de">Was trägt</span><span class="lang-en hidden">What Holds</span></span>
-                        <span class="rk-text"><span class="lang-de">Was von den zehn Punkten belegt ist, was erst ein Labor zeigen kann und was auch das nicht beantwortet.</span><span class="lang-en hidden">What of the ten points is supported, what only a laboratory can show, and what even that cannot answer.</span></span>
-                        <span class="rk-meta"><span class="lang-de">auf dieser Webseite lesbar · auch als PDF</span><span class="lang-en hidden">readable on this website · also as PDF</span></span>
-                    </span>
-                </button>
-                <button type="button" class="reihe-karte" onclick="goToSection('grundlagen','g-fundament')">
+                    <div class="rk-body">
+                        <h3 class="rk-titel"><span class="lang-de">Was trägt</span><span class="lang-en hidden">What Holds</span></h3>
+                        <p class="rk-text lang-de">Was von den zehn Punkten wissenschaftlich belegt ist, was erst ein Labor zeigen kann und was auch das nicht beantwortet. In einfacher Sprache, mit den Quellen daneben.</p>
+                        <p class="rk-text lang-en hidden">What of the ten points is supported by research, what only a laboratory can show, and what even that cannot answer. In plain language, with the sources alongside.</p>
+                        <p class="rk-zugang">
+                            <a class="inline-link" href="#" onclick="switchTab('traegt'); return false;"><span class="lang-de">Auf dieser Webseite lesen →</span><span class="lang-en hidden">Read on this website →</span></a>
+                            <a class="lang-de download-link" href="https://drive.proton.me/urls/7677W8WHR0#NYMydN2AuYqD" target="_blank" rel="noopener">PDF</a>
+                            <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/QVREY8AX9M#02RBUtZewWGl" target="_blank" rel="noopener">PDF</a>
+                        </p>
+                    </div>
+                </div>
+
+                <span class="sec-anchor" id="g-fundament" aria-hidden="true"></span>
+                <div class="reihe-karte">
                     <span class="rk-nr">3</span>
-                    <span class="rk-body">
-                        <span class="rk-titel"><span class="lang-de">Das Fundament</span><span class="lang-en hidden">The Foundation</span></span>
-                        <span class="rk-text"><span class="lang-de">Die ausführliche Prüfung: was jede Quelle beisteuert und wo die Konstruktion offen bleibt.</span><span class="lang-en hidden">The detailed examination: what each source contributes and where the construction stays open.</span></span>
-                        <span class="rk-meta"><span class="lang-de">PDF</span><span class="lang-en hidden">PDF</span></span>
-                    </span>
-                </button>
-                <button type="button" class="reihe-karte" onclick="switchTab('bilanz-interaktiv')">
+                    <div class="rk-body">
+                        <h3 class="rk-titel"><span class="lang-de">Das Fundament</span><span class="lang-en hidden">The Foundation</span></h3>
+                        <p class="rk-text lang-de">Die ausführliche Prüfung: was jede Quelle beisteuert, an welche Forschung sie anschliesst — und wo die Konstruktion offen bleibt. Fachbegriffe werden erklärt, Vorwissen wird nicht vorausgesetzt.</p>
+                        <p class="rk-text lang-en hidden">The detailed examination: what each source contributes, which research it connects to — and where the construction stays open. Technical terms are explained, no prior knowledge assumed.</p>
+                        <p class="rk-zugang">
+                            <a class="lang-de download-link" href="https://drive.proton.me/urls/35K8M336TM#oiKgoLbZa3Sr" target="_blank" rel="noopener">PDF lesen / herunterladen</a>
+                            <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/3BR55P5M9C#En5LDoaXAtuD" target="_blank" rel="noopener">Read / download PDF</a>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reihe-karte">
                     <span class="rk-nr">4</span>
-                    <span class="rk-body">
-                        <span class="rk-titel"><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></span>
-                        <span class="rk-text"><span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — sechs Felder, nie zu einer Zahl verrechnet.</span><span class="lang-en hidden">What a world without gross domestic product measures its success by — six fields, never merged into one number.</span></span>
-                        <span class="rk-meta"><span class="lang-de">interaktiv · auch als PDF</span><span class="lang-en hidden">interactive · also as PDF</span></span>
-                    </span>
-                </button>
+                    <div class="rk-body">
+                        <h3 class="rk-titel"><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></h3>
+                        <p class="rk-text lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — sechs Felder nebeneinander, nie zu einer Zahl verrechnet. Ein Bericht statt einer Punktzahl.</p>
+                        <p class="rk-text lang-en hidden">What a world without gross domestic product measures its success by — six fields side by side, never merged into one number. A report, not a score.</p>
+                        <p class="rk-zugang">
+                            <a class="inline-link" href="#" onclick="switchTab('bilanz-interaktiv'); return false;"><span class="lang-de">Interaktiv erkunden →</span><span class="lang-en hidden">Explore interactively →</span></a>
+                            <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener">PDF</a>
+                            <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener">PDF</a>
+                        </p>
+                    </div>
+                </div>
+
             </div>
 
             <h3 class="lang-de">Die übrigen Papiere</h3>
             <h3 class="lang-en hidden">The remaining papers</h3>
-            <p class="lang-en hidden lead-note">All of them are available in English.</p>
+            <p class="lang-de">Technischer, als Download — für alle, die noch tiefer nachsehen wollen.</p>
+            <p class="lang-en hidden">More technical, as downloads — for anyone who wants to look deeper still. All of them are available in English.</p>
 
             <div class="source-card workshop-doc">
                 <span class="source-title"><span class="lang-de">Das TSBL-Whitepaper <em>(allgemeinverständlich)</em></span><span class="lang-en hidden">The TSBL White Paper <em>(plain language)</em></span></span>
-                <span class="lang-de">Das Warum und das Was: die Idee der Föderation, für ein breites Publikum geschrieben.</span>
-                <span class="lang-en hidden">The why and the what: the idea of the federation, written for a broad audience.</span>
+                <span class="lang-de">Das ganze System auf einmal: die Idee der Föderation, für ein breites Publikum geschrieben.</span>
+                <span class="lang-en hidden">The whole system at once: the idea of the federation, written for a broad audience.</span>
                 <br>
                 <a class="lang-de download-link" href="https://drive.proton.me/urls/CQGGTDFGR0#20C1p95asGHw" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — TSBL-Whitepaper</a>
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/RSZF7QSMZW#8sw63BIGmZKH" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — TSBL White Paper</a>
             </div>
 
             <div class="source-card workshop-doc">
-                <span class="source-title"><span class="lang-de">Die Lebendige Bilanz</span><span class="lang-en hidden">The Living Balance</span></span>
-                <span class="lang-de">Woran eine Welt ohne Bruttoinlandsprodukt ihren Erfolg misst — ein Bericht statt einer Punktzahl.</span>
-                <span class="lang-en hidden">What a world without gross domestic product measures its success by — a report, not a score.</span>
-                <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/NJ1JAT6848#74K1JkrW1ROa" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Die Lebendige Bilanz</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/2GJKR0SYVM#UQFA0JNj92Ev" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Living Balance</a>
-                <br>
-                <button class="explore-btn" onclick="switchTab('bilanz-interaktiv')">
-                    <span aria-hidden="true">➔</span> <span class="lang-de">Interaktiv erkunden</span><span class="lang-en hidden">Explore interactively</span>
-                </button>
-            </div>
-
-            <div class="source-card workshop-doc">
                 <span class="source-title"><span class="lang-de">Der Versorgungskorb</span><span class="lang-en hidden">The Provision Basket</span></span>
-                <span class="lang-de">Die Detailebene darunter: wie sich «gerechter Wohlstand» messen lässt, ohne ihn zu bepreisen.</span>
-                <span class="lang-en hidden">The layer of detail beneath it: how "just prosperity" can be measured without pricing it.</span>
+                <span class="lang-de">Die Detailebene unter der Bilanz: wie sich «gerechter Wohlstand» messen lässt, ohne ihn zu bepreisen.</span>
+                <span class="lang-en hidden">The layer of detail beneath the Balance: how "just prosperity" can be measured without pricing it.</span>
                 <br>
                 <a class="lang-de download-link" href="https://drive.proton.me/urls/BX08H3C338#FdZyf2YhBs5k" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Der Versorgungskorb</a>
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/SB7F01FSA0#Rf00Y4lsZsqr" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Provision Basket</a>
@@ -1951,16 +2021,6 @@
                 <br>
                 <a class="lang-de download-link" href="https://drive.proton.me/urls/61RMF3GV54#qbC1tYzM05u1" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Design Rationale</a>
                 <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/NRKQ1GB180#4u4JOPQgt7fD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — Design Rationale</a>
-            </div>
-
-            <span class="sec-anchor" id="g-fundament" aria-hidden="true"></span>
-            <div class="source-card workshop-doc">
-                <span class="source-title"><span class="lang-de">Das Fundament</span><span class="lang-en hidden">The Foundation</span></span>
-                <span class="lang-de"><em>Worauf die Welt von «Eintrag Null» gebaut ist.</em> Vier reale Arbeiten stehen unter dieser Welt, dazu sieben Gründungsentscheidungen und eine private fünfte Quelle. Dieses Papier führt sie einzeln auf: was jede beisteuert, an welche Forschung sie anschliesst — und wo die Konstruktion offen bleibt. Für alle geschrieben, die es nachprüfen wollen; Fachbegriffe werden erklärt, Vorwissen wird nicht vorausgesetzt.</span>
-                <span class="lang-en hidden"><em>What the world of «Entry Zero» is built on.</em> Four real works lie beneath this world, together with seven founding decisions and a private fifth source. This paper sets them out one by one: what each contributes, which research it connects to — and where the construction stays open. Written for anyone who wants to check; technical terms are explained, no prior knowledge assumed.</span>
-                <br>
-                <a class="lang-de download-link" href="https://drive.proton.me/urls/35K8M336TM#oiKgoLbZa3Sr" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">PDF lesen / herunterladen — Das Fundament</a>
-                <a class="lang-en hidden download-link" href="https://drive.proton.me/urls/3BR55P5M9C#En5LDoaXAtuD" target="_blank" rel="noopener" style="display:inline-block; margin-top:8px;">Read / download PDF — The Foundation</a>
             </div>
         </div>
 
@@ -2227,28 +2287,49 @@
                             <tr><th scope="col">Ebene</th><th scope="col">begonnen</th><th scope="col" style="text-align:right;">Fassungen</th><th scope="col">Stand</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Das Exposé</td><td class="when">Juni 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                            <tr><td>Die Roman-Bibel — das Kanonbuch, in dem jede Figur, jedes Jahr und jede Weltregel steht</td><td class="when">13. Juni 2026</td><td class="num">112</td><td class="when">v1.12</td></tr>
-                            <tr><td>Kapitelstruktur und Szenenliste</td><td class="when">Juni 2026</td><td class="num">10</td><td class="when">v0.10 · 23. Juni 2026</td></tr>
-                            <tr><td>Die 28 Kapitel, deutsch</td><td class="when">Juni 2026</td><td class="num">159</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Die zwölf Belege und Übergänge, deutsch</td><td class="when">Juni 2026</td><td class="num">52</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Nachwort, Impressum, Anhänge, Covertexte (beide Ausgaben)</td><td class="when">Juni 2026</td><td class="num">70</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Das Gesamtmanuskript, deutsch</td><td class="when">Juni 2026</td><td class="num">24</td><td class="when">v0.24</td></tr>
-                            <tr><td>Die Translation Bible — das Kanonbuch der englischen Ausgabe</td><td class="when">25. Juni 2026</td><td class="num">55</td><td class="when">v0.55</td></tr>
-                            <tr><td>Die 28 Kapitel, englisch</td><td class="when">Juni 2026</td><td class="num">105</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Die zehn Belege, englisch</td><td class="when">Juni 2026</td><td class="num">21</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Das Gesamtmanuskript, englisch</td><td class="when">Juni 2026</td><td class="num">19</td><td class="when">v0.19</td></tr>
-                            <tr><td>Die vier Werkstattpapiere (alle vier auch englisch)</td><td class="when">17. Juni 2026</td><td class="num">44</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Die beiden Werkstatttexte</td><td class="when">17. Juni 2026</td><td class="num">11</td><td class="when">zuletzt Juli 2026</td></tr>
-                            <tr><td>Der Essay, deutsch und englisch</td><td class="when">5. Juli 2026</td><td class="num">10</td><td class="when">v0.7 / v0.3</td></tr>
-                            <tr><td>Die Novelle</td><td class="when">Juli 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                            <tr><td>Das Manifest der Föderation (deutsch und englisch)</td><td class="when">Juli 2026</td><td class="num">20</td><td class="when">v0.17 / v0.3</td></tr>
-                            <tr><td>Die beiden Grundlagenpapiere — «Das Fundament» und «Was trägt» (je deutsch und englisch)</td><td class="when">Juli 2026</td><td class="num">27</td><td class="when">zuletzt September 2026</td></tr>
+                            <tr class="reg-group"><td>A · Das Buch</td><td class="when"></td><td class="num">482</td><td class="when"></td></tr>
+                            <tr><td>Die 28 Kapitel, deutsch</td><td class="when">28 Dok.</td><td class="num">162</td><td class="when"></td></tr>
+                            <tr><td>Die 28 Kapitel, englisch</td><td class="when">28 Dok.</td><td class="num">108</td><td class="when"></td></tr>
+                            <tr><td>Belege und Übergänge, deutsch</td><td class="when">11 Dok.</td><td class="num">59</td><td class="when"></td></tr>
+                            <tr><td>Belege, englisch</td><td class="when">11 Dok.</td><td class="num">24</td><td class="when"></td></tr>
+                            <tr><td>Paratexte beider Ausgaben</td><td class="when">15 Dok.</td><td class="num">94</td><td class="when"></td></tr>
+                            <tr><td>Umschläge und Schaubilder</td><td class="when">17 Dok.</td><td class="num">28</td><td class="when"></td></tr>
+                            <tr><td>Einschübe und Einzelszenen</td><td class="when">2 Dok.</td><td class="num">7</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>B · Die Steuerungsdokumente</td><td class="when"></td><td class="num">206</td><td class="when"></td></tr>
+                            <tr><td>Die Roman-Bibel</td><td class="when">1 Dok.</td><td class="num">115</td><td class="when"></td></tr>
+                            <tr><td>Nachträge zur Roman-Bibel</td><td class="when">3 Dok.</td><td class="num">5</td><td class="when"></td></tr>
+                            <tr><td>Die Translation Bible</td><td class="when">1 Dok.</td><td class="num">55</td><td class="when"></td></tr>
+                            <tr><td>Übersetzungs-Arbeitsanweisung</td><td class="when">1 Dok.</td><td class="num">3</td><td class="when"></td></tr>
+                            <tr><td>Das Exposé</td><td class="when">1 Dok.</td><td class="num">18</td><td class="when"></td></tr>
+                            <tr><td>Kapitelstruktur und Szenenliste</td><td class="when">1 Dok.</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>C · Die veröffentlichten Papiere</td><td class="when"></td><td class="num">160</td><td class="when"></td></tr>
+                            <tr><td>Das Manifest</td><td class="when">2 Dok.</td><td class="num">20</td><td class="when"></td></tr>
+                            <tr><td>Was trägt / What Holds</td><td class="when">2 Dok.</td><td class="num">6</td><td class="when"></td></tr>
+                            <tr><td>Das Fundament</td><td class="when">2 Dok.</td><td class="num">21</td><td class="when"></td></tr>
+                            <tr><td>Die Lebendige Bilanz</td><td class="when">2 Dok.</td><td class="num">13</td><td class="when"></td></tr>
+                            <tr><td>Das Whitepaper</td><td class="when">2 Dok.</td><td class="num">25</td><td class="when"></td></tr>
+                            <tr><td>Der Versorgungskorb</td><td class="when">2 Dok.</td><td class="num">4</td><td class="when"></td></tr>
+                            <tr><td>Die Design-Begründung</td><td class="when">2 Dok.</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr><td>Die Novelle samt Kapiteln</td><td class="when">9 Dok.</td><td class="num">40</td><td class="when"></td></tr>
+                            <tr><td>Die beiden Werkstatttexte</td><td class="when">2 Dok.</td><td class="num">8</td><td class="when"></td></tr>
+                            <tr><td>Der Essay</td><td class="when">2 Dok.</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr><td>Die Pol-Konsistenz-Prüfung</td><td class="when">2 Dok.</td><td class="num">3</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>D · Die Werkstatt (unveröffentlicht)</td><td class="when"></td><td class="num">149</td><td class="when"></td></tr>
+                            <tr><td>Werkstattnotizen und Befunde</td><td class="when">25 Dok.</td><td class="num">57</td><td class="when"></td></tr>
+                            <tr><td>Referenzen und Erkennbarkeit</td><td class="when">5 Dok.</td><td class="num">17</td><td class="when"></td></tr>
+                            <tr><td>Das Stimmenbuch</td><td class="when">4 Dok.</td><td class="num">15</td><td class="when"></td></tr>
+                            <tr><td>Aussenkommunikation und Presse</td><td class="when">6 Dok.</td><td class="num">14</td><td class="when"></td></tr>
+                            <tr><td>Webseiten-Dokumente</td><td class="when">3 Dok.</td><td class="num">41</td><td class="when"></td></tr>
+                            <tr><td>Das Fassungsregister selbst</td><td class="when">1 Dok.</td><td class="num">5</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>E · Die Bauwerkzeuge</td><td class="when"></td><td class="num">278</td><td class="when"></td></tr>
+                            <tr><td>Build-Skripte</td><td class="when">14 Dok.</td><td class="num">238</td><td class="when"></td></tr>
+                            <tr><td>Hilfsskripte und Vorlagen</td><td class="when">5 Dok.</td><td class="num">17</td><td class="when"></td></tr>
+                            <tr><td>Bau-Anleitungen</td><td class="when">2 Dok.</td><td class="num">23</td><td class="when"></td></tr>
                             <tr class="reg-book"><td>Das Buch</td><td class="when"></td><td class="num">v0.1</td><td class="when">der erste Eintrag</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="reg-sum lang-de"><strong>Zusammen: 764 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
+                <p class="reg-sum lang-de"><strong>Zusammen: 1275 Fassungen.</strong> Das Buch, das daraus wurde, trägt die Nummer v0.1.</p>
 
                 <!-- Register of the Making EN -->
                 <div class="reg-wrap lang-en hidden">
@@ -2257,28 +2338,49 @@
                             <tr><th scope="col">Layer</th><th scope="col">begun</th><th scope="col" style="text-align:right;">Versions</th><th scope="col">As of</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>The synopsis</td><td class="when">June 2026</td><td class="num">18</td><td class="when">v0.18</td></tr>
-                            <tr><td>The novel bible — the canon book holding every character, every year, every law of the world</td><td class="when">13 June 2026</td><td class="num">112</td><td class="when">v1.12</td></tr>
-                            <tr><td>Chapter structure and scene list</td><td class="when">June 2026</td><td class="num">10</td><td class="when">v0.10 · 23 June 2026</td></tr>
-                            <tr><td>The 28 chapters, German</td><td class="when">June 2026</td><td class="num">159</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The twelve exhibits and transitions, German</td><td class="when">June 2026</td><td class="num">52</td><td class="when">last July 2026</td></tr>
-                            <tr><td>Afterword, imprint, appendices, cover texts (both editions)</td><td class="when">June 2026</td><td class="num">70</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The full manuscript, German</td><td class="when">June 2026</td><td class="num">24</td><td class="when">v0.24</td></tr>
-                            <tr><td>The Translation Bible — the canon book of the English edition</td><td class="when">25 June 2026</td><td class="num">55</td><td class="when">v0.55</td></tr>
-                            <tr><td>The 28 chapters, English</td><td class="when">June 2026</td><td class="num">105</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The ten exhibits, English</td><td class="when">June 2026</td><td class="num">21</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The full manuscript, English</td><td class="when">June 2026</td><td class="num">19</td><td class="when">v0.19</td></tr>
-                            <tr><td>The four workshop papers (all four also in English)</td><td class="when">17 June 2026</td><td class="num">44</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The two workshop texts</td><td class="when">17 June 2026</td><td class="num">11</td><td class="when">last July 2026</td></tr>
-                            <tr><td>The essay, German and English</td><td class="when">5 July 2026</td><td class="num">10</td><td class="when">v0.7 / v0.3</td></tr>
-                            <tr><td>The novella</td><td class="when">July 2026</td><td class="num">7</td><td class="when">v0.7</td></tr>
-                            <tr><td>The manifesto of the Federation (German and English)</td><td class="when">July 2026</td><td class="num">20</td><td class="when">v0.17 / v0.3</td></tr>
-                            <tr><td>The two groundwork papers — «The Foundation» and «What Holds» (each in German and English)</td><td class="when">July 2026</td><td class="num">27</td><td class="when">last September 2026</td></tr>
+                            <tr class="reg-group"><td>A · The book</td><td class="when"></td><td class="num">482</td><td class="when"></td></tr>
+                            <tr><td>The 28 chapters, German</td><td class="when">28 docs</td><td class="num">162</td><td class="when"></td></tr>
+                            <tr><td>The 28 chapters, English</td><td class="when">28 docs</td><td class="num">108</td><td class="when"></td></tr>
+                            <tr><td>Exhibits and transitions, German</td><td class="when">11 docs</td><td class="num">59</td><td class="when"></td></tr>
+                            <tr><td>Exhibits, English</td><td class="when">11 docs</td><td class="num">24</td><td class="when"></td></tr>
+                            <tr><td>Paratexts of both editions</td><td class="when">15 docs</td><td class="num">94</td><td class="when"></td></tr>
+                            <tr><td>Covers and diagrams</td><td class="when">17 docs</td><td class="num">28</td><td class="when"></td></tr>
+                            <tr><td>Insertions and single scenes</td><td class="when">2 docs</td><td class="num">7</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>B · The steering documents</td><td class="when"></td><td class="num">206</td><td class="when"></td></tr>
+                            <tr><td>The novel bible</td><td class="when">1 docs</td><td class="num">115</td><td class="when"></td></tr>
+                            <tr><td>Addenda to the novel bible</td><td class="when">3 docs</td><td class="num">5</td><td class="when"></td></tr>
+                            <tr><td>The Translation Bible</td><td class="when">1 docs</td><td class="num">55</td><td class="when"></td></tr>
+                            <tr><td>Translation working brief</td><td class="when">1 docs</td><td class="num">3</td><td class="when"></td></tr>
+                            <tr><td>The synopsis</td><td class="when">1 docs</td><td class="num">18</td><td class="when"></td></tr>
+                            <tr><td>Chapter structure and scene list</td><td class="when">1 docs</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>C · The published papers</td><td class="when"></td><td class="num">160</td><td class="when"></td></tr>
+                            <tr><td>The manifesto</td><td class="when">2 docs</td><td class="num">20</td><td class="when"></td></tr>
+                            <tr><td>What Holds</td><td class="when">2 docs</td><td class="num">6</td><td class="when"></td></tr>
+                            <tr><td>The Foundation</td><td class="when">2 docs</td><td class="num">21</td><td class="when"></td></tr>
+                            <tr><td>The Living Balance</td><td class="when">2 docs</td><td class="num">13</td><td class="when"></td></tr>
+                            <tr><td>The white paper</td><td class="when">2 docs</td><td class="num">25</td><td class="when"></td></tr>
+                            <tr><td>The provision basket</td><td class="when">2 docs</td><td class="num">4</td><td class="when"></td></tr>
+                            <tr><td>The design rationale</td><td class="when">2 docs</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr><td>The novella and its chapters</td><td class="when">9 docs</td><td class="num">40</td><td class="when"></td></tr>
+                            <tr><td>The two workshop texts</td><td class="when">2 docs</td><td class="num">8</td><td class="when"></td></tr>
+                            <tr><td>The essay</td><td class="when">2 docs</td><td class="num">10</td><td class="when"></td></tr>
+                            <tr><td>The pole-consistency check</td><td class="when">2 docs</td><td class="num">3</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>D · The workshop (unpublished)</td><td class="when"></td><td class="num">149</td><td class="when"></td></tr>
+                            <tr><td>Workshop notes and findings</td><td class="when">25 docs</td><td class="num">57</td><td class="when"></td></tr>
+                            <tr><td>References and recognizability</td><td class="when">5 docs</td><td class="num">17</td><td class="when"></td></tr>
+                            <tr><td>The book of voices</td><td class="when">4 docs</td><td class="num">15</td><td class="when"></td></tr>
+                            <tr><td>Outreach and press</td><td class="when">6 docs</td><td class="num">14</td><td class="when"></td></tr>
+                            <tr><td>Website documents</td><td class="when">3 docs</td><td class="num">41</td><td class="when"></td></tr>
+                            <tr><td>The version register itself</td><td class="when">1 docs</td><td class="num">5</td><td class="when"></td></tr>
+                            <tr class="reg-group"><td>E · The build tools</td><td class="when"></td><td class="num">278</td><td class="when"></td></tr>
+                            <tr><td>Build scripts</td><td class="when">14 docs</td><td class="num">238</td><td class="when"></td></tr>
+                            <tr><td>Helper scripts and templates</td><td class="when">5 docs</td><td class="num">17</td><td class="when"></td></tr>
+                            <tr><td>Build instructions</td><td class="when">2 docs</td><td class="num">23</td><td class="when"></td></tr>
                             <tr class="reg-book"><td>The book</td><td class="when"></td><td class="num">v0.1</td><td class="when">the first entry</td></tr>
                         </tbody>
                     </table>
                 </div>
-                <p class="reg-sum lang-en hidden"><strong>Altogether: 764 versions.</strong> The book that came of it carries the number v0.1.</p>
+                <p class="reg-sum lang-en hidden"><strong>Altogether: 1275 versions.</strong> The book that came of it carries the number v0.1.</p>
             </section>
 
         </div>
@@ -2343,7 +2445,7 @@
                     <h3 class="lang-en hidden">A price has no sense organ for the Earth.</h3>
                     <p class="lang-de">Holz aus einem zerstörten Urwald und Holz aus gepflegtem Wald können dasselbe kosten. Die Natur kennt den Unterschied, der Markt nicht. Solange Wohlstand daran gemessen wird, wie viel Geld fliesst, sehen ein gutes Leben und eine verbrauchte Welt in der Rechnung gleich aus. Die Föderation beginnt darum mit einem anderen Massstab: Gezählt wird, was wirklich verbraucht wird — nicht, was es kostet: Eine Gemeinschaft weiss am Jahresende, wie viele Arbeitsstunden, Kilowattstunden, Hektaren und Tonnen sie verbraucht hat. Die Föderation lehnt keine Technik ab und keinen Handel; sie lehnt den Massstab ab.</p>
                     <p class="lang-en hidden">Wood from a razed primeval forest and wood from a tended one can cost the same. Nature knows the difference; the market does not. As long as prosperity is measured by how much money flows, a good life and a used-up world look the same in the accounts. The Federation therefore begins with a different measure: what is counted is what is actually consumed — not what it costs. A community knows at year's end how many working hours, kilowatt hours, hectares and tonnes it has consumed. The Federation rejects no technology and no trade; it rejects the measure.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(1)">belegt</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(1)">supported</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(1)">belegt</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(1)">supported</button></div>
                 </div>
             </div>
 
@@ -2355,7 +2457,7 @@
                     <h3 class="lang-en hidden">It is not a state. It is a network of places.</h3>
                     <p class="lang-de">Die kleinste Einheit ist der Knoten: Menschen an einem Ort, die einander erkennen und füreinander einstehen. Knoten schliessen sich zu Verbünden zusammen, Verbünde zu einem weltweiten Netz; eine Mitte, die befiehlt, gibt es nicht. Drei Werkzeuge halten das Netz zusammen: das <strong>Register</strong>, in dem jede Entscheidung samt Begründung offen steht; die <strong>Stunden</strong>, ein Verzeichnis geleisteter Arbeitsstunden — keine Währung, nicht handelbar, nicht ansparbar; und die <strong>Rückmeldung</strong>, die Muster erkennt und empfiehlt, aber nie befiehlt. Dazu kommen ein freier Katalog erprobter Baupläne und eine Zuteilung, die Arbeit ohne Vorgesetzte verteilt.</p>
                     <p class="lang-en hidden">The smallest unit is the node: people in one place who recognise one another and stand up for one another. Nodes join into unions, unions into a worldwide network; there is no centre that commands. Three tools hold the network together: the <strong>Register</strong>, where every decision stands open, together with its reasons; the <strong>hours</strong>, a ledger of work performed — not a currency: it cannot be traded or saved up; and the <strong>band</strong>, which reads patterns and recommends — but never commands. Added to these are a free catalogue of proven blueprints and an allocation that distributes work without supervisors.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(2)">Bauprinzip belegt</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(2)">Ob es im Grossen trägt: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(2)">building principle supported</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(2)">Whether it holds at scale: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(2)">Bauprinzip belegt</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(2)">Ob es im Grossen trägt: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(2)">building principle supported</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(2)">Whether it holds at scale: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2367,7 +2469,7 @@
                     <h3 class="lang-en hidden">The necessities of life hang on no condition.</h3>
                     <p class="lang-de">Was ein Mensch zum Leben braucht, ist von den Stunden abgekoppelt. Niemand muss arbeiten, um essen zu können. Die Stunden regeln den Beitrag zum Gemeinsamen, nicht den Zugang zum Notwendigen. Wer mehr beiträgt, mehrt nicht seinen Anspruch, der ihm ohnehin zusteht, sondern seinen Spielraum darüber — im laufenden Jahr; auch er wird nicht zu Vermögen.</p>
                     <p class="lang-en hidden">What a person needs in order to live is decoupled from the hours. No one has to work in order to eat. The hours govern the contribution to what is shared, not access to what is needed. Whoever contributes more does not enlarge a claim that is theirs in any case, but the room above it — in the current year; that too does not become wealth.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(3)">belegt für Einzelpersonen und mittlere Fristen</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(3)">Langzeitwirkung auf ganze Gemeinschaften: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(3)">supported for individuals and medium terms</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(3)">Long-term effect on whole communities: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(3)">belegt für Einzelpersonen und mittlere Fristen</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(3)">Langzeitwirkung auf ganze Gemeinschaften: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(3)">supported for individuals and medium terms</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(3)">Long-term effect on whole communities: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2379,7 +2481,7 @@
                     <h3 class="lang-en hidden">The basket secures not the minimum, but the Enough.</h3>
                     <p class="lang-de">Die Föderation hat ihren Massstab für ein würdiges Leben nicht erfunden. Sie nahm eine fertige, redlich erarbeitete Liste aus der alten Welt — den Warenkorb, an dem ein Sozialstaat einst bemass, was ein Mensch braucht — und befreite sie von ihrer Enge. Jenes alte Mass war so knapp, dass man sich nie alles zugleich leisten konnte; seine Knappheit war dem Geld geschuldet, nicht dem Bedarf. Ohne Geld wurde aus dem Existenzminimum das Genug: Nahrung und Wohnung, Wärme und Kleidung, Pflege und Bildung, Transport und Kommunikation, Anteil am gemeinsamen Leben. Der Korb hört an einer Schwelle bewusst auf: Was darüber liegt, ist nicht verboten, nur nicht mehr seine Sache. Und er wächst mit dem, was eine Gesellschaft normal macht.</p>
                     <p class="lang-en hidden">The Federation did not invent its measure of a dignified life. It took a finished, honestly compiled list from the old world — the basket a welfare state once used to gauge what a person needs — and freed it from its narrowness. That old measure was so tight that no one relying on it could ever afford everything at once; its scarcity was owed to money, not to need. Without money, the subsistence minimum became the Enough: food and housing, warmth and clothing, care and education, transport and communication, a share in common life. The basket deliberately stops at a threshold: what lies above it is not forbidden, only no longer its business. And it grows with what a society makes normal.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(4)">belegt als Konzept und Grössenordnung</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(4)">Wie der Korb konkret aussieht und ob Menschen eine Obergrenze akzeptieren: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(4)">supported as concept and order of magnitude</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(4)">What the basket looks like in detail, and whether people accept a ceiling: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(4)">belegt als Konzept und Grössenordnung</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(4)">Wie der Korb konkret aussieht und ob Menschen eine Obergrenze akzeptieren: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(4)">supported as concept and order of magnitude</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(4)">What the basket looks like in detail, and whether people accept a ceiling: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2391,7 +2493,7 @@
                     <h3 class="lang-en hidden">Success is reported, not graded.</h3>
                     <p class="lang-de">An die Stelle des Bruttoinlandsprodukts tritt die Lebendige Bilanz: sechs Felder nebeneinander — Versorgung, Biosphäre, Zeitwohlstand, Resilienz, Gerechtigkeit, Lernen —, die ausdrücklich nicht zu einer Zahl verrechnet werden. Sobald man Gesundheit gegen Natur gegen freie Zeit in einer Note verrechnet, hat man wieder einen Preis erfunden, nur unter anderem Namen. Verrechnet wird nichts, aber es gibt eine Rangordnung. Die Belastbarkeit der Biosphäre ist die einzige harte Grenze: Reisst ein Knoten sie, rechtfertigt das keine noch so gute Versorgung. Und die Versorgung wird am Schwächsten gemessen, nie am Durchschnitt, weil ein hoher Durchschnitt keinen einzigen Mangel heilt. Niemand wird gegen den Nachbarn gereiht: Ein Knoten wird mit sich selbst über die Zeit verglichen und mit dem Weg, den er sich vorgenommen hat. Alte Bilanzen bleiben stehen; nichts wird überschrieben.</p>
                     <p class="lang-en hidden">In place of gross domestic product stands the Living Balance: six fields side by side — Provision, Biosphere, Time-wealth, Resilience, Justice, Learning — which are expressly not merged into a single number. The moment health is netted against nature against free time in one grade, a price has been invented again, under another name. Nothing is netted, but there is an order of rank. The carrying capacity of the biosphere is the only hard limit: if a node breaches it, no provision, however good, justifies it. And provision is measured at the worst-off person, never at the average, because a high average heals not a single shortage. No one is ranked against their neighbour: a node is compared with itself over time and with the path it set for itself. Old balances remain standing; nothing is overwritten.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(5)">belegt als Messmethode</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(5)">Ob sie zur Steuerung taugt: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(5)">supported as a measurement method</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(5)">Whether it serves for steering: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(5)">belegt als Messmethode</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(5)">Ob sie zur Steuerung taugt: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(5)">supported as a measurement method</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(5)">Whether it serves for steering: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2403,7 +2505,7 @@
                     <h3 class="lang-en hidden">Help needs no money, only visibility.</h3>
                     <p class="lang-de">In einer Geldwirtschaft wird Bedarf erst sichtbar, wenn jemand ihn bezahlen kann. In der Föderation wird ein Mangel gemeldet, und ein Nachbarknoten deckt ihn — Pumpen gegen Pflegekapazität, über Jahre in beide Richtungen. Es entsteht kein Schuldenstand. Was das Netz beobachtet, ist nur, ob der Fluss lebendig bleibt: Bleibt die Hilfe über Jahre einseitig, ist das ein Warnzeichen: Entweder steckt ein Knoten in Not, oder es entsteht eine Abhängigkeit. Ob das ohne Preise auch im Grossen trägt, ist die härteste offene Frage des Entwurfs. Sie lässt sich nicht am Schreibtisch entscheiden, sondern nur im Versuch.</p>
                     <p class="lang-en hidden">In a money economy, need becomes visible only when someone can pay for it. In the Federation, a shortage is reported, and a neighbouring node covers it — pumps for care capacity, over years and in both directions. No debt balance arises. All the network watches is whether the flow stays alive: if help runs one way for years, that is a warning sign — either a node is in trouble, or a dependency is forming. Whether this holds at scale without prices is the hardest open question of the design. It cannot be settled at a desk, only in the attempt.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(6)">im Kleinen belegt</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(6)">Im Grossen die offenste Frage des ganzen Entwurfs</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(6)">supported at small scale</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(6)">At large scale the most open question of the whole design</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(6)">im Kleinen belegt</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(6)">Im Grossen die offenste Frage des ganzen Entwurfs</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(6)">supported at small scale</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(6)">At large scale the most open question of the whole design</button></div>
                 </div>
             </div>
 
@@ -2415,7 +2517,7 @@
                     <h3 class="lang-en hidden">The transition is carried by a fund that abolishes itself.</h3>
                     <p class="lang-de">Die alte Welt endet nicht über Nacht, und der Übergang braucht keinen Umsturz und keine Enteignung. Ein Übergangsfonds nimmt privates Kapital der alten Welt und verwandelt es unwiderruflich in Gemeingüter: Land, Werkzeuge, Infrastruktur. Wer zeichnet, erhält keine Rendite, sondern Versorgungszusagen. Sobald das Bleibende gebaut ist, verliert das Geld seine Bedeutung. Der Fonds finanziert seinen eigenen Abschied.</p>
                     <p class="lang-en hidden">The old world does not end overnight, and the transition needs no overthrow and no expropriation. A transition fund takes private capital of the old world and converts it irrevocably into commons: land, tools, infrastructure. Those who subscribe receive no return, but pledges of provision. Once the lasting things are built, money loses its meaning. The fund finances its own farewell.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(7)">Bausteine belegt</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(7)">Grössenordnung und Kapitalbeschaffung: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(7)">building blocks supported</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(7)">Order of magnitude and capital raising: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(7)">Bausteine belegt</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(7)">Grössenordnung und Kapitalbeschaffung: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(7)">building blocks supported</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(7)">Order of magnitude and capital raising: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2427,7 +2529,7 @@
                     <h3 class="lang-en hidden">What the Earth gains.</h3>
                     <p class="lang-de">Die Zielwerte des Entwurfs stammen aus dem <em>Global Justice Report</em>: Die Erwärmung wird knapp unter zwei Grad gestoppt und geht bis 2100 auf 1,8 Grad zurück — erreichbar nur bei schnellem Ausstieg aus den fossilen Energien und wenn ein Teil des Kohlendioxids der Luft wieder entnommen wird. Rodungsstopp und Wiederaufforstung bringen die Wälder auf den Stand von 1900 zurück, was einen deutlich geringeren Fleischkonsum voraussetzt. Das ist kein Paradies. Der Meeresspiegel steigt noch, manche Tier- und Pflanzenart hat die Schwelle überschritten, hinter der es kein Zurück gibt. Geheilt, nicht heil — ein mühsam gehaltenes Gleichgewicht. Und eine Lehre, die teuer war: Viele gehaltene örtliche Grenzen ergeben noch kein gehaltenes Ganzes. Erst als das Netz eine Obergrenze für die Erde als Ganze festlegte und sie auf die Knoten verteilte, schloss sich die Lücke.</p>
                     <p class="lang-en hidden">The design's target values come from the <em>Global Justice Report</em>: warming is stopped just under two degrees and falls back to 1.8 degrees by 2100 — attainable only with a rapid exit from fossil energy and if part of the carbon dioxide is drawn back out of the air. An end to clearing and a reforestation programme bring the forests back to where they stood in 1900, which presupposes considerably less meat. This is no paradise. Sea levels are still rising; some animal and plant species have crossed the threshold behind which there is no way back. Healed, not whole — a laboriously held equilibrium. And a lesson that came at a price: many locally held limits do not yet make a held whole. Only when the network set a ceiling for the Earth as a whole and distributed it among the nodes did the gap close.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(8)">Zielgrössen belegt als ehrgeiziges, deklariertes Szenario</button><button type="button" class="mk mk-nicht-testbar" onclick="openTraegt(8)">Der Verteilungsschlüssel: nicht im Labor testbar, weil er die ganze Welt betrifft</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(8)">target figures supported as an ambitious, declared scenario</button><button type="button" class="mk mk-nicht-testbar" onclick="openTraegt(8)">The distribution key: not testable in a laboratory, because it concerns the whole world</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(8)">Zielgrössen belegt als ehrgeiziges, deklariertes Szenario</button><button type="button" aria-haspopup="dialog" class="mk mk-nicht-testbar" onclick="openTraegt(8)">Der Verteilungsschlüssel: nicht im Labor testbar, weil er die ganze Welt betrifft</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(8)">target figures supported as an ambitious, declared scenario</button><button type="button" aria-haspopup="dialog" class="mk mk-nicht-testbar" onclick="openTraegt(8)">The distribution key: not testable in a laboratory, because it concerns the whole world</button></div>
                 </div>
             </div>
 
@@ -2439,7 +2541,7 @@
                     <h3 class="lang-en hidden">What the people gain.</h3>
                     <p class="lang-de">Rund tausend Arbeitsstunden im Jahr — etwa die Hälfte von heute —, weil der Gewinn an Produktivität nicht in mehr Konsum fliesst, sondern in Zeit. Die Arbeit verschiebt sich von der Herstellung von Dingen hin zu Pflege, Bildung, Gestaltung. Der technische Fortschritt trägt seinen Teil dazu bei: Maschinen übernehmen, was sich automatisieren lässt. Entscheidungen werden beraten, bis sie getragen werden, statt niedergestimmt; Einwände werden gezählt und aufbewahrt. Und die gewonnene Zeit wird nicht protokolliert. Das Verzeichnis zählt den Beitrag und lässt das Leben in Ruhe. Diese Lücke ist keine Schwäche des Systems. Sie ist seine Wahl.</p>
                     <p class="lang-en hidden">Around a thousand working hours a year — roughly half of today's — because the gains of productivity flow not into more consumption but into time. Work shifts from the making of things towards care, education, design. Technical progress plays its part: machines take over whatever can be automated. Decisions are deliberated until they are carried, rather than voted down; objections are counted and kept. And the time gained is not logged. The ledger counts the contribution and leaves life alone. This gap is not a weakness of the system. It is its choice.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(9)">Richtung belegt</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(9)">Der Zielwert: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(9)">direction supported</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(9)">The target figure: to be settled in a laboratory</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(9)">Richtung belegt</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(9)">Der Zielwert: im Labor zu klären</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(9)">direction supported</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(9)">The target figure: to be settled in a laboratory</button></div>
                 </div>
             </div>
 
@@ -2451,7 +2553,7 @@
                     <h3 class="lang-en hidden">It grows node by node — across four generations.</h3>
                     <p class="lang-de">Nicht über Nacht, und nicht durch Beschluss. Die Föderation beginnt als Labor: An mindestens drei Orten in verschiedenen Klimazonen — freiwillig, innerhalb bestehender Staaten, etwa als abgegrenzte Sonderzonen, die mit dem Regelwerk der Föderation ausgestattet sind — wird ab 2030 dasselbe integrale Wirtschaftssystem erprobt, wissenschaftlich begleitet und Schritt für Schritt aus den Ergebnissen weiterentwickelt. Was überall trägt, taugt zur Übertragung; was nur an einem Ort trägt, wird verändert oder verworfen. Geld und das Verzeichnis der Arbeitsstunden laufen jahrzehntelang nebeneinander; die Föderation wächst dort, wo sie Menschen konkret nützt, Knoten für Knoten. Neue Regionen kommen dazu, wenn sie es brauchen und wenn das Netz sie tragen kann, nicht wenn sie reich sind. Im Jahr 2100 tritt die letzte bei.</p>
                     <p class="lang-en hidden">Not overnight, and not by decree. The Federation begins as a laboratory: in at least three places in different climate zones — voluntarily, within existing states, for instance as demarcated special zones equipped with the Federation's rulebook — the same integral economic system is tested from 2030 on, accompanied by science and developed step by step from the results. What holds everywhere is fit for transfer; what holds in only one place is changed or discarded. Money and the ledger of working hours run side by side for decades; the Federation grows where it is of concrete use to people, node by node. New regions join when they need it and when the network can carry them, not when they are rich. In the year 2100, the last one joins.</p>
-                <div class="mk-row lang-de"><button type="button" class="mk mk-belegt" onclick="openTraegt(10)">Methode belegt</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(10)">Vier Generationen: im Labor zu klären, historisch belastet</button></div><div class="mk-row lang-en hidden"><button type="button" class="mk mk-belegt" onclick="openTraegt(10)">method supported</button><button type="button" class="mk mk-im-labor" onclick="openTraegt(10)">Four generations: to be settled in a laboratory, historically burdened</button></div>
+                <div class="mk-row lang-de"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(10)">Methode belegt</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(10)">Vier Generationen: im Labor zu klären, historisch belastet</button></div><div class="mk-row lang-en hidden"><button type="button" aria-haspopup="dialog" class="mk mk-belegt" onclick="openTraegt(10)">method supported</button><button type="button" aria-haspopup="dialog" class="mk mk-im-labor" onclick="openTraegt(10)">Four generations: to be settled in a laboratory, historically burdened</button></div>
                 </div>
             </div>
 
@@ -2718,8 +2820,8 @@
 
             <h2 class="lang-de">Wie es weitergeht</h2>
             <h2 class="lang-en hidden">Where to go from here</h2>
-            <p class="lang-de">Dieses Papier sortiert die Frage «Könnte das funktionieren?» — es begründet sie nicht in voller Tiefe. Wer den drei härtesten Fragen nachgehen will, findet sie eine Ebene darunter. Im Werkstattpapier «Das Fundament» stehen zwei davon: warum es so schwer ist, ohne Preise zu rechnen, und wie eine Obergrenze für die Erde gerecht verteilt werden könnte — die «Aggregationslücke». Die dritte, ob die Messung der Schwächsten mit der Privatsphäre Einzelner vereinbar bleibt, steht im Werkstattpapier «Die Lebendige Bilanz». Auch was ein Laborprogramm kosten, messen und aushalten müsste — Kapital, Unterhalt, Vergleichsregionen, Generationenwechsel —, steht dort, nicht hier.</p>
-            <p class="lang-en hidden">This paper sorts the question «could this work?» — it does not argue it in full depth. Whoever wants to pursue the three hardest questions will find them one level down. The workshop paper <strong>«The Foundation»</strong> holds two of them: why it is so difficult to reckon without prices, and how a ceiling for the Earth might be fairly distributed — the «aggregation gap». The third, whether measuring the worst-off remains compatible with the privacy of individuals, stands in the workshop paper <strong>«The Living Balance»</strong>. What a laboratory programme would have to cost, measure and endure — capital, upkeep, comparison regions, change of generations — stands there too, not here.</p>
+            <p class="lang-de">Dieses Papier sortiert die Frage «Könnte das funktionieren?» — es begründet sie nicht in voller Tiefe. Wer den drei härtesten Fragen nachgehen will, findet sie eine Ebene darunter. Im Werkstattpapier <strong>«<a href="#" class="inline-link" onclick="goToSection('grundlagen','g-fundament'); return false;">Das Fundament</a>»</strong> stehen zwei davon: warum es so schwer ist, ohne Preise zu rechnen, und wie eine Obergrenze für die Erde gerecht verteilt werden könnte — die «Aggregationslücke». Die dritte, ob die Messung der Schwächsten mit der Privatsphäre Einzelner vereinbar bleibt, steht im Werkstattpapier <strong>«<a href="#" class="inline-link" onclick="switchTab('bilanz-interaktiv'); return false;">Die Lebendige Bilanz</a>»</strong>. Auch was ein Laborprogramm kosten, messen und aushalten müsste — Kapital, Unterhalt, Vergleichsregionen, Generationenwechsel —, steht dort, nicht hier.</p>
+            <p class="lang-en hidden">This paper sorts the question «could this work?» — it does not argue it in full depth. Whoever wants to pursue the three hardest questions will find them one level down. The workshop paper <strong>«<a href="#" class="inline-link" onclick="goToSection('grundlagen','g-fundament'); return false;">The Foundation</a>»</strong> holds two of them: why it is so difficult to reckon without prices, and how a ceiling for the Earth might be fairly distributed — the «aggregation gap». The third, whether measuring the worst-off remains compatible with the privacy of individuals, stands in the workshop paper <strong>«<a href="#" class="inline-link" onclick="switchTab('bilanz-interaktiv'); return false;">The Living Balance</a>»</strong>. What a laboratory programme would have to cost, measure and endure — capital, upkeep, comparison regions, change of generations — stands there too, not here.</p>
 
             <p class="lang-de"><a href="https://drive.proton.me/urls/7677W8WHR0#NYMydN2AuYqD" target="_blank" rel="noopener" class="download-link">PDF lesen / herunterladen — Was trägt — und was ein Labor erst zeigen muss</a></p>
             <p class="lang-en hidden"><a href="https://drive.proton.me/urls/QVREY8AX9M#02RBUtZewWGl" target="_blank" rel="noopener" class="download-link">Read / download PDF — What Holds — and What Only a Laboratory Can Show</a></p>
@@ -3247,7 +3349,7 @@
         const TRAEGT = {"1": {"de": {"titel": "Zählen, was verbraucht wird, nicht was es kostet", "marker": [{"text": "belegt", "kat": "belegt"}], "begr": "Dass der Preis ein schlechtes Mass für Wohlstand ist, wissen Ökonomen seit Jahrzehnten. Eine Kommission unter den Nobelpreisträgern Joseph Stiglitz und Amartya Sen hat 2009 empfohlen, Fortschritt nicht mehr am Bruttoinlandsprodukt allein zu messen. Stunden, Kilowattstunden, Hektaren und Tonnen zu zählen — das nennt die Wissenschaft «physische Rechnungslegung» und tut es längst.", "note": "Offen ist nicht das Zählen, sondern ob man eine ganze Wirtschaft allein damit steuern kann (siehe Grundsatz 6)."}, "en": {"titel": "Counting what is consumed, not what it costs", "marker": [{"text": "supported", "kat": "belegt"}], "begr": "That price is a poor measure of prosperity has been known to economists for decades. A commission under the Nobel laureates Joseph Stiglitz and Amartya Sen recommended in 2009 that progress no longer be measured by gross domestic product alone. Counting hours, kilowatt hours, hectares and tonnes — science calls this «physical accounting» and has long done it.", "note": "What is open is not the counting, but whether a whole economy can be steered by it alone (see Principle 6)."}, "vert": null}, "2": {"de": {"titel": "Ein Netz aus Orten, keine befehlende Mitte", "marker": [{"text": "Bauprinzip belegt", "kat": "belegt"}, {"text": "Ob es im Grossen trägt: im Labor zu klären", "kat": "im-labor"}], "begr": "Die Nobelpreisträgerin Elinor Ostrom hat in jahrzehntelanger Feldforschung gezeigt, dass Gemeinschaften ihre gemeinsamen Güter — Wälder, Fischgründe, Bewässerungssysteme — sehr wohl selbst verwalten können, ohne Staat und ohne Markt. Sie hat auch beschrieben, wie: in überschaubaren Einheiten, die sich zu grösseren Verbünden schachteln. Genau so ist die Föderation gebaut. Ostrom hat aber auch gewarnt: Es gibt kein Patentrezept. Drei Dinge weiss die Forschung, die der Entwurf ernst nehmen muss. Erstens: Menschen können sich nur mit rund 150 anderen wirklich kennen und mit etwa 1500 noch Gesichter zuordnen (Robin Dunbar). Ein Knoten von wenigen tausend Menschen ist deshalb ein Ort des *Erkennens*, nicht des engen Kennens — darum spricht das Manifest von Menschen, die «einander erkennen und füreinander einstehen». Das engere Mittragen geschieht in kleineren Kreisen, die keine Instanz sind. Wann ein Knoten zu gross wird, legt keine Regel fest; seine eigene Bilanz zeigt es, und dann teilt er sich. Ob dieses Signal rechtzeitig anschlägt — und ob ein Knoten, dessen Beratung schon erlahmt, die Kraft zur Teilung noch hat —, ist eine der Fragen, die nur ein Labor beantwortet. Zweitens: Beratung, bis eine Entscheidung getragen wird, funktioniert in kleinen Runden. Ein Verbund aus 300 Knoten kann nicht mehr alle miteinander reden lassen; dort wird aus Beratung Delegation. Das Fundament sagt das offen. Drittens: Auch wo jede Entscheidung offen im Register steht, bleibt unsichtbar, was in Freundeskreisen und Beziehungsnetzen *vorher* schon feststand. Die Soziologin Jo Freeman hat 1972 gezeigt, dass Gruppen ohne formale Macht nicht machtfrei sind, sondern unsichtbare Macht haben. Der Roman macht genau diese Lücke zu seinem Hauptkonflikt.", "note": ""}, "en": {"titel": "A network of places, no commanding centre", "marker": [{"text": "building principle supported", "kat": "belegt"}, {"text": "Whether it holds at scale: to be settled in a laboratory", "kat": "im-labor"}], "begr": "The Nobel laureate Elinor Ostrom showed, in decades of field research, that communities can indeed manage their common goods themselves — forests, fisheries, irrigation systems — without state and without market. She also described how: in surveyable units that nest into larger unions. That is exactly how the Federation is built. But Ostrom also warned: there is no patent recipe. Research knows three things the design must take seriously. First: people can truly know only around 150 others, and still place the faces of about 1,500 (Robin Dunbar). A node of a few thousand people is therefore a place of recognizing, not of close knowing — which is why the manifesto speaks of people who «recognize one another and stand up for one another». The closer carrying happens in smaller circles that are not an authority. When a node grows too large is fixed by no rule; its own balance shows it, and then it divides. Whether that signal sounds in time — and whether a node whose deliberation is already faltering still has the strength to divide — is one of the questions only a laboratory answers. Second: deliberation until a decision is carried works in small rounds. A union of 300 nodes can no longer let everyone speak with everyone; there, deliberation becomes delegation. The Foundation says so openly. Third: even where every decision stands open in the Register, what was already settled in circles of friends and networks of relationships remains invisible. The sociologist Jo Freeman showed in 1972 that groups without formal power are not free of power, but hold invisible power. The novel makes precisely this gap its central conflict.", "note": ""}, "vert": null}, "3": {"de": {"titel": "Niemand muss arbeiten, um essen zu können", "marker": [{"text": "belegt für Einzelpersonen und mittlere Fristen", "kat": "belegt"}, {"text": "Langzeitwirkung auf ganze Gemeinschaften: im Labor zu klären", "kat": "im-labor"}], "begr": "Das ist der Grundsatz, zu dem die meisten Menschen spontan sagen: Dann arbeitet doch keiner mehr. Die Forschung sagt etwas anderes. Die grösste Studie zu bedingungslosem Einkommen — 3000 Menschen in den USA, drei Jahre lang, 1000 Dollar im Monat, veröffentlicht 2024 — fand: Die Empfänger arbeiteten pro Woche gut eine Stunde weniger. Nicht null Stunden. Eine Stunde. Ein Überblick über 38 Studien weltweit fand nirgends einen nennenswerten Rückzug aus der Arbeit. Das finnische Experiment zeigte mehr Wohlbefinden bei gleicher Beschäftigung. Was die Forschung *nicht* zeigt: was über Jahrzehnte geschieht, wenn eine ganze Gemeinschaft so lebt, nicht einzelne Personen für drei Jahre.", "note": ""}, "en": {"titel": "No one has to work in order to eat", "marker": [{"text": "supported for individuals and medium terms", "kat": "belegt"}, {"text": "Long-term effect on whole communities: to be settled in a laboratory", "kat": "im-labor"}], "begr": "This is the principle to which most people spontaneously say: then nobody will work any more. The research says otherwise. The largest study on unconditional income — 3,000 people in the USA, three years, 1,000 dollars a month, published in 2024 — found: recipients worked a good hour less per week. Not zero hours. One hour. A review of 38 studies worldwide found no appreciable withdrawal from work anywhere. The Finnish experiment showed greater well-being at unchanged employment. What the research does not show: what happens over decades when a whole community lives this way, rather than individuals for three years.", "note": ""}, "vert": null}, "4": {"de": {"titel": "Das Genug, nicht das Minimum", "marker": [{"text": "belegt als Konzept und Grössenordnung", "kat": "belegt"}, {"text": "Wie der Korb konkret aussieht und ob Menschen eine Obergrenze akzeptieren: im Labor zu klären", "kat": "im-labor"}], "begr": "Wie viel braucht ein Mensch für ein gutes Leben? Ein Forschungsteam um Joel Millward-Hopkins und Julia Steinberger hat das 2020 ausgerechnet: rund 15 Gigajoule Energie pro Person und Jahr — etwa ein Zehntel dessen, was ein Mensch in der Schweiz heute verbraucht — reichen für Wohnung, Wärme, Ernährung, Gesundheit, Bildung, Mobilität und Kommunikation für alle Menschen auf der Erde. Voraussetzung ist der Einsatz der besten verfügbaren Technik. Dass der Korb der Föderation aus dem realen Warenkorb der Schweizer Sozialhilfe abgeleitet ist und «mitwächst», entspricht dem, was die Armutsforschung seit Peter Townsend weiss: Dazugehören bemisst sich am Üblichen einer Gesellschaft, nicht an einer festen Schwelle. Den Begriff des Genug — nicht das Minimum — entnimmt der Entwurf der UN-Roadmap «Eradicating Poverty Beyond Growth» von 2026. Auch sie ist, wie der Global Justice Report, eine Position in einer laufenden Debatte, nicht deren Ergebnis.", "note": ""}, "en": {"titel": "The Enough, not the minimum", "marker": [{"text": "supported as concept and order of magnitude", "kat": "belegt"}, {"text": "What the basket looks like in detail, and whether people accept a ceiling: to be settled in a laboratory", "kat": "im-labor"}], "begr": "How much does a person need for a good life? A research team around Joel Millward-Hopkins and Julia Steinberger calculated this in 2020: around 15 gigajoules of energy per person per year — about a tenth of what a person in Switzerland consumes today — suffices for housing, warmth, nutrition, health, education, mobility and communication for every human being on Earth. The precondition is the use of the best available technology. That the Federation's basket is derived from the real provision basket of Swiss social assistance and «grows along» corresponds to what poverty research has known since Peter Townsend: belonging is measured against what is customary in a society, not against a fixed threshold. The design takes the notion of the Enough — not the minimum — from the UN roadmap «Eradicating Poverty Beyond Growth» of 2026. It too is, like the Global Justice Report, a position in an ongoing debate, not its result.", "note": ""}, "vert": null}, "5": {"de": {"titel": "Erfolg wird berichtet, nicht benotet", "marker": [{"text": "belegt als Messmethode", "kat": "belegt"}, {"text": "Ob sie zur Steuerung taugt: im Labor zu klären", "kat": "im-labor"}], "begr": "Die Lebendige Bilanz — sechs Felder nebeneinander, nie zu einer Zahl verrechnet — ist genau das, was die Stiglitz-Sen-Kommission vorgeschlagen hat: ein Armaturenbrett statt einer einzigen Note. Die OECD macht es mit ihrem «Better Life Index» ähnlich, die Ökonomin Kate Raworth mit ihrem «Donut». Zwei Regeln der Bilanz gehen über die übliche Praxis hinaus. Erstens: Versorgung wird an den am schlechtesten Versorgten gemessen, nie am Durchschnitt — und zwar mit einem Verfahren, das die UNO für ihren Armutsindex benutzt. Die Messung hat eine bewusste Grenze: In einem Knoten von einigen hundert Menschen würde eine Zahl über die Schwächsten faktisch Namen nennen. Darum wird sie erst ab einer Mindestgrösse berichtet und sonst auf der Ebene des Verbunds gebildet; wie hoch diese Schwelle liegt, muss ein Labor vor der ersten Messung festlegen. Zweitens: Ausgestossenes und wieder eingefangenes CO₂ werden getrennt gebucht und nie gegeneinander verrechnet, damit ein Versprechen für morgen nicht die Verschmutzung von heute rechtfertigt. Klimaforscher fordern genau diese Trennung seit 2019 — die meisten realen Klimaziele haben sie nicht. Eine Grenze bleibt: Jedes Messsystem verführt dazu, die Zahl zu frisieren statt die Sache zu verbessern. Die Bilanz schützt sich davor nicht durch ihre Bauweise, sondern durch eine Regel: Kein Knoten wird gegen einen anderen gereiht. Wer niemanden übertreffen muss, hat weniger Grund zu schummeln. Ob das reicht, wird sich zeigen.", "note": ""}, "en": {"titel": "Success is reported, not graded", "marker": [{"text": "supported as a measurement method", "kat": "belegt"}, {"text": "Whether it serves for steering: to be settled in a laboratory", "kat": "im-labor"}], "begr": "The Living Balance — six fields side by side, never merged into a single number — is exactly what the Stiglitz-Sen commission proposed: a dashboard instead of a single grade. The OECD does something similar with its «Better Life Index», the economist Kate Raworth with her «Doughnut». Two rules of the Balance go beyond usual practice. First: provision is measured at the worst-off person, never at the average — and by a procedure the UN uses for its poverty index. The measurement has a deliberate limit: in a node of a few hundred people, a figure about the worst-off would in effect name names. It is therefore reported only above a minimum size, and otherwise formed at the level of the union; how high that threshold lies must be fixed by a laboratory before the first measurement. Second: emitted and recaptured CO₂ are booked separately and never netted against one another, so that a promise for tomorrow cannot justify today's pollution. Climate researchers have demanded precisely this separation since 2019 — most real climate targets do not have it. One limit remains: every measurement system tempts one to dress up the figure instead of improving the matter. The Balance protects itself against this not by its construction but by a rule: no node is ranked against another. Whoever need not outdo anyone has less reason to cheat. Whether that suffices will show.", "note": ""}, "vert": {"de": {"papier": "Die Lebendige Bilanz", "hint": "Ob die Messung der Schwächsten mit der Privatsphäre Einzelner vereinbar bleibt"}, "en": {"papier": "The Living Balance", "hint": "Whether measuring the worst-off remains compatible with the privacy of individuals"}, "ziel": "bilanz"}}, "6": {"de": {"titel": "Hilfe braucht kein Geld, nur Sichtbarkeit", "marker": [{"text": "im Kleinen belegt", "kat": "belegt"}, {"text": "Im Grossen die offenste Frage des ganzen Entwurfs", "kat": "im-labor"}], "begr": "Das ist die härteste Frage des Entwurfs, und das Manifest sagt es selbst. Dass Gemeinschaften ohne Geld füreinander sorgen, wissen Anthropologen seit Marcel Mauss: Gaben werden erinnert, nicht verrechnet. In Nachbarschaften, Dörfern und nach Katastrophen funktioniert das nachweislich. Ob es zwischen Millionen Menschen und Millionen Gütern funktioniert, ist seit hundert Jahren umstritten. Die Ökonomen Ludwig von Mises und Friedrich Hayek haben argumentiert, dass nur Preise das verstreute Wissen darüber bündeln, was gerade knapp ist. Ihre Gegner verweisen darauf, dass Konzerne wie Walmart intern längst ohne Preise planen — nur planen diese Konzerne *innerhalb* eines Marktes, der ihnen die Knappheitsinformation liefert. Dazu kommt ein zweites Problem: Was, wenn jemand nicht beiträgt? Der Entwurf setzt auf Sichtbarkeit statt Sanktion. Die experimentelle Ökonomik (Ernst Fehr, Simon Gächter) hat gezeigt, dass Zusammenarbeit ohne die Möglichkeit, Trittbrettfahrer zu bestrafen, über die Zeit zerfällt — und mit ihr stabil bleibt. Ostroms funktionierende Gemeinschaften kennen alle abgestufte Sanktionen.", "note": "Ein Labor kann prüfen, ob Knoten untereinander ohne Geld auskommen. Ob eine ganze Gesellschaft es kann, kann kein Labor prüfen, solange es mit einer Geldwirtschaft Handel treibt."}, "en": {"titel": "Help needs no money, only visibility", "marker": [{"text": "supported at small scale", "kat": "belegt"}, {"text": "At large scale the most open question of the whole design", "kat": "im-labor"}], "begr": "This is the hardest question of the design, and the manifesto says so itself. That communities care for one another without money has been known to anthropologists since Marcel Mauss: gifts are remembered, not reckoned. In neighbourhoods, villages and after disasters this demonstrably works. Whether it works between millions of people and millions of goods has been disputed for a hundred years. The economists Ludwig von Mises and Friedrich Hayek argued that only prices bundle the scattered knowledge of what is currently scarce. Their opponents point out that corporations such as Walmart have long planned internally without prices — but these corporations plan inside a market that supplies them with the scarcity information. A second problem is added: what if someone does not contribute? The design relies on visibility instead of sanction. Experimental economics (Ernst Fehr, Simon Gächter) has shown that cooperation without the possibility of punishing free riders decays over time — and stays stable with it. Ostrom's functioning communities all know graduated sanctions.", "note": "A laboratory can test whether nodes get by among themselves without money. Whether a whole society can, no laboratory can test as long as it trades with a money economy."}, "vert": {"de": {"papier": "Das Fundament", "hint": "Warum es so schwer ist, ohne Preise zu rechnen"}, "en": {"papier": "The Foundation", "hint": "Why it is so difficult to reckon without prices"}, "ziel": "fundament"}}, "7": {"de": {"titel": "Ein Fonds, der sich selbst abschafft", "marker": [{"text": "Bausteine belegt", "kat": "belegt"}, {"text": "Grössenordnung und Kapitalbeschaffung: im Labor zu klären", "kat": "im-labor"}], "begr": "Die Bausteine gibt es: Bodenstiftungen, die Land dauerhaft dem Markt entziehen; Unternehmen in Verantwortungseigentum; Genossenschaften; gemeinnütziger Wohnungsbau. Sie zeigen, dass man Eigentum unwiderruflich in Gemeingut verwandeln kann. Was es nicht gibt, ist ein Beispiel dafür in der Grösse einer Volkswirtschaft — und keinen Beleg dafür, dass genug Kapitalbesitzer freiwillig auf Rendite verzichten. Das Fundament nennt die Herkunft des Kapitals darum ausdrücklich als ungeklärt und macht sie zu einer der ersten Messgrössen eines Labors: Wie viel lässt sich unter welchen Bedingungen unwiderruflich umwandeln, und wer wandelt um. Wichtig ist, was der Entwurf *nicht* sagt: Er schafft Geld nicht ab. Geld und Stundenverzeichnis laufen jahrzehntelang nebeneinander; Geld verliert in der Föderation seine Rolle für die Versorgung, bleibt aber Recheneinheit im Handel mit der Aussenwelt. Historische Versuche, Geld über Nacht abzuschaffen, sind gescheitert — aber das ist nicht, was hier vorgeschlagen wird. Und ein Detail, das reale Politik oft vergisst: Wer baut, muss auch unterhalten. Ein bis drei Prozent des Wiederbeschaffungswerts jährlich, so die Faustregel für Infrastruktur. Der Fonds finanziert den Bau; den Unterhalt tragen die Stunden.", "note": ""}, "en": {"titel": "A fund that abolishes itself", "marker": [{"text": "building blocks supported", "kat": "belegt"}, {"text": "Order of magnitude and capital raising: to be settled in a laboratory", "kat": "im-labor"}], "begr": "The building blocks exist: land trusts that permanently withdraw land from the market; companies in steward-ownership; cooperatives; non-profit housing. They show that property can be irrevocably converted into commons. What does not exist is an example on the scale of a national economy — and no evidence that enough capital owners will voluntarily forgo return. The Foundation therefore names the origin of the capital expressly as unresolved and makes it one of the first metrics of a laboratory: how much can be irrevocably converted, under what conditions, and who converts. What matters is what the design does not say: it does not abolish money. Money and the hours, the ledger of work performed, run side by side for decades; in the Federation money loses its role for provision, but remains a unit of account in trade with the outside world. Historical attempts to abolish money overnight have failed — but that is not what is proposed here. And a detail that real politics often forgets: whoever builds must also maintain. One to three per cent of replacement value annually, so the rule of thumb for infrastructure. The fund finances the building; the hours carry the upkeep.", "note": ""}, "vert": {"de": {"papier": "Die Lebendige Bilanz", "hint": "Was ein Laborprogramm kosten und aushalten müsste — Kapital und Unterhalt"}, "en": {"papier": "The Living Balance", "hint": "What a laboratory programme would have to cost and endure — capital and upkeep"}, "ziel": "bilanz"}}, "8": {"de": {"titel": "Was die Erde davon hat", "marker": [{"text": "Zielgrössen belegt als ehrgeiziges, deklariertes Szenario", "kat": "belegt"}, {"text": "Der Verteilungsschlüssel: nicht im Labor testbar, weil er die ganze Welt betrifft", "kat": "nicht-testbar"}], "begr": "Die Zahlen — 1,8 Grad im Jahr 2100, Wälder auf dem Stand von 1900 — hat die Föderation nicht erfunden. Sie stammen aus dem *Global Justice Report* 2026, den das World Inequality Lab um Thomas Piketty und Lucas Chancel im Juni 2026 veröffentlicht hat. Der Report rechnet vor, dass ein gutes Leben für alle innerhalb der Belastungsgrenzen der Erde möglich ist — und sagt selbst, dass nicht Technik, sondern «politische Wahl» das Hindernis sei. Diese Ziele haben Bedingungen, die man kennen muss. Der Klimapfad setzt einen schnellen Ausstieg aus fossilen Energien voraus *und* dass ein Teil des CO₂ wieder aus der Luft geholt wird — mit Technik, deren Skalierbarkeit umstritten ist. Die Wälder wachsen nur, wenn Rodung stoppt und deutlich weniger Fleisch gegessen wird, weil Weideland frei werden muss. Und der Report ist selbst Gegenstand fachlicher Kritik. Eine Lehre des Romans ist wissenschaftlich besonders gut begründet: Viele gehaltene örtliche Grenzen ergeben kein gehaltenes Ganzes. Ein Klimabudget ist eine endliche Gesamtmenge; sie muss von oben gesetzt und verteilt werden. Wie man sie *gerecht* verteilt — nach Köpfen, nach Geschichte, nach Fähigkeit — ist die Frage, an der die reale Klimapolitik bisher scheitert. Der Entwurf neigt der Verteilung nach Köpfen zu, weil sie zu seiner Gerechtigkeitsdimension passt; festgelegt hat er sie nicht.", "note": ""}, "en": {"titel": "What the Earth gains", "marker": [{"text": "target figures supported as an ambitious, declared scenario", "kat": "belegt"}, {"text": "The distribution key: not testable in a laboratory, because it concerns the whole world", "kat": "nicht-testbar"}], "begr": "The figures — 1.8 degrees in the year 2100, forests at the level of 1900 — the Federation did not invent. They come from the Global Justice Report 2026, which the World Inequality Lab around Thomas Piketty and Lucas Chancel published in June 2026. The report calculates that a good life for all within the Earth's carrying capacity is possible — and says itself that the obstacle is not technology but «political choice». These targets have conditions one must know. The climate pathway presupposes a rapid exit from fossil energy and that part of the CO₂ is drawn back out of the air — with technology whose scalability is disputed. The forests grow only if clearing stops and considerably less meat is eaten, because pasture must be freed. And the report is itself the object of scholarly criticism. One lesson of the novel is especially well grounded scientifically: many locally held limits do not make a held whole. A climate budget is a finite total; it must be set from above and distributed. How to distribute it fairly — by heads, by history, by capacity — is the question on which real climate policy has so far failed. The design inclines towards distribution by heads, because that fits its dimension of justice; it has not fixed it.", "note": ""}, "vert": {"de": {"papier": "Das Fundament", "hint": "Wie eine Obergrenze für die Erde gerecht verteilt werden könnte — die «Aggregationslücke»"}, "en": {"papier": "The Foundation", "hint": "How a ceiling for the Earth might be fairly distributed — the «aggregation gap»"}, "ziel": "fundament"}}, "9": {"de": {"titel": "Tausend Arbeitsstunden im Jahr", "marker": [{"text": "Richtung belegt", "kat": "belegt"}, {"text": "Der Zielwert: im Labor zu klären", "kat": "im-labor"}], "begr": "Auch diese Zahl kommt aus dem *Global Justice Report*: von heute rund 2100 auf 1000 Stunden pro Erwerbstätigem bis 2100. Zum Vergleich: In Deutschland sind es heute rund 1340 Stunden, in der Schweiz und den USA etwa 1800. Die Richtung ist belegt. Die grösste Studie zur Vier-Tage-Woche — fast 3000 Beschäftigte in 141 Firmen in sechs Ländern, veröffentlicht 2025 in *Nature Human Behaviour* — fand weniger Erschöpfung, bessere Gesundheit und keine Einbusse an Produktivität. Aber: sechs Monate, freiwillige Firmen, meist kleine Dienstleister. Von dort bis zu einer halbierten Arbeitszeit für alle ist ein weiter Weg. Ein bekanntes Risiko: Wer mehr freie Zeit hat, konsumiert oft mehr. Der Entwurf antwortet darauf nicht mit Effizienz, sondern mit einer harten Obergrenze für die Biosphäre — was wieder auf Grundsatz 8 zurückführt.", "note": ""}, "en": {"titel": "A thousand working hours a year", "marker": [{"text": "direction supported", "kat": "belegt"}, {"text": "The target figure: to be settled in a laboratory", "kat": "im-labor"}], "begr": "This figure too comes from the Global Justice Report: from around 2,100 today to 1,000 hours per working person by 2100. For comparison: in Germany it is around 1,340 hours today, in Switzerland and the USA about 1,800. The direction is supported. The largest study on the four-day week — almost 3,000 employees in 141 firms across six countries, published in 2025 in *Nature Human Behaviour* — found less exhaustion, better health and no loss of productivity. But: six months, firms that took part voluntarily, mostly small service providers. From there to halved working time for everyone is a long way. A known risk: whoever has more free time often consumes more. The design answers this not with efficiency but with a hard ceiling for the biosphere — which leads back again to Principle 8.", "note": ""}, "vert": null}, "10": {"de": {"titel": "Knoten für Knoten, vier Generationen", "marker": [{"text": "Methode belegt", "kat": "belegt"}, {"text": "Vier Generationen: im Labor zu klären, historisch belastet", "kat": "im-labor"}], "begr": "Dass man neue Gesellschaftsformen in abgegrenzten Zonen erprobt, ist eine anerkannte Methode — in der Wissenschaft heisst das Reallabor. Sie hat eine belastete Geschichte: Manche Sonderzonen, etwa Próspera in Honduras, sind zu Recht in der Kritik, weil sie Demokratie einschränken und Investoren schützen. Die Föderation unterscheidet sich in drei Punkten: Sie ist freiwillig, jederzeit verlassbar und kennt keinen Investorenschutz. Die schwerste Prüfung ist nicht das erste Jahrzehnt, sondern der Generationenwechsel. Die israelischen Kibbuzim, jahrzehntelang das erfolgreichste Beispiel gelebter Gütergemeinschaft, haben sie ab den 1980er-Jahren mehrheitlich aufgegeben — nicht weil sie scheiterten, sondern weil die Kinder anders wählten als die Gründer. Der Roman spielt genau diesen Übergang durch. Ein reales Programm müsste ihn messen, und das dauert Jahrzehnte.", "note": ""}, "en": {"titel": "Node by node, four generations", "marker": [{"text": "method supported", "kat": "belegt"}, {"text": "Four generations: to be settled in a laboratory, historically burdened", "kat": "im-labor"}], "begr": "That new forms of society are tried out in demarcated zones is a recognized method — science calls it a real-world laboratory. It has a burdened history: some special zones, such as Próspera in Honduras, are rightly criticized for restricting democracy and protecting investors. The Federation differs in three points: it is voluntary, can be left at any time, and knows no investor protection. The severest test is not the first decade but the change of generations. The Israeli kibbutzim, for decades the most successful example of lived communal ownership, largely gave it up from the 1980s onward — not because they failed, but because the children chose differently from the founders. The novel plays through exactly this transition. A real programme would have to measure it, and that takes decades.", "note": ""}, "vert": {"de": {"papier": "Die Lebendige Bilanz", "hint": "Was ein Laborprogramm messen müsste — Vergleichsregionen und Generationenwechsel"}, "en": {"papier": "The Living Balance", "hint": "What a laboratory programme would have to measure — comparison regions and the change of generations"}, "ziel": "bilanz"}}};
 
         const TRAEGT_PAPIER = {
-            fundament: { de: 'Das Fundament', en: 'The Foundation', ziel: ['werkstatt','w-fundament'] },
+            fundament: { de: 'Das Fundament', en: 'The Foundation', ziel: ['grundlagen','g-fundament'] },
             bilanz:    { de: 'Die Lebendige Bilanz', en: 'The Living Balance', ziel: ['bilanz-interaktiv', null] }
         };
 
