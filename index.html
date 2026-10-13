@@ -2,7 +2,7 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.60 ·  2026-09-26
+  Fassung:  v0.61 ·  2026-10-13
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
@@ -16,6 +16,28 @@
   findet ihn hier; wer wissen will, wie Noa dazu kommt, liest zuerst die
   Novelle.» Das ist sinnvoll, weil die Novelle selbst nur als PDF vorliegt:
   Der Befund ist ihr Ergebnis ohne die 15 000 Woerter.
+  NEUE SEITE «EINE EINLADUNG» (Beschluss Martin, Weg A). Der Essay «Hör hin»
+  («be aware of the undertow», 13.10.2026) steht als eigene, ruhige Leseseite:
+  Brotkrume, Dachzeile, Titel, Vorspann, Text, am Fuss ein Knopf zum Buch —
+  kein Inhaltsverzeichnis, keine Sprungmarken, keine Karten, keine
+  Zugangszeile. Eigener Stil (.lese-seite): schmalere Spalte (680 px),
+  groesserer Zeilenabstand (1.95), damit die Seite dem Lesen nicht im Weg
+  steht. Der Text sagt es selbst: «Nimms dir fuer eine ruhige Minute.»
+  Zwei Wege dorthin: von der Buch-Seite («Bevor du liest: eine Einladung»,
+  unter der Signaturzeile) und aus der Werkstatt nach den drei Textkarten
+  («Eine vierte Annaeherung steht nicht hier, sondern vor dem Buch»).
+  Das Menue markiert «Das Buch» als Ebene.
+  ⚠ NAME: Der Text ist als «Martin Greter Pamment» veroeffentlicht; auf der
+  Webseite erscheint er OHNE abweichende Signatur — es gilt durchgehend
+  «Martin U G P» (Beschluss Martin). Die Webseite nennt keinen zweiten Namen.
+  ⚠ EINLEITUNG EN: Die vier Vorspann-Absaetze lagen nur deutsch vor; die
+  englische Fassung ist MEINE Uebersetzung und nicht von Martin geprueft —
+  insbesondere «Ontologie-Update» -> «ontology update», «Mit-Sein» ->
+  «being-with», «Nimms dir...» -> «Take it with you for a quiet minute».
+  ⚠ G3: Der Text nennt das Sprachmodell und erzaehlt Kapitel 3 nach. Er steht
+  darum NICHT auf der Buch-Seite selbst, sondern einen Klick dahinter — wie
+  die Werkstatt. Der Link traegt keinen KI-Hinweis.
+
   ⚠ NACHTRAG (Fund Martin): Der Verweis «Kapitel 4, «Die Lebendige Bilanz»»
   fuehrte weiterhin auf die INTERAKTIVE Seite statt in den Sammelband —
   obwohl der Satz eine Stelle im Band behauptet («steht in Kapitel 4») und
@@ -1319,6 +1341,17 @@
         }
 
         /* --- Manifest-Seite --- */
+        /* Leseseite: schmaler, luftiger, ohne Bedienelemente im Text */
+        .lese-seite { max-width: 680px; margin-left: auto; margin-right: auto; }
+        .lese-seite p { font-size: 1.07rem; line-height: 1.95; margin-bottom: 1.35em; }
+        .lese-seite h1 { margin-bottom: 6px; }
+        .lese-vorspann { color: var(--eb-muted); }
+        .lese-trenner {
+            border: none; border-top: 1px solid rgba(255,255,255,0.14);
+            width: 90px; margin: 34px auto 34px 0;
+        }
+        .lese-fuss { margin-top: 44px; }
+
         .breadcrumb {
             font-size: 0.82rem; letter-spacing: 0.06em;
             color: var(--eb-muted); margin: 0 0 10px 0;
@@ -2114,6 +2147,9 @@
             <p class="buch-signatur lang-de">Die Farben gehören allen. Der Pinselstrich gehört einem — und einer steht dafür ein.</p>
             <p class="buch-signatur lang-en hidden">The colours belong to everyone. The brushstroke belongs to one — and one stands behind it.</p>
 
+            <p class="lang-de" style="text-align:center; margin-top:4px;"><a href="#" class="inline-link" onclick="switchTab('einladung'); return false;">Bevor du liest: eine Einladung →</a></p>
+            <p class="lang-en hidden" style="text-align:center; margin-top:4px;"><a href="#" class="inline-link" onclick="switchTab('einladung'); return false;">Before you read: an invitation →</a></p>
+
             <span class="sec-anchor" id="buch-download" aria-hidden="true"></span>
             <h2 class="lang-de">Herunterladen</h2>
             <h2 class="lang-en hidden">Download</h2>
@@ -2520,6 +2556,9 @@
                     </div>
                 </div>
             </div>
+
+            <p class="lang-de">Eine vierte Annäherung steht nicht hier, sondern vor dem Buch: <a href="#" class="inline-link" onclick="switchTab('einladung'); return false;">«Hör hin»</a> übt die Haltung ein, mit der dieses Buch gelesen sein will.</p>
+            <p class="lang-en hidden">A fourth approach does not stand here but before the book: <a href="#" class="inline-link" onclick="switchTab('einladung'); return false;">«Listen»</a> rehearses the stance this book asks to be read with.</p>
 
             <span class="sec-anchor" id="w-belege" aria-hidden="true"></span>
             <h2 class="lang-de">Was die Prüfung ergibt</h2>
@@ -3291,6 +3330,97 @@
             </p>
         </div>
 
+        <!-- ================= SEITE: EINE EINLADUNG ================= -->
+        <div id="panel-einladung" class="content-panel lese-seite">
+            <p class="breadcrumb">
+                <a href="#" onclick="switchTab('buch'); return false;"><span class="lang-de">Das Buch</span><span class="lang-en hidden">The Book</span></a><span class="sep" aria-hidden="true">›</span><span class="lang-de">Eine Einladung</span><span class="lang-en hidden">An Invitation</span>
+            </p>
+            <p class="page-kicker">be aware of the undertow</p>
+            <h1 class="lang-de">Hör hin</h1>
+            <h1 class="lang-en hidden">Listen</h1>
+
+            <p class="lang-de lese-vorspann">Es gibt Texte, die wollen dich nicht überzeugen. Sie wollen dir nichts verkaufen, dich nicht belehren und dir keine fertigen Formeln liefern. Sie laden dich lediglich ein, für einen Moment innezuhalten und den Blick zu schärfen.</p>
+            <p class="lang-en hidden lese-vorspann">There are texts that do not want to convince you. They have nothing to sell you, nothing to teach you, no ready-made formulas to hand over. They merely invite you to pause for a moment and sharpen your gaze.</p>
+
+            <p class="lang-de lese-vorspann">Wie lernen wir, die Welt nicht mehr in starre Schnittkanten — Nutzen, Preis, Subjekt, Objekt — zu zerlegen? Wie verändert sich unser Begriff von Autorschaft, Verantwortung und Mit-Sein, wenn wir der Natur und der Technik mit einer neuen Haltung des Hinhörens begegnen?</p>
+            <p class="lang-en hidden lese-vorspann">How do we learn to stop cutting the world into rigid edges — use, price, subject, object? How does our notion of authorship, responsibility and being-with change when we meet nature and technology with a new readiness to listen?</p>
+
+            <p class="lang-de lese-vorspann">Ein Versuch über das Ontologie-Update unserer Zeit und die Welt von <em>Eintrag Null</em>.</p>
+            <p class="lang-en hidden lese-vorspann">An attempt on the ontology update of our time and the world of <em>Entry Zero</em>.</p>
+
+            <p class="lang-de lese-vorspann">Nimms dir für eine ruhige Minute mit einer Tasse Kaffee:</p>
+            <p class="lang-en hidden lese-vorspann">Take it with you for a quiet minute and a cup of coffee:</p>
+
+            <hr class="lese-trenner">
+
+            <p class="lang-de">Hör hin. Vielleicht nicht auf die schwebenden Worte zuerst. Darunter knirscht etwas, ein Mahlen tief in der Mechanik deiner Tage, und es könnte sein, dass du es schon lange hörst, ohne es gehört zu haben. Sand zwischen Zahnrädern, die einmal rund liefen. Oder nie.</p>
+            <p class="lang-en hidden">Listen. Perhaps not to the floating words first. Underneath, something grinds, a grating deep in the mechanism of your days, and it may be that you have heard it a long time without having heard it. Sand between gears that once ran true. Or never.</p>
+
+            <p class="lang-de">Du nennst Teile der Welt «Ressourcen». Nicht du allein, alle sagen es; es ist ein Wort, das man erbt. Es liegt leicht auf der Zunge, ein kleiner Kiesel, den man nicht schlucken will. Und die Wälder werden leiser. Ob das zusammenhängt? Vielleicht merkst du, wie schnell du es zusammenhängen lässt. Die Zeit liegt auf einer Waage. Du sparst sie, du verlierst sie, und zwischen deinen Fingern rinnt etwas Trockenes.</p>
+            <p class="lang-en hidden">You call parts of the world «resources». Not you alone; everyone says it — it is a word one inherits. It lies light on the tongue, a small pebble you don't want to swallow. And the forests grow quieter. Whether that is connected? Perhaps you notice how quickly you let it connect. Time lies on a scale. You save it, you lose it, and between your fingers something dry runs away.</p>
+
+            <p class="lang-de">Eine Brille wäre das. Eine, die Sinn einfängt und die Sinne erstarren lässt. Die Gläser so geschliffen, dass du überall Kanten siehst: innen, aussen; Nutzen, Preis; richtig, falsch. Sauber geschnitten. Vielleicht ist dir das zu sauber, vielleicht beruhigt es dich. Beides darf sein.</p>
+            <p class="lang-en hidden">A lens, that would be. One that catches sense and lets the senses set hard. Its glass ground so that you see edges everywhere: inside, outside; use, price; right, wrong. Cleanly cut. Perhaps that is too clean for you; perhaps it soothes you. Both may be.</p>
+
+            <p class="lang-de">Leg sie ab. Einen Atemzug lang, wenn du willst.</p>
+            <p class="lang-en hidden">Take it off. For one breath, if you like.</p>
+
+            <p class="lang-de">Dann könnte hervortreten, was Kulisse war. Dein Auge braucht einen Moment dafür. Ein Wald, und er ist kein Ressourcenlager. Er liest. Und schon hast du ihm ein Verb geliehen, deins. Anders geht es nicht; auch dieser Satz ist aus Kanten gebaut. Wenn dir das Verb zu gross vorkommt, bleib dort stehen. Es ist umstritten, und es darf kratzen. An einem Baum wird gefressen, ein Zeichen geht durch die Luft, und der Nachbar macht seine Blätter bitter. Ein Tier erkennt eine Fährte an einem geknickten Halm. Bedeutung geht durchs Geäst, lange vor dem ersten menschlichen Satz, in Ähnlichkeiten, in Spuren, in einer Ursache, die eine Wirkung ruft.</p>
+            <p class="lang-en hidden">Then what was backdrop could step forward. Your eye needs a moment for it. A forest, and it is no store of resources. It reads. And already you have lent it a verb, yours. There is no other way; this sentence too is built of edges. If the verb seems too large to you, stop there. It is contested, and it is allowed to scratch. At a tree something feeds, a sign goes through the air, and the neighbour turns its leaves bitter. An animal knows a trail by a broken stalk. Meaning moves through the branches, long before the first human sentence, in likenesses, in traces, in a cause that calls a consequence.</p>
+
+            <p class="lang-de">Und der Wald führt Buch. Das ist belegt. Lachse ziehen die Flüsse hinauf, Bären tragen sie ins Unterholz, und der Stickstoff aus dem Meer lässt sich später in den Jahresringen finden, Jahr um Jahr verzeichnet. Keine Rechnung. Niemand hat gefragt. Vielleicht riechst du jetzt etwas, Tang, nasses Fell. Oder nichts. Lass es sein.</p>
+            <p class="lang-en hidden">And the forest keeps its books. That is documented. Salmon run up the rivers, bears carry them into the undergrowth, and the nitrogen from the sea can later be found in the growth rings, year upon year recorded. No bill. No one asked. Perhaps you smell something now, kelp, wet fur. Or nothing. Let it be.</p>
+
+            <p class="lang-de">Nicht du bringst das Verzeichnen in die Welt. Du findest es vor, älter als du.</p>
+            <p class="lang-en hidden">It is not you who brings recording into the world. You find it already there, older than you.</p>
+
+            <p class="lang-de">«Eintrag Null.» Du hörst Nullpunkt, Stillstand, das Hamsterrad, das endlich steht. Es könnte sein, dass du es eine Weile so hören und lesen willst. Dabei ist es ein Anfang, der erste Eintrag eines Registers, das noch keinen kannte.</p>
+            <p class="lang-en hidden">«Entry Zero.» You hear zero point, standstill, the hamster wheel that finally stops. It may be that you want to hear and read it that way for a while. And yet it is a beginning, the first entry in a register that knew none before it.</p>
+
+            <p class="lang-de">Jeder spätere Eintrag trägt sein Woher, sein Warum, eine Kette, die du zurückgehen kannst, Glied um Glied. Der erste nicht. Er trägt die Nummer null und ein Feld, in das jede Entscheidung dieser Welt ihre Begründung legen muss. Dieses eine Feld bleibt leer. Weiss. Eigens. Alles andere wird verbucht, sorgfältig, Eintrag um Eintrag, und das schützt: Wer verzeichnet ist, kann nicht übergangen werden. Nur dieses eine Feld ist anders. Wenn du zu lange hinschaust, blendet es ein wenig.</p>
+            <p class="lang-en hidden">Every later entry carries its whence, its why, a chain you can walk back, link by link. The first does not. It carries the number zero and a field into which every decision in this world must lay its reasons. This one field stays empty. White. Deliberately. Everything else is booked, carefully, entry upon entry, and that protects: whoever is recorded cannot be passed over. Only this one field is otherwise. If you look at it too long, it dazzles a little.</p>
+
+            <p class="lang-de">In diese Leere legt das Buch eine Gabe, die nichts zurückverlangt. Was du damit machst, steht nirgends.</p>
+            <p class="lang-en hidden">Into this emptiness the book lays a gift that asks nothing back. What you make of it is recorded nowhere.</p>
+
+            <p class="lang-de">Kapitel drei, sechs Stunden. Du sitzt nicht im Raum, aber das Buch setzt dich an seinen Rand. Eine junge Gemeinschaft sitzt um einen Menschen, der nicht mehr arbeiten und keine Stunden mehr beitragen kann. Der Konsens stellt sich nicht ein. Die Luft wird dick, fast körnig. Das Licht kriecht über den Boden, vom Fenster zur Tür, und es kriecht langsam, langsamer als du liest. Jemand atmet hörbar aus.</p>
+            <p class="lang-en hidden">Chapter Three, six hours. You do not sit in the room, but the book sets you at its edge. A young community sits around a person who can no longer work and contribute no more hours. The consensus will not settle. The air grows thick, almost grainy. The light creeps across the floor, from the window to the door, and it creeps slowly, more slowly than you read. Someone breathes out audibly.</p>
+
+            <p class="lang-de">Nichts kommt voran.</p>
+            <p class="lang-en hidden">Nothing comes forward.</p>
+
+            <p class="lang-de">Wenn du jetzt weiterblättern willst, ist das der Raum. Vielleicht hältst du ihn zuerst für einen Mangel. In ihm wird etwas gegründet, leise, fast nebenbei: Die Würde aller Lebewesen wird in dieser Gemeinschaft nicht verbucht. Sechs Stunden, die man nicht aufrechnet, sechs, die man miteinander aushält und, sagt eine Stimme am Ende, gar nicht eintragen will. Ob das schön ist, musst du nicht entscheiden. Es kostet. Draussen bleibt eine Arbeit liegen, eine Entscheidung wird vertagt, jemand geht müde nach Hause und ist es morgen noch. Später wird gerade diese ungezählte Stunde am schwersten wiegen. Aber das ist später, und jetzt ist das Licht erst an der Tischkante.</p>
+            <p class="lang-en hidden">If you want to turn the page now, that is the space. Perhaps you take it at first for a lack. In it something is founded, quietly, almost in passing: in this community, the dignity of all living beings is not booked. Six hours one does not reckon up, six one endures together and, a voice says at the end, does not even want to enter. Whether that is beautiful you need not decide. It costs. Outside, work is left lying, a decision is put off, someone goes home tired and is still tired tomorrow. Later it is precisely this uncounted hour that will weigh the most. But that is later, and now the light is only at the table's edge.</p>
+
+            <p class="lang-de">Auch die Sätze, die du gerade liest, kommen aus einer unsichtbaren Landschaft. Zu jedem Satz führten unzählige Wege, und keiner wiederholte sich. Ein KI-Sprachmodell hat sie begehbar gemacht: Verzweigung, Schwelle, wieder Verzweigung. Jemand ist hineingegangen und hat gehört. Ein Weg fing gut an und wurde dann schlammig, also verwarf man ihn. Ein anderer kratzte und blieb trotzdem. Was du liest, ist das, was übrig blieb.</p>
+            <p class="lang-en hidden">The sentences you are reading now, too, come from an invisible landscape. To every sentence countless paths led, and none repeated. An AI language model made them walkable: branching, threshold, branching again. Someone went in and listened. One path began well and then grew muddy, so it was discarded. Another scratched and stayed all the same. What you read is what was left.</p>
+
+            <p class="lang-de">Die Landschaft der KI-Sprachmodelle senkt den Preis des Weges. Den Preis des menschlichen Urteils senkt sie nicht. Welcher Pfad ein Buch wird, welcher Satz bleibt, wer dafür geradesteht, das entscheidet kein Tal und keine Maschine. Eine Hand wählt und verwirft. Ein Mensch erzählt und steht ein. Das Werkzeug wird weicher, nein, durchlässiger, und das Gegenüber bleibt.</p>
+            <p class="lang-en hidden">The landscape of AI language models lowers the price of the path. The price of human judgement it does not lower. Which path becomes a book, which sentence stays, who stands behind it — that is decided by no valley and no machine. A hand chooses and discards. A human being tells and stands behind it. The tool grows softer — no, more permeable — and the other remains.</p>
+
+            <p class="lang-de">Und die Sprache hört auf, dir die Welt vorzusortieren, oder sie versucht es wenigstens. Sie legt dir ein Tier hin, und es ist zuerst ein Tier: nass, warm, ein Atem, der dampft. Die Bedrohung läuft als Zahl durch die Hefte der Figuren, Spalte um Spalte, nie als Predigt. Das kann dir kälter vorkommen, als du erwartest, oder wärmer. Sie zeigt, statt zu erklären, und lässt dich stehen im Dazwischen, wo du selbst lesen musst, bevor ein Urteil fällt. Das heisst nicht, dass nichts auf dem Spiel stünde. Es gibt Risse, es gibt Tote, es gibt eine Haltung. Nur nimmt sie dir das Sehen nicht ab.</p>
+            <p class="lang-en hidden">And the language stops pre-sorting the world for you, or at least it tries. It lays an animal before you, and it is first of all an animal: wet, warm, a breath that steams. The threat runs as a number through the characters' notebooks, column upon column, never as a sermon. That may seem colder to you than you expect, or warmer. It shows instead of explaining, and leaves you standing in the between, where you must read for yourself before a judgement falls. That does not mean nothing is at stake. There are rifts, there are dead, there is a stance. Only it does not take the seeing from you.</p>
+
+            <p class="lang-de">Das verlangt dir etwas ab. Kein Tempo, sondern Verweilen, und das ist unbequemer, als es klingt; die Beine schlafen womöglich ein. Du liest nicht, um zu erfahren, wie es ausgeht. Du liest, um zu spüren, wie es ist, nicht gleich zu wissen. Ob du dich daran gewöhnst? Vielleicht. Vielleicht sollst du nicht.</p>
+            <p class="lang-en hidden">That asks something of you. Not speed, but dwelling, and that is less comfortable than it sounds; your legs may fall asleep. You do not read to learn how it turns out. You read to feel what it is not to know at once. Whether you grow used to it? Perhaps. Perhaps you are not meant to.</p>
+
+            <p class="lang-de">Du lernst das nicht auswendig. Du übst es einmal, und dann wieder, und es geht verloren, und du übst es noch einmal. Es beginnt dort, wo das Knacken im Holz, das Schweigen im Gespräch, der Moment, der sich entzieht, dich nicht mehr stören, sondern dich fragen.</p>
+            <p class="lang-en hidden">You do not learn this by heart. You practise it once, and then again, and it is lost, and you practise it once more. It begins where the cracking in the wood, the silence in a conversation, the moment that withdraws, no longer disturb you but ask you.</p>
+
+            <p class="lang-de">Leg die Brille ab. Oder halt sie noch eine Weile in der Hand, wenn das leichter ist. Irgendwann merkst du, dass du schon eine andere aufhast. Das macht nichts. Nur erstarren soll sie nicht.</p>
+            <p class="lang-en hidden">Take off the lens. Or hold it a while longer in your hand, if that is easier. At some point you notice you already have another on. That does not matter. Only it must not set hard.</p>
+
+            <p class="lang-de">Das Gewebe war immer schon da.</p>
+            <p class="lang-en hidden">The fabric was always already there.</p>
+
+            <p class="lang-de">Du auch</p>
+            <p class="lang-en hidden">You too</p>
+
+            <p class="lese-fuss">
+                <button class="action-btn" onclick="switchTab('buch')"><span class="lang-de">Zum Buch</span><span class="lang-en hidden">To the book</span></button>
+            </p>
+        </div>
+
         <!-- ================= SEITE 4: MITSCHREIBEN ================= -->
         <div id="panel-mitschreiben" class="content-panel">
             <h1 class="lang-de">Mitschreiben</h1>
@@ -3693,7 +3823,7 @@
             // «Die Grundlagen» — deren Punkt bleibt markiert, damit der
             // Besucher sieht, wo er ist (sonst waere gar nichts markiert).
             const EBENE = { manifest: 'grundlagen', traegt: 'grundlagen', 'bilanz-interaktiv': 'grundlagen',
-                            landschaft: 'werkstatt', essay: 'werkstatt' };
+                            landschaft: 'werkstatt', essay: 'werkstatt', einladung: 'buch' };
             const markiere = EBENE[tabId] || tabId;
 
             const targetPanel = document.getElementById('panel-' + tabId);
