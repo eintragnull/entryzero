@@ -238,8 +238,8 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        // Near-Plane auf 1.0 angehoben zur Maximierung der Tiefenspeicher-Präzision
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1.0, 3500);
+        // Maximale Sichtweite auf 8000 Einheiten erhöht
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1.0, 8000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -259,8 +259,7 @@
         const starTexture = textureLoader.load('starmap_milkyway.jpg');
         const starMat = new THREE.MeshBasicMaterial({
             map: starTexture,
-            side: THREE.BackSide,
-            fog: false
+            side: THREE.BackSide
         });
         const starSphere = new THREE.Mesh(starGeo, starMat);
         scene.add(starSphere);
@@ -295,8 +294,7 @@
             map: createStarSpriteTexture(),
             transparent: true,
             blending: THREE.AdditiveBlending,
-            depthWrite: false,
-            fog: false
+            depthWrite: false
         });
         const starField3d = new THREE.Points(stars3dGeo, stars3dMat);
         scene.add(starField3d);
@@ -311,8 +309,7 @@
         const earthMat = new THREE.MeshStandardMaterial({
             map: earthTexture,
             roughness: 0.65,
-            metalness: 0.1,
-            fog: false // verhindert Abdunkeln im All
+            metalness: 0.1
         });
         const earth = new THREE.Mesh(earthGeo, earthMat);
         earthGroup.add(earth);
@@ -324,8 +321,7 @@
             alphaMap: cloudTexture,
             transparent: true,
             opacity: 0.85,
-            depthWrite: false, // verhindert schwarze Ränder
-            fog: false
+            depthWrite: false
         });
         const clouds = new THREE.Mesh(cloudGeo, cloudMat);
         earthGroup.add(clouds);
@@ -336,8 +332,7 @@
             transparent: true,
             opacity: 0.22,
             side: THREE.BackSide,
-            depthWrite: false, // verhindert schwarze Ringartefakte
-            fog: false
+            depthWrite: false
         });
         const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
         earthGroup.add(atmosphere);
@@ -372,8 +367,7 @@
             alphaTest: 0.1,
             side: THREE.DoubleSide,
             roughness: 0.3,
-            metalness: 0.2,
-            fog: false
+            metalness: 0.2
         });
 
         const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
@@ -385,7 +379,7 @@
         // --- 6. AUTO-ZOOM & REGLER-LOGIK ---
         let progress = 0;
         let isAutoPlaying = true;
-        const AUTO_ZOOM_DURATION = 60.0; // 60 Sekunden Gesamtdauer
+        const AUTO_ZOOM_DURATION = 60.0;
 
         const zoomSlider = document.getElementById('zoom-slider');
         const playBtn = document.getElementById('play-btn');
@@ -428,7 +422,6 @@
             }
 
             // Erdrotation
-            starSphere.rotation.y = time * 0.001;
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
@@ -451,7 +444,6 @@
                 lookY = THREE.MathUtils.lerp(0, -50, p1);
                 lookZ = THREE.MathUtils.lerp(-50, -80, p1);
 
-                // Morpho-Falter taucht am Südpol auf und wächst
                 if (p1 < 0.25) {
                     morphoGroup.visible = false;
                 } else {
@@ -487,11 +479,9 @@
                 camY = THREE.MathUtils.lerp(-55, -70, t);
                 camZ = THREE.MathUtils.lerp(-35, -120, t);
 
-                // Kamera schwenkt von Richtung Weltraum (-90) zurück auf die Erde (0, 0, -50)
                 lookY = THREE.MathUtils.lerp(-55, 0, t);
                 lookZ = THREE.MathUtils.lerp(-90, -50, t);
 
-                // Falter blendet aus
                 if (t > 0.7) {
                     morphoGroup.visible = false;
                 } else {
@@ -504,12 +494,11 @@
             } else {
                 // PHASE 4: Rauszoomen ins Weltall - Erde wird kleiner und fliegt davon (0.72 bis 1.00)
                 const t = (progress - 0.72) / 0.28;
-                const p4 = Math.pow(t, 3.0); // Beschleunigung weg von der Erde
+                const p4 = Math.pow(t, 3.0);
 
                 camY = THREE.MathUtils.lerp(-70, -350, p4);
                 camZ = THREE.MathUtils.lerp(-120, -2400, p4);
 
-                // Blick bleibt zentriert auf der Erde
                 lookY = 0;
                 lookZ = -50;
 
@@ -518,6 +507,10 @@
 
             camera.position.set(0, camY, camZ);
             camera.lookAt(0, lookY, lookZ);
+
+            // WICHTIG: Die Sternenkugel folgt der Kameraposition (Skybox-Standard),
+            // damit sie niemals abgeschnitten wird
+            starSphere.position.copy(camera.position);
 
             morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
             morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
