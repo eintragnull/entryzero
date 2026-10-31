@@ -56,8 +56,17 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.85);
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1), transform 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1), transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
             pointer-events: auto;
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .text-card:hover {
+            border-color: rgba(26, 188, 156, 0.45);
+            box-shadow: 0 30px 70px rgba(26, 188, 156, 0.15), 0 30px 60px rgba(0,0,0,0.85);
         }
 
         .text-card.visible {
@@ -100,6 +109,11 @@
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.35);
+            transition: color 0.3s ease;
+        }
+
+        .text-card:hover .source-tag {
+            color: #1abc9c;
         }
 
         /* --- STEUERUNGSELEMENTE UNTEN --- */
@@ -195,7 +209,7 @@
     <canvas id="webgl-canvas"></canvas>
 
     <div class="overlay-container" id="overlay">
-        <div class="text-card" id="text-card">
+        <a href="/" class="text-card" id="text-card" title="Zurück zu Eintrag Null">
             <h1>Das Ungemessene</h1>
             <p class="subtitle">Was bleibt, wenn das Verzeichnis schweigt?</p>
             <p class="body-text">
@@ -206,7 +220,7 @@
             </p>
             <p class="footnote">Nicht gemessen — als Lücke aus Wahl, nicht aus Versäumnis.</p>
             <p class="source-tag">» Ein Fragment aus Eintrag Null «</p>
-        </div>
+        </a>
     </div>
 
     <!-- Regler für den Zoom -->
@@ -224,7 +238,7 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1500);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -240,7 +254,7 @@
         scene.add(sunLight);
 
         // --- 3. WELTALL (MILCHSTRASSE + 3D-STERNE) ---
-        const starGeo = new THREE.SphereGeometry(600, 64, 64);
+        const starGeo = new THREE.SphereGeometry(1000, 64, 64);
         const starTexture = textureLoader.load('starmap_milkyway.jpg');
         const starMat = new THREE.MeshBasicMaterial({
             map: starTexture,
@@ -265,13 +279,13 @@
         }
 
         const stars3dGeo = new THREE.BufferGeometry();
-        const stars3dCount = 1800;
+        const stars3dCount = 2400;
         const starPos = new Float32Array(stars3dCount * 3);
 
         for (let i = 0; i < stars3dCount * 3; i += 3) {
-            starPos[i]     = (Math.random() - 0.5) * 450;
-            starPos[i + 1] = (Math.random() - 0.5) * 450;
-            starPos[i + 2] = (Math.random() - 0.5) * 450;
+            starPos[i]     = (Math.random() - 0.5) * 800;
+            starPos[i + 1] = (Math.random() - 0.5) * 800;
+            starPos[i + 2] = (Math.random() - 0.5) * 800;
         }
 
         stars3dGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
@@ -364,7 +378,7 @@
         // --- 6. AUTO-ZOOM & REGLER-LOGIK ---
         let progress = 0;
         let isAutoPlaying = true;
-        const AUTO_ZOOM_DURATION = 60.0; // 1 Minute Dauer
+        const AUTO_ZOOM_DURATION = 60.0; // 1 Minute Gesamtdauer
 
         const zoomSlider = document.getElementById('zoom-slider');
         const playBtn = document.getElementById('play-btn');
@@ -406,6 +420,9 @@
                 zoomSlider.value = progress;
             }
 
+            // Kubische Easing-Kurve für anfänglich schnellen Flug, der zum Ziel hin stark abbremst
+            const p = 1 - Math.pow(1 - progress, 3.0);
+
             // Erdrotation
             starSphere.rotation.y = time * 0.001;
             earth.rotation.y = time * 0.02;
@@ -414,15 +431,15 @@
             // --- KAMERAPFAD & BLICKRICHTUNG ---
             let camY, camZ, lookY, lookZ;
 
-            if (progress < 0.5) {
-                const t = progress / 0.5;
-                camY = THREE.MathUtils.lerp(30, -45, t);
-                camZ = THREE.MathUtils.lerp(200, -35, t);
+            if (p < 0.5) {
+                const t = p / 0.5;
+                camY = THREE.MathUtils.lerp(80, -45, t);
+                camZ = THREE.MathUtils.lerp(700, -35, t);
                 
                 lookY = THREE.MathUtils.lerp(0, -35, t);
                 lookZ = THREE.MathUtils.lerp(-50, -60, t);
             } else {
-                const t = (progress - 0.5) / 0.5;
+                const t = (p - 0.5) / 0.5;
                 camY = THREE.MathUtils.lerp(-45, -55, t);
                 camZ = THREE.MathUtils.lerp(-35, -110, t);
                 
@@ -433,37 +450,32 @@
             camera.position.set(0, camY, camZ);
             camera.lookAt(0, lookY, lookZ);
 
-            // --- MORPHO-FALTER FLUG & STUFENLOSES WACHSTUM ---
+            // --- MORPHO-FALTER FLUG & WACHSTUM ---
             const flap = Math.sin(time * 11);
             leftWing.rotation.y = flap * 0.75;
             rightWing.rotation.y = -flap * 0.75;
 
-            if (progress < 0.28) {
+            if (p < 0.28) {
                 morphoGroup.visible = false;
             } else {
                 morphoGroup.visible = true;
                 
-                // tVal verläuft von 0.0 bis 1.0 zwischen progress 0.28 und 1.0
-                const tVal = (progress - 0.28) / 0.72;
+                const tVal = (p - 0.28) / 0.72;
 
-                // Falter taucht am Südpol auf und fliegt dynamisch vor die Linse
                 morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
                 morphoGroup.position.y = THREE.MathUtils.lerp(-35, -55, tVal) + Math.sin(time * 2.0) * 0.9;
                 morphoGroup.position.z = THREE.MathUtils.lerp(-60, -135, tVal);
 
-                // Deutlich beschleunigte Größen-Skalierung vor dem Text-Erscheinungszeitpunkt
-                const scaleCurve = Math.pow(tVal, 0.85); 
-                const currentScale = THREE.MathUtils.lerp(0.05, 3.8, scaleCurve);
+                const currentScale = THREE.MathUtils.lerp(0.05, 3.8, Math.pow(tVal, 0.85));
                 morphoGroup.scale.set(currentScale, currentScale, currentScale);
 
-                // Sanftes Neigen beim Fliegen
                 morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
                 morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
             }
 
-            // --- TEXTKARTE BLENDET BEI 75% EIN ---
+            // --- TEXTKARTE BLENDET IN DER ABBREMSPHASE EIN ---
             const textCard = document.getElementById('text-card');
-            if (progress > 0.75) {
+            if (p > 0.75) {
                 textCard.classList.add('visible');
             } else {
                 textCard.classList.remove('visible');
