@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -47,16 +47,16 @@
         .text-card {
             max-width: 620px;
             text-align: center;
-            background: rgba(2, 6, 12, 0.82);
+            background: rgba(2, 6, 12, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             padding: 42px 36px;
             border-radius: 20px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.85);
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1), transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1), transform 2.5s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: auto;
         }
 
@@ -100,6 +100,69 @@
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.35);
+        }
+
+        /* --- STEUERUNGSELEMENTE UNTEN --- */
+        .controls-bar {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(2, 6, 12, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 10px 24px;
+            border-radius: 40px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .play-btn {
+            background: none;
+            border: none;
+            color: #1abc9c;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .play-btn:hover {
+            color: #ffffff;
+        }
+
+        .zoom-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 220px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.25);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .zoom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #1abc9c;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(26, 188, 156, 0.8);
+            transition: transform 0.1s ease;
+        }
+
+        .zoom-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.25);
         }
 
         .audio-control {
@@ -146,6 +209,12 @@
         </div>
     </div>
 
+    <!-- Regler für den Zoom -->
+    <div class="controls-bar">
+        <button class="play-btn" id="play-btn" onclick="togglePlayPause()" title="Auto-Zoom Pause/Play">❚❚</button>
+        <input type="range" class="zoom-slider" id="zoom-slider" min="0" max="1" step="0.0001" value="0">
+    </div>
+
     <button class="audio-control" id="audio-btn" onclick="toggleAudio()">
         Naturklang 🔊
     </button>
@@ -154,7 +223,6 @@
         // --- 1. SETUP & RENDERER ---
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
-        scene.fog = new THREE.FogExp2(0x010204, 0.0018);
 
         const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
@@ -163,7 +231,7 @@
 
         const textureLoader = new THREE.TextureLoader();
 
-        // --- 2. LICHT ---
+        // --- 2. LICHTVERHÄLTNISSE ---
         const ambientLight = new THREE.AmbientLight(0xddeeff, 0.6);
         scene.add(ambientLight);
 
@@ -171,8 +239,7 @@
         sunLight.position.set(120, 40, 100);
         scene.add(sunLight);
 
-        // --- 3. WELTALL & LEUCHTENDE STERNE ---
-        // A) Fotorealistische Milchstraße (sofort sichtbar, unabhängig vom Nebel)
+        // --- 3. WELTALL (MILCHSTRASSE + 3D-STERNE) ---
         const starGeo = new THREE.SphereGeometry(600, 64, 64);
         const starTexture = textureLoader.load('starmap_milkyway.jpg');
         const starMat = new THREE.MeshBasicMaterial({
@@ -183,24 +250,20 @@
         const starSphere = new THREE.Mesh(starGeo, starMat);
         scene.add(starSphere);
 
-        // Textur-Generator für weiche, runderleuchtende Sternenkugeln
         function createStarSpriteTexture() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 64; canvas.height = 64;
-            const ctx = canvas.getContext('2d');
-            
-            const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-            gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
-            gradient.addColorStop(0.2, 'rgba(230, 245, 255, 0.8)');
-            gradient.addColorStop(0.5, 'rgba(180, 220, 255, 0.25)');
-            gradient.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
-            
-            ctx.fillStyle = gradient;
+            const c = document.createElement('canvas');
+            c.width = 64; c.height = 64;
+            const ctx = c.getContext('2d');
+            const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            g.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+            g.addColorStop(0.2, 'rgba(230, 245, 255, 0.8)');
+            g.addColorStop(0.5, 'rgba(180, 220, 255, 0.25)');
+            g.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
+            ctx.fillStyle = g;
             ctx.fillRect(0, 0, 64, 64);
-            return new THREE.CanvasTexture(canvas);
+            return new THREE.CanvasTexture(c);
         }
 
-        // B) Räumliche 3D-Sterne als sanft glühende Kugeln
         const stars3dGeo = new THREE.BufferGeometry();
         const stars3dCount = 1800;
         const starPos = new Float32Array(stars3dCount * 3);
@@ -259,120 +322,146 @@
         const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
         earthGroup.add(atmosphere);
 
-        // --- 5. SCHMETTERLINGE (EXAKTES FLÜGEL-SPLITTING) ---
-        const butterflyGroup = new THREE.Group();
-        butterflyGroup.position.set(0, -100, -220);
-        scene.add(butterflyGroup);
+        // --- 5. EINZELNER MORPHO-FALTER ---
+        const morphoGroup = new THREE.Group();
+        scene.add(morphoGroup);
 
-        const butterflyTextures = [
-            textureLoader.load('butterfly_monarch.png'),
-            textureLoader.load('butterfly_morpho.png'),
-            textureLoader.load('butterfly_swallowtail.png')
-        ];
+        const morphoTexture = textureLoader.load('butterfly_morpho.png');
 
-        // Linke Flügelgeometrie (nutzt linke Bildhälfte 0.0 - 0.5)
-        const leftWingGeo = new THREE.PlaneGeometry(0.8, 1.2);
-        leftWingGeo.translate(-0.4, 0, 0);
+        // Linker Flügel (UV: 0.0 bis 0.5)
+        const leftWingGeo = new THREE.PlaneGeometry(1.6, 2.4);
+        leftWingGeo.translate(-0.8, 0, 0);
         const leftUv = leftWingGeo.attributes.uv;
         for (let i = 0; i < leftUv.count; i++) {
             leftUv.setX(i, leftUv.getX(i) * 0.5);
         }
         leftUv.needsUpdate = true;
 
-        // Rechte Flügelgeometrie (nutzt rechte Bildhälfte 0.5 - 1.0)
-        const rightWingGeo = new THREE.PlaneGeometry(0.8, 1.2);
-        rightWingGeo.translate(0.4, 0, 0);
+        // Rechter Flügel (UV: 0.5 bis 1.0)
+        const rightWingGeo = new THREE.PlaneGeometry(1.6, 2.4);
+        rightWingGeo.translate(0.8, 0, 0);
         const rightUv = rightWingGeo.attributes.uv;
         for (let i = 0; i < rightUv.count; i++) {
             rightUv.setX(i, 0.5 + rightUv.getX(i) * 0.5);
         }
         rightUv.needsUpdate = true;
 
-        const butterflies = [];
+        const wingMat = new THREE.MeshStandardMaterial({
+            map: morphoTexture,
+            transparent: true,
+            alphaTest: 0.1,
+            side: THREE.DoubleSide,
+            roughness: 0.3,
+            metalness: 0.2
+        });
 
-        for (let i = 0; i < 180; i++) {
-            const bContainer = new THREE.Group();
-            const randomTex = butterflyTextures[Math.floor(Math.random() * butterflyTextures.length)];
-            
-            const wingMat = new THREE.MeshStandardMaterial({
-                map: randomTex,
-                transparent: true,
-                alphaTest: 0.1,
-                side: THREE.DoubleSide,
-                roughness: 0.4
-            });
+        const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
+        const rightWing = new THREE.Mesh(rightWingGeo, wingMat);
 
-            const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
-            const rightWing = new THREE.Mesh(rightWingGeo, wingMat);
+        morphoGroup.add(leftWing);
+        morphoGroup.add(rightWing);
 
-            bContainer.add(leftWing);
-            bContainer.add(rightWing);
+        // --- 6. AUTO-ZOOM & REGLER-LOGIK ---
+        let progress = 0;
+        let isAutoPlaying = true;
+        const AUTO_ZOOM_DURATION = 60.0; // 1 Minute Dauer
 
-            const x = (Math.random() - 0.5) * 50;
-            const y = (Math.random() - 0.5) * 20;
-            const z = (Math.random() - 0.5) * 50;
-            bContainer.position.set(x, y, z);
-            
-            const scale = 0.5 + Math.random() * 0.5;
-            bContainer.scale.set(scale, scale, scale);
+        const zoomSlider = document.getElementById('zoom-slider');
+        const playBtn = document.getElementById('play-btn');
 
-            butterflyGroup.add(bContainer);
+        zoomSlider.addEventListener('input', (e) => {
+            progress = parseFloat(e.target.value);
+            isAutoPlaying = false;
+            updatePlayBtnUI();
+        });
 
-            butterflies.push({
-                group: bContainer,
-                left: leftWing,
-                right: rightWing,
-                speed: 8 + Math.random() * 8,
-                phase: Math.random() * Math.PI * 2,
-                baseY: y
-            });
+        function togglePlayPause() {
+            isAutoPlaying = !isAutoPlaying;
+            if (progress >= 1.0 && isAutoPlaying) {
+                progress = 0; // Neu starten, falls am Ende
+            }
+            updatePlayBtnUI();
         }
 
-        // --- 6. KAMERA & NAVIGATION ---
-        camera.position.set(0, 0, 180);
-        let progress = 0;
+        function updatePlayBtnUI() {
+            playBtn.innerText = isAutoPlaying ? '❚❚' : '▶';
+        }
 
-        window.addEventListener('wheel', (e) => {
-            progress += e.deltaY * 0.0007;
-            progress = Math.max(0, Math.min(1, progress));
-        });
-
-        let touchStartY = 0;
-        window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
-        window.addEventListener('touchmove', (e) => {
-            const diff = touchStartY - e.touches[0].clientY;
-            progress += diff * 0.001;
-            progress = Math.max(0, Math.min(1, progress));
-            touchStartY = e.touches[0].clientY;
-        });
-
-        // --- 7. ANIMATION ---
+        // --- 7. ANIMATION & TRAJEKTORIE ---
         const clock = new THREE.Clock();
 
         function animate() {
             requestAnimationFrame(animate);
+            const delta = clock.getDelta();
             const time = clock.getElapsedTime();
 
+            // Automatische Zoom-Fortschaltung über 60 Sekunden
+            if (isAutoPlaying && progress < 1.0) {
+                progress += delta / AUTO_ZOOM_DURATION;
+                if (progress > 1.0) {
+                    progress = 1.0;
+                    isAutoPlaying = false;
+                    updatePlayBtnUI();
+                }
+                zoomSlider.value = progress;
+            }
+
+            // Erdrotation
             starSphere.rotation.y = time * 0.001;
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
-            butterflies.forEach(b => {
-                const flap = Math.sin(time * b.speed + b.phase);
-                b.left.rotation.y = flap * 0.7;
-                b.right.rotation.y = -flap * 0.7;
-                b.group.position.y = b.baseY + Math.sin(time * 2.2 + b.phase) * 0.6;
-                b.group.rotation.z = Math.sin(time + b.phase) * 0.15;
-            });
+            // --- KAMERAPFAD (Start weit oben -> Vorbeiflug Südpol) ---
+            if (progress < 0.5) {
+                // Phase 1: Anflug von oben auf die kleine Erde
+                const t = progress / 0.5;
+                camera.position.x = 0;
+                camera.position.y = THREE.MathUtils.lerp(25, -48, t);
+                camera.position.z = THREE.MathUtils.lerp(220, -15, t);
+            } else {
+                // Phase 2: Unter dem Südpol durch ins Freie
+                const t = (progress - 0.5) / 0.5;
+                camera.position.x = 0;
+                camera.position.y = THREE.MathUtils.lerp(-48, -62, t);
+                camera.position.z = THREE.MathUtils.lerp(-15, -120, t);
+            }
 
-            const targetZ = THREE.MathUtils.lerp(180, -200, progress);
-            const targetY = THREE.MathUtils.lerp(0, -98, progress);
+            // Kamera blickt leicht nach unten beim Anflug
+            camera.lookAt(0, -35, -70);
 
-            camera.position.z += (targetZ - camera.position.z) * 0.045;
-            camera.position.y += (targetY - camera.position.y) * 0.045;
+            // --- MORPHO-FALTER DYNAMIK ---
+            // Flügelschlag
+            const flap = Math.sin(time * 11);
+            leftWing.rotation.y = flap * 0.75;
+            rightWing.rotation.y = -flap * 0.75;
 
+            if (progress < 0.35) {
+                // Falter versteckt sich noch hinter/unter der Erde
+                morphoGroup.position.set(0, -38, -65);
+                morphoGroup.scale.set(0.001, 0.001, 0.001);
+                morphoGroup.visible = false;
+            } else {
+                morphoGroup.visible = true;
+                // Phase ab 0.35: Falter taucht am Südpol auf, fliegt ins Zentrum & wächst
+                const tVal = (progress - 0.35) / 0.65;
+                
+                // Position des Falters vor der Kamera
+                morphoGroup.position.x = Math.sin(time * 1.5) * 1.2;
+                morphoGroup.position.y = THREE.MathUtils.lerp(-42, -61, tVal) + Math.sin(time * 2.0) * 0.8;
+                morphoGroup.position.z = THREE.MathUtils.lerp(-62, -145, tVal);
+
+                // Wachstum des Falters
+                const currentScale = THREE.MathUtils.lerp(0.04, 1.4, Math.pow(tVal, 1.8));
+                morphoGroup.scale.set(currentScale, currentScale, currentScale);
+
+                // Leichtes Neigen beim Fliegen
+                morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.2;
+                morphoGroup.rotation.x = 0.2 + Math.sin(time * 1.2) * 0.1;
+            }
+
+            // --- TEXTKARTE EINBLENDEN ---
             const textCard = document.getElementById('text-card');
-            if (progress > 0.7) {
+            if (progress > 0.75) {
                 textCard.classList.add('visible');
             } else {
                 textCard.classList.remove('visible');
@@ -391,7 +480,7 @@
 
         // --- 8. AUDIO (BRANDUNG & BLÄTTERRASCHELN) ---
         let audioCtx = null;
-        let isPlaying = false;
+        let isPlayingAudio = false;
         let waveFilter = null;
         let waveGain = null;
         let leafFilter = null;
@@ -442,7 +531,7 @@
             noiseSource.start();
 
             setInterval(() => {
-                if (isPlaying && audioCtx && audioCtx.state === 'running') {
+                if (isPlayingAudio && audioCtx && audioCtx.state === 'running') {
                     const time = audioCtx.currentTime;
                     const waveMod = Math.sin(time * 0.9) * 0.5 + 0.5;
                     waveFilter.frequency.setTargetAtTime(180 + waveMod * 320, time, 0.5);
@@ -458,17 +547,17 @@
             const btn = document.getElementById('audio-btn');
             if (!audioCtx) {
                 initAudio();
-                isPlaying = true;
+                isPlayingAudio = true;
                 btn.innerText = 'Naturklang: An 🔊';
                 btn.style.background = 'rgba(26, 188, 156, 0.4)';
             } else if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
-                isPlaying = true;
+                isPlayingAudio = true;
                 btn.innerText = 'Naturklang: An 🔊';
                 btn.style.background = 'rgba(26, 188, 156, 0.4)';
             } else if (audioCtx.state === 'running') {
                 audioCtx.suspend();
-                isPlaying = false;
+                isPlayingAudio = false;
                 btn.innerText = 'Naturklang 🔊';
                 btn.style.background = 'rgba(0, 0, 0, 0.5)';
             }
