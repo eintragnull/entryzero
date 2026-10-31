@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -378,7 +378,7 @@
         function togglePlayPause() {
             isAutoPlaying = !isAutoPlaying;
             if (progress >= 1.0 && isAutoPlaying) {
-                progress = 0; // Neu starten, falls am Ende
+                progress = 0;
             }
             updatePlayBtnUI();
         }
@@ -395,7 +395,7 @@
             const delta = clock.getDelta();
             const time = clock.getElapsedTime();
 
-            // Automatische Zoom-Fortschaltung über 60 Sekunden
+            // Auto-Zoom Fortschaltung über 60s
             if (isAutoPlaying && progress < 1.0) {
                 progress += delta / AUTO_ZOOM_DURATION;
                 if (progress > 1.0) {
@@ -411,55 +411,57 @@
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
-            // --- KAMERAPFAD (Start weit oben -> Vorbeiflug Südpol) ---
+            // --- KAMERAPFAD & BLICKRICHTUNG ---
+            let camY, camZ, lookY, lookZ;
+
             if (progress < 0.5) {
-                // Phase 1: Anflug von oben auf die kleine Erde
                 const t = progress / 0.5;
-                camera.position.x = 0;
-                camera.position.y = THREE.MathUtils.lerp(25, -48, t);
-                camera.position.z = THREE.MathUtils.lerp(220, -15, t);
+                camY = THREE.MathUtils.lerp(30, -45, t);
+                camZ = THREE.MathUtils.lerp(200, -35, t);
+                
+                lookY = THREE.MathUtils.lerp(0, -35, t);
+                lookZ = THREE.MathUtils.lerp(-50, -60, t);
             } else {
-                // Phase 2: Unter dem Südpol durch ins Freie
                 const t = (progress - 0.5) / 0.5;
-                camera.position.x = 0;
-                camera.position.y = THREE.MathUtils.lerp(-48, -62, t);
-                camera.position.z = THREE.MathUtils.lerp(-15, -120, t);
+                camY = THREE.MathUtils.lerp(-45, -55, t);
+                camZ = THREE.MathUtils.lerp(-35, -110, t);
+                
+                lookY = THREE.MathUtils.lerp(-35, -55, t);
+                lookZ = THREE.MathUtils.lerp(-60, -180, t);
             }
 
-            // Kamera blickt leicht nach unten beim Anflug
-            camera.lookAt(0, -35, -70);
+            camera.position.set(0, camY, camZ);
+            camera.lookAt(0, lookY, lookZ);
 
-            // --- MORPHO-FALTER DYNAMIK ---
-            // Flügelschlag
+            // --- MORPHO-FALTER FLUG & STUFENLOSES WACHSTUM ---
             const flap = Math.sin(time * 11);
             leftWing.rotation.y = flap * 0.75;
             rightWing.rotation.y = -flap * 0.75;
 
-            if (progress < 0.35) {
-                // Falter versteckt sich noch hinter/unter der Erde
-                morphoGroup.position.set(0, -38, -65);
-                morphoGroup.scale.set(0.001, 0.001, 0.001);
+            if (progress < 0.28) {
                 morphoGroup.visible = false;
             } else {
                 morphoGroup.visible = true;
-                // Phase ab 0.35: Falter taucht am Südpol auf, fliegt ins Zentrum & wächst
-                const tVal = (progress - 0.35) / 0.65;
                 
-                // Position des Falters vor der Kamera
-                morphoGroup.position.x = Math.sin(time * 1.5) * 1.2;
-                morphoGroup.position.y = THREE.MathUtils.lerp(-42, -61, tVal) + Math.sin(time * 2.0) * 0.8;
-                morphoGroup.position.z = THREE.MathUtils.lerp(-62, -145, tVal);
+                // tVal verläuft von 0.0 bis 1.0 zwischen progress 0.28 und 1.0
+                const tVal = (progress - 0.28) / 0.72;
 
-                // Wachstum des Falters
-                const currentScale = THREE.MathUtils.lerp(0.04, 1.4, Math.pow(tVal, 1.8));
+                // Falter taucht am Südpol auf und fliegt dynamisch vor die Linse
+                morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
+                morphoGroup.position.y = THREE.MathUtils.lerp(-35, -55, tVal) + Math.sin(time * 2.0) * 0.9;
+                morphoGroup.position.z = THREE.MathUtils.lerp(-60, -135, tVal);
+
+                // Deutlich beschleunigte Größen-Skalierung vor dem Text-Erscheinungszeitpunkt
+                const scaleCurve = Math.pow(tVal, 0.85); 
+                const currentScale = THREE.MathUtils.lerp(0.05, 3.8, scaleCurve);
                 morphoGroup.scale.set(currentScale, currentScale, currentScale);
 
-                // Leichtes Neigen beim Fliegen
-                morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.2;
-                morphoGroup.rotation.x = 0.2 + Math.sin(time * 1.2) * 0.1;
+                // Sanftes Neigen beim Fliegen
+                morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
+                morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
             }
 
-            // --- TEXTKARTE EINBLENDEN ---
+            // --- TEXTKARTE BLENDET BEI 75% EIN ---
             const textCard = document.getElementById('text-card');
             if (progress > 0.75) {
                 textCard.classList.add('visible');
