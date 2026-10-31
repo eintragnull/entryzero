@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Das Ungemessene — Eine Reise durch die Biosphäre</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #010204;
+            font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+            color: #ecebe4;
+        }
+
+        #webgl-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            pointer-events: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .text-card {
+            max-width: 620px;
+            text-align: center;
+            background: rgba(2, 6, 12, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 42px 36px;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1), transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: auto;
+        }
+
+        .text-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-card h1 {
+            font-weight: 300;
+            font-size: 2.3rem;
+            letter-spacing: 0.08em;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .text-card .subtitle {
+            font-style: italic;
+            color: #1abc9c;
+            font-size: 1.05rem;
+            margin-bottom: 24px;
+        }
+
+        .text-card .body-text {
+            font-size: 1.15rem;
+            line-height: 1.85;
+            color: #e2e8f0;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+
+        .text-card .footnote {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            font-style: italic;
+            margin-bottom: 24px;
+        }
+
+        .text-card .source-tag {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .audio-control {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #a3d2f7;
+            padding: 12px 22px;
+            border-radius: 30px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-control:hover {
+            background: rgba(26, 188, 156, 0.3);
+            border-color: #1abc9c;
+            color: #fff;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <canvas id="webgl-canvas"></canvas>
+
+    <div class="overlay-container" id="overlay">
+        <div class="text-card" id="text-card">
+            <h1>Das Ungemessene</h1>
+            <p class="subtitle">Was bleibt, wenn das Verzeichnis schweigt?</p>
+            <p class="body-text">
+                Gewonnene Zeit, die niemand einträgt;<br>
+                Sorge am Rand des Gezählten;<br>
+                Vertrauen ohne Prüfung;<br>
+                die Kulturtechnik dieses Jahrhunderts: gemeinsam aufmerksam sein.
+            </p>
+            <p class="footnote">Nicht gemessen — als Lücke aus Wahl, nicht aus Versäumnis.</p>
+            <p class="source-tag">» Ein Fragment aus Eintrag Null «</p>
+        </div>
+    </div>
+
+    <button class="audio-control" id="audio-btn" onclick="toggleAudio()">
+        Naturklang 🔊
+    </button>
+
+    <script>
+        // --- 1. SETUP & RENDERER ---
+        const canvas = document.getElementById('webgl-canvas');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x010204, 0.0018);
+
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        const textureLoader = new THREE.TextureLoader();
+
+        // --- 2. LICHT ---
+        const ambientLight = new THREE.AmbientLight(0xddeeff, 0.6);
+        scene.add(ambientLight);
+
+        const sunLight = new THREE.DirectionalLight(0xfffaed, 1.6);
+        sunLight.position.set(120, 40, 100);
+        scene.add(sunLight);
+
+        // --- 3. WELTALL (HYBRID: MILCHSTRASSE + 3D-STERNE FÜR PARALLAXE) ---
+        // A) Fotorealistischer Hintergrund
+        const starGeo = new THREE.SphereGeometry(600, 64, 64);
+        const starTexture = textureLoader.load('starmap_milkyway.jpg');
+        const starMat = new THREE.MeshBasicMaterial({
+            map: starTexture,
+            side: THREE.BackSide
+        });
+        const starSphere = new THREE.Mesh(starGeo, starMat);
+        scene.add(starSphere);
+
+        // B) Räumliche 3D-Einzelsterne für Tiefenwirkung beim Durchflug
+        const stars3dGeo = new THREE.BufferGeometry();
+        const stars3dCount = 2000;
+        const starPos = new Float32Array(stars3dCount * 3);
+
+        for (let i = 0; i < stars3dCount * 3; i += 3) {
+            starPos[i]     = (Math.random() - 0.5) * 400;
+            starPos[i + 1] = (Math.random() - 0.5) * 400;
+            starPos[i + 2] = (Math.random() - 0.5) * 400;
+        }
+
+        stars3dGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const stars3dMat = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.9,
+            transparent: true,
+            opacity: 0.85
+        });
+        const starField3d = new THREE.Points(stars3dGeo, stars3dMat);
+        scene.add(starField3d);
+
+        // --- 4. NASA PLANETEN-ENSEMBLE (ERDE & WOLKEN VIA ALPHAMAP) ---
+        const earthGroup = new THREE.Group();
+        earthGroup.position.set(0, 0, -50);
+        scene.add(earthGroup);
+
+        const earthGeo = new THREE.SphereGeometry(30, 64, 64);
+        const earthTexture = textureLoader.load('earth_nasa.jpg');
+        const earthMat = new THREE.MeshStandardMaterial({
+            map: earthTexture,
+            roughness: 0.65,
+            metalness: 0.1
+        });
+        const earth = new THREE.Mesh(earthGeo, earthMat);
+        earthGroup.add(earth);
+
+        // Wolkenschicht nutzt earth_clouds.jpg als alphaMap (Schwarz = transparent)
+        const cloudGeo = new THREE.SphereGeometry(30.6, 64, 64);
+        const cloudTexture = textureLoader.load('earth_clouds.jpg');
+        const cloudMat = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            alphaMap: cloudTexture,
+            transparent: true,
+            opacity: 0.85
+        });
+        const clouds = new THREE.Mesh(cloudGeo, cloudMat);
+        earthGroup.add(clouds);
+
+        const atmoGeo = new THREE.SphereGeometry(32.2, 64, 64);
+        const atmoMat = new THREE.MeshBasicMaterial({
+            color: 0x2bb5ff,
+            transparent: true,
+            opacity: 0.22,
+            side: THREE.BackSide
+        });
+        const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
+        earthGroup.add(atmosphere);
+
+        // --- 5. FOTO-SCHMETTERLINGE (MORGENWIESE) ---
+        const butterflyGroup = new THREE.Group();
+        butterflyGroup.position.set(0, -100, -220);
+        scene.add(butterflyGroup);
+
+        const butterflyTextures = [
+            textureLoader.load('butterfly_monarch.png'),
+            textureLoader.load('butterfly_morpho.png'),
+            textureLoader.load('butterfly_swallowtail.png')
+        ];
+
+        const wingGeo = new THREE.PlaneGeometry(1.2, 1.2);
+        wingGeo.translate(0.6, 0, 0);
+
+        const butterflies = [];
+
+        for (let i = 0; i < 180; i++) {
+            const bContainer = new THREE.Group();
+            const randomTex = butterflyTextures[Math.floor(Math.random() * butterflyTextures.length)];
+            
+            const wingMat = new THREE.MeshStandardMaterial({
+                map: randomTex,
+                transparent: true,
+                alphaTest: 0.1,
+                side: THREE.DoubleSide,
+                roughness: 0.4
+            });
+
+            const leftWing = new THREE.Mesh(wingGeo, wingMat);
+            const rightWing = new THREE.Mesh(wingGeo, wingMat);
+            rightWing.scale.set(-1, 1, 1);
+
+            bContainer.add(leftWing);
+            bContainer.add(rightWing);
+
+            const x = (Math.random() - 0.5) * 50;
+            const y = (Math.random() - 0.5) * 20;
+            const z = (Math.random() - 0.5) * 50;
+            bContainer.position.set(x, y, z);
+            
+            const scale = 0.5 + Math.random() * 0.5;
+            bContainer.scale.set(scale, scale, scale);
+
+            butterflyGroup.add(bContainer);
+
+            butterflies.push({
+                group: bContainer,
+                left: leftWing,
+                right: rightWing,
+                speed: 8 + Math.random() * 8,
+                phase: Math.random() * Math.PI * 2,
+                baseY: y
+            });
+        }
+
+        // --- 6. KAMERA & NAVIGATION ---
+        camera.position.set(0, 0, 180);
+        let progress = 0;
+
+        window.addEventListener('wheel', (e) => {
+            progress += e.deltaY * 0.0007;
+            progress = Math.max(0, Math.min(1, progress));
+        });
+
+        let touchStartY = 0;
+        window.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; });
+        window.addEventListener('touchmove', (e) => {
+            const diff = touchStartY - e.touches[0].clientY;
+            progress += diff * 0.001;
+            progress = Math.max(0, Math.min(1, progress));
+            touchStartY = e.touches[0].clientY;
+        });
+
+        // --- 7. ANIMATION ---
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const time = clock.getElapsedTime();
+
+            starSphere.rotation.y = time * 0.001;
+            earth.rotation.y = time * 0.02;
+            clouds.rotation.y = time * 0.032;
+
+            butterflies.forEach(b => {
+                const flap = Math.sin(time * b.speed + b.phase);
+                b.left.rotation.y = flap * 0.75;
+                b.right.rotation.y = -flap * 0.75;
+                b.group.position.y = b.baseY + Math.sin(time * 2.2 + b.phase) * 0.6;
+                b.group.rotation.z = Math.sin(time + b.phase) * 0.15;
+            });
+
+            const targetZ = THREE.MathUtils.lerp(180, -200, progress);
+            const targetY = THREE.MathUtils.lerp(0, -98, progress);
+
+            camera.position.z += (targetZ - camera.position.z) * 0.045;
+            camera.position.y += (targetY - camera.position.y) * 0.045;
+
+            const textCard = document.getElementById('text-card');
+            if (progress > 0.7) {
+                textCard.classList.add('visible');
+            } else {
+                textCard.classList.remove('visible');
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- 8. AUDIO (BRANDUNG & BLÄTTERRASCHELN) ---
+        let audioCtx = null;
+        let isPlaying = false;
+        let waveFilter = null;
+        let waveGain = null;
+        let leafFilter = null;
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            const bufferSize = audioCtx.sampleRate * 3;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            let b0 = 0, b1 = 0, b2 = 0;
+
+            for (let i = 0; i < bufferSize; i++) {
+                const white = Math.random() * 2 - 1;
+                b0 = 0.99886 * b0 + white * 0.0555179;
+                b1 = 0.99332 * b1 + white * 0.0750759;
+                b2 = 0.96900 * b2 + white * 0.1538520;
+                output[i] = (b0 + b1 + b2) * 0.11; 
+            }
+
+            const noiseSource = audioCtx.createBufferSource();
+            noiseSource.buffer = noiseBuffer;
+            noiseSource.loop = true;
+
+            waveFilter = audioCtx.createBiquadFilter();
+            waveFilter.type = 'lowpass';
+            waveFilter.frequency.value = 350;
+
+            waveGain = audioCtx.createGain();
+            waveGain.gain.value = 0.15;
+
+            noiseSource.connect(waveFilter);
+            waveFilter.connect(waveGain);
+            waveGain.connect(audioCtx.destination);
+
+            leafFilter = audioCtx.createBiquadFilter();
+            leafFilter.type = 'bandpass';
+            leafFilter.frequency.value = 1800;
+            leafFilter.Q.value = 3.0;
+
+            const leafGain = audioCtx.createGain();
+            leafGain.gain.value = 0.05;
+
+            noiseSource.connect(leafFilter);
+            leafFilter.connect(leafGain);
+            leafGain.connect(audioCtx.destination);
+
+            noiseSource.start();
+
+            setInterval(() => {
+                if (isPlaying && audioCtx && audioCtx.state === 'running') {
+                    const time = audioCtx.currentTime;
+                    const waveMod = Math.sin(time * 0.9) * 0.5 + 0.5;
+                    waveFilter.frequency.setTargetAtTime(180 + waveMod * 320, time, 0.5);
+                    waveGain.gain.setTargetAtTime(0.08 + waveMod * 0.18, time, 0.5);
+
+                    const gust = Math.pow(Math.sin(time * 0.3) * 0.5 + 0.5, 3);
+                    leafFilter.frequency.setTargetAtTime(1200 + gust * 1400, time, 0.3);
+                }
+            }, 120);
+        }
+
+        function toggleAudio() {
+            const btn = document.getElementById('audio-btn');
+            if (!audioCtx) {
+                initAudio();
+                isPlaying = true;
+                btn.innerText = 'Naturklang: An 🔊';
+                btn.style.background = 'rgba(26, 188, 156, 0.4)';
+            } else if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+                isPlaying = true;
+                btn.innerText = 'Naturklang: An 🔊';
+                btn.style.background = 'rgba(26, 188, 156, 0.4)';
+            } else if (audioCtx.state === 'running') {
+                audioCtx.suspend();
+                isPlaying = false;
+                btn.innerText = 'Naturklang 🔊';
+                btn.style.background = 'rgba(0, 0, 0, 0.5)';
+            }
+        }
+
+        // --- 9. LOCAL-FIRST / SERVICE WORKER ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+</body>
+</html>
