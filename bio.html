@@ -210,15 +210,14 @@
 
     <div class="overlay-container" id="overlay">
         <a href="/" class="text-card" id="text-card" title="Zurück zu Eintrag Null">
-            <h1>Das Ungemessene</h1>
-            <p class="subtitle">Was bleibt, wenn das Verzeichnis schweigt?</p>
+            <h1>Das Ungemessene - Dimension 7</h1>
+            <p class="subtitle">Sechs zählt die Bilanz. Das siebte nicht — und doch.</p>
             <p class="body-text">
                 Gewonnene Zeit, die niemand einträgt;<br>
-                Sorge am Rand des Gezählten;<br>
-                Vertrauen ohne Prüfung;<br>
-                die Kulturtechnik dieses Jahrhunderts: gemeinsam aufmerksam sein.
+                Mitgefühl am Rand des Gezählten;<br>
+                Vertrauen ohne Prüfung.
             </p>
-            <p class="footnote">Nicht gemessen — als Lücke aus Wahl, nicht aus Versäumnis.</p>
+            <p class="footnote">Nicht gemessen — gemeinsam aufmerksam sein.</p>
             <p class="source-tag">» Ein Fragment aus Eintrag Null «</p>
         </a>
     </div>
@@ -238,7 +237,6 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        // Maximale Sichtweite auf 8000 Einheiten erhöht
         const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1.0, 8000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -343,7 +341,6 @@
 
         const morphoTexture = textureLoader.load('butterfly_morpho.png');
 
-        // Linker Flügel (UV: 0.0 bis 0.5)
         const leftWingGeo = new THREE.PlaneGeometry(1.6, 2.4);
         leftWingGeo.translate(-0.8, 0, 0);
         const leftUv = leftWingGeo.attributes.uv;
@@ -352,7 +349,6 @@
         }
         leftUv.needsUpdate = true;
 
-        // Rechter Flügel (UV: 0.5 bis 1.0)
         const rightWingGeo = new THREE.PlaneGeometry(1.6, 2.4);
         rightWingGeo.translate(0.8, 0, 0);
         const rightUv = rightWingGeo.attributes.uv;
@@ -364,7 +360,7 @@
         const wingMat = new THREE.MeshStandardMaterial({
             map: morphoTexture,
             transparent: true,
-            alphaTest: 0.1,
+            alphaTest: 0.05,
             side: THREE.DoubleSide,
             roughness: 0.3,
             metalness: 0.2
@@ -402,7 +398,7 @@
             playBtn.innerText = isAutoPlaying ? '❚❚' : '▶';
         }
 
-        // --- 7. ANIMATION & TRAJEKTORIE ---
+        // --- 7. ANIMATION UND CHOREOGRAFIE ---
         const clock = new THREE.Clock();
 
         function animate() {
@@ -410,7 +406,6 @@
             const delta = clock.getDelta();
             const time = clock.getElapsedTime();
 
-            // Auto-Zoom Fortschaltung über 60s
             if (isAutoPlaying && progress < 1.0) {
                 progress += delta / AUTO_ZOOM_DURATION;
                 if (progress > 1.0) {
@@ -421,11 +416,9 @@
                 zoomSlider.value = progress;
             }
 
-            // Erdrotation
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
-            // Flügelschlag des Morpho-Falters
             const flap = Math.sin(time * 11);
             leftWing.rotation.y = flap * 0.75;
             rightWing.rotation.y = -flap * 0.75;
@@ -433,71 +426,79 @@
             let camY = 0, camZ = 0;
             let lookY = 0, lookZ = 0;
 
-            // --- PHASEN-STEUERUNG DER CHOREOGRAFIE ---
-            if (progress < 0.40) {
-                // PHASE 1: Anflug aus dem All & Durchflug unter dem Südpol (0.00 bis 0.40)
-                const t = progress / 0.40;
+            if (progress < 0.38) {
+                // PHASE 1: Anflug aus dem All bis unter den Südpol
+                const t = progress / 0.38;
                 const p1 = 1 - Math.pow(1 - t, 3.5);
 
-                camY = THREE.MathUtils.lerp(160, -50, p1);
-                camZ = THREE.MathUtils.lerp(2200, -20, p1);
-                lookY = THREE.MathUtils.lerp(0, -50, p1);
-                lookZ = THREE.MathUtils.lerp(-50, -80, p1);
+                camY = THREE.MathUtils.lerp(160, -42, p1);
+                camZ = THREE.MathUtils.lerp(2200, -10, p1);
+                
+                // Blickpunkt leicht versetzt, damit die Erde oben im Bild bleibt
+                lookY = THREE.MathUtils.lerp(0, -18, p1);
+                lookZ = -50;
 
                 if (p1 < 0.25) {
                     morphoGroup.visible = false;
                 } else {
                     morphoGroup.visible = true;
+                    wingMat.opacity = 1.0;
                     const tVal = (p1 - 0.25) / 0.75;
                     morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
-                    morphoGroup.position.y = THREE.MathUtils.lerp(-35, -50, tVal) + Math.sin(time * 2.0) * 0.9;
-                    morphoGroup.position.z = THREE.MathUtils.lerp(-60, -90, tVal);
+                    morphoGroup.position.y = THREE.MathUtils.lerp(-35, -45, tVal) + Math.sin(time * 2.0) * 0.9;
+                    morphoGroup.position.z = THREE.MathUtils.lerp(-60, -80, tVal);
 
                     const scale = THREE.MathUtils.lerp(0.05, 3.8, Math.pow(tVal, 0.85));
                     morphoGroup.scale.set(scale, scale, scale);
                 }
 
-            } else if (progress < 0.58) {
-                // PHASE 2: Textkarte & Falter im Fokus (0.40 bis 0.58)
-                const t = (progress - 0.40) / 0.18;
+            } else if (progress < 0.60) {
+                // PHASE 2: Textkarte & Falter im Fokus, Erde oben im Bild sichtbar (+20% Lesedauer)
+                const t = (progress - 0.38) / 0.22;
+                const p2 = t * t * (3 - 2 * t);
 
-                camY = THREE.MathUtils.lerp(-50, -55, t);
-                camZ = THREE.MathUtils.lerp(-20, -35, t);
-                lookY = -55;
-                lookZ = -90;
+                camY = THREE.MathUtils.lerp(-42, -45, p2);
+                camZ = THREE.MathUtils.lerp(-10, -15, p2);
+                
+                // Blickpunkt behält Erde oben im Bildfenster
+                lookY = -18;
+                lookZ = -50;
 
                 morphoGroup.visible = true;
+                wingMat.opacity = 1.0;
                 morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
-                morphoGroup.position.y = -50 + Math.sin(time * 2.0) * 0.9;
-                morphoGroup.position.z = -90;
+                morphoGroup.position.y = -45 + Math.sin(time * 2.0) * 0.9;
+                morphoGroup.position.z = -80;
                 morphoGroup.scale.set(3.8, 3.8, 3.8);
 
-            } else if (progress < 0.72) {
-                // PHASE 3: Text verschwindet & Kamera schwenkt um zur Erde (0.58 bis 0.72)
-                const t = (progress - 0.58) / 0.14;
+            } else if (progress < 0.78) {
+                // PHASE 3: Text verschwindet & Kamera führt eine vertikale Erdumrundung durch
+                const t = (progress - 0.60) / 0.18;
+                const p3 = t * t * (3 - 2 * t); // Smoothstep
 
-                camY = THREE.MathUtils.lerp(-55, -70, t);
-                camZ = THREE.MathUtils.lerp(-35, -120, t);
+                // Vertikaler Bogen von unten (Y=-45, Z=-15) um die Erde herum nach oben (Y=80, Z=120)
+                camY = THREE.MathUtils.lerp(-45, 80, p3);
+                camZ = THREE.MathUtils.lerp(-15, 120, p3);
 
-                lookY = THREE.MathUtils.lerp(-55, 0, t);
-                lookZ = THREE.MathUtils.lerp(-90, -50, t);
+                // Kamera fixiert das Zentrum der Erde (0, 0, -50)
+                lookY = THREE.MathUtils.lerp(-18, 0, p3);
+                lookZ = -50;
 
-                if (t > 0.7) {
-                    morphoGroup.visible = false;
-                } else {
-                    morphoGroup.visible = true;
-                    const shrink = 1.0 - (t / 0.7);
-                    const scale = 3.8 * shrink;
-                    morphoGroup.scale.set(scale, scale, scale);
-                }
+                // Falter blendet organisch aus
+                morphoGroup.visible = true;
+                const shrink = 1.0 - p3;
+                const scale = 3.8 * shrink;
+                morphoGroup.scale.set(scale, scale, scale);
+                wingMat.opacity = Math.max(0, 1.0 - p3);
+                if (p3 >= 0.98) morphoGroup.visible = false;
 
             } else {
-                // PHASE 4: Rauszoomen ins Weltall - Erde wird kleiner und fliegt davon (0.72 bis 1.00)
-                const t = (progress - 0.72) / 0.28;
-                const p4 = Math.pow(t, 3.0);
+                // PHASE 4: Rauszoomen ins Weltall aus der oberen Umrundungsposition
+                const t = (progress - 0.78) / 0.22;
+                const p4 = Math.pow(t, 2.5);
 
-                camY = THREE.MathUtils.lerp(-70, -350, p4);
-                camZ = THREE.MathUtils.lerp(-120, -2400, p4);
+                camY = THREE.MathUtils.lerp(80, 450, p4);
+                camZ = THREE.MathUtils.lerp(120, 2400, p4);
 
                 lookY = 0;
                 lookZ = -50;
@@ -508,16 +509,15 @@
             camera.position.set(0, camY, camZ);
             camera.lookAt(0, lookY, lookZ);
 
-            // WICHTIG: Die Sternenkugel folgt der Kameraposition (Skybox-Standard),
-            // damit sie niemals abgeschnitten wird
+            // Skybox folgt der Kamera
             starSphere.position.copy(camera.position);
 
             morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
             morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
 
-            // --- TEXTKARTE: NUR IN PHASE 2 SICHTBAR (ca. 0.42 bis 0.58) ---
+            // --- TEXTKARTE: EINBLENDUNG ZWISCHEN 0.39 UND 0.59 ---
             const textCard = document.getElementById('text-card');
-            if (progress >= 0.42 && progress <= 0.58) {
+            if (progress >= 0.39 && progress <= 0.59) {
                 textCard.classList.add('visible');
             } else {
                 textCard.classList.remove('visible');
