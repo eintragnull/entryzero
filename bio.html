@@ -56,7 +56,7 @@
             box-shadow: 0 30px 60px rgba(0,0,0,0.85);
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 2.5s cubic-bezier(0.16, 1, 0.3, 1), transform 2.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+            transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1), transform 2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
             pointer-events: auto;
             display: block;
             text-decoration: none;
@@ -238,7 +238,6 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        // Kamerasichtweite auf 3500 erweitert für den tiefen Weltall-Start
         const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 3500);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -379,7 +378,7 @@
         // --- 6. AUTO-ZOOM & REGLER-LOGIK ---
         let progress = 0;
         let isAutoPlaying = true;
-        const AUTO_ZOOM_DURATION = 60.0; // 1 Minute Gesamtdauer
+        const AUTO_ZOOM_DURATION = 60.0; // 60 Sekunden für die Hin- und Rückreise
 
         const zoomSlider = document.getElementById('zoom-slider');
         const playBtn = document.getElementById('play-btn');
@@ -393,7 +392,7 @@
         function togglePlayPause() {
             isAutoPlaying = !isAutoPlaying;
             if (progress >= 1.0 && isAutoPlaying) {
-                progress = 0;
+                progress = 0; // Bei Zielerreichung neu starten
             }
             updatePlayBtnUI();
         }
@@ -402,7 +401,7 @@
             playBtn.innerText = isAutoPlaying ? '❚❚' : '▶';
         }
 
-        // --- 7. ANIMATION & TRAJEKTORIE ---
+        // --- 7. ANIMATION & TRAJEKTORIE (ANFLUG & RÜCKFLUG) ---
         const clock = new THREE.Clock();
 
         function animate() {
@@ -421,63 +420,77 @@
                 zoomSlider.value = progress;
             }
 
-            // Stärkere Potenz (4.5): Der anfängliche Flug aus 2200 Einheiten Entfernung verläuft rasant
-            // und bremst sehr früh ab, sodass Anflug, Südpol und Falter extrem ruhig schweben
-            const p = 1 - Math.pow(1 - progress, 4.5);
-
             // Erdrotation
             starSphere.rotation.y = time * 0.001;
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
-            // --- KAMERAPFAD & BLICKRICHTUNG (START WEIT DRAUSSEN BEI Z=2200) ---
+            // Flügelschlag des Morpho-Falters
+            const flap = Math.sin(time * 11);
+            leftWing.rotation.y = flap * 0.75;
+            rightWing.rotation.y = -flap * 0.75;
+
             let camY, camZ, lookY, lookZ;
 
-            if (p < 0.5) {
-                const t = p / 0.5;
-                camY = THREE.MathUtils.lerp(160, -45, t);
-                camZ = THREE.MathUtils.lerp(2200, -35, t);
-                
-                lookY = THREE.MathUtils.lerp(0, -35, t);
-                lookZ = THREE.MathUtils.lerp(-50, -60, t);
+            // --- SPALTUNG IN ZWEI PHASEN ---
+            if (progress <= 0.5) {
+                // PHASE 1: ANFLUG & HERANZOOMEN (progress 0.0 bis 0.5)
+                const tIn = progress / 0.5;
+                const pIn = 1 - Math.pow(1 - tIn, 4.0); // Schnell starten, sanft abbremsen am Südpol
+
+                camY = THREE.MathUtils.lerp(160, -45, pIn);
+                camZ = THREE.MathUtils.lerp(2200, -35, pIn);
+                lookY = THREE.MathUtils.lerp(0, -35, pIn);
+                lookZ = THREE.MathUtils.lerp(-50, -60, pIn);
+
+                // Morpho-Falter taucht auf und wächst
+                if (pIn < 0.25) {
+                    morphoGroup.visible = false;
+                } else {
+                    morphoGroup.visible = true;
+                    const tVal = (pIn - 0.25) / 0.75;
+                    morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
+                    morphoGroup.position.y = THREE.MathUtils.lerp(-35, -55, tVal) + Math.sin(time * 2.0) * 0.9;
+                    morphoGroup.position.z = THREE.MathUtils.lerp(-60, -135, tVal);
+
+                    const scale = THREE.MathUtils.lerp(0.05, 3.8, Math.pow(tVal, 0.85));
+                    morphoGroup.scale.set(scale, scale, scale);
+                }
+
             } else {
-                const t = (p - 0.5) / 0.5;
-                camY = THREE.MathUtils.lerp(-45, -55, t);
-                camZ = THREE.MathUtils.lerp(-35, -110, t);
-                
-                lookY = THREE.MathUtils.lerp(-35, -55, t);
-                lookZ = THREE.MathUtils.lerp(-60, -180, t);
+                // PHASE 2: RÜCKSCHWENK & RAUSZOOMEN IN DEN KOSMOS (progress 0.5 bis 1.0)
+                const tOut = (progress - 0.5) / 0.5;
+                const pOut = Math.pow(tOut, 3.5); // Sanft beschleunigender Rückflug ins All
+
+                camY = THREE.MathUtils.lerp(-45, 160, pOut);
+                camZ = THREE.MathUtils.lerp(-35, 2200, pOut);
+                lookY = THREE.MathUtils.lerp(-35, 0, pOut);
+                lookZ = THREE.MathUtils.lerp(-60, -50, pOut);
+
+                // Falter zieht sich zurück / schrumpft sanft im Raum
+                if (pOut > 0.75) {
+                    morphoGroup.visible = false;
+                } else {
+                    morphoGroup.visible = true;
+                    const tVal = 1.0 - (pOut / 0.75);
+                    morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
+                    morphoGroup.position.y = THREE.MathUtils.lerp(-55, -35, pOut) + Math.sin(time * 2.0) * 0.9;
+                    morphoGroup.position.z = THREE.MathUtils.lerp(-135, -60, pOut);
+
+                    const scale = THREE.MathUtils.lerp(0.05, 3.8, Math.pow(tVal, 0.85));
+                    morphoGroup.scale.set(scale, scale, scale);
+                }
             }
 
             camera.position.set(0, camY, camZ);
             camera.lookAt(0, lookY, lookZ);
 
-            // --- MORPHO-FALTER FLUG & WACHSTUM ---
-            const flap = Math.sin(time * 11);
-            leftWing.rotation.y = flap * 0.75;
-            rightWing.rotation.y = -flap * 0.75;
+            morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
+            morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
 
-            if (p < 0.28) {
-                morphoGroup.visible = false;
-            } else {
-                morphoGroup.visible = true;
-                
-                const tVal = (p - 0.28) / 0.72;
-
-                morphoGroup.position.x = Math.sin(time * 1.5) * 1.6;
-                morphoGroup.position.y = THREE.MathUtils.lerp(-35, -55, tVal) + Math.sin(time * 2.0) * 0.9;
-                morphoGroup.position.z = THREE.MathUtils.lerp(-60, -135, tVal);
-
-                const currentScale = THREE.MathUtils.lerp(0.05, 3.8, Math.pow(tVal, 0.85));
-                morphoGroup.scale.set(currentScale, currentScale, currentScale);
-
-                morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
-                morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
-            }
-
-            // --- TEXTKARTE BLENDET IN DER RUHIGEN ABBREMSPHASE EIN ---
+            // --- TEXTKARTE: NUR IM MITTLEREN SCHEITELPUNKT SICHTBAR (ca. 42% bis 62%) ---
             const textCard = document.getElementById('text-card');
-            if (p > 0.75) {
+            if (progress >= 0.42 && progress <= 0.62) {
                 textCard.classList.add('visible');
             } else {
                 textCard.classList.remove('visible');
