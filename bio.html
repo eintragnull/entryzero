@@ -238,7 +238,8 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 3500);
+        // Near-Plane auf 1.0 angehoben zur Maximierung der Tiefenspeicher-Präzision
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1.0, 3500);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -300,7 +301,7 @@
         const starField3d = new THREE.Points(stars3dGeo, stars3dMat);
         scene.add(starField3d);
 
-        // --- 4. PLANETEN-ENSEMBLE (ERDE & WOLKEN) ---
+        // --- 4. PLANETEN-ENSEMBLE (ERDE, WOLKEN & ATMOSPHÄRE) ---
         const earthGroup = new THREE.Group();
         earthGroup.position.set(0, 0, -50);
         scene.add(earthGroup);
@@ -310,7 +311,8 @@
         const earthMat = new THREE.MeshStandardMaterial({
             map: earthTexture,
             roughness: 0.65,
-            metalness: 0.1
+            metalness: 0.1,
+            fog: false // verhindert Abdunkeln im All
         });
         const earth = new THREE.Mesh(earthGeo, earthMat);
         earthGroup.add(earth);
@@ -321,7 +323,9 @@
             color: 0xffffff,
             alphaMap: cloudTexture,
             transparent: true,
-            opacity: 0.85
+            opacity: 0.85,
+            depthWrite: false, // verhindert schwarze Ränder
+            fog: false
         });
         const clouds = new THREE.Mesh(cloudGeo, cloudMat);
         earthGroup.add(clouds);
@@ -331,7 +335,9 @@
             color: 0x2bb5ff,
             transparent: true,
             opacity: 0.22,
-            side: THREE.BackSide
+            side: THREE.BackSide,
+            depthWrite: false, // verhindert schwarze Ringartefakte
+            fog: false
         });
         const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
         earthGroup.add(atmosphere);
@@ -366,7 +372,8 @@
             alphaTest: 0.1,
             side: THREE.DoubleSide,
             roughness: 0.3,
-            metalness: 0.2
+            metalness: 0.2,
+            fog: false
         });
 
         const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
@@ -502,7 +509,7 @@
                 camY = THREE.MathUtils.lerp(-70, -350, p4);
                 camZ = THREE.MathUtils.lerp(-120, -2400, p4);
 
-                // Blick bleibt starr auf der Erde zentriert
+                // Blick bleibt zentriert auf der Erde
                 lookY = 0;
                 lookZ = -50;
 
