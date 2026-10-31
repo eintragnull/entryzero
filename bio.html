@@ -214,7 +214,7 @@
             <p class="subtitle">Was bleibt, wenn das Verzeichnis schweigt?</p>
             <p class="body-text">
                 Gewonnene Zeit, die niemand einträgt;<br>
-                Mitgefühl am Rand des Gezählten;<br>
+                Sorge am Rand des Gezählten;<br>
                 Vertrauen ohne Prüfung;<br>
                 die Kulturtechnik dieses Jahrhunderts: gemeinsam aufmerksam sein.
             </p>
@@ -238,7 +238,8 @@
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1500);
+        // Kamerasichtweite auf 3500 erweitert für den tiefen Weltall-Start
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 3500);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -254,7 +255,7 @@
         scene.add(sunLight);
 
         // --- 3. WELTALL (MILCHSTRASSE + 3D-STERNE) ---
-        const starGeo = new THREE.SphereGeometry(1000, 64, 64);
+        const starGeo = new THREE.SphereGeometry(2800, 64, 64);
         const starTexture = textureLoader.load('starmap_milkyway.jpg');
         const starMat = new THREE.MeshBasicMaterial({
             map: starTexture,
@@ -279,13 +280,13 @@
         }
 
         const stars3dGeo = new THREE.BufferGeometry();
-        const stars3dCount = 2400;
+        const stars3dCount = 3000;
         const starPos = new Float32Array(stars3dCount * 3);
 
         for (let i = 0; i < stars3dCount * 3; i += 3) {
-            starPos[i]     = (Math.random() - 0.5) * 800;
-            starPos[i + 1] = (Math.random() - 0.5) * 800;
-            starPos[i + 2] = (Math.random() - 0.5) * 800;
+            starPos[i]     = (Math.random() - 0.5) * 2000;
+            starPos[i + 1] = (Math.random() - 0.5) * 2000;
+            starPos[i + 2] = (Math.random() - 0.5) * 2000;
         }
 
         stars3dGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
@@ -420,21 +421,22 @@
                 zoomSlider.value = progress;
             }
 
-            // Kubische Easing-Kurve für anfänglich schnellen Flug, der zum Ziel hin stark abbremst
-            const p = 1 - Math.pow(1 - progress, 3.0);
+            // Stärkere Potenz (4.5): Der anfängliche Flug aus 2200 Einheiten Entfernung verläuft rasant
+            // und bremst sehr früh ab, sodass Anflug, Südpol und Falter extrem ruhig schweben
+            const p = 1 - Math.pow(1 - progress, 4.5);
 
             // Erdrotation
             starSphere.rotation.y = time * 0.001;
             earth.rotation.y = time * 0.02;
             clouds.rotation.y = time * 0.032;
 
-            // --- KAMERAPFAD & BLICKRICHTUNG ---
+            // --- KAMERAPFAD & BLICKRICHTUNG (START WEIT DRAUSSEN BEI Z=2200) ---
             let camY, camZ, lookY, lookZ;
 
             if (p < 0.5) {
                 const t = p / 0.5;
-                camY = THREE.MathUtils.lerp(80, -45, t);
-                camZ = THREE.MathUtils.lerp(700, -35, t);
+                camY = THREE.MathUtils.lerp(160, -45, t);
+                camZ = THREE.MathUtils.lerp(2200, -35, t);
                 
                 lookY = THREE.MathUtils.lerp(0, -35, t);
                 lookZ = THREE.MathUtils.lerp(-50, -60, t);
@@ -473,7 +475,7 @@
                 morphoGroup.rotation.x = 0.1 + Math.sin(time * 1.2) * 0.1;
             }
 
-            // --- TEXTKARTE BLENDET IN DER ABBREMSPHASE EIN ---
+            // --- TEXTKARTE BLENDET IN DER RUHIGEN ABBREMSPHASE EIN ---
             const textCard = document.getElementById('text-card');
             if (p > 0.75) {
                 textCard.classList.add('visible');
