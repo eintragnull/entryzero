@@ -171,39 +171,59 @@
         sunLight.position.set(120, 40, 100);
         scene.add(sunLight);
 
-        // --- 3. WELTALL (HYBRID: MILCHSTRASSE + 3D-STERNE FÜR PARALLAXE) ---
-        // A) Fotorealistischer Hintergrund
+        // --- 3. WELTALL & LEUCHTENDE STERNE ---
+        // A) Fotorealistische Milchstraße (sofort sichtbar, unabhängig vom Nebel)
         const starGeo = new THREE.SphereGeometry(600, 64, 64);
         const starTexture = textureLoader.load('starmap_milkyway.jpg');
         const starMat = new THREE.MeshBasicMaterial({
             map: starTexture,
-            side: THREE.BackSide
+            side: THREE.BackSide,
+            fog: false
         });
         const starSphere = new THREE.Mesh(starGeo, starMat);
         scene.add(starSphere);
 
-        // B) Räumliche 3D-Einzelsterne für Tiefenwirkung beim Durchflug
+        // Textur-Generator für weiche, runderleuchtende Sternenkugeln
+        function createStarSpriteTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 64; canvas.height = 64;
+            const ctx = canvas.getContext('2d');
+            
+            const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            gradient.addColorStop(0, 'rgba(255, 255, 255, 1.0)');
+            gradient.addColorStop(0.2, 'rgba(230, 245, 255, 0.8)');
+            gradient.addColorStop(0.5, 'rgba(180, 220, 255, 0.25)');
+            gradient.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 64, 64);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        // B) Räumliche 3D-Sterne als sanft glühende Kugeln
         const stars3dGeo = new THREE.BufferGeometry();
-        const stars3dCount = 2000;
+        const stars3dCount = 1800;
         const starPos = new Float32Array(stars3dCount * 3);
 
         for (let i = 0; i < stars3dCount * 3; i += 3) {
-            starPos[i]     = (Math.random() - 0.5) * 400;
-            starPos[i + 1] = (Math.random() - 0.5) * 400;
-            starPos[i + 2] = (Math.random() - 0.5) * 400;
+            starPos[i]     = (Math.random() - 0.5) * 450;
+            starPos[i + 1] = (Math.random() - 0.5) * 450;
+            starPos[i + 2] = (Math.random() - 0.5) * 450;
         }
 
         stars3dGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
         const stars3dMat = new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.9,
+            size: 2.2,
+            map: createStarSpriteTexture(),
             transparent: true,
-            opacity: 0.85
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            fog: false
         });
         const starField3d = new THREE.Points(stars3dGeo, stars3dMat);
         scene.add(starField3d);
 
-        // --- 4. NASA PLANETEN-ENSEMBLE (ERDE & WOLKEN VIA ALPHAMAP) ---
+        // --- 4. PLANETEN-ENSEMBLE (ERDE & WOLKEN) ---
         const earthGroup = new THREE.Group();
         earthGroup.position.set(0, 0, -50);
         scene.add(earthGroup);
@@ -218,7 +238,6 @@
         const earth = new THREE.Mesh(earthGeo, earthMat);
         earthGroup.add(earth);
 
-        // Wolkenschicht nutzt earth_clouds.jpg als alphaMap (Schwarz = transparent)
         const cloudGeo = new THREE.SphereGeometry(30.6, 64, 64);
         const cloudTexture = textureLoader.load('earth_clouds.jpg');
         const cloudMat = new THREE.MeshStandardMaterial({
@@ -240,7 +259,7 @@
         const atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
         earthGroup.add(atmosphere);
 
-        // --- 5. FOTO-SCHMETTERLINGE (MORGENWIESE) ---
+        // --- 5. SCHMETTERLINGE (EXAKTES FLÜGEL-SPLITTING) ---
         const butterflyGroup = new THREE.Group();
         butterflyGroup.position.set(0, -100, -220);
         scene.add(butterflyGroup);
@@ -251,8 +270,23 @@
             textureLoader.load('butterfly_swallowtail.png')
         ];
 
-        const wingGeo = new THREE.PlaneGeometry(1.2, 1.2);
-        wingGeo.translate(0.6, 0, 0);
+        // Linke Flügelgeometrie (nutzt linke Bildhälfte 0.0 - 0.5)
+        const leftWingGeo = new THREE.PlaneGeometry(0.8, 1.2);
+        leftWingGeo.translate(-0.4, 0, 0);
+        const leftUv = leftWingGeo.attributes.uv;
+        for (let i = 0; i < leftUv.count; i++) {
+            leftUv.setX(i, leftUv.getX(i) * 0.5);
+        }
+        leftUv.needsUpdate = true;
+
+        // Rechte Flügelgeometrie (nutzt rechte Bildhälfte 0.5 - 1.0)
+        const rightWingGeo = new THREE.PlaneGeometry(0.8, 1.2);
+        rightWingGeo.translate(0.4, 0, 0);
+        const rightUv = rightWingGeo.attributes.uv;
+        for (let i = 0; i < rightUv.count; i++) {
+            rightUv.setX(i, 0.5 + rightUv.getX(i) * 0.5);
+        }
+        rightUv.needsUpdate = true;
 
         const butterflies = [];
 
@@ -268,9 +302,8 @@
                 roughness: 0.4
             });
 
-            const leftWing = new THREE.Mesh(wingGeo, wingMat);
-            const rightWing = new THREE.Mesh(wingGeo, wingMat);
-            rightWing.scale.set(-1, 1, 1);
+            const leftWing = new THREE.Mesh(leftWingGeo, wingMat);
+            const rightWing = new THREE.Mesh(rightWingGeo, wingMat);
 
             bContainer.add(leftWing);
             bContainer.add(rightWing);
@@ -326,8 +359,8 @@
 
             butterflies.forEach(b => {
                 const flap = Math.sin(time * b.speed + b.phase);
-                b.left.rotation.y = flap * 0.75;
-                b.right.rotation.y = -flap * 0.75;
+                b.left.rotation.y = flap * 0.7;
+                b.right.rotation.y = -flap * 0.7;
                 b.group.position.y = b.baseY + Math.sin(time * 2.2 + b.phase) * 0.6;
                 b.group.rotation.z = Math.sin(time + b.phase) * 0.15;
             });
