@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -278,6 +278,19 @@
     </button>
 
     <script>
+        // --- GLOBALE ZUSTÄNDE (VORAB DEKLARIERT) ---
+        let audioCtx = null;
+        let isPlayingAudio = false;
+        let waveFilter = null;
+        let waveGain = null;
+        let leafFilter = null;
+
+        let progress = 0;
+        let isAutoPlaying = true;
+        const AUTO_ZOOM_DURATION = 60.0;
+
+        let currentLang = 'de';
+
         // --- SPRACH-ÜBERSETZUNGEN & LOGIK ---
         const translations = {
             de: {
@@ -299,8 +312,6 @@
                 audioOn: "Nature Sound: On 🔊"
             }
         };
-
-        let currentLang = 'de';
 
         function initLanguage() {
             const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
@@ -474,10 +485,6 @@
         morphoGroup.add(rightWing);
 
         // --- 6. AUTO-ZOOM & REGLER-LOGIK ---
-        let progress = 0;
-        let isAutoPlaying = true;
-        const AUTO_ZOOM_DURATION = 60.0;
-
         const zoomSlider = document.getElementById('zoom-slider');
         const playBtn = document.getElementById('play-btn');
 
@@ -621,6 +628,7 @@
             renderer.render(scene, camera);
         }
 
+        // Initialisierung der Sprache und Start der Animation
         initLanguage();
         animate();
 
@@ -631,12 +639,6 @@
         });
 
         // --- 8. AUDIO (BRANDUNG & BLÄTTERRASCHELN) ---
-        let audioCtx = null;
-        let isPlayingAudio = false;
-        let waveFilter = null;
-        let waveGain = null;
-        let leafFilter = null;
-
         function initAudio() {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
