@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Das Ungemessene — Eine Reise durch die Biosphäre</title>
+    <title>Das Ungemessene — Eintrag Null</title>
 
     <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://entryzero.vercel.app/ungemessen">
-    <meta property="og:title" content="Das Ungemessene — Eintrag Null">
-    <meta property="og:description" content="Was bleibt, wenn das Verzeichnis schweigt? ungemessen — unmeasured">
+    <meta property="og:title" content="ungemessene/unmeasured — Eintrag Null/Entry Zero">
+    <meta property="og:description" content="Was bleibt, wenn das Wirtschaftswachstum nicht mehr zählt? gemessen — unmeasured">
     <meta property="og:image" content="https://entryzero.vercel.app/og-image.jpg">
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
@@ -18,7 +18,7 @@
     <!-- Twitter / X Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Das Ungemessene — Eintrag Null">
-    <meta name="twitter:description" content="Was bleibt, wenn das Verzeichnis schweigt? ungemessen — unmeasured">
+    <meta name="twitter:description" content="Was bleibt, wenn das Wirtschaftswachstum nicht mehr zählt? ungemessen — unmeasured">
     <meta name="twitter:image" content="https://entryzero.vercel.app/og-image.jpg">
 
     <style>
@@ -125,7 +125,7 @@
             color: #1abc9c;
         }
 
-        /* --- STEUERUNGSELEMENTE UNTEN --- */
+        /* --- STEUERUNGSELEMENTE UNTEN (DESKTOP STANDARD) --- */
         .controls-bar {
             position: absolute;
             bottom: 30px;
@@ -233,12 +233,50 @@
             cursor: pointer;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .audio-control:hover {
             background: rgba(26, 188, 156, 0.3);
             border-color: #1abc9c;
             color: #fff;
+        }
+
+        /* --- RESPONSIVE WEICHE FÜR MOBILGERÄTE (HANDY-ANSICHT) --- */
+        @media (max-width: 768px) {
+            .controls-bar {
+                bottom: 20px;
+                padding: 8px 16px;
+                gap: 10px;
+                max-width: 92%;
+            }
+
+            .zoom-slider {
+                width: 130px;
+            }
+
+            /* Ton-Button wird zentriert über die Steuerungsleiste platziert */
+            .audio-control {
+                bottom: 78px;
+                right: 50%;
+                transform: translateX(50%);
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+
+            .text-card {
+                padding: 28px 20px;
+                margin: 0 10px;
+            }
+
+            .text-card h1 {
+                font-size: 1.75rem;
+            }
+
+            .text-card .body-text {
+                font-size: 1rem;
+                line-height: 1.65;
+            }
         }
     </style>
 
@@ -628,7 +666,6 @@
             renderer.render(scene, camera);
         }
 
-        // Initialisierung der Sprache und Start der Animation
         initLanguage();
         animate();
 
