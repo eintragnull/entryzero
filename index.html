@@ -2,7 +2,7 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.62 ·  2026-10-26
+  Fassung:  v0.63 ·  2026-10-30
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
@@ -16,6 +16,19 @@
   findet ihn hier; wer wissen will, wie Noa dazu kommt, liest zuerst die
   Novelle.» Das ist sinnvoll, weil die Novelle selbst nur als PDF vorliegt:
   Der Befund ist ihr Ergebnis ohne die 15 000 Woerter.
+  Print-Ausgabe ins Ausgaben-Muster gebracht (Beschluss Martin), analog zur
+  PDF/EPUB-Liste: nach AUSGABE gruppiert, je Sprachstrang in der dortigen
+  Reihenfolge (DE: deutsche Ausgabe zuerst; EN: englische zuerst).
+    Deutsche Ausgabe — Eintrag Null: Orell Fuessli (CH) · Thalia DE · Thalia AT
+    Englische Ausgabe — Entry Zero: Amazon de/co.uk/com
+  AMAZON als sichtbare Laenderlinks (zweite Loesung, Beschluss Martin), KEINE
+  Browserweiche. Ziel ist jeweils die Amazon-SUCHE nach der ISBN-13
+  (amazon.XX/s?k=9783952668153), nicht /dp/ASIN: Die ISBN ist marktueber-
+  greifend identisch, die Suche findet das Buch auf JEDEM Markt — die ASIN
+  B0HNG9CQB2 traegt dagegen nur auf einem Markt. Die ISBN 978-3952668153
+  (Pruefziffer geprueft, Praefix 978-3) steht fuer die englische Taschenbuch-
+  ausgabe. Externe Shop-Links, inline-link, neuer Tab.
+
   Zwei Aenderungen (Beschluss Martin):
   (1) «Regenwald» -> «Trockenwald», «rainforest» -> «dry forest» auf der
       Buch-Seite (Erzaehl-Absatz, je einmal DE/EN).
@@ -2222,16 +2235,28 @@
             <h2 class="lang-de">Print-Ausgabe</h2>
             <h2 class="lang-en hidden">Print edition</h2>
             <p class="lang-de">Das Taschenbuch ist kostenpflichtig erhältlich:</p>
+            <!-- DE-Reihenfolge: deutsche Ausgabe zuerst -->
             <ul class="lang-de">
-                <li>Schweiz — <a href="https://www.orellfuessli.ch/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">orellfuessli.ch</a></li>
-                <li>Deutschland — <a href="https://www.thalia.de/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.de</a></li>
-                <li>Österreich — <a href="https://www.thalia.at/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.at</a></li>
+                <li>
+                    <strong>Deutsche Ausgabe — Eintrag Null</strong><br>
+                    Schweiz — <a href="https://www.orellfuessli.ch/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">orellfuessli.ch</a> · Deutschland — <a href="https://www.thalia.de/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.de</a> · Österreich — <a href="https://www.thalia.at/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.at</a>
+                </li>
+                <li>
+                    <strong>Englische Ausgabe — Entry Zero</strong><br>
+                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a> · <a href="https://www.amazon.com/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.com</a>
+                </li>
             </ul>
             <p class="lang-en hidden">The paperback is available for purchase:</p>
+            <!-- EN-Reihenfolge: englische Ausgabe zuerst -->
             <ul class="lang-en hidden">
-                <li>Switzerland — <a href="https://www.orellfuessli.ch/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">orellfuessli.ch</a></li>
-                <li>Germany — <a href="https://www.thalia.de/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.de</a></li>
-                <li>Austria — <a href="https://www.thalia.at/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.at</a></li>
+                <li>
+                    <strong>English edition — Entry Zero</strong><br>
+                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a> · <a href="https://www.amazon.com/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.com</a>
+                </li>
+                <li>
+                    <strong>German edition — Eintrag Null</strong><br>
+                    Switzerland — <a href="https://www.orellfuessli.ch/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">orellfuessli.ch</a> · Germany — <a href="https://www.thalia.de/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.de</a> · Austria — <a href="https://www.thalia.at/shop/home/artikeldetails/A1082297110" target="_blank" rel="noopener" class="inline-link">thalia.at</a>
+                </li>
             </ul>
         </div>
 
