@@ -1,9 +1,12 @@
-const CACHE_NAME = 'eintrag-null-biosphaere-v2';
+const CACHE_NAME = 'eintrag-null-biosphaere-v3';
 
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/bio.html',
+  '/ungemessen',
+  '/og-image.jpg',
+  'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js',
   '/starmap_milkyway.jpg',
   '/earth_nasa.jpg',
   '/earth_clouds.jpg',
@@ -14,7 +17,7 @@ const ASSETS_TO_CACHE = [
   '/favicon.ico'
 ];
 
-// 1. Installation: Alle Kern-Dateien in den Cache laden
+// 1. Installation: Alle Kern-Dateien & Routen in den Cache laden
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -40,7 +43,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// 3. Fetch-Strategie: Cache First with Network Fallback (Local-First / Offline-First)
+// 3. Fetch-Strategie: Cache First mit Network Fallback
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
@@ -59,7 +62,7 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       }).catch(() => {
         if (event.request.headers.get('accept') && event.request.headers.get('accept').includes('text/html')) {
-          return caches.match('/bio.html') || caches.match('/index.html');
+          return caches.match('/ungemessen') || caches.match('/bio.html') || caches.match('/index.html');
         }
       });
     })
