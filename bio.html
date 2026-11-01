@@ -1,10 +1,26 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Das Ungemessene — eine Reise zur Biosphäre</title>
-    
+    <title>Das Ungemessene — Eine Reise durch die Biosphäre</title>
+
+    <!-- Open Graph / Facebook / LinkedIn Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://entryzero.vercel.app/ungemessen">
+    <meta property="og:title" content="Das Ungemessene — Eintrag Null">
+    <meta property="og:description" content="Was bleibt, wenn das Verzeichnis schweigt? ungemessen — unmeasured">
+    <meta property="og:image" content="https://entryzero.vercel.app/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter / X Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Das Ungemessene — Eintrag Null">
+    <meta name="twitter:description" content="Was bleibt, wenn das Verzeichnis schweigt? ungemessen — unmeasured">
+    <meta name="twitter:image" content="https://entryzero.vercel.app/og-image.jpg">
+
     <style>
         * {
             margin: 0;
@@ -97,13 +113,6 @@
             font-weight: 300;
         }
 
-        .text-card .footnote {
-            font-size: 0.95rem;
-            color: #94a3b8;
-            font-style: italic;
-            margin-bottom: 24px;
-        }
-
         .text-card .source-tag {
             font-size: 0.78rem;
             letter-spacing: 0.18em;
@@ -155,7 +164,7 @@
         .zoom-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 220px;
+            width: 200px;
             height: 4px;
             border-radius: 2px;
             background: rgba(255, 255, 255, 0.25);
@@ -177,6 +186,37 @@
 
         .zoom-slider::-webkit-slider-thumb:hover {
             transform: scale(1.25);
+        }
+
+        /* --- SPRACHWECHSLER STYLES --- */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 6px;
+            border-left: 1px solid rgba(255, 255, 255, 0.15);
+            padding-left: 12px;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            padding: 2px 4px;
+            transition: color 0.2s ease;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            color: #1abc9c;
+        }
+
+        .lang-divider {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.75rem;
         }
 
         .audio-control {
@@ -210,21 +250,27 @@
 
     <div class="overlay-container" id="overlay">
         <a href="/" class="text-card" id="text-card" title="Zurück zu Eintrag Null">
-            <h1>Die Bilanz des Jahres 2100</h1>
-            <p class="subtitle">Was bleibt, wenn das Wirtschaftswachstum nicht mehr zählt?</p>
-            <p class="body-text">
+            <h1 id="card-h1">Die Bilanz des Jahres 2100</h1>
+            <p class="subtitle" id="card-subtitle">Was bleibt, wenn das Wirtschaftswachstum nicht mehr zählt?</p>
+            <p class="body-text" id="card-body">
                 1 Versorgung · 2 Biosphäre · 3 Zeitwohlstand<br>
                 4 Resilienz · 5 Gerechtigkeit · 6 Lernen<br>
                 7 ungemessen
             </p>
-                        <p class="source-tag">» EINTRAG NULL«</p>
+            <p class="source-tag" id="card-source">» EINTRAG NULL «</p>
         </a>
     </div>
 
-    <!-- Regler für den Zoom -->
+    <!-- Regler & Sprachschalter -->
     <div class="controls-bar">
         <button class="play-btn" id="play-btn" onclick="togglePlayPause()" title="Auto-Zoom Pause/Play">❚❚</button>
         <input type="range" class="zoom-slider" id="zoom-slider" min="0" max="1" step="0.0001" value="0">
+        
+        <div class="lang-switch">
+            <button class="lang-btn" id="btn-de" onclick="setLanguage('de')">DE</button>
+            <span class="lang-divider">|</span>
+            <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+        </div>
     </div>
 
     <button class="audio-control" id="audio-btn" onclick="toggleAudio()">
@@ -232,6 +278,62 @@
     </button>
 
     <script>
+        // --- SPRACH-ÜBERSETZUNGEN & LOGIK ---
+        const translations = {
+            de: {
+                title: "Die Bilanz des Jahres 2100",
+                subtitle: "Was bleibt, wenn das Wirtschaftswachstum nicht mehr zählt?",
+                body: "1 Versorgung · 2 Biosphäre · 3 Zeitwohlstand<br>4 Resilienz · 5 Gerechtigkeit · 6 Lernen<br>7 ungemessen",
+                source: "» EINTRAG NULL «",
+                cardTitle: "Zurück zu Eintrag Null",
+                audioOff: "Naturklang 🔊",
+                audioOn: "Naturklang: An 🔊"
+            },
+            en: {
+                title: "The Account of 2100",
+                subtitle: "What remains when economic growth no longer counts?",
+                body: "1 Provision · 2 Biosphere · 3 Time-Wealth<br>4 Resilience · 5 Justice · 6 Learning<br>7 unmeasured",
+                source: "» ENTRY ZERO «",
+                cardTitle: "Back to Entry Zero",
+                audioOff: "Nature Sound 🔊",
+                audioOn: "Nature Sound: On 🔊"
+            }
+        };
+
+        let currentLang = 'de';
+
+        function initLanguage() {
+            const navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+            if (navLang.startsWith('de')) {
+                currentLang = 'de';
+            } else {
+                currentLang = 'en';
+            }
+            applyLanguage(currentLang);
+        }
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            applyLanguage(lang);
+        }
+
+        function applyLanguage(lang) {
+            const t = translations[lang];
+            document.getElementById('card-h1').innerText = t.title;
+            document.getElementById('card-subtitle').innerText = t.subtitle;
+            document.getElementById('card-body').innerHTML = t.body;
+            document.getElementById('card-source').innerText = t.source;
+            document.getElementById('text-card').setAttribute('title', t.cardTitle);
+
+            document.getElementById('btn-de').classList.toggle('active', lang === 'de');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+            const audioBtn = document.getElementById('audio-btn');
+            if (audioBtn) {
+                audioBtn.innerText = isPlayingAudio ? t.audioOn : t.audioOff;
+            }
+        }
+
         // --- 1. SETUP & RENDERER ---
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
@@ -433,7 +535,6 @@
                 camY = THREE.MathUtils.lerp(160, -42, p1);
                 camZ = THREE.MathUtils.lerp(2200, -10, p1);
                 
-                // Blickpunkt leicht versetzt, damit die Erde oben im Bild bleibt
                 lookY = THREE.MathUtils.lerp(0, -18, p1);
                 lookZ = -50;
 
@@ -452,14 +553,13 @@
                 }
 
             } else if (progress < 0.60) {
-                // PHASE 2: Textkarte & Falter im Fokus, Erde oben im Bild sichtbar (+20% Lesedauer)
+                // PHASE 2: Textkarte & Falter im Fokus, Erde oben im Bild
                 const t = (progress - 0.38) / 0.22;
                 const p2 = t * t * (3 - 2 * t);
 
                 camY = THREE.MathUtils.lerp(-42, -45, p2);
                 camZ = THREE.MathUtils.lerp(-10, -15, p2);
                 
-                // Blickpunkt behält Erde oben im Bildfenster
                 lookY = -18;
                 lookZ = -50;
 
@@ -473,17 +573,14 @@
             } else if (progress < 0.78) {
                 // PHASE 3: Text verschwindet & Kamera führt eine vertikale Erdumrundung durch
                 const t = (progress - 0.60) / 0.18;
-                const p3 = t * t * (3 - 2 * t); // Smoothstep
+                const p3 = t * t * (3 - 2 * t);
 
-                // Vertikaler Bogen von unten (Y=-45, Z=-15) um die Erde herum nach oben (Y=80, Z=120)
                 camY = THREE.MathUtils.lerp(-45, 80, p3);
                 camZ = THREE.MathUtils.lerp(-15, 120, p3);
 
-                // Kamera fixiert das Zentrum der Erde (0, 0, -50)
                 lookY = THREE.MathUtils.lerp(-18, 0, p3);
                 lookZ = -50;
 
-                // Falter blendet organisch aus
                 morphoGroup.visible = true;
                 const shrink = 1.0 - p3;
                 const scale = 3.8 * shrink;
@@ -492,7 +589,7 @@
                 if (p3 >= 0.98) morphoGroup.visible = false;
 
             } else {
-                // PHASE 4: Rauszoomen ins Weltall aus der oberen Umrundungsposition
+                // PHASE 4: Rauszoomen ins Weltall
                 const t = (progress - 0.78) / 0.22;
                 const p4 = Math.pow(t, 2.5);
 
@@ -508,7 +605,6 @@
             camera.position.set(0, camY, camZ);
             camera.lookAt(0, lookY, lookZ);
 
-            // Skybox folgt der Kamera
             starSphere.position.copy(camera.position);
 
             morphoGroup.rotation.z = Math.sin(time * 1.8) * 0.15;
@@ -525,6 +621,7 @@
             renderer.render(scene, camera);
         }
 
+        initLanguage();
         animate();
 
         window.addEventListener('resize', () => {
@@ -600,20 +697,21 @@
 
         function toggleAudio() {
             const btn = document.getElementById('audio-btn');
+            const t = translations[currentLang];
             if (!audioCtx) {
                 initAudio();
                 isPlayingAudio = true;
-                btn.innerText = 'Naturklang: An 🔊';
+                btn.innerText = t.audioOn;
                 btn.style.background = 'rgba(26, 188, 156, 0.4)';
             } else if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
                 isPlayingAudio = true;
-                btn.innerText = 'Naturklang: An 🔊';
+                btn.innerText = t.audioOn;
                 btn.style.background = 'rgba(26, 188, 156, 0.4)';
             } else if (audioCtx.state === 'running') {
                 audioCtx.suspend();
                 isPlayingAudio = false;
-                btn.innerText = 'Naturklang 🔊';
+                btn.innerText = t.audioOff;
                 btn.style.background = 'rgba(0, 0, 0, 0.5)';
             }
         }
