@@ -2,7 +2,7 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.64 ·  2026-11-01
+  Fassung:  v0.65 ·  2026-11-02
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
 
@@ -16,23 +16,22 @@
   findet ihn hier; wer wissen will, wie Noa dazu kommt, liest zuerst die
   Novelle.» Das ist sinnvoll, weil die Novelle selbst nur als PDF vorliegt:
   Der Befund ist ihr Ergebnis ohne die 15 000 Woerter.
-  amazon.com aus den Print-Links entfernt (Fund Martin: Link funktioniert
-  nicht — das Buch ist auf dem US-Markt nicht gelistet; amazon.de und
-  amazon.co.uk tragen). Beide Amazon-Zeilen (DE- und EN-Liste) fuehren jetzt
-  nur noch amazon.de · amazon.co.uk.
-
-  Print-Ausgabe ins Ausgaben-Muster gebracht (Beschluss Martin), analog zur
-  PDF/EPUB-Liste: nach AUSGABE gruppiert, je Sprachstrang in der dortigen
-  Reihenfolge (DE: deutsche Ausgabe zuerst; EN: englische zuerst).
-    Deutsche Ausgabe — Eintrag Null: Orell Fuessli (CH) · Thalia DE · Thalia AT
-    Englische Ausgabe — Entry Zero: Amazon de/co.uk/com
-  AMAZON als sichtbare Laenderlinks (zweite Loesung, Beschluss Martin), KEINE
-  Browserweiche. Ziel ist jeweils die Amazon-SUCHE nach der ISBN-13
-  (amazon.XX/s?k=9783952668153), nicht /dp/ASIN: Die ISBN ist marktueber-
-  greifend identisch, die Suche findet das Buch auf JEDEM Markt — die ASIN
-  B0HNG9CQB2 traegt dagegen nur auf einem Markt. Die ISBN 978-3952668153
-  (Pruefziffer geprueft, Praefix 978-3) steht fuer die englische Taschenbuch-
-  ausgabe. Externe Shop-Links, inline-link, neuer Tab.
+  Print-Ausgabe neu, in drei Schritten dieser Woche zusammengefasst
+  (Beschluss Martin):
+  - Ins Ausgaben-Muster gebracht (analog PDF/EPUB): nach AUSGABE gruppiert,
+    je Sprachstrang in dortiger Reihenfolge. Deutsche Ausgabe: Orell Fuessli
+    (CH), Thalia DE/AT. Englische Ausgabe: Amazon.
+  - AMAZON als sichtbare Laenderlinks, Ziel ist die ISBN-13-SUCHE
+    (amazon.XX/s?k=9783952668153), nicht /dp/ASIN — die ISBN ist markt-
+    uebergreifend, die Suche findet das Buch auf jedem Store, der es fuehrt.
+    ISBN 978-3952668153 = englische Taschenbuchausgabe (Pruefziffer geprueft).
+  - Sichtbar: amazon.de · co.uk · com · ca, dahinter grauer Hinweis «und
+    weitere regionale Amazon-Shops» / «and other regional Amazon stores».
+    (amazon.com war zwischenzeitlich draussen, weil das Buch dort noch nicht
+    gelistet war; jetzt verfuegbar und wieder drin.)
+  ⚠ Diese v0.65 wurde zur Sicherheit frisch aus Martins sauberer v0.62 gebaut,
+  nachdem ein index-basiertes Ersetzen die beiden Amazon-Zeilen durcheinander-
+  gebracht hatte (DE-Zeile trug beide Nachsaetze, EN-Zeile die alte Fassung).
 
   Zwei Aenderungen (Beschluss Martin):
   (1) «Regenwald» -> «Trockenwald», «rainforest» -> «dry forest» auf der
@@ -2240,7 +2239,6 @@
             <h2 class="lang-de">Print-Ausgabe</h2>
             <h2 class="lang-en hidden">Print edition</h2>
             <p class="lang-de">Das Taschenbuch ist kostenpflichtig erhältlich:</p>
-            <!-- DE-Reihenfolge: deutsche Ausgabe zuerst -->
             <ul class="lang-de">
                 <li>
                     <strong>Deutsche Ausgabe — Eintrag Null</strong><br>
@@ -2248,15 +2246,14 @@
                 </li>
                 <li>
                     <strong>Englische Ausgabe — Entry Zero</strong><br>
-                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a>
+                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a> · <a href="https://www.amazon.com/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.com</a> · <a href="https://www.amazon.ca/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.ca</a> <span style="color: var(--eb-muted);">und weitere regionale Amazon-Shops</span>
                 </li>
             </ul>
             <p class="lang-en hidden">The paperback is available for purchase:</p>
-            <!-- EN-Reihenfolge: englische Ausgabe zuerst -->
             <ul class="lang-en hidden">
                 <li>
                     <strong>English edition — Entry Zero</strong><br>
-                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a>
+                    Amazon — <a href="https://www.amazon.de/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.de</a> · <a href="https://www.amazon.co.uk/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.co.uk</a> · <a href="https://www.amazon.com/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.com</a> · <a href="https://www.amazon.ca/s?k=9783952668153" target="_blank" rel="noopener" class="inline-link">amazon.ca</a> <span style="color: var(--eb-muted);">and other regional Amazon stores</span>
                 </li>
                 <li>
                     <strong>German edition — Eintrag Null</strong><br>
