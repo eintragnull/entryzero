@@ -1,4 +1,4 @@
-Das Genug / What is enough, Tür v0.3.2, Webseitenfassung (14.11.2026)
+Das Genug / What is enough, Tür v0.3.3, Webseitenfassung (14.11.2026)
 
 Inhalt
   index.html   Das Spiel, eine Seite, Deutsch und Englisch. Rechenkern v0.16 ist eingebettet.
@@ -19,7 +19,7 @@ Links
 
 ---
 
-What is enough (Das Genug), Door v0.3.2, website version (14 November 2026)
+What is enough (Das Genug), Door v0.3.3, website version (14 November 2026)
 
 Put the folder "das-genug" unchanged into the public directory of the website; it is then reachable at /das-genug/.
 The page follows the browser language (German for de, otherwise English) and can be switched at the bottom.

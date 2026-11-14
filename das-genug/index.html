@@ -23,7 +23,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.3.2 · 14.11.2026 · Kern v0.16 · Spielkonzept v0.9 · Sprache wie die Webseite (?lang=, ez_lang, Browser, sonst Englisch); Tür hinaus zum Manifest -->
+<!-- Die Tür v0.3.3 · 14.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.10 · Nichts läuft ins Leere: Jahresbild in zwei Teilen (was du getan hast / was in der Welt geschah, mit Ursachen), Folgesätze nach jeder Jahreszeit, Hinweis auf verfallende Stunden, Spielraum in Birk sichtbar, Geld bei Tal-Süd sichtbar, ungezählte Sätze nach Jahreszeit -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -113,6 +113,7 @@ button.leise{background:transparent;border:1px solid var(--linie);color:var(--le
 .stimmen .wer{font-family:var(--display);font-weight:700}
 .reihe{display:flex;flex-wrap:wrap;gap:8px}
 .bild{display:flex;flex-direction:column;gap:8px;padding-left:14px;border-left:3px solid var(--bach)}
+.jahrtitel{font-family:var(--display);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--leise);margin:0;font-weight:700}
 textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px solid var(--linie);background:var(--karte);color:var(--tinte);padding:10px 12px;resize:vertical}
 .hinweis{font-size:.85rem;color:var(--leise)}
 .link{font-family:ui-monospace, "SF Mono", Menlo, monospace;font-size:.75rem;word-break:break-all;background:var(--karte);border:1px solid var(--linie);border-radius:10px;padding:8px 10px}
@@ -1241,11 +1242,13 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 </script>
 <script>
 "use strict";
-// Die Tür v0.3.2 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.3.3 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const JZ_DE = ["Frühling", "Sommer", "Herbst", "Winter"];
+const gross = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+const Z = (n) => L.zahl[n] || String(n);   // Zahlwort in der Sprache der Tür
 
 // ---------- Die Sätze der Tür ----------
 const SPRACHEN = {
@@ -1253,8 +1256,23 @@ const SPRACHEN = {
     titel: "Das Genug", andere: "English", ort: "Birk · Alpen-Pol", bach: "Der Bach", augenblick: "Einen Augenblick.",
     jz: ["Frühling", "Sommer", "Herbst", "Winter"],
     jzSatz: ["Der Schnee geht, die Arbeit kommt.", "Es ist mehr da, als ihr braucht.", "Die Ernte ist drin.", "Die Tage sind kurz."],
+    sommerDuerre: "Es ist trocken, der Bach führt wenig Wasser. In Birk ist trotzdem mehr da, als ihr braucht.",
     anvertraut: "Dir ist ein Ort anvertraut. ",
     kreise: { birk: ["Birk", "ihr"], steighof: ["Steighof", "Nachbarn"], talsued: ["Tal-Süd", "wartet"], gemein: ["Gemeingut", "für alle"] },
+    talsuedBezahlt: "hat bezahlt", talsuedBereit: "bereit",
+    zahl: ["keine", "eine", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht"],
+    rest: {
+      stunden: (n, Z) => n === 1 ? "Eine Stunde liegt noch in deiner Hand. Mit dem Frühling verfällt sie." : `${gross(Z)} Stunden liegen noch in deiner Hand. Mit dem Frühling verfallen sie.`,
+      spielraum: (n, Z) => (n === 1 ? "Ein Teil Spielraum liegt" : `${gross(Z)} Teile Spielraum liegen`) + " noch in deiner Hand. Was du nicht weitergibst, bleibt in Birk."
+    },
+    folge: {
+      verfallen: (n, Z) => n === 1 ? "Eine Stunde ist mit dem Frühling verfallen." : `${gross(Z)} Stunden sind mit dem Frühling verfallen.`,
+      behalten: "Was du in Birk behalten hast, liegt jetzt als Spielraum in deiner Hand.",
+      blieb: (n, Z) => (n === 1 ? "Ein Teil Spielraum blieb" : `${gross(Z)} Teile Spielraum blieben`) + " in Birk. Was bleibt, wird verbraucht, und auch das zehrt am Bach.",
+      speicher: (region) => "Im Speicher liegt, was du gegeben hast. Im Winter geht es an " + (region ? "Tal-Süd." : "den Ort, der es am meisten braucht."),
+      verteilt: (region) => "Was im Speicher lag, ging an " + (region ? "Tal-Süd." : "den Ort, der es am meisten brauchte."),
+      geld: "Das Geld liegt im Übergangsfonds. Ein Jahr lang arbeiten eure Werkstatt und die Pflege auch für Tal-Süd."
+    },
     steine: { stunde: "Stunde", spielraum: "Spiel&shy;raum", vertrag: "Vertrag", zeichnung: "Geld" },
     ereignis: {
       bach: { titel: "Der Bach und die Pumpen", lage: "Der Bach sinkt, und Ried talabwärts bittet um Pumpen, die eure Werkstatt nur mit Bachwasser bauen kann.",
@@ -1281,7 +1299,7 @@ const SPRACHEN = {
       stunde: { birk: "Die Stunde bleibt bei euch: dieses Jahr ein Stück mehr Spielraum.", steighof: "Arbeit mit Steighof, damit es sich selbst tragen kann.", talsued: "Arbeit an der Wasserleitung von Tal-Süd.", gemein: "Arbeit am Bauplan der Pumpe, offen für alle." },
       spielraum: { steighof: "Geht an Steighof.", gemein: "In den Speicher. Im Winter geht er an die, die es brauchen." },
       vertrag: { birk: "Annehmen: Material aus der alten Welt, dafür baut ihr Tal-Süds Leitung nach Vertrag." },
-      zeichnung: { birk: "Annehmen: Tal-Süds Händler zahlen Geld in den Übergangsfonds ein, und Tal-Süd rückt auf der Warteliste vor." }
+      zeichnung: { birk: "Annehmen: Tal-Süds Händler zahlen Geld in den Übergangsfonds ein, und Tal-Süd rückt auf der Warteliste vor. Ein Jahr lang arbeiten eure Werkstatt und die Pflege auch für Tal-Süd." }
     },
     antwort: {
       stunde: { birk: "Mara: «Heute Abend ist Zeit fürs Gemeinschaftshaus.»", steighof: "Steighof: «Ihr arbeitet mit uns, nicht für uns. Das merken wir uns.»", talsued: "Tal-Süd: «Die Leitung wächst. Unsere Leute zählen die Meter.»", gemein: "Jorin: «Die Pumpe ist besser geworden. Auch Ried kann sie bauen.»" },
@@ -1296,33 +1314,62 @@ const SPRACHEN = {
       zeichnung: "<b>Tal-Süd</b> legt dir etwas hin: «Unsere Händler zahlen Geld in den Übergangsfonds ein. Dafür rücken wir auf der Warteliste vor.»"
     },
     zurueckschieben: "Zurückschieben",
-    hand: ["Deine Stunden sind gelegt.", "Was du nicht weitergibst, bleibt dieses Jahr in Birk.", "Diesmal liegt nichts in deiner Hand.", "Diesmal liegt nichts in deiner Hand."],
+    hand: ["Deine Stunden sind gelegt.", "Dein Spielraum ist weitergegeben.", "Diesmal liegt nichts in deiner Hand.", "Diesmal liegt nichts in deiner Hand."],
     gehen: (j) => `Den ${j} gehen lassen`,
     ohne: (j) => `Ohne Beschluss gilt am Ende des ${j}s: `,
     tisch: { am: "Am Tisch", wartet: "Am Tisch wartet etwas", zurueck: "Zurück an den Tisch", offen: "Vorerst offen lassen", so: "So machen wir es", eingehen: "Darauf eingehen", trotzdem: "Trotzdem so",
       bindet: (nr) => `Eure Regel ${nr} bindet.`, spannung: (nr) => `Steht in Spannung zu eurer Regel ${nr}.`, gebunden: "Dieser Weg ist durch eure Regel gebunden.",
       haltung: { zustimmung: "Ja.", bedenken: "Mit Sorge. Aber ja." }, nurSo: "Nur so: " },
+    // z: in welchen Jahreszeiten der Satz stimmt (die Jahreszeit, die eben vergangen ist; 0 Frühling … 3 Winter)
     ungezaehlt: [
-      { t: "Beim Heuen half jemand mit, den niemand eingeteilt hatte." },
-      { t: "Am Brunnen erzählte die Älteste, wie es vor dem Übergang war. Die Kinder blieben sitzen." },
-      { t: "Jorin flickte ein Velo, das nicht ihm gehörte, und schrieb es nirgends auf." },
-      { t: "Im Gemeinschaftshaus spielte jemand Akkordeon, bis die Lampen ausgingen." },
-      { t: "Mara sass eine Nacht bei einer Kranken. Niemand hat es gezählt.", sorge: true },
-      { t: "Eine Nachbarin brachte Suppe, ohne zu fragen, ob man sie braucht.", sorge: true },
-      { t: "Der erste Schnee fiel, und für eine Stunde arbeitete niemand." },
-      { t: "Rahel zeigte einem Jungen, wo das Moor im Frühling das Wasser hält." },
-      { t: "Jemand liess die Werkstatt offen, damit andere ihr Werkzeug holen konnten." },
-      { t: "Zwei Kinder aus Tal-Süd lasen in der Bibliothek von Birk, bis es dunkel wurde." }
+      { t: "Beim Heuen half jemand mit, den niemand eingeteilt hatte.", z: [1] },
+      { t: "Am Brunnen erzählte die Älteste, wie es vor dem Übergang war. Die Kinder blieben sitzen.", z: [0, 1, 2] },
+      { t: "Jorin flickte ein Velo, das nicht ihm gehörte, und schrieb es nirgends auf.", z: [0, 1, 2] },
+      { t: "Im Gemeinschaftshaus spielte jemand Akkordeon, bis die Lampen ausgingen.", z: [0, 1, 2, 3] },
+      { t: "Mara sass eine Nacht bei einer Kranken. Niemand hat es gezählt.", sorge: true, z: [0, 1, 2, 3] },
+      { t: "Eine Nachbarin brachte Suppe, ohne zu fragen, ob man sie braucht.", sorge: true, z: [2, 3] },
+      { t: "Der erste Schnee fiel, und für eine Stunde arbeitete niemand.", z: [2] },
+      { t: "Rahel zeigte einem Jungen, wo das Moor im Frühling das Wasser hält.", z: [0, 1, 2] },
+      { t: "Jemand liess die Werkstatt offen, damit andere ihr Werkzeug holen konnten.", z: [0, 1, 2, 3] },
+      { t: "Zwei Kinder aus Tal-Süd lasen in der Bibliothek von Birk, bis es dunkel wurde.", z: [0, 2, 3] },
+      { t: "Jemand räumte den Schnee vor der Tür der Alten, bevor sie aufwachte.", z: [3] },
+      { t: "Am ersten warmen Abend trugen alle die Tische hinaus, ohne dass es jemand vorgeschlagen hatte.", z: [0] }
     ],
+    jahr: {
+      getan: "Was du getan hast", welt: "Was in der Welt geschah",
+      stundenKeine: (n, Z) => `Deine ${n === 1 ? "Stunde hast du nicht gelegt. Sie verfiel" : Z + " Stunden hast du nicht gelegt. Sie verfielen"} mit dem Frühling.`,
+      stundenAlle: (n, Z, liste) => `Deine ${n === 1 ? "Stunde" : Z + " Stunden"} hast du gelegt: ${liste}.`,
+      stundenTeil: (n, Z, k, ZK, liste, v, ZV) => `Von deinen ${Z} Stunden hast du ${ZK} gelegt: ${liste}. ${v === 1 ? "Eine verfiel" : ZV.charAt(0).toUpperCase() + ZV.slice(1) + " verfielen"} mit dem Frühling.`,
+      stundeZiel: { steighof: (Z) => `${Z} mit Steighof`, vorAufbau: (Z) => `${Z} an der Leitung von Tal-Süd`, blaupause: (Z) => `${Z} am Bauplan der Pumpe`, spielraum: (Z) => `${Z} für Birk selbst` },
+      vertrag: "Den Vertrag mit Tal-Süd hast du angenommen.",
+      spielraumNichts: (n, Z) => `Vom Spielraum hast du nichts weitergegeben. ${n === 1 ? "Ein Teil blieb" : Z.charAt(0).toUpperCase() + Z.slice(1) + " Teile blieben"} in Birk.`,
+      spielraumGabe: (teile, kept, ZB) => `Vom Spielraum hast du ${teile} gegeben` + (kept ? `; ${kept === 1 ? "ein Teil blieb" : ZB + " Teile blieben"} in Birk.` : "."),
+      gabeZiel: { steighof: (n, Z) => `${n === 1 ? "einen Teil" : Z + " Teile"} an Steighof`, speicher: (n, Z) => `${n === 1 ? "einen Teil" : Z + " Teile"} in den Speicher` },
+      und: " und ",
+      tischNichts: "Am Tisch hast du nichts entschieden.",
+      mal: ["", "Einmal", "Zweimal", "Dreimal", "Viermal"],
+      ohneGalt: (Mal) => `${Mal} galt, was ohne Beschluss gilt:`,
+      entschieden: (titel, weg, a) => `Am Tisch, ${titel}: ${weg}, ${a === "durchsetzen" ? "durchgesetzt" : "gemeinsam beschlossen"}.`,
+      ohneBeschluss: (titel, satz) => `Ohne Beschluss, ${titel}: ${satz}`,
+      geldJa: "Das Geld von Tal-Süd hast du angenommen.", geldNein: "Das Geld von Tal-Süd hast du nicht angenommen.",
+      gehalten: "Das Lebensnotwendige war gedeckt, für alle in den vier Orten. In der Föderation ist das immer so.",
+      trocken: (liste) => `${liste} war es trocken, und in der Dürre erholt sich der Bach nicht.`,
+      jzIn: ["im Frühling", "im Sommer", "im Herbst", "im Winter"],
+      entnahme: (blieb) => "Die vier Orte nehmen ihm in jeder Jahreszeit ihren Teil" + (blieb ? "; der Spielraum, der in Birk blieb, gehört dazu." : "."),
+      naeher: "Tal-Süd ist auf der Warteliste näher gerückt: Seine Not ist gross, und es lernt aus den offenen Bibliotheken der Föderation.",
+      naeherGeld: "Tal-Süd ist auf der Warteliste näher gerückt: durch das Geld seiner Händler, und weil es aus den offenen Bibliotheken der Föderation lernt.",
+      leitung: "Auch die Leitung, an der du mitgebaut hast, zählt.",
+      nochWarten: "Es wartet noch."
+    },
     bild: {
       gehalten: "Das Lebensnotwendige war in jeder Jahreszeit gedeckt, für alle in den vier Orten.",
       bachMehr: "Der Bach führt mehr Wasser als zu Beginn deines Jahres. ", bachWeniger: "Der Bach führt weniger Wasser als zu Beginn deines Jahres. ", bachGleich: "Der Bach führt etwa so viel Wasser wie zu Beginn deines Jahres. ", bachGekippt: "Der Bach ist gekippt. ",
       bereit: "Tal-Süd ist bereit für die Aufnahme.", naeher: "Tal-Süd ist auf der Warteliste näher gerückt. Es wartet noch.", wartet: "Tal-Süd wartet.",
       zeichnung: "Tal-Süd hat sich mit Geld der alten Welt eingekauft. Eine bedürftigere Region ohne Geld ist dadurch auf der Warteliste zurückgefallen.",
       regel: (t) => "Eine neue Regel: " + t,
-      gerissen: (n) => (n === 1 ? "Ein Faden ist gerissen." : `${n} Fäden sind gerissen.`), neu: (n) => (n === 1 ? "Ein neuer Faden der Gabe läuft." : `${n} neue Fäden der Gabe laufen.`),
+      gerissen: (n) => (n === 1 ? "Ein Faden ist gerissen." : `${gross(Z(n))} Fäden sind gerissen.`), neu: (n) => (n === 1 ? "Ein neuer Faden der Gabe läuft." : `${gross(Z(n))} neue Fäden der Gabe laufen.`),
       gemeingut: "Der Bauplan der Pumpe im Gemeingut ist besser geworden, für alle.",
-      muede: (namen) => (namen.length === 1 ? namen[0] + " geht müde ins neue Jahr." : namen.join(" und ") + " gehen müde ins neue Jahr.")
+      muede: (namen) => gross(namen.length === 1 ? namen[0] + " geht müde ins neue Jahr." : namen.join(" und ") + " gehen müde ins neue Jahr.")
     },
     ende: { zu: "Dein Jahr ist zu Ende.", frage: "Was gibst du weiter?", platzhalter: "Ein Satz für den Menschen nach dir. Er darf auch fehlen.", reist: "Dein Satz reist mit. Alle, die nach dir kommen, können ihn lesen.", knopf: "Weitergeben" },
     gegeben: { titel: "Weitergegeben.", text: "Gib den Link einem Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt.",
@@ -1346,8 +1393,23 @@ const SPRACHEN = {
     titel: "What is enough", andere: "Deutsch", ort: "Birk · Alpine Pole", bach: "The stream", augenblick: "One moment.",
     jz: ["Spring", "Summer", "Autumn", "Winter"],
     jzSatz: ["The snow goes, the work comes.", "There is more than you need.", "The harvest is in.", "The days are short."],
+    sommerDuerre: "It is dry, and the stream carries little water. Even so, Birk has more than it needs.",
     anvertraut: "A place has been entrusted to you. ",
     kreise: { birk: ["Birk", "you"], steighof: ["Steighof", "neighbours"], talsued: ["Tal-Süd", "waiting"], gemein: ["Commons", "for everyone"] },
+    talsuedBezahlt: "has paid", talsuedBereit: "ready",
+    zahl: ["no", "one", "two", "three", "four", "five", "six", "seven", "eight"],
+    rest: {
+      stunden: (n, Z) => n === 1 ? "One hour is still in your hand. It lapses with spring." : `${Z.charAt(0).toUpperCase() + Z.slice(1)} hours are still in your hand. They lapse with spring.`,
+      spielraum: (n, Z) => (n === 1 ? "One piece of leeway is" : `${Z.charAt(0).toUpperCase() + Z.slice(1)} pieces of leeway are`) + " still in your hand. What you don't pass on stays in Birk."
+    },
+    folge: {
+      verfallen: (n, Z) => n === 1 ? "One hour lapsed with spring." : `${Z.charAt(0).toUpperCase() + Z.slice(1)} hours lapsed with spring.`,
+      behalten: "What you kept in Birk is now in your hand as leeway.",
+      blieb: (n, Z) => (n === 1 ? "One piece of leeway" : `${Z.charAt(0).toUpperCase() + Z.slice(1)} pieces of leeway`) + " stayed in Birk. What stays is used up, and that too draws on the stream.",
+      speicher: (region) => "What you gave is in the store. In winter it goes to " + (region ? "Tal-Süd." : "the place that needs it most."),
+      verteilt: (region) => "What was in the store went to " + (region ? "Tal-Süd." : "the place that needed it most."),
+      geld: "The money is in the transition fund. For a year your workshop and care also work for Tal-Süd."
+    },
     steine: { stunde: "Hour", spielraum: "Lee&shy;way", vertrag: "Contract", zeichnung: "Money" },
     ereignis: {
       bach: { titel: "The stream and the pumps", lage: "The stream is falling, and Ried down the valley asks for pumps that your workshop can only build with water from the stream.",
@@ -1374,7 +1436,7 @@ const SPRACHEN = {
       stunde: { birk: "The hour stays with you: a little more leeway this year.", steighof: "Work alongside Steighof, so that it can stand on its own.", talsued: "Work on Tal-Süd's water pipeline.", gemein: "Work on the pump design, open to all." },
       spielraum: { steighof: "Goes to Steighof.", gemein: "Into the store. In winter it goes to those who need it." },
       vertrag: { birk: "Accept: material from the old world, and in return you build Tal-Süd's pipeline under contract." },
-      zeichnung: { birk: "Accept: Tal-Süd's traders pay money into the transition fund, and Tal-Süd moves up the waiting list." }
+      zeichnung: { birk: "Accept: Tal-Süd's traders pay money into the transition fund, and Tal-Süd moves up the waiting list. For a year your workshop and care also work for Tal-Süd." }
     },
     antwort: {
       stunde: { birk: "Mara: ‘Tonight there's time for the community hall.’", steighof: "Steighof: ‘You work with us, not for us. We'll remember that.’", talsued: "Tal-Süd: ‘The pipeline is growing. Our people are counting the metres.’", gemein: "Jorin: ‘The pump has got better. Ried can build it too.’" },
@@ -1389,33 +1451,61 @@ const SPRACHEN = {
       zeichnung: "<b>Tal-Süd</b> puts something in front of you: ‘Our traders pay money into the transition fund. In return, we move up the waiting list.’"
     },
     zurueckschieben: "Push it back",
-    hand: ["Your hours are placed.", "What you don't pass on stays in Birk this year.", "This time there is nothing in your hand.", "This time there is nothing in your hand."],
+    hand: ["Your hours are placed.", "Your leeway has been passed on.", "This time there is nothing in your hand.", "This time there is nothing in your hand."],
     gehen: (j) => `Let ${j.toLowerCase()} go`,
     ohne: (j) => `If nothing is decided, at the end of ${j.toLowerCase()}: `,
     tisch: { am: "At the table", wartet: "Something is waiting at the table", zurueck: "Back to the table", offen: "Leave it open for now", so: "That's how we'll do it", eingehen: "Agree to it", trotzdem: "Do it anyway",
       bindet: (nr) => `Your rule ${nr} binds.`, spannung: (nr) => `In tension with your rule ${nr}.`, gebunden: "This way is bound by your rule.",
       haltung: { zustimmung: "Yes.", bedenken: "With misgivings. But yes." }, nurSo: "Only like this: " },
     ungezaehlt: [
-      { t: "At haymaking someone helped whom nobody had put on the list." },
-      { t: "At the fountain the eldest told how things were before the transition. The children stayed sitting." },
-      { t: "Jorin mended a bicycle that wasn't his, and wrote it down nowhere." },
-      { t: "In the community hall someone played the accordion until the lamps went out." },
-      { t: "Mara sat up all night with a sick woman. Nobody counted it.", sorge: true },
-      { t: "A neighbour brought soup without asking whether it was needed.", sorge: true },
-      { t: "The first snow fell, and for an hour nobody worked." },
-      { t: "Rahel showed a boy where the moor holds the water in spring." },
-      { t: "Someone left the workshop open so that others could fetch their tools." },
-      { t: "Two children from Tal-Süd read in Birk's library until it grew dark." }
+      { t: "At haymaking someone helped whom nobody had put on the list.", z: [1] },
+      { t: "At the fountain the eldest told how things were before the transition. The children stayed sitting.", z: [0, 1, 2] },
+      { t: "Jorin mended a bicycle that wasn't his, and wrote it down nowhere.", z: [0, 1, 2] },
+      { t: "In the community hall someone played the accordion until the lamps went out.", z: [0, 1, 2, 3] },
+      { t: "Mara sat up all night with a sick woman. Nobody counted it.", sorge: true, z: [0, 1, 2, 3] },
+      { t: "A neighbour brought soup without asking whether it was needed.", sorge: true, z: [2, 3] },
+      { t: "The first snow fell, and for an hour nobody worked.", z: [2] },
+      { t: "Rahel showed a boy where the moor holds the water in spring.", z: [0, 1, 2] },
+      { t: "Someone left the workshop open so that others could fetch their tools.", z: [0, 1, 2, 3] },
+      { t: "Two children from Tal-Süd read in Birk's library until it grew dark.", z: [0, 2, 3] },
+      { t: "Someone cleared the snow from the old woman's door before she woke.", z: [3] },
+      { t: "On the first warm evening everyone carried the tables outside, though nobody had suggested it.", z: [0] }
     ],
+    jahr: {
+      getan: "What you did", welt: "What happened in the world",
+      stundenKeine: (n, Z) => `You didn't place your ${n === 1 ? "hour. It" : Z + " hours. They"} lapsed with spring.`,
+      stundenAlle: (n, Z, liste) => `You placed your ${n === 1 ? "hour" : Z + " hours"}: ${liste}.`,
+      stundenTeil: (n, Z, k, ZK, liste, v, ZV) => `Of your ${Z} hours you placed ${ZK}: ${liste}. ${v === 1 ? "One" : ZV.charAt(0).toUpperCase() + ZV.slice(1)} lapsed with spring.`,
+      stundeZiel: { steighof: (Z) => `${Z} with Steighof`, vorAufbau: (Z) => `${Z} on Tal-Süd's pipeline`, blaupause: (Z) => `${Z} on the pump design`, spielraum: (Z) => `${Z} for Birk itself` },
+      vertrag: "You accepted the contract with Tal-Süd.",
+      spielraumNichts: (n, Z) => `You passed on none of the leeway. ${n === 1 ? "One piece" : Z.charAt(0).toUpperCase() + Z.slice(1) + " pieces"} stayed in Birk.`,
+      spielraumGabe: (teile, kept, ZB) => `Of the leeway, you gave ${teile}` + (kept ? `; ${kept === 1 ? "one piece" : ZB + " pieces"} stayed in Birk.` : "."),
+      gabeZiel: { steighof: (n, Z) => `${n === 1 ? "one piece" : Z + " pieces"} to Steighof`, speicher: (n, Z) => `${n === 1 ? "one piece" : Z + " pieces"} into the store` },
+      und: " and ",
+      tischNichts: "You decided nothing at the table.",
+      mal: ["", "Once", "Twice", "Three times", "Four times"],
+      ohneGalt: (Mal) => `${Mal}, what holds without a decision came into force:`,
+      entschieden: (titel, weg, a) => `At the table, ${titel}: ${weg}, ${a === "durchsetzen" ? "pushed through" : "decided together"}.`,
+      ohneBeschluss: (titel, satz) => `Without a decision, ${titel}: ${satz}`,
+      geldJa: "You accepted Tal-Süd's money.", geldNein: "You did not accept Tal-Süd's money.",
+      gehalten: "What life needs was covered for everyone in the four places. In the federation it always is.",
+      trocken: (liste) => `${liste.charAt(0).toUpperCase() + liste.slice(1)} it was dry, and in a drought the stream does not recover.`,
+      jzIn: ["in spring", "in summer", "in autumn", "in winter"],
+      entnahme: (blieb) => "The four places take their share from it every season" + (blieb ? "; the leeway that stayed in Birk is part of that." : "."),
+      naeher: "Tal-Süd has moved up the waiting list: its need is great, and it learns from the federation's open libraries.",
+      naeherGeld: "Tal-Süd has moved up the waiting list: through its traders' money, and because it learns from the federation's open libraries.",
+      leitung: "The pipeline you helped build counts too.",
+      nochWarten: "It is still waiting."
+    },
     bild: {
       gehalten: "What life needs was covered in every season, for everyone in the four places.",
       bachMehr: "The stream carries more water than at the start of your year. ", bachWeniger: "The stream carries less water than at the start of your year. ", bachGleich: "The stream carries about as much water as at the start of your year. ", bachGekippt: "The stream has tipped. ",
       bereit: "Tal-Süd is ready to join.", naeher: "Tal-Süd has moved up the waiting list. It is still waiting.", wartet: "Tal-Süd is waiting.",
       zeichnung: "Tal-Süd bought its way in with money from the old world. A region in greater need, without money, has fallen back on the waiting list as a result.",
       regel: (t) => "A new rule: " + t,
-      gerissen: (n) => (n === 1 ? "A thread has broken." : `${n} threads have broken.`), neu: (n) => (n === 1 ? "A new thread of giving is running." : `${n} new threads of giving are running.`),
+      gerissen: (n) => (n === 1 ? "A thread has broken." : `${gross(Z(n))} threads have broken.`), neu: (n) => (n === 1 ? "A new thread of giving is running." : `${gross(Z(n))} new threads of giving are running.`),
       gemeingut: "The pump design in the commons has got better, for everyone.",
-      muede: (namen) => (namen.length === 1 ? namen[0] + " goes into the new year tired." : namen.join(" and ") + " go into the new year tired.")
+      muede: (namen) => gross(namen.length === 1 ? namen[0] + " goes into the new year tired." : namen.join(" and ") + " go into the new year tired.")
     },
     ende: { zu: "Your year is over.", frage: "What do you pass on?", platzhalter: "One sentence for the person after you. It may also be left out.", reist: "Your sentence travels with it. Everyone who comes after you can read it.", knopf: "Pass it on" },
     gegeben: { titel: "Passed on.", text: "Give the link to one person. They play their year in the world you leave them.",
@@ -1475,7 +1565,7 @@ function gegengrundText(a) {
 
 // ---------- Zustand der Tür (nicht der Welt) ----------
 let S = null, ansicht = "spiel", sel = null, vor = null, antwort = "", ungezaehlt = -1, tischZu = false, weg = null, abgelehnt = {}, meldung = "";
-let gelegtSaison = -1, tischAuf = false, blickId = null, puls = null, wandelPaar = null, geschichteOffen = false;
+let gelegtSaison = -1, tischAuf = false, blickId = null, puls = null, wandelPaar = null, geschichteOffen = false, folge = [];
 let empfangen = false, links = null, oeffnenSichtbar = false, neuFragen = false, schauStand = null, schauLink = "";
 let klangAn = true; try { klangAn = localStorage.getItem("das-genug-klang") !== "aus"; } catch (e) { /* Standard: an */ }
 
@@ -1546,7 +1636,7 @@ async function oeffne(eingabe) {
   if (!g.ok) { meldung = L.fehler.nichtOeffnen + (SP === "de" ? g.grund : ""); zeichne(); return; }
   meldung = "";
   if (l.art === "s") { schauStand = g.zustand; schauLink = basis() + "#s=" + l.code; ansicht = "schau"; zeichne(); return; }
-  S = g.zustand; empfangen = true; links = null; abgelehnt = {}; antwort = ""; ungezaehlt = -1; tischZu = false; weg = null; wandelPaar = null;
+  S = g.zustand; empfangen = true; links = null; abgelehnt = {}; antwort = ""; ungezaehlt = -1; tischZu = false; weg = null; wandelPaar = null; folge = [];
   ansicht = S.amtszeit && S.amtszeit.beendet ? "ende" : "ankunft"; speichern(); zeichne();
 }
 
@@ -1567,7 +1657,7 @@ function zielFuer(art, kreis) {
 }
 function lege(stein, kreis) {
   const z = zielFuer(stein.art, kreis); if (!z) return;
-  if (zug(z.e)) { gelegtSaison = S.meta.saison; puls = kreis; blickId = null; klang("holz"); antwort = antwortFuer(stein.art, kreis, S); if (stein.angebot) abgelehnt[S.meta.saison + ":" + stein.art] = true;
+  if (zug(z.e)) { gelegtSaison = S.meta.saison; puls = stein.art === "zeichnung" ? "talsued" : kreis; blickId = null; klang("holz"); antwort = antwortFuer(stein.art, kreis, S); if (stein.angebot) abgelehnt[S.meta.saison + ":" + stein.art] = true;
     const k = S.knoten.birk; const voll = K.FELDER.filter((f) => k.felder[f].last > k.felder[f].kapazitaet);
     if (voll.length && stein.art === "stunde") antwort = L.antwort.voll[voll[0]];
   }
@@ -1579,9 +1669,9 @@ function ablehnen(art) { abgelehnt[S.meta.saison + ":" + art] = true; sel = null
 function gehenLassen() {
   const vorher = S;
   if (!zug({ typ: "JAHRESZEIT_ENDE" })) { zeichne(); return; }
-  const n = L.ungezaehlt.length, frei = L.ungezaehlt.map((u, i) => (u.sorge && S.sorgeGezaehlt ? -1 : i)).filter((i) => i >= 0);
-  ungezaehlt = frei[(S.meta.seed + S.meta.takt * 7) % frei.length];
-  wandelPaar = [vorher, S];
+  const jzVorher = vorher.meta.jz, frei = L.ungezaehlt.map((u, i) => ((u.sorge && S.sorgeGezaehlt) || (u.z && u.z.indexOf(jzVorher) < 0) ? -1 : i)).filter((i) => i >= 0);
+  ungezaehlt = frei.length ? frei[(S.meta.seed + S.meta.takt * 7) % frei.length] : -1;
+  wandelPaar = [vorher, S]; folge = folgeSaetze(vorher, S, zuegeDerSaison(vorher));
   antwort = ""; sel = null; vor = null; tischZu = false; tischAuf = false; weg = null; blickId = null; puls = null;
   if (S.amtszeit.beendet) ansicht = "ende";
   speichern(); zeichne(); window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1605,14 +1695,111 @@ function beschliesse(ausgang) {
   weg = null; zeichne();
 }
 
-// ---------- Das Bild des Jahres, in Worten ----------
-function bildInWorten(s, A) {
-  const a = A.anfang, B = L.bild, out = [B.gehalten];
-  const d = s.naturhaushalt.zustand - a.naturhaushalt;
-  out.push((s.naturhaushalt.gekippt && !a.gekippt ? B.bachGekippt : d > 1 ? B.bachMehr : d < -1 ? B.bachWeniger : B.bachGleich) + K.bachSatz(s, SP));
+// ---------- Was aus deinen Zügen wurde (Tür v0.3.3: nichts läuft ins Leere) ----------
+const MEINE = ["STUNDE", "TEILEN", "ANGEBOT", "EREIGNIS_BESCHLUSS"];
+// die eigenen Züge der laufenden Jahreszeit, aus dem Protokoll
+function zuegeDerSaison(s) {
+  const P = s.protokoll, out = [];
+  for (let i = P.length - 1; i >= 0; i--) { const e = P[i]; if (["JAHRESZEIT_ENDE", "WEITERGABE", "START"].indexOf(e.typ) >= 0) break; if (e.urheber === ICH && MEINE.indexOf(e.typ) >= 0) out.unshift(e); }
+  return out;
+}
+const zaehle = (zuege, typ, feld, wert) => zuege.filter((e) => e.typ === typ && e[feld] === wert).length;
+function regionVorrang(s) { return s.verbund.archiv.some((a) => a.regel.typ === "speicher_vorrang" && a.regel.ziel === "region" && !a.offen && !a.wartetAuf && a.gueltigAb <= s.meta.saison); }
+// höchstens zwei Sätze nach dem Wechsel der Jahreszeit: was aus dem wurde, was du getan oder liegen gelassen hast
+function folgeSaetze(vor, nach, zuege) {
+  const F = L.folge, jz = vor.meta.jz, out = [];
+  if (jz === 0) {
+    const v = vor.knoten.birk.stunden; if (v > 0) out.push(F.verfallen(v, Z(v)));
+    if (zaehle(zuege, "STUNDE", "ziel", "spielraum") > 0) out.push(F.behalten);
+  }
+  if (jz === 1) {
+    const blieb = Math.floor(Math.max(0, vor.knoten.birk.spielraum));
+    if (blieb > 0) out.push(F.blieb(blieb, Z(blieb)));
+    if (zaehle(zuege, "TEILEN", "ziel", "steighof") > 0) out.push(K.blick(nach, "steighof", SP));
+    if (zaehle(zuege, "TEILEN", "ziel", "speicher") > 0) out.push(F.speicher(regionVorrang(nach)));
+  }
+  if (jz === 3) {
+    if (vor.verbund.speicher > 0 && nach.verbund.speicher === 0) out.push(F.verteilt(regionVorrang(vor)));
+    if (zuege.some((e) => e.typ === "ANGEBOT" && e.angebot === "zeichnung" && e.annehmen)) out.push(F.geld);
+  }
+  return out.slice(0, 2);
+}
+// ein leiser Satz über dem Knopf, solange noch etwas in der Hand liegt, das mit der Jahreszeit vergeht
+function restSatz() {
+  const k = S.knoten.birk;
+  if (S.meta.jz === 0 && k.stunden > 0) return L.rest.stunden(k.stunden, Z(k.stunden));
+  const sr = Math.floor(Math.max(0, k.spielraum));
+  if (S.meta.jz === 1 && sr > 0) return L.rest.spielraum(sr, Z(sr));
+  return "";
+}
+// Das Jahr der laufenden Amtszeit aus dem Protokoll nachspielen: jede Jahreszeit mit Zustand davor, danach und deinen Zügen
+function jahrLesen(s) {
+  const A = s.amtszeit, P = s.protokoll;
+  let i = 1;
+  if (A.nr > 1) { let w = 0; for (i = 0; i < P.length; i++) if (P[i].typ === "WEITERGABE" && ++w === A.nr - 1) { i++; break; } }
+  let z = K.nachspielen(P.slice(0, i)); const zeiten = []; let zuege = [];
+  for (let j = i; j < P.length; j++) {
+    const e = P[j], r = K.eintragen(z, e); if (!r.ok) break;
+    if (e.typ === "JAHRESZEIT_ENDE") { zeiten.push({ vor: z, nach: r.zustand, zuege }); zuege = []; }
+    else if (e.urheber === ICH && MEINE.indexOf(e.typ) >= 0) zuege.push(e);
+    z = r.zustand;
+  }
+  return zeiten;
+}
+function liste(teile) { return teile.length < 2 ? teile.join("") : teile.slice(0, -1).join(", ") + L.jahr.und + teile[teile.length - 1]; }
+function jahrInWorten(s) {
+  const J = L.jahr, A = s.amtszeit, a = A.anfang;
+  let zeiten = []; try { zeiten = jahrLesen(s); } catch (e) { zeiten = []; }
+  const inJz = (jz) => zeiten.find((x) => x.vor.meta.jz === jz);
+  const getan = [], welt = [];
+  // Frühling: die Stunden und der Vertrag
+  const fr = inJz(0);
+  if (fr) {
+    const ziele = ["steighof", "vorAufbau", "blaupause", "spielraum"], gelegt = ziele.map((zl) => zaehle(fr.zuege, "STUNDE", "ziel", zl));
+    const k = gelegt.reduce((x, y) => x + y, 0), v = fr.vor.knoten.birk.stunden, n = k + v;
+    const teile = ziele.map((zl, i) => (gelegt[i] ? J.stundeZiel[zl](Z(gelegt[i])) : "")).filter(Boolean);
+    if (n > 0) getan.push(k === 0 ? J.stundenKeine(n, Z(n)) : v === 0 ? J.stundenAlle(n, Z(n), liste(teile)) : J.stundenTeil(n, Z(n), k, Z(k), liste(teile), v, Z(v)));
+    if (fr.zuege.some((e) => e.typ === "ANGEBOT" && e.angebot === "vertrag" && e.annehmen)) getan.push(J.vertrag);
+  }
+  // Sommer: der Spielraum
+  const so = inJz(1); let blieb = 0;
+  if (so) {
+    const g1 = zaehle(so.zuege, "TEILEN", "ziel", "steighof"), g2 = zaehle(so.zuege, "TEILEN", "ziel", "speicher");
+    blieb = Math.floor(Math.max(0, so.vor.knoten.birk.spielraum));
+    if (g1 + g2 === 0 && blieb > 0) getan.push(J.spielraumNichts(blieb, Z(blieb)));
+    else if (g1 + g2 > 0) getan.push(J.spielraumGabe(liste([g1 ? J.gabeZiel.steighof(g1, Z(g1)) : "", g2 ? J.gabeZiel.speicher(g2, Z(g2)) : ""].filter(Boolean)), blieb, Z(blieb)));
+  }
+  // Der Tisch
+  const taten = s.register.slice(a.register), entschieden = taten.filter((t) => t.ausgang === "gemeinsam" || t.ausgang === "durchsetzen"), ohne = taten.filter((t) => t.ausgang === "ohne");
+  const titelVon = (t) => { const T = ereignisText(t.ereignisId); return L.q(esc(T ? T.titel : t.ereignis)); };
+  const stillVon = (t) => { const T = ereignisText(t.ereignisId); return esc(T ? T.stillstand : t.weg.replace(/^Ohne Beschluss: /, "")); };
+  const wegVon = (t) => { const T = ereignisText(t.ereignisId); if (!T) return esc(t.weg); return esc((t.wegId === "C" && /Rest/.test(t.weg) ? T.wege.C2 : T.wege[t.wegId]) || t.weg); };
+  if (!entschieden.length) { getan.push(J.tischNichts + (ohne.length ? " " + J.ohneGalt(J.mal[ohne.length] || String(ohne.length)) + " " + ohne.map(stillVon).join(" ") : "")); }
+  else { entschieden.forEach((t) => getan.push(J.entschieden(titelVon(t), wegVon(t), t.ausgang))); ohne.forEach((t) => getan.push(J.ohneBeschluss(titelVon(t), stillVon(t)))); }
+  // Winter: das Geld
+  const wi = inJz(3);
+  if (wi) { const ja = wi.zuege.some((e) => e.typ === "ANGEBOT" && e.angebot === "zeichnung" && e.annehmen); if (ja) getan.push(J.geldJa); else if (!wi.vor.region.reihung.gezeichnet) getan.push(J.geldNein); }
+
+  // Die Welt, mit ihren Gründen; keine Wertung
+  const B = L.bild;
+  welt.push(J.gehalten);
+  const d = s.naturhaushalt.zustand - a.naturhaushalt, gekippt = s.naturhaushalt.gekippt && !a.gekippt;
+  welt.push((gekippt ? B.bachGekippt : d > 1 ? B.bachMehr : d < -1 ? B.bachWeniger : B.bachGleich).trim());
+  const trocken = zeiten.filter((x) => x.nach.wetter === "Dürre").map((x) => J.jzIn[x.vor.meta.jz]);
+  if (trocken.length) welt.push(J.trocken(gross(liste(trocken))));
+  if (gekippt || d < -1) welt.push(J.entnahme(blieb > 0));
+  if (!(trocken.length && s.wetter === "Dürre")) welt.push(K.bachSatz(s, SP));
   const R = s.region.reihung;
-  out.push(R.aufnahmeBereit ? B.bereit : R.platz < a.platz - 0.5 ? B.naeher : B.wartet);
-  return out.concat(bildTeile(A.bild || [], s));
+  if (R.aufnahmeBereit) welt.push(B.bereit);
+  else if (R.platz < a.platz - 0.5) {
+    const mitgebaut = zeiten.some((x) => x.zuege.some((e) => (e.typ === "STUNDE" && e.ziel === "vorAufbau") || (e.typ === "ANGEBOT" && e.angebot === "vertrag" && e.annehmen)));
+    welt.push((R.gezeichnet ? J.naeherGeld : J.naeher) + (mitgebaut ? " " + J.leitung : "") + " " + J.nochWarten);
+  } else welt.push(B.wartet);
+  if (wi && wi.vor.verbund.speicher > 0 && wi.nach.verbund.speicher === 0) welt.push(L.folge.verteilt(regionVorrang(wi.vor)));
+  bildTeile(A.bild || [], s).forEach((t) => welt.push(esc(t)));
+  // getan enthält schon maskierte Titel; die übrigen Sätze kommen aus der Tür selbst
+  const block = (titel, saetze) => `<section class="bild" aria-label="${titel}"><h3 class="jahrtitel">${titel}</h3>${saetze.map((t) => `<p>${t}</p>`).join("")}</section>`;
+  return block(J.getan, getan) + block(J.welt, welt);
 }
 function bildTeile(bild, s) {
   const B = L.bild, out = [];
@@ -1622,7 +1809,7 @@ function bildTeile(bild, s) {
     else if (x.art === "regel" && !d.keine) { const a = (s.verbund.archiv.find((r) => r.nr === d.nr)) || { regel: d.regel, text: x.text }; out.push(B.regel(regelText(a))); }
     else if (x.art === "faeden") out.push(d.gerissen ? B.gerissen(d.gerissen) : d.neu ? B.neu(d.neu) : x.text);
     else if (x.art === "gemeingut") out.push(B.gemeingut);
-    else if (x.art === "erbe" && d.felder) out.push(B.muede(d.felder.map(feldName)));
+    else if (x.art === "erbe" && d.felder) out.push(B.muede(d.felder.map((f) => K.FELD_SATZ[SP][f][0])));
   });
   return out;
 }
@@ -1652,11 +1839,17 @@ function ring(anteil, farbe, dicke, start) {
 function kreisBild(id) {
   const s = S;
   if (id === "birk") { const k = s.knoten.birk; return K.FELDER.map((f, i) => { const F = k.felder[f], frei = F.kapazitaet - F.last;   // freie Zeit je Arbeitsfeld; aufgebraucht wird der Bogen rostrot
-      return frei > 0 ? ring(Math.min(1, frei / 40) / 3 * 0.9, "var(--leise)", 4, -90 + i * 120) : ring(0.04, "var(--rost)", 7, -90 + i * 120); }).join(""); }
+      return frei > 0 ? ring(Math.min(1, frei / 40) / 3 * 0.9, "var(--leise)", 4, -90 + i * 120) : ring(0.04, "var(--rost)", 7, -90 + i * 120); }).join("") + spielraumPunkte(k.spielraum); }
   if (id === "steighof") return ring((K.deckungsgrad(s.knoten.steighof.korb) - 0.5) * 2, "var(--bach)", 3);
-  if (id === "talsued") return ring(s.region.vorAufbau.wasser, "var(--bach)", 3);
+  if (id === "talsued") return ring(s.region.vorAufbau.wasser, "var(--bach)", 3) + (s.region.reihung.gezeichnet ? `<circle cx="50" cy="22" r="5" style="fill:none;stroke:var(--gold)" stroke-width="2"/>` : "");
   if (id === "gemein") { let d = ""; for (let i = 0; i < 3; i++) d += `<circle cx="${38 + i * 12}" cy="76" r="3.5" style="fill:${i < s.gemeingut.pumpe.stufe ? "var(--bach)" : "none"};stroke:var(--leise)"/>`; for (let i = 0; i < Math.min(8, s.verbund.speicher); i++) d += `<rect x="${30 + i * 5}" y="20" width="3.5" height="8" style="fill:var(--birke-rand)"/>`; return d; }
   return "";
+}
+// Der Spielraum, der in Birk liegt: ein goldener Punkt je Teil (im Sommer sind es die Steine in der Hand)
+function spielraumPunkte(n) { const m = Math.min(8, Math.floor(Math.max(0, n))); let d = ""; for (let i = 0; i < m; i++) d += `<circle cx="${50 - (m - 1) * 3.5 + i * 7}" cy="22" r="2.6" style="fill:var(--gold)"/>`; return d; }
+function untertitel(id) {
+  if (id === "talsued") { const R = S.region.reihung; if (R.aufnahmeBereit) return L.talsuedBereit; if (R.gezeichnet) return L.talsuedBezahlt; }
+  return L.kreise[id][1];
 }
 function bach(s) {
   const H = s.naturhaushalt, w = 1.2 + (H.zustand / 100) * 6;
@@ -1694,14 +1887,17 @@ function spiel() {
   let o = kopf(true);
   if (geschichteOffen) o += geschichte();
   const erste = S.meta.saison === S.amtszeit.beginn && !antwort;
-  o += `<p class="lage">${erste && S.amtszeit.nr === 1 && S.meta.jz === 0 ? L.anvertraut : ""}${L.jzSatz[S.meta.jz]}</p>`;
-  const wandelSatz = wandelPaar ? K.wandel(wandelPaar[0], wandelPaar[1], SP) : null;
+  const duerre = S.meta.jz === 1 && S.wetter === "Dürre", jzSatz = duerre ? L.sommerDuerre : L.jzSatz[S.meta.jz];
+  o += `<p class="lage">${erste && S.amtszeit.nr === 1 && S.meta.jz === 0 ? L.anvertraut : ""}${jzSatz}</p>`;
+  // im trockenen Sommer sagt der Satz der Jahreszeit schon, was der Wandel sagen würde
+  const wandelSatz = wandelPaar && !(duerre && wandelPaar[1].wetter === "Dürre" && wandelPaar[0].wetter !== "Dürre" && K.wandel(wandelPaar[0], wandelPaar[1], "de") === "Es wurde trocken. Der Bach führt wenig Wasser.") ? K.wandel(wandelPaar[0], wandelPaar[1], SP) : null;
   if (wandelSatz) o += `<p class="wandel">${esc(wandelSatz)}</p>`;
+  if (wandelPaar && folge.length) o += folge.map((t) => `<p>${esc(t)}</p>`).join("");
   if (ungezaehlt >= 0) o += `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>`;
   o += `<div class="feld">` + Object.keys(L.kreise).map((id) => {
     const z = st ? zielFuer(st.art, id) : null;
     const cls = (st ? (z ? (vor === id ? "vor" : "bereit") : "ruht") : blickId === id ? "blick" : "") + (puls === id ? " puls" : "");
-    return `<button class="kreis ${cls}" data-kreis="${id}" aria-label="${L.kreise[id][0]}"><svg viewBox="0 0 100 100">${kreisBild(id)}</svg><span class="n">${L.kreise[id][0]}</span><span class="r">${L.kreise[id][1]}</span></button>`;
+    return `<button class="kreis ${cls}" data-kreis="${id}" aria-label="${L.kreise[id][0]}"><svg viewBox="0 0 100 100">${kreisBild(id)}</svg><span class="n">${L.kreise[id][0]}</span><span class="r">${untertitel(id)}</span></button>`;
   }).join("") + `<svg class="faeden" aria-hidden="true"></svg></div>`;
   const zt = st && vor ? zielFuer(st.art, vor) : null;
   o += `<p class="ziel">${zt ? esc(zt.ziel) : blickId ? esc(K.blick(S, blickId, SP)) : meldung ? esc(meldung) : ""}</p>`;
@@ -1715,6 +1911,8 @@ function spiel() {
   else if (E) o += `<button class="leise" data-tisch="auf" style="align-self:center">${tischZu ? L.tisch.zurueck : L.tisch.wartet}</button>`;
   const T = E && ereignisText(E.id);
   if (E) o += `<p class="ohne">${L.ohne(L.jz[S.meta.jz])}${esc(T ? T.stillstand : E.stillstand.text)}</p>`;
+  const rest = restSatz();
+  if (rest) o += `<p class="ohne">${esc(rest)}</p>`;
   o += `<button class="weiter" data-gehen>${L.gehen(L.jz[S.meta.jz])}</button>`;
   o += fuss();
   return o;
@@ -1740,9 +1938,9 @@ function ankunft() {
     <button class="haupt" data-eintreten style="align-self:flex-start">${A.eintreten}</button>` + fuss();
 }
 function ende() {
-  const A = S.amtszeit, En = L.ende;
+  const En = L.ende;
   return kopf() + `<h2>${En.zu}</h2>
-    <div class="bild">${bildInWorten(S, A).map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+    ${jahrInWorten(S)}
     ${ungezaehlt >= 0 ? `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>` : ""}
     <label for="satz"><h2>${En.frage}</h2></label>
     <textarea id="satz" maxlength="${K.SATZ_MAX}" placeholder="${En.platzhalter}"></textarea>
@@ -1829,6 +2027,7 @@ function faeden() {
     let a = null, art = "";
     if (f.von === "birk" && ziel[f.nach]) { a = ziel[f.nach]; art = f.art === "vertrag" ? "vertrag" : ""; }
     else if (f.nach === "birk" && f.von === "region") { a = "talsued"; art = "vertrag"; }
+    else if (f.von === "region" && f.nach === "fonds") { a = "talsued"; art = "vertrag"; }
     if (!a) return;
     if (f.gerissen) art = "gerissen";
     else if (a === "steighof" && S.unerwartetSaisons.steighof >= 2) art = "unruhig";
@@ -1878,7 +2077,7 @@ function ziehEnde() {
 
 // ---------- Start ----------
 function neueWelt() {
-  S = K.neueWelt((Math.random() * 4294967295) >>> 0); empfangen = false; links = null; ansicht = "spiel"; sel = null; vor = null; antwort = ""; ungezaehlt = -1; abgelehnt = {}; meldung = ""; wandelPaar = null;
+  S = K.neueWelt((Math.random() * 4294967295) >>> 0); empfangen = false; links = null; ansicht = "spiel"; sel = null; vor = null; antwort = ""; ungezaehlt = -1; abgelehnt = {}; meldung = ""; wandelPaar = null; folge = [];
   speichern();
 }
 async function start() {
@@ -1894,6 +2093,7 @@ async function start() {
 window.addEventListener("hashchange", () => { if (/^#[bs]=/.test(location.hash)) oeffne(location.hash); });
 start();
 </script>
+
 
 </body>
 </html>
