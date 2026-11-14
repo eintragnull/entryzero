@@ -2,9 +2,27 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.65 ·  2026-11-02
+  Fassung:  v0.66 ·  2026-11-14
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
+
+  Aenderungen v0.65 -> v0.66 (Sitzung 14.11.2026, Beschluss Martin):
+  (1) DAS SPIEL: neuer Menuepunkt an zweiter Stelle «Das Spiel / The Game»
+      (zwei Tueren, Geschichte und Spiel, vor den Grundlagen). Neue Seite
+      panel-spiel mit der Verkaufsflaeche DE/EN (Bauplan v0.12, §4) und dem
+      Knopf zum Spiel. Das Spiel selbst laeuft auf eigener Seite /das-genug/
+      (Ordner aus das-genug-tuer-v0_3_2-webseite.zip), nicht im Panel.
+  (2) STARTSEITE: unter «Das Buch ist frei verfuegbar …» ein Satz mit Knopf:
+      «Oder versuch es selbst: Ein Jahr. Eine Geste. Dann gibst du weiter.»
+      Der Knopf fuehrt direkt ins Spiel (die Tuer erklaert nichts vorab).
+  (3) ?tab= : Die Seite oeffnet beim Laden den genannten Bereich, z. B.
+      /?tab=manifest. Gebraucht vom Spiel: «Was du gerade getan hast, hat
+      einen Namen» fuehrt direkt zum Manifest. Nur vorhandene Bereiche.
+  (4) SPRACHE: Browser, die weder Deutsch noch Englisch sprechen, erhalten
+      jetzt Englisch (bisher Deutsch). Gleiche Regel im Spiel; Spiel und
+      Webseite teilen die gemerkte Wahl ('ez_lang').
+  Kanon: keine Offenlegung auf den Spiel-Flaechen (G3), kein Falter, keine
+  Aufforderung zum Weitergeben (G2).
 
   Aenderungen gegenueber v0.52 (Sitzung 07.09.2026):
   ⚠ TEXTVERLUST BEHOBEN (Vergleich v0.49 gegen v0.52 auf Wunsch Martins).
@@ -2078,6 +2096,7 @@
         <div class="nav-links" id="nav-links">
             <button type="button" class="nav-item active" onclick="switchTab('home')" id="nav-home"><span class="lang-de">Startseite</span><span class="lang-en hidden">Home</span></button>
             <button type="button" class="nav-item" onclick="switchTab('buch')" id="nav-buch"><span class="lang-de">Das Buch</span><span class="lang-en hidden">The Book</span></button>
+            <button type="button" class="nav-item" onclick="switchTab('spiel')" id="nav-spiel"><span class="lang-de">Das Spiel</span><span class="lang-en hidden">The Game</span></button>
             <button type="button" class="nav-item" onclick="switchTab('grundlagen')" id="nav-grundlagen"><span class="lang-de">Die Grundlagen</span><span class="lang-en hidden">The Foundations</span></button>
             <button type="button" class="nav-item" onclick="switchTab('werkstatt')" id="nav-werkstatt"><span class="lang-de">Die Werkstatt</span><span class="lang-en hidden">The Workshop</span></button>
             <button type="button" class="nav-item" onclick="switchTab('mitschreiben')" id="nav-mitschreiben"><span class="lang-de">Mitschreiben</span><span class="lang-en hidden">Write On</span></button>
@@ -2135,12 +2154,50 @@
 
             <p class="lang-en hidden">The book is freely available, in English and in German.</p>
 
+            <p class="lang-de" style="text-align: center; margin-top: 30px;">Oder versuch es selbst: <em>Ein Jahr. Eine Geste. Dann gibst du weiter.</em></p>
+            <p class="lang-en hidden" style="text-align: center; margin-top: 30px;">Or try it yourself: <em>One year. One gesture. Then you pass it on.</em></p>
+            <div class="btn-group" style="justify-content: center; margin-top: 12px;">
+                <a class="action-btn secondary" href="/das-genug/"><span class="lang-de">Ein Jahr spielen</span><span class="lang-en hidden">Play one year</span></a>
+            </div>
+
             <p style="font-size: 1rem; margin-top: 45px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 25px; text-align: center;">
                 <span class="lang-de">Und wer wissen will, wie dieses Buch entstand: <a href="#" class="inline-link" onclick="switchTab('werkstatt'); return false;">Die Werkstatt</a> erzählt es — als Novelle.</span>
                 <span class="lang-en hidden">And if you want to know how this book came to be: <a href="#" class="inline-link" onclick="switchTab('werkstatt'); return false;">The Workshop</a> tells it — as a novella.</span>
             </p>
 
             <div class="meta-author">Martin U G P · The Symbios Butterfly Lab</div>
+        </div>
+
+        <!-- ================= SEITE 0b: DAS SPIEL ================= -->
+        <!-- Verkaufsflaeche aus Bauplan v0.12, §4. Keine Offenlegung hier (G3); das Spiel laeuft unter /das-genug/. -->
+        <div id="panel-spiel" class="content-panel">
+            <h1 class="lang-de">Das Genug</h1>
+            <h1 class="lang-en hidden">What is enough</h1>
+
+            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-de">Ein Jahr. Eine Geste. Dann gibst du weiter.</p>
+            <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-en hidden">One year. One gesture. Then you pass it on.</p>
+
+            <div class="lang-de">
+                <p>Dir ist ein Ort anvertraut und eine Handvoll Stunden. Jede Jahreszeit legst du, was du hast, auf einen Kreis: zu dir, zu den Nachbarn, zu denen, die noch warten, ins Gemeinsame.</p>
+                <p>Mehr musst du nicht wissen. Was du getan hast, merkst du an dem, was antwortet.</p>
+                <p>Es gibt keine Punkte, keinen Sieg und keine nächste Stufe. Nach einem Jahr hört das Spiel von selbst auf. Die Frage war nie, wie viel du holst, sondern: Was genügt?</p>
+                <p>Am Ende fragt es nur noch eines: Was gibst du weiter? Ein Satz, an einen Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt, mit dem, was du geschützt hast, und mit dem, was du versäumt hast.</p>
+                <p><em>Gib es deiner Enkelin. Oder lass es dir von ihr geben.</em></p>
+            </div>
+            <div class="lang-en hidden">
+                <p>A place is entrusted to you, and a handful of hours. Each season you lay what you have on a circle: towards yourselves, towards the neighbours, towards those still waiting, into what you share.</p>
+                <p>You need know nothing more. You notice what you have done by what answers.</p>
+                <p>There are no points, no winning and no next level. After one year the game stops by itself. The question was never how much you can take, but: what is enough?</p>
+                <p>At the end it asks only one thing: what do you pass on? One sentence, to one person. They play their year in the world you leave them, with what you protected and with what you neglected.</p>
+                <p><em>Give it to your granddaughter. Or let her give it to you.</em></p>
+            </div>
+
+            <div class="btn-group" style="justify-content: center;">
+                <a class="action-btn" href="/das-genug/"><span class="lang-de">Ein Jahr spielen</span><span class="lang-en hidden">Play one year</span></a>
+            </div>
+
+            <p class="lang-de" style="text-align: center; font-size: 0.95rem;">Auf dem Telefon und am Rechner, ohne Anmeldung. Auf keinem Server wird etwas gespeichert.</p>
+            <p class="lang-en hidden" style="text-align: center; font-size: 0.95rem;">On a phone or a computer, without signing up. Nothing is stored on any server.</p>
         </div>
 
         <!-- ================= SEITE 1: DAS BUCH ================= -->
@@ -3895,7 +3952,7 @@
         const LANG_KEY = 'ez_lang';
 
         // Ermittelt die Startsprache: 1. Angabe in der Adresse (?lang=), 2. gemerkte
-        // Nutzerwahl, 3. Browsersprache, Default DE. localStorage kann im
+        // Nutzerwahl, 3. Browsersprache, Default EN (seit v0.66). localStorage kann im
         // Privatmodus werfen -> abgefangen.
         function initialLang() {
             // 1. ?lang=de / ?lang=en — schlaegt alles andere, wird aber nicht gemerkt
@@ -3908,14 +3965,14 @@
                 if (saved === 'de' || saved === 'en') return saved;
             } catch (e) { /* localStorage nicht verfuegbar */ }
             const prefs = (navigator.languages && navigator.languages.length)
-                ? navigator.languages : [navigator.language || 'de'];
+                ? navigator.languages : [navigator.language || 'en'];
             for (const p of prefs) {
                 if (!p) continue;
                 const code = p.toLowerCase();
                 if (code.startsWith('de')) return 'de';
                 if (code.startsWith('en')) return 'en';
             }
-            return 'de'; // alles Uebrige: deutsche Seite
+            return 'en'; // alles Uebrige: englische Seite (seit v0.66; vorher deutsch)
         }
 
         // 'auto' = Startaufruf ohne Klick: Sprache setzen, aber NICHT als Wahl merken.
@@ -3976,7 +4033,13 @@
         document.addEventListener("DOMContentLoaded", function() {
             const start = initialLang();
             if (start !== 'de') setLanguage(start, { auto: true }); // DE ist Default im Markup
-            switchTab('home');
+            // ?tab=manifest usw. oeffnet einen vorhandenen Bereich (seit v0.66; gebraucht vom Spiel)
+            let startTab = 'home';
+            try {
+                const t = new URLSearchParams(window.location.search).get('tab');
+                if (t && /^[a-z-]+$/.test(t) && document.getElementById('panel-' + t)) startTab = t;
+            } catch (e) { /* URLSearchParams nicht verfuegbar */ }
+            switchTab(startTab);
             updateNavHeight();
             markExternalLinks();
         });
