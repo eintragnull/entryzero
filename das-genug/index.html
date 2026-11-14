@@ -1,0 +1,1899 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Das Genug</title>
+<meta name="description" content="Ein Jahr. Eine Geste. Dann gibst du weiter. · One year. One gesture. Then you pass it on.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://entryzero.vercel.app/das-genug/">
+<meta property="og:site_name" content="Eintrag Null / Entry Zero">
+<meta property="og:title" content="Das Genug · What is enough">
+<meta property="og:description" content="Ein Jahr. Eine Geste. Dann gibst du weiter. · One year. One gesture. Then you pass it on.">
+<meta property="og:locale" content="de_CH">
+<meta property="og:locale:alternate" content="en_GB">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Das Genug · What is enough">
+<meta name="twitter:description" content="Ein Jahr. Eine Geste. Dann gibst du weiter. · One year. One gesture. Then you pass it on.">
+<style>
+/* Schriften von der eigenen Seite (SIL Open Font License, siehe fonts/) */
+@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/atkinson-hyperlegible-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Atkinson Hyperlegible";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/atkinson-hyperlegible-latin-400-italic.woff2) format("woff2")}
+@font-face{font-family:"Atkinson Hyperlegible";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/atkinson-hyperlegible-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
+</style>
+<!-- Die Tür v0.3.2 · 14.11.2026 · Kern v0.16 · Spielkonzept v0.9 · Sprache wie die Webseite (?lang=, ez_lang, Browser, sonst Englisch); Tür hinaus zum Manifest -->
+
+<style>
+/* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
+:root{
+  --grund:#EEF1EE; --tinte:#1E2A2E; --leise:#56656A; --linie:#C9D2CF; --karte:#F8FAF8;
+  --birke:#EADFC9; --birke-rand:#A89470; --bach:#2C6E8E; --rost:#B4522D; --gold:#9A7420;
+  --fr:#E2ECDD; --so:#F0E8D0; --he:#EEDDCB; --wi:#E1E8EF;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --text:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --grund:#131A1C; --tinte:#E3EAE8; --leise:#9AA8AA; --linie:#2E3A3C; --karte:#1A2325;
+  --birke:#3B3428; --birke-rand:#8C7A58; --bach:#7DB7D3; --rost:#E58C62; --gold:#D5AE57;
+  --fr:#18241B; --so:#262213; --he:#2A1E16; --wi:#172029; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --grund:#131A1C; --tinte:#E3EAE8; --leise:#9AA8AA; --linie:#2E3A3C; --karte:#1A2325;
+  --birke:#3B3428; --birke-rand:#8C7A58; --bach:#7DB7D3; --rost:#E58C62; --gold:#D5AE57;
+  --fr:#18241B; --so:#262213; --he:#2A1E16; --wi:#172029; color-scheme:dark }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--grund);color:var(--tinte);font-family:var(--text);font-size:17px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:12px 28px;
+  transition:background-color .8s}
+body[data-jz="0"]{background:var(--fr)} body[data-jz="1"]{background:var(--so)} body[data-jz="2"]{background:var(--he)} body[data-jz="3"]{background:var(--wi)}
+main{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1,h2,.zeit{font-family:var(--display);font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h1{font-size:2rem;margin:0}
+h2{font-size:1.3rem;margin:0}
+p{margin:0}
+.kopf{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.ort{font-size:.85rem;color:var(--leise);letter-spacing:.06em;text-transform:uppercase}
+.zeit{font-size:1.5rem}
+.bach{display:block;width:100%;height:26px}
+.bach path{fill:none;stroke:var(--bach);stroke-linecap:round;transition:stroke-width .8s, opacity .8s}
+.lage{font-size:1.05rem;min-height:1.5em}
+.satz{font-family:var(--display);font-weight:500;font-size:1.35rem;line-height:1.35}
+.feld{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:34px 26px;justify-items:center}
+.faeden{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.faeden line{stroke:var(--bach);stroke-width:2.5;stroke-linecap:round;opacity:.75}
+.faeden line.vertrag{stroke:var(--gold);stroke-dasharray:2 7;opacity:.9}
+.faeden line.unruhig{stroke:var(--rost);stroke-dasharray:9 6}
+.faeden line.gerissen{stroke:var(--rost);stroke-dasharray:3 14;opacity:.5}
+.kreis{position:relative;z-index:1;width:min(100%, 138px);aspect-ratio:1;max-width:100%;border-radius:50%;border:2px solid var(--linie);background:var(--karte);color:var(--tinte);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font:inherit;padding:10px;cursor:pointer;transition:border-color .2s, transform .2s, opacity .3s}
+.kreis svg{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);pointer-events:none}
+.kreis .n{font-family:var(--display);font-weight:700;font-size:1.1rem;position:relative}
+.kreis .r{font-size:.78rem;color:var(--leise);position:relative}
+.kreis.bereit{border-color:var(--bach);border-style:dashed}
+.kreis.vor{border-color:var(--bach);border-style:solid;transform:scale(1.03)}
+.kreis.ruht{opacity:.45;cursor:default}
+.kreis.blick{border-color:var(--leise)}
+.kreis.puls{animation:puls .9s ease-out}
+@keyframes puls{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--bach) 55%, transparent)}100%{box-shadow:0 0 0 22px transparent}}
+.bachknopf{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer}
+.erbe{background:none;border:none;padding:0;font:inherit;font-style:italic;color:var(--leise);text-align:left;cursor:pointer;text-decoration:underline dotted;text-underline-offset:4px}
+.wandel{font-family:var(--display);font-weight:500}
+.ohne{font-size:.9rem;color:var(--leise);text-align:center}
+.geschichte{border:1px solid var(--linie);border-radius:16px;background:var(--karte);padding:14px 16px;display:flex;flex-direction:column;gap:12px}
+.geschichte h3{font-family:var(--display);font-size:1rem;margin:0}
+.geschichte ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.kreis:focus-visible,.stein:focus-visible,button:focus-visible{outline:3px solid var(--bach);outline-offset:2px}
+.ziel{min-height:2.6em;font-size:.95rem;color:var(--leise);text-align:center}
+.antwort{min-height:1.5em;font-style:italic}
+.hand{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;min-height:58px;align-items:center}
+.stein{width:54px;height:54px;border-radius:50%;border:2px solid var(--birke-rand);background:var(--birke);color:var(--tinte);font:inherit;font-size:.68rem;
+  display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.1;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;transition:transform .15s}
+.stein.sel{transform:translateY(-6px);box-shadow:0 6px 0 -2px var(--bach)}
+.stein.angebot{border-color:var(--gold);border-style:double;border-width:4px;font-weight:700}
+.geist{position:fixed;pointer-events:none;z-index:20;opacity:.9}
+.leer{color:var(--leise);font-size:.95rem}
+.angebotssatz{font-size:.95rem;text-align:center}
+.angebotssatz b{font-family:var(--display)}
+button.weiter,button.haupt,button.leise{font:inherit;border-radius:999px;padding:12px 20px;cursor:pointer}
+button.weiter{background:transparent;border:2px solid var(--tinte);color:var(--tinte);align-self:center}
+button.haupt{background:var(--tinte);border:2px solid var(--tinte);color:var(--grund)}
+button.leise{background:transparent;border:1px solid var(--linie);color:var(--leise);font-size:.9rem;padding:8px 14px}
+.ungezaehlt{border:1px dashed var(--leise);border-radius:14px;padding:12px 14px;font-style:italic;
+  background-image:repeating-linear-gradient(135deg, color-mix(in srgb, var(--tinte) 6%, transparent) 0 2px, transparent 2px 9px)}
+.tisch{border:2px solid var(--tinte);border-radius:18px;background:var(--karte);padding:16px;display:flex;flex-direction:column;gap:12px}
+.tisch .titel{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--leise)}
+.wege{display:flex;flex-direction:column;gap:8px}
+.weg{font:inherit;text-align:left;border:2px solid var(--birke-rand);background:var(--birke);color:var(--tinte);border-radius:14px;padding:12px 14px;cursor:pointer}
+.weg.sel{border-color:var(--bach);box-shadow:0 0 0 2px var(--bach) inset}
+.weg[aria-disabled="true"]{opacity:.5;cursor:default}
+.stimmen{display:flex;flex-direction:column;gap:4px;font-size:.95rem}
+.stimmen .wer{font-family:var(--display);font-weight:700}
+.reihe{display:flex;flex-wrap:wrap;gap:8px}
+.bild{display:flex;flex-direction:column;gap:8px;padding-left:14px;border-left:3px solid var(--bach)}
+textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px solid var(--linie);background:var(--karte);color:var(--tinte);padding:10px 12px;resize:vertical}
+.hinweis{font-size:.85rem;color:var(--leise)}
+.link{font-family:ui-monospace, "SF Mono", Menlo, monospace;font-size:.75rem;word-break:break-all;background:var(--karte);border:1px solid var(--linie);border-radius:10px;padding:8px 10px}
+.tuer{border-top:1px solid var(--linie);padding-top:14px;display:flex;flex-direction:column;gap:6px}
+.tuer a{color:var(--bach)}
+.fuss{display:flex;flex-direction:column;gap:8px;align-items:center;margin-top:8px}
+.fuss .klein{background:none;border:none;color:var(--leise);font:inherit;font-size:.85rem;text-decoration:underline;cursor:pointer}
+.oeffnen{display:flex;gap:8px;width:100%}
+.oeffnen input{flex:1;min-width:0;font:inherit;font-size:.9rem;border-radius:10px;border:1px solid var(--linie);background:var(--karte);color:var(--tinte);padding:8px 10px}
+.zeitlinie{display:flex;flex-direction:column;gap:16px}
+.zeitlinie .z{display:flex;flex-direction:column;gap:6px}
+.zeitlinie .j{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--leise)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+</head>
+<body>
+<main id="app" aria-live="polite"></main>
+
+<script>
+/* Das Genug — Rechenkern v0.16 (Tür v0.3: Sätze ohne Modellwörter, Deutsch und Englisch für Blick, Wandel, Bach, Preis und Bedingung; strukturierte Daten für Bild, Archiv und Register)
+ * Ein Kern für Browser und Simulation. Kein Romankanon: Der Rechenkern ist Spielsetzung.
+ * Grundlage: Vollmodell v0.2, Reduktion v0.1, Bauweg v0.2. Norm B in allen Texten.
+ *
+ * Bauart:
+ *  - Der Weltzustand entsteht nur als Faltung über das Protokoll (append-only).
+ *  - Jeder Eintrag geht durch den Türsteher (Invarianten). Abgelehnte Einträge werden nicht angefügt.
+ *  - Nur menschliche Beschlüsse erzeugen Archiveinträge. Für ein KI-Sprachmodell gibt es keinen Eintragstyp.
+ *  - Zufall nur aus Startwert und Takt.
+ */
+(function (root, factory) {
+  if (typeof module === "object" && module.exports) module.exports = factory();
+  else root.DasGenugKern = factory();
+})(typeof self !== "undefined" ? self : this, function () {
+  "use strict";
+
+  const VERSION = "0.16";
+  const VERMERK = "Der Rechenkern ist Spielsetzung, kein Kanon. TSBL beschreibt kein Zuteilungsverfahren (Vollmodell F.2); der Motor füllt diese Lücke für das Spiel, nicht für die Welt.";
+  const JAHRESZEITEN = ["Frühling", "Sommer", "Herbst", "Winter"];
+
+  // ---------- Der Korb (Vollmodell C.1) ----------
+  const POS1 = ["nahrung", "wasser", "wohnung", "energie", "kleidung", "gesundheit", "grundbildung"];
+  const POS2 = ["mobilitaet", "bildung", "pflege", "kommunikation", "kultur"];
+  const POS_NAME = {
+    nahrung: "Nahrung", wasser: "Wasser", wohnung: "Wohnung", energie: "Energie", kleidung: "Kleidung",
+    gesundheit: "Gesundheit", grundbildung: "Grundbildung", mobilitaet: "Mobilität", bildung: "Weiterführende Bildung",
+    pflege: "Pflege", kommunikation: "Kommunikation", kultur: "Kultur"
+  };
+
+  // ---------- Siebtes Feld (Vollmodell D.2/7): nur Text, nie ein Wert ----------
+  const SIEBTES_FELD = [
+    "Gewonnene Zeit, die niemand einträgt",
+    "Sorge am Rand des Gezählten",
+    "Vertrauen ohne Prüfung",
+    "Gemeinsam aufmerksam sein"
+  ];
+
+  // ---------- Netzrahmen 2060 (index.html, illustrativ; kanonisch nur 2100) ----------
+  const NETZ_2060 = { versorgung: 78, biosphaere: 1.88, zeit: 1450, resilienz: 52, spreizung: 4.2, lernen: 3.0, anteilRegionen: 34 };
+
+  // ---------- Regelregister: echt oder Platzhalter (Bauweg §3.1) ----------
+  const REGELREGISTER = [
+    { id: "R-01", name: "Schicht 1 der Mitglieder ist immer gedeckt", status: "echt", quelle: "I-1; Manifest 3" },
+    { id: "R-02", name: "Versorgung am Schwächsten als Minimum", status: "echt", quelle: "I-2; Bilanz" },
+    { id: "R-03", name: "Stunden verfallen am Ende der Jahreszeit", status: "echt", quelle: "I-9; ITC" },
+    { id: "R-04", name: "Spielraum gilt nur im laufenden Jahr", status: "echt", quelle: "Manifest 3; Korb C.5" },
+    { id: "R-05", name: "Der Speicher wird im Winter verteilt; ohne Verbundregel an den schwächsten Knoten (Bedarf vor Fähigkeit)", status: "echt", quelle: "Fundament §3; Reihung" },
+    { id: "R-06", name: "Wartende Region erhält, was nicht knapp ist (Bibliothek, Ausbildung)", status: "echt", quelle: "Reihung Satz 3" },
+    { id: "R-07", name: "Erwartete Einseitigkeit nach Beitritt: 8 Jahre", status: "platzhalter", quelle: "Spielsetzung zur Reziprozität (Bilanz B.2)" },
+    { id: "R-08", name: "Deckungsgrad als Mittel der zwölf Positionen, gleich gewichtet", status: "platzhalter", quelle: "Gewichtung offen (Korb C.3)" },
+    { id: "R-09", name: "Biosphäre: Verbund-Budgetanteil 100; Grundlast 88; Spielraum 0,4 je Einheit; Bau und Hilfe an die Region", status: "platzhalter", quelle: "Rückkanal (Bilanz B.3); Zahlen gesetzt" },
+    { id: "R-10", name: "Wetter: Dürre und Sturm aus Startwert", status: "platzhalter", quelle: "Krisen-Zeitachse: Wasser als Leitkonflikt" },
+    { id: "R-11", name: "Zeitlast: +15 h je Stunde für gemeinsame Arbeit", status: "platzhalter", quelle: "Skala gesetzt" },
+    { id: "R-12", name: "Resilienz als Reservetage", status: "platzhalter", quelle: "Bilanz B.1; Skala gesetzt" },
+    { id: "R-13", name: "Lernen ruht in Stufe 1", status: "platzhalter", quelle: "Reduktion D.2 (an den Code verlagert)" },
+    { id: "R-14", name: "Schwellen der Prüfung (Werte)", status: "platzhalter", quelle: "Integral §9.5; Werte gesetzt" },
+    { id: "R-15", name: "Sturm trifft die Teilhabe; Reserven und gehaltener Spielraum schützen", status: "platzhalter", quelle: "Resilienz (Bilanz B.1); Was trägt: ein Knoten, der sich nicht selbst trägt, trägt das Netz nicht" },
+    { id: "R-16", name: "Erschöpfung: Zeitlast über Basis + 40 h senkt Pflege und Kultur, ohne Zeit keine Erholung", status: "platzhalter", quelle: "Korb C.1: freie Zeit als Schwelle der Teilhabe" },
+    { id: "R-17", name: "Erholung: Knoten mit Zeit heben ihre Teilhabe selbst", status: "platzhalter", quelle: "Zeitwohlstand; Skala gesetzt" },
+    { id: "R-18", name: "Abhängigkeit: unerwartete Einseitigkeit mindert die Wirkung der Gabe und stoppt die eigene Erholung", status: "platzhalter", quelle: "Reziprozitäts-Saldo (Bilanz B.2): Hierarchie statt Hilfe" },
+    { id: "R-19", name: "Aufnahmefähigkeit der Region hängt am Vor-Aufbau (Wasser zuerst)", status: "platzhalter", quelle: "Reihung Satz 1 und 3; Tragfähigkeit" },
+    { id: "R-20", name: "Weiter werben: Ein Vorschlag mit offenem Einwand bleibt offen und tritt erst in Kraft, wenn der Einwand weicht; Durchsetzen gilt sofort", status: "echt", quelle: "Integral CDS (kein Beschluss gegen einen bestehenden grundsätzlichen Einwand); J-6 Beraten und Tempo; Korrektur 8.11.2026" },
+    { id: "R-21", name: "Folgeregel einseitiger Fluss: Erwartung verlängern mit Hilfe zur Selbsttragfähigkeit", status: "echt", quelle: "Vollmodell F.5" },
+    { id: "R-22", name: "Der Naturhaushalt: Zustand von Wasser, Boden und Wald mit Erholungskraft; erschöpft erholt er sich langsamer, Dürre setzt die Erholung aus; unter dem Kipppunkt bleibt sie gebrochen", status: "platzhalter", quelle: "Biosphäre: Wasser, Boden, Artenvielfalt (Bilanz); Beschluss Martin 8.11.2026; Zahlen gesetzt" },
+    { id: "R-23", name: "Entnahme aus dem Naturhaushalt: Grundlast, gehaltener Spielraum (stärker), weitergegebener Spielraum (schwächer)", status: "platzhalter", quelle: "Suffizienz (GJR: ~70 % des Mehrverbrauchs trägt wenig zum Wohlergehen bei)" },
+    { id: "R-24", name: "Gekippter Naturhaushalt: Erholung der Teilhabe halbiert, Sturmschäden stärker", status: "platzhalter", quelle: "Kaskade (Bauplan §8.3)" },
+    { id: "R-25", name: "Nicht nachwachsendes Material: Anteil des Verbunds je Jahr; Unterhalt, Sturmreparatur und Vor-Aufbau verbrauchen; was über den Anteil geht, fehlt im nächsten Jahr", status: "platzhalter", quelle: "Lücke 4 der Vergleichsstudie, als Spielsetzung gefüllt (Beschluss Martin 8.11.2026)" },
+    { id: "R-26", name: "Für Material gibt es zu Beginn keine Regel; die Übernutzung öffnet den Tisch («keine Regel greift»)", status: "echt", quelle: "Vergleichsstudie: der Deckel ist auf CO2 und Biosphäre gerechnet; I-8" },
+    { id: "R-27", name: "Arbeit bei Steighof: Stunden bauen seine eigene Tragfähigkeit auf; das ist keine einseitige Gabe und mindert eine Abhängigkeit", status: "platzhalter", quelle: "Folgeregel F.5 (Hilfe zur Selbsttragfähigkeit); Stunden sind Arbeit, keine Währung (I-9); Beschluss Martin 8.11.2026" },
+    { id: "R-28", name: "Zustimmungsgrad: Jeder Knoten steht zu einem Vorschlag mit Zustimmung, Bedenken oder Einwand, abhängig von der Lage; die Breite geht in die Gesundheit der Beratung ein", status: "platzhalter", quelle: "Integral CDS: weighted consensus (Module 6); Haltungen nach Lage gesetzt" },
+    { id: "R-29", name: "Einwand mit Bedingung: Wer die Bedingung annimmt, passt den Vorschlag an; die Regel gilt sofort, niemand ist überstimmt", status: "echt", quelle: "Integral CDS: objection mapping (Einwand führt zu Änderung des Vorschlags)" },
+    { id: "R-31", name: "Birk hat drei Arbeitsfelder (Pflege und Sorge, Werkstatt und Baupläne, Boden und Wasser) mit Bedarf, Kapazität und Last; die notwendige Arbeit ist ihre Summe", status: "platzhalter", quelle: "Integral COS (erster Baustein der Zuteilung); Umzugsbauplan 3.1; Zahlen gesetzt" },
+    { id: "R-32", name: "Erschöpft ist ein Feld, nicht der Knoten: Pflege → Pflege und Kultur sinken; Werkstatt → Mobilität und Kultur sinken; Boden und Wasser → mehr Entnahme aus dem Naturhaushalt", status: "platzhalter", quelle: "Korb C.1 (freie Zeit als Schwelle); Umzugsbauplan 3.1" },
+    { id: "R-33", name: "Knotenrat: Mara (Pflege), Jorin (Werkstatt), Rahel (Boden und Wasser) stehen zu einer Wirkung aus der Lage ihres Feldes; ihre Bedingung verlagert Last in das Feld mit dem meisten Spielraum", status: "platzhalter", quelle: "Integral CDS; Ratstisch-Entwurf (Stimmen); Rahel ist Spielsetzung (Beschluss Martin 13.11.2026)" },
+    { id: "R-34", name: "Ereignisse: Der Kern wählt je Jahreszeit das Ereignis, dessen Auslöser am stärksten anschlägt; die Wirkungen der drei Wege werden aus der Lage berechnet", status: "platzhalter", quelle: "Umzugsbauplan 3.3; Inhalt aus dem Ratstisch-Entwurf; Zahlen gesetzt" },
+    { id: "R-35", name: "Ein Ereignis wird gemeinsam (Bedingungen aufgenommen), durchgesetzt oder nicht beschlossen (weiter werben); ohne Beschluss gilt der Stillstand", status: "echt", quelle: "Integral CDS; Entscheidungsarchitektur 3.2" },
+    { id: "R-36", name: "Register der Taten: jeder Beschluss zu einem Ereignis mit Weg, Ausgang, verworfenen Wegen und Haltungen; keine Regel (Regeln folgen in 2b.3)", status: "echt", quelle: "Integral CDS (Begründung und verworfene Alternativen)" },
+    { id: "R-37", name: "Ried liegt im Nachbarverbund; seine Teilhabe sinkt in der Dürre und erholt sich sonst langsam", status: "platzhalter", quelle: "Beschluss Martin 13.11.2026 (Ried bleibt eigener Knoten); Zahlen gesetzt" },
+    { id: "R-38", name: "Manche Wege setzen zusätzlich eine Regel (Bach-Grenze, Vertrauen vor Erfassung, Spielraum-Deckel, Speicher für die Region); sie steht im Archiv und wirkt in späteren Jahren", status: "echt", quelle: "Umzugsbauplan 3.4 (Taten und Regeln); Integral CDS (Präzedenz)" },
+    { id: "R-39", name: "Register-Spannung: Widerspricht ein Weg einer geltenden Regel, ist das eine sichtbare Spannung; nur bindende Regeln sperren einen Weg", status: "echt", quelle: "Ratstisch-Entwurf (Register-Spannung); Umzugsbauplan 3.4" },
+    { id: "R-40", name: "Sperr-Schutz: Würden geltende Regeln alle drei Wege eines Ereignisses sperren, ruht die Bindung für dieses Ereignis", status: "echt", quelle: "Invariante I-11; Kriterium 7" },
+    { id: "R-41", name: "Stundenkontingent im Frühling aus dem freien Raum der Arbeitsfelder (je 20 Stunden eine Arbeitsstunde, mindestens 1, höchstens 4)", status: "platzhalter", quelle: "Hinweis zur Reibung zwischen Stunden und Feldern (13.11.2026)" },
+    { id: "R-42", name: "Anerkennung für Arbeit nach aussen sammelt sich in einem Konto und wird in ganzen Einheiten Spielraum", status: "platzhalter", quelle: "Hinweis zu halben Spielraumeinheiten (13.11.2026); Manifest 3" },
+    { id: "R-43", name: "Tal-Süd steht in der Reihung: Es rückt jährlich vor, zu zwei Dritteln nach Tragfähigkeit (Vor-Aufbau und Synchronisation) und, ohne Zeichnung, zu einem Drittel nach Not; bei Platz 0 ist es bereit für die Aufnahme", status: "platzhalter", quelle: "Reihung 2054 (K14): Tragfähigkeit, Drittel-Regel; Zahlen gesetzt" },
+    { id: "R-44", name: "Der Übergangsfonds schrumpft jedes Jahr nach seiner Versinkungs-Ordnung; die Ausrüstung der Schmiede zehrt an ihm", status: "platzhalter", quelle: "K12 (Versinkungs-Ordnung 2050); Höhe gesetzt" },
+    { id: "R-45", name: "Zeichnung: Tal-Süd rückt sofort vor, der Fonds erhält Mittel der alten Welt; dafür verliert Tal-Süd die Spur nach Not, Zusagen binden Werkstatt und Pflege des Verbunds für vier Jahreszeiten, eine bedürftigere Region ohne Zeichnung fällt zurück, und der Übergang aus der Geldwirtschaft verlangsamt sich", status: "platzhalter", quelle: "K14 (Zeichnung, Zusagen, Zusagen-Geographie, Drittel-Regel); gilt 2060 (Beschluss Martin 13.11.2026)" },
+    { id: "R-46", name: "Der Übergang aus der Geldwirtschaft: Der Hybrid-Anteil von Tal-Süd sinkt mit dem Vor-Aufbau", status: "platzhalter", quelle: "Korb D.2 (Hybrid-Kipp); Integral §11" },
+    { id: "R-47", name: "Eine Amtszeit dauert vier Jahreszeiten; danach ruhen die Züge der Sprecherin, bis sie Birk weitergibt. Die Welt läuft weiter; ohne Beschluss gilt der Stillstand", status: "echt", quelle: "Spielkonzept v0.4 (das Spiel hat ein Genug); Integral CDS (Rotation der Verantwortung); Beschluss Martin 14.11.2026" },
+    { id: "R-48", name: "Die Weitergabe: ein Satz an die Nachfolgerin (er darf auch fehlen); die Nachfolgerin erbt Welt, Archiv und Register, sieht zu Beginn aber nur den Satz", status: "echt", quelle: "Spielkonzept v0.4 (zweite Tür: weitergeben); Doppelhelix: nähren und zurückgeben" },
+    { id: "R-49", name: "Das Bild der Amtszeit: einzelne Sätze zu dem, was gehalten, gesetzt, versäumt und hinterlassen wurde; keine Zahl über allem, kein Vergleich zwischen Amtszeiten", status: "echt", quelle: "I-4, I-5; Prüffrage 1" },
+    { id: "R-50", name: "Ein Arbeitsfeld, das am Jahresende über seiner Kapazität liegt, beginnt das neue Jahr mit der Hälfte dieser Überlast", status: "platzhalter", quelle: "Erschöpfung hat ein Gedächtnis; macht die Kopplung der Stunden an die Felder (R-41) wirksam; Hälfte gesetzt" },
+    { id: "R-51", name: "Die Herkunft der Sprecherin (Pflege, Werkstatt oder Boden und Wasser) wird je Amtszeit gelost; sie ändert den Blick, nicht die Rechnung", status: "platzhalter", quelle: "Auslosung (Beschluss Martin 13.11.2026); Ratstisch-Entwurf" },
+    { id: "R-52", name: "Tischschwelle: Ein Ereignis öffnet den Tisch nur, wenn sein Auslöser eine Schwelle erreicht; darunter läuft die Routine ohne Beratung", status: "platzhalter", quelle: "Integral §9.5 (Schwellen, Koordinationsmembran); Spielkonzept v0.4, 0b Folge 3 (der Tisch ist selten); Werte gesetzt" },
+    { id: "R-53", name: "Ein einstimmiger Beschluss verbucht als Gegengrund die verworfenen Wege und ihren Preis", status: "echt", quelle: "Bauplan §3.5 (Beschluss und Gegengrund ins Archiv); Analyse vom 14.11.2026" },
+    { id: "R-30", name: "Bauplan Pumpe im Gemeingut: Eine Stunde verbessert ihn für alle (bis Stufe 3); jede Stufe senkt das Material je Pumpe um 20 %", status: "platzhalter", quelle: "Integral OAD: offene Entwürfe, Lebenszyklus (Module 4); kein geistiges Eigentum" }
+  ];
+
+  // ---------- Werkzeuge ----------
+  const clone = (o) => JSON.parse(JSON.stringify(o));
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  const r3 = (x) => Math.round(x * 1000) / 1000;
+
+  function mulberry32(a) {
+    return function () {
+      a |= 0; a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function zufall(s, salz) { return mulberry32((s.meta.seed * 1000003 + s.meta.takt * 7919 + salz) >>> 0)(); }
+
+  function pruefsumme(obj) {
+    const str = JSON.stringify(obj);
+    let h = 0x811c9dc5;
+    for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+    return (h >>> 0).toString(16).padStart(8, "0");
+  }
+
+  function korb(s2) { const k = {}; POS1.forEach((p) => (k[p] = 1)); POS2.forEach((p, i) => (k[p] = s2[i])); return k; }
+  function deckungsgrad(k) { const all = POS1.concat(POS2); return all.reduce((a, p) => a + clamp(k[p], 0, 1), 0) / all.length; }
+  function schicht1Min(k) { return Math.min(...POS1.map((p) => k[p])); }
+
+  // ---------- Startzustand 2060 ----------
+  function startzustand(seed) {
+    const knoten = {
+      weidmoos: { id: "weidmoos", name: "Weidmoos", gruendung: 2038, spieler: false, korb: korb([1, 1, 1, 1, 1]), spielraumBasis: 6, spielraum: 6, stunden: 0, zeitlastBasis: 1400, zeitlast: 1400, reserveTage: 60, last: 25, blaupausen: 3 },
+      erlenbach: { id: "erlenbach", name: "Erlenbach", gruendung: 2044, spieler: false, korb: korb([1, 1, 1, 1, 0.9]), spielraumBasis: 4, spielraum: 4, stunden: 0, zeitlastBasis: 1450, zeitlast: 1450, reserveTage: 45, last: 23, blaupausen: 2 },
+      birk: { id: "birk", name: "Birk", gruendung: 2046, spieler: true,
+        felder: { pflege: { name: "Pflege und Sorge", stimme: "Mara", bedarf: 430, kapazitaet: 455, last: 430 },
+                  werkstatt: { name: "Werkstatt und Baupläne", stimme: "Jorin", bedarf: 370, kapazitaet: 390, last: 370 },
+                  boden: { name: "Boden und Wasser", stimme: "Rahel", bedarf: 650, kapazitaet: 670, last: 650 } }, korb: korb([1, 1, 1, 1, 0.95]), spielraumBasis: 4, spielraum: 4, stunden: 3, zeitlastBasis: 1450, zeitlast: 1450, reserveTage: 45, last: 23, blaupausen: 2 },
+      steighof: { id: "steighof", name: "Steighof", gruendung: 2052, spieler: false, korb: korb([0.5, 0.6, 0.55, 0.7, 0.5]), spielraumBasis: 1, spielraum: 1, stunden: 0, zeitlastBasis: 1550, zeitlast: 1550, reserveTage: 20, last: 17, blaupausen: 0 }
+    };
+    return {
+      meta: { version: VERSION, seed: seed >>> 0, jahr: 2060, jz: 0, takt: 0, saison: 0, vermerk: VERMERK },
+      netz: { rahmen: clone(NETZ_2060), quelle: "index.html, Datensatz der Lebendigen Bilanz (Verläufe illustrativ, kanonisch nur 2100)" },
+      verfassung: [
+        { nr: "F-2034-01", text: "Das Lebensnotwendige hängt an keiner Bedingung; die Stunden sind nicht handelbar und nicht ansparbar; jede Entscheidung steht mit Begründung im Register." },
+        { nr: "F-2034-03", text: "Wer nicht synchronisiert, entkoppelt sich; niemand wird ausgeschlossen." },
+        { nr: "F-2054-01", text: "Die Reihung: nach Tragfähigkeit; ein Drittel nach Not ohne Zeichnung; jede wartende Region erhält sofort, was nicht knapp ist." },
+        { nr: "F-2054-03", text: "Bei der Deckung eines Mangels geht Bedarf vor Fähigkeit." }
+      ],
+      verbund: {
+        name: "Verbund am Nordhang",
+        knoten: ["weidmoos", "erlenbach", "birk", "steighof"],
+        speicher: 0,
+        budget: { deckel: 100, bau: 0, nutzung: 0, gerissen: false },
+        beratung: { zustimmungsbreite: 0.85, ungeloest: 1, erzwungen: 0, revisionen: 0 },
+        archiv: []
+      },
+      knoten,
+      region: {
+        bezeichnung: "Tal-Süd", name: "Tal-Süd", mitglied: false,
+        reihung: { platz: 12, aufnahmeBereit: false, gezeichnet: false, zeichnungJahr: null, traegeBis: null },
+        korb: { nahrung: 0.8, wasser: 0.55, wohnung: 0.75, energie: 0.6, kleidung: 0.9, gesundheit: 0.5, grundbildung: 0.6, mobilitaet: 0.3, bildung: 0.3, pflege: 0.25, kommunikation: 0.4, kultur: 0.35 },
+        vorAufbau: { wasser: 0.2, verfassung: 0.4, bibliothek: 0.3, ausbildung: 0.2 },
+        synchronisation: { identitaet: 0, beschluesse: 0, entwuerfe: 0, beitraege: 0, telemetrie: 0 },
+        hybridAnteil: 0.7
+      },
+      fluesse: [
+        { id: "f1", von: "weidmoos", nach: "steighof", art: "erwartet", seit: 2052, erwartetBis: 2060, samen: 0, gerissen: false },
+        { id: "f2", von: "erlenbach", nach: "steighof", art: "erwartet", seit: 2052, erwartetBis: 2060, samen: 0, gerissen: false }
+      ],
+      unerwartetSaisons: { steighof: 0 },
+      erwartung: { steighof: 2060 },
+      naturhaushalt: { zustand: 55, kipp: 40, gekippt: false },
+      material: { basis: 10, anteil: 10, verbraucht: 0, vorgriff: 0 },
+      gegebenSaison: 0,
+      gemeingut: { pumpe: { stufe: 0, verbesserungen: [] }, plaene: [] },
+      ried: { name: "Ried", verbund: "Nachbarverbund talabwärts", teilhabe: 0.78 },
+      ereignis: null, register: [], spaeter: [], erfassung: "keine", sorgeGezaehlt: false,
+      fonds: { mittel: 60, versinkung: 6 }, zusagen: [], zusagenGeographie: 0,
+      amtszeit: null, amtszeiten: [], erbe: null,
+      erschoepft: {},
+      siebtesFeld: { inhalt: SIEBTES_FELD.slice() },
+      lage: { spannungen: [], haupt: null },
+      verfallen: 0,
+      protokoll: []
+    };
+  }
+
+  // ---------- Fluss-Hilfen ----------
+  function fluss(s, von, nach, art) {
+    let f = s.fluesse.find((x) => x.von === von && x.nach === nach && x.art === art && !x.gerissen);
+    if (!f) { f = { id: "f" + (s.fluesse.length + 1), von, nach, art, seit: s.meta.jahr, erwartetBis: null, samen: 0, gerissen: false }; s.fluesse.push(f); }
+    return f;
+  }
+  function zuSchwaechstem(s, menge) {
+    const ids = s.verbund.knoten;
+    let ziel = ids[0];
+    ids.forEach((id) => { if (deckungsgrad(s.knoten[id].korb) < deckungsgrad(s.knoten[ziel].korb)) ziel = id; });
+    hebeTeilhabe(s.knoten[ziel].korb, menge * gabeFaktor(s, ziel));
+    return ziel;
+  }
+  function hebeTeilhabe(k, menge) {
+    let rest = menge;
+    while (rest > 1e-9) {
+      let p = POS2[0]; POS2.forEach((q) => { if (k[q] < k[p]) p = q; });
+      if (k[p] >= 1) break;
+      const d = Math.min(rest, 1 - k[p], 0.1); k[p] = r3(k[p] + d); rest -= d;
+    }
+  }
+  function aufnahme(s) { return 0.4 + 0.6 * s.region.vorAufbau.wasser; }
+  function abhaengig(s) { return s.unerwartetSaisons.steighof >= 2; }
+  function gabeFaktor(s, ziel) { return ziel === "steighof" && abhaengig(s) ? 0.25 : 1; }
+  function hebeRegion(s, menge) {
+    const k = s.region.korb; let rest = menge * aufnahme(s);
+    const all = POS1.concat(POS2);
+    while (rest > 1e-9) {
+      let p = POS1[0]; POS1.forEach((q) => { if (k[q] < k[p]) p = q; });
+      if (k[p] >= 1) { p = all[0]; all.forEach((q) => { if (k[q] < k[p]) p = q; }); if (k[p] >= 1) break; }
+      const d = Math.min(rest, 1 - k[p], 0.05); k[p] = r3(k[p] + d); rest -= d;
+    }
+  }
+
+  // ---------- Regeltypen, die die Automatik ausführen kann ----------
+  const REGELTYPEN = {
+    speicher_vorrang: { text: (r) => r.ziel === "region" ? "Der Speicher geht zuerst an Tal-Süd, das noch wartet." : r.ziel === "schwaechster" ? "Der Speicher geht zuerst an den schwächsten Knoten des Verbunds." : `Der Speicher geht zuerst an ${r.ziel}.` },
+    vorAufbau_quote: { text: (r) => `Der Verbund gibt jede Jahreszeit ${r.stunden} Stunden in den Vor-Aufbau der wartenden Region.` },
+    teilhabe_ausgleich: { text: () => "Wer Spielraum über 3 hat, gibt jede Jahreszeit eine Einheit an den schwächsten Knoten." },
+    erwartung_verlaengern: { text: (r) => `Die Einseitigkeit zu Steighof gilt bis ${r.bis} als erwartet; dafür baut der Verbund Steighofs eigene Tragfähigkeit auf.` },
+    material_kreislauf: { text: () => "Material wird repariert und zurückgenommen: halber Verbrauch, dafür Arbeit für alle Knoten." },
+    material_grenze: { text: () => "Der Verbund verbraucht nicht mehr Material als seinen Anteil." },
+    material_vorgriff: { text: (r) => `Der Verbund nimmt ${r.menge} Einheiten Material aus dem Anteil des nächsten Jahres vorweg.` },
+    naturhaushalt_grenze: { text: (r) => `Der Bach ist eine Grenze: Kein Weg darf ihm mehr nehmen, als er tragen kann (Schwelle ${r.schwelle}).`, bindend: true },
+    keine_personen_erfassung: { text: () => "Vertrauen vor Erfassung: Aufgaben werden sichtbar, Menschen nie." },
+    spielraum_deckel: { text: (r) => `Genug statt mehr: Kein Ort behält mehr als ${r.max} Teile Spielraum; der Rest geht in den Speicher.` }
+  };
+  // Welche Merkmale eines Weges einer Regel widersprechen (Register-Spannung, R-39)
+  const KONFLIKT = { naturhaushalt_grenze: ["naturhaushalt_entnahme"], keine_personen_erfassung: ["personen_erfassung"], spielraum_deckel: ["neubau_beton"], speicher_vorrang: ["geschlossene_tuer"] };
+  function geltendeRegeln(s) { return s.verbund.archiv.filter((a) => !a.offen && a.gueltigAb <= s.meta.saison); }
+  function pruefeWeg(s, w) {
+    const sp = [], sperren = [];
+    geltendeRegeln(s).forEach((a) => {
+      const k = KONFLIKT[a.regel.typ] || [];
+      if ((w.tags || []).some((t) => k.indexOf(t) >= 0)) {
+        sp.push({ nr: a.nr, text: a.text });
+        if (a.regel.typ === "naturhaushalt_grenze" && (w.wirkung.nh || 0) < 0 && s.naturhaushalt.zustand + w.wirkung.nh < a.regel.schwelle) sperren.push({ nr: a.nr, text: a.text });
+      }
+    });
+    return { spannungen: sp, sperren };
+  }
+  function namen(s, ids) { return (ids || []).map((id) => (s.knoten[id] ? s.knoten[id].name : id)).join(", "); }
+  function regelGilt(s, typ) { return s.verbund.archiv.some((a) => a.regel.typ === typ && !a.offen && a.gueltigAb <= s.meta.saison); }
+  function materialFaktor(s) { return regelGilt(s, "material_kreislauf") ? 0.5 : 1; }
+  function verbrauche(s, menge) { s.material.verbraucht = r3(s.material.verbraucht + menge * materialFaktor(s)); }
+  const FELDER = ["pflege", "werkstatt", "boden"];
+  // Last buchen: bei Birk auf die Arbeitsfelder, sonst auf die Zeitlast des Knotens
+  function last(s, id, h, verteilung) {
+    const k = s.knoten[id];
+    if (!k.felder) { k.zeitlast += h; return; }
+    const v = verteilung || { pflege: 1 / 3, werkstatt: 1 / 3, boden: 1 / 3 };
+    FELDER.forEach((f) => { if (v[f]) k.felder[f].last = r3(k.felder[f].last + h * v[f]); });
+    k.zeitlast = r3(FELDER.reduce((a, f) => a + k.felder[f].last, 0));
+  }
+  function kontingent(k) { if (!k.felder) return 3; const frei = FELDER.reduce((a, f) => a + Math.max(0, k.felder[f].kapazitaet - k.felder[f].last), 0); return Math.max(1, Math.min(4, Math.floor(frei / 20))); }
+  function anerkennen(k, h) { k.anerkennung = r3((k.anerkennung || 0) + h); while (k.anerkennung >= 1) { k.spielraum += 1; k.anerkennung = r3(k.anerkennung - 1); } }
+  function erschoepfteFelder(k) { return k.felder ? FELDER.filter((f) => k.felder[f].last > k.felder[f].kapazitaet) : []; }
+
+  // Knotenrat (R-33): Haltung jeder Stimme zu einer Wirkung auf die Felder, aus der Lage ihres Feldes.
+  // Rein und deterministisch, kein Vertrauenswert (I-6). wirkung = { pflege, werkstatt, boden (Stunden), nh (Naturhaushalt) }
+  function knotenrat(s, wirkung) {
+    const k = s.knoten.birk, w = wirkung || {}, out = {};
+    FELDER.forEach((f) => {
+      const F = k.felder[f], nach = F.last + (w[f] || 0);
+      let h = nach > F.kapazitaet ? "einwand" : (w[f] || 0) > 0 || nach > F.kapazitaet - 10 ? "bedenken" : "zustimmung";
+      if (f === "boden" && (w.nh || 0) < 0) h = s.naturhaushalt.zustand + w.nh < s.naturhaushalt.kipp + 10 ? "einwand" : (h === "zustimmung" ? "bedenken" : h);
+      out[F.stimme] = { feld: f, haltung: h };
+    });
+    return out;
+  }
+  // Bedingung einer Stimme: Last aus ihrem Feld in das Feld mit dem meisten Spielraum verlagern (oder, bei Rahel, die Entnahme halbieren)
+  function bedingungVon(s, stimme, wirkung) {
+    const k = s.knoten.birk, w = Object.assign({}, wirkung);
+    const f = FELDER.find((x) => k.felder[x].stimme === stimme);
+    if (f === "boden" && (w.nh || 0) < 0) { w.nh = w.nh / 2; return { text: "Nur so lange, bis Bach und Moor sich erholen; die Entnahme wird halbiert.", wirkung: w, halbiert: true }; }
+    const frei = FELDER.filter((x) => x !== f).sort((a, b) => (k.felder[b].kapazitaet - k.felder[b].last - (w[b] || 0)) - (k.felder[a].kapazitaet - k.felder[a].last - (w[a] || 0)))[0];
+    const zuviel = Math.max(0, k.felder[f].last + (w[f] || 0) - k.felder[f].kapazitaet);
+    const verlagert = zuviel > 0 ? zuviel + 5 : Math.min(w[f] || 0, 5);   // auch bestehende Überlast wird verlagert
+    w[f] = (w[f] || 0) - verlagert; w[frei] = (w[frei] || 0) + verlagert;
+    const b = { wirkung: w, von: f, nach: frei, stunden: Math.round(verlagert) };
+    b.text = bedingungText(b, "de"); return b;
+  }
+
+  function materialFrei(s) { return s.material.anteil - s.material.verbraucht; }
+  function pumpeFaktor(s) { return Math.max(0.4, 1 - 0.2 * s.gemeingut.pumpe.stufe); }
+  function auflage(s, typ) { const a = s.verbund.archiv.find((x) => x.auflage && x.auflage.typ === typ && !x.offen && x.gueltigAb <= s.meta.saison); return a ? a.auflage : null; }
+  // Erholungskraft in Worten, nie als Zahl (keine zweite Grösse zum Steigern)
+  function erholungskraft(s) {
+    const H = s.naturhaushalt;
+    if (H.gekippt) return "gebrochen";
+    const wort = H.zustand >= 60 ? "kräftig" : H.zustand >= 50 ? "mässig" : "schwach";
+    return s.wetter === "Dürre" ? wort + ", in der Dürre ausgesetzt" : wort;
+  }
+
+  // ---------- Zustimmungsgrad (R-28): Haltung jedes Knotens zu einem Vorschlag ----------
+  // Rein und deterministisch: aus Regeltyp und Lage, nicht aus einem Vertrauenswert (I-6).
+  function zustimmung(s, r, aufl) {
+    const dSt = deckungsgrad(s.knoten.steighof.korb), mued = (id) => s.knoten[id].zeitlast > s.knoten[id].zeitlastBasis + 20;
+    const h = { weidmoos: "zustimmung", erlenbach: "zustimmung", birk: "zustimmung", steighof: "zustimmung" };
+    if (r.typ === "speicher_vorrang" && r.ziel === "region") { h.erlenbach = dSt < 0.85 ? "einwand" : "bedenken"; h.steighof = dSt < 0.85 ? "einwand" : "bedenken"; h.weidmoos = dSt < 0.85 ? "bedenken" : "zustimmung"; }
+    if (r.typ === "vorAufbau_quote") { h.erlenbach = mued("erlenbach") || mued("weidmoos") ? "einwand" : "bedenken"; h.weidmoos = mued("weidmoos") ? "einwand" : "bedenken"; }
+    if (r.typ === "erwartung_verlaengern") { h.weidmoos = s.knoten.steighof.spielraumBasis < 1.5 ? "einwand" : "bedenken"; h.erlenbach = "bedenken"; }
+    if (r.typ === "material_kreislauf") { h.erlenbach = mued("erlenbach") ? "einwand" : "bedenken"; h.steighof = "bedenken"; }
+    if (r.typ === "material_grenze") { h.steighof = s.region.vorAufbau.wasser < 0.6 ? "einwand" : "bedenken"; }
+    if (r.typ === "material_vorgriff") { h.weidmoos = "einwand"; }
+    if (aufl) Object.keys(h).forEach((k) => { if (h[k] === "einwand") h[k] = "zustimmung"; });
+    return h;
+  }
+
+  // ---------- Türsteher (Invarianten am Eintrag) ----------
+  // ---------- Ereignisse (Schritt 2b.2): Szenen, die der Kern aus der Lage auslöst ----------
+  // Vorlage: ausloeser(s) → Stärke (0 = schlägt nicht an); lage(s) → Text; wege(s) → drei Wege mit Wirkung, berechnet aus der Lage;
+  // stillstand(s) → Wirkung, wenn nichts beschlossen wird. Inhalt aus Martins Ratstisch-Entwurf; Wirkungen sind Spielsetzung.
+  const wd = (x) => Math.round(x * 100) / 100;
+  const EREIGNISSE = {
+    bach: {
+      titel: "Der Bach und die Pumpen", jz: 0,
+      ausloeser: (s) => Math.max(0, (0.88 - s.ried.teilhabe) + (62 - s.naturhaushalt.zustand) / 40),
+      lage: (s) => `Der Birkbach führt wenig Wasser (Naturhaushalt ${erholungskraft(s)}). Ried im Nachbarverbund braucht Pumpen für die Aussaat. Eure Werkstatt könnte sie bauen, braucht dafür aber Kühlwasser aus dem Bach.`,
+      wege: (s) => {
+        const schwach = s.naturhaushalt.zustand < 50, w = s.knoten.birk.felder.werkstatt, ueber = Math.max(0, w.last + 30 - w.kapazitaet);
+        return [
+          { id: "A", titel: "Werkstatt auf Volllast, mit Notaggregat", tags: ["naturhaushalt_entnahme"], wirkung: { ried: 0.15, bau: 1.5, nh: schwach ? -4 : -2, werkstatt: 20, pflege: 8, material: 1 } },
+          { id: "B", titel: "Den Bach schützen, die Hilfe verschieben", regel: { typ: "naturhaushalt_grenze", schwelle: 50 }, wirkung: { nh: s.naturhaushalt.gekippt ? 0.5 : 2, ried: -0.08 } },
+          { id: "C", titel: "Widderpumpen in Handarbeit, nach dem Bauplan aus dem Gemeingut", wirkung: { ried: 0.03, werkstatt: 30, boden: 5, nh: 0.5, material: 0.3, plan: "Widderpumpe", spaeter: [{ in: 1, wirkung: { ried: wd(0.10 * Math.max(0.3, 1 - ueber / 40)) } }] } }];
+      },
+      stillstand: () => ({ text: "Die Werkstatt läuft wie bisher, der Bach sinkt weiter, Ried wartet.", wirkung: { nh: -1, ried: -0.05 } })
+    },
+    kuehle: {
+      titel: "Genug für Birk, zu viel für alle", jz: 1,
+      ausloeser: (s) => Math.max(0, s.verbund.budget.nutzung / s.verbund.budget.deckel - 0.85 + (s.wetter === "Dürre" ? 0.1 : 0)),
+      lage: (s) => `Hitze. Birk hält seinen eigenen Anteil, aber alle vier Orte zusammen verbrauchen mehr, als die Natur im Tal trägt. Geplant ist ein Kühlhaus aus Beton für die Hochbetagten.`,
+      wege: (s) => {
+        const wenig = s.knoten.birk.spielraum < 3;
+        return [
+          { id: "A", titel: "Das Kühlhaus aus Beton bauen", tags: ["neubau_beton"], wirkung: { reserve: 15, bau: 3, material: 3, werkstatt: 15, birkKorb: { pflege: 0.03 } } },
+          { id: "B", titel: "Den Spielraum aller senken, bis es für die Natur reicht", regel: { typ: "spielraum_deckel", max: 4 }, wirkung: { spielraumAlle: -1, birkKorb: { kultur: wenig ? -0.06 : -0.03 } } },
+          { id: "C", titel: "Den Felsenkeller mit Lehm umbauen", wirkung: { reserve: 6, material: 0.5, werkstatt: 12, boden: 10, birkKorb: { pflege: 0.01 }, plan: "Lehmkeller" } }];
+      },
+      stillstand: () => ({ text: "Birk bleibt in seinem Anteil, und alle zusammen verbrauchen weiter zu viel.", wirkung: { bau: 1 } })
+    },
+    erfassung: {
+      titel: "Alles erfassen?", jz: 2,
+      ausloeser: (s) => s.erfassung !== "keine" ? 0 : 0.4 + Math.max(0, s.knoten.birk.felder.pflege.last - s.knoten.birk.felder.pflege.bedarf) / 40,
+      lage: () => `Ernte und Einwinterung. Eine Gruppe im Dorf, die Präzisions-Initiative, will jede Stunde der Sorge-Arbeit aufschreiben, damit die Last gerechter verteilt wird.`,
+      wege: (s) => {
+        const pl = s.knoten.birk.felder.pflege, ueber = Math.max(0, pl.last - pl.bedarf);
+        return [
+          { id: "A", titel: "Alles erfassen, auch die Sorge-Arbeit", tags: ["personen_erfassung"], wirkung: { pflege: -12 - ueber / 2, werkstatt: 8, boden: 8, erfassung: "lueckenlos" } },
+          { id: "B", titel: "Nicht erfassen, aber eine Pflichtquote für die Ernte", wirkung: { reserve: 8, boden: -10, pflege: 6 } },
+          { id: "C", titel: "Nur die Aufgaben zeigen, nie die Personen; das Fest bleibt ohne Eintrag", regel: { typ: "keine_personen_erfassung" }, wirkung: { pflege: -5, plan: "Engpass-Tafel", erfassung: "aufgaben" } }];
+      },
+      stillstand: () => ({ text: "Es bleibt, wie es war, mit denselben wenigen, die die Sorge tragen.", wirkung: { pflege: 4 } })
+    },
+    aufnahme: {
+      titel: "Die Bitte um Aufnahme", jz: 3,
+      ausloeser: (s) => Math.max(0, 0.65 - schicht1Min(s.region.korb)) + 0.2,
+      lage: (s) => `Tiefer Winter. Tal-Süd, das noch in Geld wirtschaftet, bittet um Aufnahme; es steht auf Platz ${Math.ceil(s.region.reihung.platz)} der Reihung (der Warteliste), die Leitungen sind marode, und es fehlt an ${POS_NAME[POS1.slice().sort((a, b) => s.region.korb[a] - s.region.korb[b])[0]]}.`,
+      wege: (s) => [
+        { id: "A", titel: "Die Aufnahme vertagen und Birk erholen lassen", tags: ["geschlossene_tuer"], wirkung: { regionKorb: { wasser: -0.03 }, reserve: 5 } },
+        { id: "B", titel: "Tal-Süd aus Birks Reserven über dem Genug versorgen", regel: { typ: "speicher_vorrang", ziel: "region" }, wirkung: { region: 0.25, reserve: -20, spielraumBirk: -1, gabeRegion: 1 } },
+        (s.fonds.mittel >= 10
+          ? { id: "C", titel: "Die Schmiede von Tal-Süd mit Mitteln aus dem Übergangsfonds ausrüsten", wirkung: { region: 0.03, hybrid: -0.08, ausbildung: 0.2, entwuerfe: 0.15, werkstatt: 15, fonds: -10, spaeter: [{ in: 1, wirkung: { region: 0.15 } }] } }
+          : { id: "C", titel: "Die Schmiede von Tal-Süd ausrüsten, mit dem Rest des Übergangsfonds und eigenem Werkzeug", wirkung: { region: 0.02, hybrid: -0.04, ausbildung: 0.1, entwuerfe: 0.08, werkstatt: 25, fonds: -s.fonds.mittel, spaeter: [{ in: 1, wirkung: { region: 0.08 } }] } })],
+      stillstand: () => ({ text: "Tal-Süd wartet, und Birk gibt weiter, wie bisher.", wirkung: { regionKorb: { wasser: -0.04 } } })
+    }
+  };
+
+  function mitRegisterSpannung(s) {
+    const L = s.lage || { spannungen: [] }, sp = (L.spannungen || []).filter((x) => x.art !== "registerspannung");
+    if (s.ereignis) s.ereignis.wege.forEach((w) => w.spannungen.forEach((r) => sp.push({ art: "registerspannung", feld: "Archiv", wo: "verbund", staerke: w.gesperrt ? 0.45 : 0.3,
+      text: `Der Weg «${w.titel}» steht in Spannung zu eurer Regel ${r.nr}: «${r.text}»${w.gesperrt ? " Sie bindet: Der Weg ist gesperrt, bis ein Einwand mit neuem Faktum sie öffnet." : ""}` })));
+    if (s.ereignis && s.ereignis.bindungRuht) sp.push({ art: "registerspannung", feld: "Archiv", wo: "verbund", staerke: 0.5, text: "Eure Regeln würden alle Wege dieses Ereignisses sperren; die Bindung ruht für dieses Ereignis." });
+    let haupt = null; sp.forEach((x) => { if (!haupt || x.staerke > haupt.staerke) haupt = x; });
+    s.lage = { spannungen: sp, haupt, weitere: sp.filter((x) => x !== haupt).map((x) => x.feld) };
+  }
+  // Tischschwelle (R-52): unter ihr läuft die Routine, der Tisch bleibt zu
+  const TISCHSCHWELLE = { bach: 0.25, kuehle: 0.15, erfassung: 0.6, aufnahme: 0.35 };
+  function waehleEreignis(s, ohneSchwelle) {
+    let best = null;
+    Object.keys(EREIGNISSE).forEach((id) => {
+      const E = EREIGNISSE[id];
+      if (E.jz !== s.meta.jz) return;
+      const st = E.ausloeser(s);
+      if (st > 0 && (ohneSchwelle || st >= (TISCHSCHWELLE[id] || 0)) && (!best || st > best.st)) best = { id, st };
+    });
+    if (!best) return null;
+    const E = EREIGNISSE[best.id], wege = E.wege(s);
+    const ws = wege.map((w) => { const p = pruefeWeg(s, w);
+      return { id: w.id, titel: w.titel, wirkung: w.wirkung, tags: w.tags || [], regel: w.regel || null, regeltext: w.regel ? REGELTYPEN[w.regel.typ].text(w.regel) : null,
+        haltungen: knotenrat(s, w.wirkung), spannungen: p.spannungen, sperren: p.sperren, gesperrt: p.sperren.length > 0 }; });
+    let ruht = false;
+    if (ws.every((w) => w.gesperrt)) { ruht = true; ws.forEach((w) => { w.gesperrt = false; }); }   // Sperr-Schutz (R-40, I-11)
+    return { id: best.id, titel: E.titel, lage: E.lage(s), staerke: r3(best.st), jahr: s.meta.jahr, jz: s.meta.jz, wege: ws, bindungRuht: ruht, stillstand: E.stillstand(s) };
+  }
+
+  // Wirkung anwenden: nur Grössen des Kerns; nie Schicht 1 der Mitglieder (I-1)
+  function wirke(s, w, quelle) {
+    const birk = s.knoten.birk;
+    FELDER.forEach((f) => { if (w[f]) last(s, "birk", w[f], { [f]: 1 }); });
+    if (w.ried) s.ried.teilhabe = r3(clamp(s.ried.teilhabe + w.ried, 0, 1));
+    if (w.nh) { s.naturhaushalt.zustand = r3(clamp(s.naturhaushalt.zustand + w.nh, 0, 100)); if (s.naturhaushalt.zustand < s.naturhaushalt.kipp) s.naturhaushalt.gekippt = true; }
+    if (w.bau) s.verbund.budget.bau = r3(s.verbund.budget.bau + w.bau);
+    if (w.material) verbrauche(s, w.material);
+    if (w.reserve) birk.reserveTage = Math.round(clamp(birk.reserveTage + w.reserve, 0, 200));
+    if (w.spielraumAlle) s.verbund.knoten.forEach((id) => { s.knoten[id].spielraum = Math.max(0, s.knoten[id].spielraum + w.spielraumAlle); });
+    if (w.spielraumBirk) birk.spielraum = Math.max(0, birk.spielraum + w.spielraumBirk);
+    if (w.birkKorb) Object.keys(w.birkKorb).forEach((p) => { if (POS2.indexOf(p) >= 0) birk.korb[p] = r3(clamp(birk.korb[p] + w.birkKorb[p], 0, 1)); });
+    if (w.region) hebeRegion(s, w.region);
+    if (w.regionKorb) Object.keys(w.regionKorb).forEach((p) => { s.region.korb[p] = r3(clamp(s.region.korb[p] + w.regionKorb[p], 0, 1)); });
+    if (w.hybrid) s.region.hybridAnteil = r3(clamp(s.region.hybridAnteil + w.hybrid, 0, 1));
+    if (w.ausbildung) s.region.vorAufbau.ausbildung = r3(clamp(s.region.vorAufbau.ausbildung + w.ausbildung, 0, 1));
+    if (w.entwuerfe) s.region.synchronisation.entwuerfe = r3(clamp(s.region.synchronisation.entwuerfe + w.entwuerfe, 0, 1));
+    if (w.gabeRegion) fluss(s, "birk", "region", "gabe").samen += w.gabeRegion;
+    if (w.fonds) s.fonds.mittel = r3(Math.max(0, s.fonds.mittel + w.fonds));
+    if (w.plan && s.gemeingut.plaene.indexOf(w.plan) < 0) s.gemeingut.plaene.push(w.plan);
+    if (w.erfassung) { s.erfassung = w.erfassung; if (w.erfassung === "lueckenlos") s.sorgeGezaehlt = true; }
+    (w.spaeter || []).forEach((x) => s.spaeter.push({ abSaison: s.meta.saison + x.in, wirkung: x.wirkung, quelle }));
+  }
+  function addiere(a, b) {
+    const w = clone(a);
+    Object.keys(b).forEach((k) => { if (typeof b[k] === "number") w[k] = r3((w[k] || 0) + b[k]); else if (b[k] !== undefined) w[k] = b[k]; });
+    return w;
+  }
+
+  const EREIGNISTYPEN = ["START", "STUNDE", "TEILEN", "ANGEBOT", "BESCHLUSS", "EINWAND", "EREIGNIS_BESCHLUSS", "JAHRESZEIT_ENDE", "WEITERGABE"];
+  const ZUEGE = ["STUNDE", "TEILEN", "ANGEBOT", "BESCHLUSS", "EINWAND", "EREIGNIS_BESCHLUSS"];
+  const SATZ_MAX = 200;
+
+  function tuersteher(s, e) {
+    if (!e || EREIGNISTYPEN.indexOf(e.typ) < 0) return "Unbekannter Eintragstyp. Es gibt keinen Eintrag zur Übertragung von Stunden, und ein KI-Sprachmodell trägt nichts ein.";
+    if (e.typ === "START") return s ? "Die Welt hat schon begonnen." : null;
+    if (!s) return "Die Welt hat noch nicht begonnen.";
+    if (e.quelle && POS1.indexOf(e.quelle) >= 0) return "I-1: Die Grundsicherung (Schicht 1) kann durch keinen Zug gesenkt werden.";
+    if (ZUEGE.concat(["WEITERGABE"]).indexOf(e.typ) >= 0) {
+      if (!e.urheber || String(e.urheber).indexOf("mensch:") !== 0) return "I-8: Nur Menschen tragen ein; ein KI-Sprachmodell trägt nichts ein.";
+      const k = s.knoten[String(e.urheber).slice(7)];
+      if (!k) return "Unbekannter Knoten.";
+    }
+    if (ZUEGE.indexOf(e.typ) >= 0 && s.amtszeit && s.amtszeit.beendet) return "Dein Jahr ist zu Ende. Was gibst du weiter?";
+    if (e.typ === "WEITERGABE") {
+      if (!s.amtszeit || !s.amtszeit.beendet) return "Weitergegeben wird am Ende des Jahres.";
+      if (e.satz !== undefined && e.satz !== null && typeof e.satz !== "string") return "Weitergegeben wird ein Satz.";
+      const t = String(e.satz || "").trim();
+      if (t.length > SATZ_MAX) return `Ein Satz, nicht mehr: höchstens ${SATZ_MAX} Zeichen.`;
+      if (/[\r\n]/.test(t)) return "Ein Satz, ohne Zeilenumbruch.";
+    }
+    if (e.typ === "STUNDE") {
+      if (s.meta.jz !== 0) return "Stunden werden in Stufe 1 im Frühling eingesetzt.";
+      const k = s.knoten[e.urheber.slice(7)];
+      if (k.stunden < 1) return "I-9: Keine Stunden mehr in dieser Jahreszeit.";
+      if (["spielraum", "vorAufbau", "steighof", "blaupause"].indexOf(e.ziel) < 0) return "Ziel unbekannt.";
+      if (e.ziel === "blaupause" && s.gemeingut.pumpe.stufe >= 3) return "Der Bauplan der Pumpe ist ausgereift; eine weitere Stunde verbessert ihn nicht mehr.";
+      const ausnahme = auflage(s, "ausnahme_vorAufbau") ? auflage(s, "ausnahme_vorAufbau").menge : 0;
+      if (e.ziel === "vorAufbau" && regelGilt(s, "material_grenze") && materialFrei(s) + ausnahme < materialFaktor(s) * pumpeFaktor(s)) return "Eure Regel «Material-Grenze» bindet: Der Materialanteil ist ausgeschöpft. Ein Einwand mit neuem Faktum kann sie öffnen.";
+    }
+    if (e.typ === "TEILEN") {
+      if (s.meta.jz !== 1) return "Spielraum wird in Stufe 1 im Sommer geteilt.";
+      const k = s.knoten[e.urheber.slice(7)];
+      if (e.ziel !== "behalten" && k.spielraum < 1) return "Kein Spielraum mehr zu teilen.";
+      if (e.ziel !== "behalten" && e.ziel !== "speicher" && s.verbund.knoten.indexOf(e.ziel) < 0) return "Ziel unbekannt.";
+      if (e.ziel === e.urheber.slice(7)) return "Man teilt nicht mit sich selbst.";
+    }
+    if (e.typ === "ANGEBOT") {
+      if (["vertrag", "zeichnung"].indexOf(e.angebot) < 0) return "Angebot unbekannt.";
+      if (e.angebot === "vertrag" && s.meta.jz !== 0) return "Der Vertrag kommt in Stufe 1 im Frühling.";
+      if (e.angebot === "zeichnung" && s.meta.jz !== 3) return "Die Zeichnung bietet Tal-Süd im Winter an.";
+      if (e.angebot === "zeichnung" && s.region.reihung.gezeichnet) return "Tal-Süd hat bereits gezeichnet.";
+    }
+    if (e.typ === "BESCHLUSS") {
+      if (!e.regel || !REGELTYPEN[e.regel.typ]) return "Die Automatik kennt diesen Regeltyp nicht; sie erfindet keine Regeln.";
+      if (!e.gegengrund) return "Ein Beschluss trägt seinen Gegengrund.";
+      if (e.angepasst && !e.bedingung) return "Ein angepasster Beschluss nennt die Bedingung, die er aufnimmt.";
+      if (e.angepasst && e.mehrheit) return "Angepasst und überstimmt zugleich geht nicht.";
+    }
+    if (e.typ === "EINWAND") {
+      if (!s.verbund.archiv.find((a) => a.nr === e.gegen)) return "Einwand gegen eine unbekannte Regel.";
+    }
+    if (e.typ === "EREIGNIS_BESCHLUSS") {
+      const E = s.ereignis;
+      if (!E || E.id !== e.ereignis) return "Dieses Ereignis liegt nicht auf dem Tisch.";
+      if (["gemeinsam", "durchsetzen", "werben"].indexOf(e.ausgang) < 0) return "Unbekannter Ausgang.";
+      if (e.ausgang !== "werben") {
+        const W = E.wege.find((x) => x.id === e.weg);
+        if (!W) return "Unbekannter Weg.";
+        if (W.gesperrt) return `Eure Regel ${W.sperren[0].nr} bindet: «${W.sperren[0].text}» Dieser Weg ist gesperrt. Ein Einwand mit neuem Faktum kann die Regel öffnen.`;
+        const einwaende = Object.keys(W.haltungen).filter((k) => W.haltungen[k].haltung === "einwand");
+        const ohne = einwaende.filter((k) => (e.bedingungen || []).indexOf(k) < 0);
+        if (e.ausgang === "gemeinsam" && ohne.length) return "Gemeinsam geht nur, wenn jeder Einwand mit seiner Bedingung aufgenommen ist: " + ohne.join(", ") + ".";
+      }
+    }
+    return null;
+  }
+
+  // ---------- Anwendung eines Eintrags ----------
+  function anwenden(s, e) {
+    if (e.typ === "START") { const n = startzustand(e.seed); n.ereignis = waehleEreignis(n); mitRegisterSpannung(n); n.amtszeit = neueAmtszeit(n, 1); n.protokoll.push(e); return n; }
+    s = clone(s);
+    const ich = e.urheber ? s.knoten[e.urheber.slice(7)] : null;
+
+    if (e.typ === "STUNDE") {
+      ich.stunden -= 1;
+      if (e.ziel === "spielraum") { ich.spielraum += 1; }
+      else if (e.ziel === "blaupause") {
+        s.gemeingut.pumpe.stufe += 1;
+        s.gemeingut.pumpe.verbesserungen.push({ jahr: s.meta.jahr, von: ich.id });
+        last(s, ich.id, 15, { werkstatt: 1 }); ich.blaupausen += 1;
+      }
+      else if (e.ziel === "steighof") {
+        const st = s.knoten.steighof;
+        hebeTeilhabe(st.korb, 0.05);
+        st.spielraumBasis = r3(Math.min(3, st.spielraumBasis + 0.1));
+        if (s.unerwartetSaisons.steighof > 0) s.unerwartetSaisons.steighof -= 1;
+        last(s, ich.id, 15, { werkstatt: 0.5, pflege: 0.5 }); anerkennen(ich, 0.5);
+        fluss(s, ich.id, "steighof", "arbeit").samen += 1;
+      }
+      else {
+        s.region.vorAufbau.wasser = r3(clamp(s.region.vorAufbau.wasser + 0.08, 0, 1));
+        s.region.korb.wasser = r3(clamp(s.region.korb.wasser + 0.04, 0, 1));
+        s.region.synchronisation.telemetrie = r3(clamp(s.region.synchronisation.telemetrie + 0.03, 0, 1));
+        last(s, ich.id, 15, { werkstatt: 0.55, boden: 0.45 }); anerkennen(ich, 0.5);
+        s.verbund.budget.bau = r3(s.verbund.budget.bau + 0.5);
+        verbrauche(s, pumpeFaktor(s));
+        fluss(s, ich.id, "region", "gabe").samen += 1;
+      }
+    }
+    if (e.typ === "TEILEN") {
+      if (e.ziel !== "behalten") s.gegebenSaison += 1;
+      if (e.ziel === "speicher") { ich.spielraum -= 1; s.verbund.speicher += 1; fluss(s, ich.id, "speicher", "gabe").samen += 1; }
+      else if (e.ziel !== "behalten") {
+        ich.spielraum -= 1; hebeTeilhabe(s.knoten[e.ziel].korb, 0.1 * gabeFaktor(s, e.ziel));
+        fluss(s, ich.id, e.ziel, "gabe").samen += 1;
+      }
+    }
+    if (e.typ === "ANGEBOT" && e.angebot === "zeichnung" && e.annehmen) {
+      const R = s.region.reihung;
+      R.gezeichnet = true; R.zeichnungJahr = s.meta.jahr; R.platz = r3(Math.max(0, R.platz - 4)); R.traegeBis = s.meta.jahr + 3;
+      s.fonds.mittel = r3(s.fonds.mittel + 12);
+      s.zusagen.push({ bisSaison: s.meta.saison + 4, werkstatt: 6, pflege: 4 });
+      s.zusagenGeographie += 1;
+      fluss(s, "region", "fonds", "vertrag");
+    }
+    if (e.typ === "ANGEBOT" && e.angebot === "vertrag" && e.annehmen) {
+      s.region.vorAufbau.wasser = r3(clamp(s.region.vorAufbau.wasser + 0.2, 0, 1));
+      s.region.korb.wasser = r3(clamp(s.region.korb.wasser + 0.1, 0, 1));
+      s.region.hybridAnteil = r3(clamp(s.region.hybridAnteil + 0.05, 0, 1));
+      s.verbund.budget.bau = r3(s.verbund.budget.bau + 0.3);
+      ich.spielraum += 1;
+      fluss(s, "region", ich.id, "vertrag");
+    }
+    if (e.typ === "BESCHLUSS") {
+      const n = s.verbund.archiv.length + 1;
+      s.verbund.archiv.push({
+        nr: `V-${s.meta.jahr}-${String(n).padStart(2, "0")}`, jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz],
+        ebene: "Verbund", regel: clone(e.regel), text: REGELTYPEN[e.regel.typ].text(e.regel),
+        gegengrund: e.gegengrund, revisionsausloeser: e.revisionsausloeser || "neues Faktum oder signifikante Änderung der Lage",
+        herkunft: e.mehrheit ? "Durchgesetzt (überstimmt: " + namen(s, e.einwaendeVon) + ")" : e.angepasst ? "Beratung, angepasst (Bedingung: " + e.bedingung + ")" : (e.einwaendeVon || []).length ? "Vorschlag, wartet auf " + namen(s, e.einwaendeVon) : "Beratung",
+        auflage: e.auflage ? clone(e.auflage) : null,
+        zustimmung: zustimmung(s, e.regel, e.angepasst ? e.auflage : null),
+        urheber: e.urheber, offen: false,
+        wartetAuf: (e.einwaendeVon || []).length && !e.mehrheit && !e.angepasst ? e.einwaendeVon.slice() : null,
+        gueltigAb: (e.einwaendeVon || []).length && !e.mehrheit && !e.angepasst ? 1e9 : s.meta.saison
+      });
+      const z = zustimmung(s, e.regel, e.angepasst ? e.auflage : null);
+      const breite = Object.values(z).reduce((a, h) => a + (h === "zustimmung" ? 1 : h === "bedenken" ? 0.5 : 0), 0) / Object.keys(z).length;
+      s.verbund.beratung.zustimmungsbreite = r3(clamp(0.8 * s.verbund.beratung.zustimmungsbreite + 0.2 * breite, 0, 1));
+      if (e.angepasst) {
+        // Einwand aufgenommen: niemand überstimmt, kein ungelöster Einwand
+      } else if (e.mehrheit) {
+        s.verbund.beratung.erzwungen += 1;
+        s.verbund.beratung.zustimmungsbreite = r3(clamp(s.verbund.beratung.zustimmungsbreite - 0.15, 0, 1));
+        (e.einwaendeVon || []).forEach((id) => s.fluesse.forEach((f) => { if (f.von === id || f.nach === id) f.gerissen = true; }));
+      } else if ((e.einwaendeVon || []).length) {
+        s.verbund.beratung.ungeloest += e.einwaendeVon.length;
+      }
+    }
+    if (e.typ === "EINWAND") {
+      const a = s.verbund.archiv.find((x) => x.nr === e.gegen);
+      if (e.neuesFaktum) { a.offen = true; s.verbund.beratung.revisionen += 1; }
+      a.einwaende = (a.einwaende || []).concat([{ urheber: e.urheber, text: e.text, neuesFaktum: !!e.neuesFaktum }]);
+    }
+    if (e.typ === "EREIGNIS_BESCHLUSS") {
+      const E = s.ereignis, W = E.wege.find((x) => x.id === e.weg);
+      let w, ueberstimmt = [], text;
+      if (e.ausgang === "werben") { w = E.stillstand.wirkung; text = "Nichts beschlossen; es wird weiter geworben."; }
+      else {
+        w = clone(W.wirkung);
+        (e.bedingungen || []).forEach((st) => { if (W.haltungen[st] && W.haltungen[st].haltung === "einwand") w = bedingungVon(s, st, w).wirkung; });
+        ueberstimmt = Object.keys(W.haltungen).filter((k) => W.haltungen[k].haltung === "einwand" && (e.bedingungen || []).indexOf(k) < 0);
+        text = W.titel;
+      }
+      wirke(s, w, E.id);
+      const anzahl = Object.keys(W ? W.haltungen : {}).length || 3;
+      const zust = W ? Object.keys(W.haltungen).reduce((a, k) => a + (W.haltungen[k].haltung === "einwand" ? ((e.bedingungen || []).indexOf(k) >= 0 ? 1 : 0) : W.haltungen[k].haltung === "bedenken" ? 0.5 : 1), 0) / anzahl : 0.5;
+      s.verbund.beratung.zustimmungsbreite = r3(clamp(0.8 * s.verbund.beratung.zustimmungsbreite + 0.2 * zust, 0, 1));
+      if (e.ausgang === "durchsetzen" && ueberstimmt.length) s.verbund.beratung.erzwungen += 1;
+      if (e.ausgang === "werben") s.verbund.beratung.ungeloest += 1;
+      let regelNr = null;
+      if (e.ausgang !== "werben" && W.regel) {
+        regelNr = `V-${s.meta.jahr}-${String(s.verbund.archiv.length + 1).padStart(2, "0")}`;
+        const ew = Object.keys(W.haltungen).filter((k) => W.haltungen[k].haltung !== "zustimmung");
+        s.verbund.archiv.push({ nr: regelNr, jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz], ebene: "Verbund", regel: clone(W.regel), text: W.regeltext,
+          gegengrund: ew.length ? ew.map((k) => `${k} (${W.haltungen[k].haltung === "einwand" ? "Einwand" : "Bedenken"} aus ${s.knoten.birk.felder[W.haltungen[k].feld].name})`).join("; ")
+            : "Einstimmig. Verworfen: " + E.wege.filter((x) => x.id !== W.id).map((x) => `«${x.titel}» (${preisVon(s, x.wirkung)})`).join("; "),
+          ereignisId: E.id, wegId: W.id,
+          gegengrundDaten: { einwaende: ew.map((k) => ({ wer: k, haltung: W.haltungen[k].haltung, feld: W.haltungen[k].feld })),
+            verworfen: ew.length ? [] : E.wege.filter((x) => x.id !== W.id).map((x) => ({ wegId: x.id, titel: x.titel, preis: preisTeile(x.wirkung) })) },
+          revisionsausloeser: "neues Faktum oder signifikante Änderung der Lage",
+          herkunft: (e.ausgang === "durchsetzen" && ueberstimmt.length ? "Durchgesetzt (überstimmt: " + ueberstimmt.join(", ") + ")" : "Beratung") + ` · aus dem Ereignis «${E.titel}»`,
+          urheber: e.urheber, offen: false, auflage: null, wartetAuf: null, gueltigAb: s.meta.saison, zustimmung: null });
+      }
+      s.register.push({ nr: `T-${s.meta.jahr}-${String(s.register.length + 1).padStart(2, "0")}`, jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz], regel: regelNr,
+        ereignis: E.titel, weg: text, ausgang: e.ausgang, bedingungen: (e.bedingungen || []).slice(), ueberstimmt, ereignisId: E.id, wegId: e.ausgang === "werben" ? null : W.id, jz: s.meta.jz,
+        verworfen: E.wege.filter((x) => e.ausgang === "werben" || x.id !== e.weg).map((x) => x.titel), urheber: e.urheber });
+      s.ereignis = null;
+    }
+    if (e.typ === "JAHRESZEIT_ENDE") s = automatik(s);
+    if (e.typ === "WEITERGABE") {
+      const A = s.amtszeit, t = String(e.satz || "").trim();
+      s.amtszeiten.push({ nr: A.nr, von: A.von, bis: A.bis, herkunft: A.herkunft, bild: A.bild, satz: t || null });
+      s.erbe = { satz: t || null, vonAmtszeit: A.nr };
+      s.amtszeit = neueAmtszeit(s, A.nr + 1);
+    }
+
+    s.protokoll.push(e);
+    s.meta.takt = s.protokoll.length;
+    return s;
+  }
+
+  // ---------- Die Automatik: der Takt F.4, ausgeführt am Ende der Jahreszeit ----------
+  function automatik(s) {
+    const V = s.verbund;
+    // 1. Stunden verfallen (I-9)
+    s.verfallen = 0;
+    V.knoten.forEach((id) => { s.verfallen += s.knoten[id].stunden; s.knoten[id].stunden = 0; });
+
+    // 0b. Ein Ereignis ohne Beschluss: Der Stillstand gilt (R-35)
+    if (s.ereignis) {
+      const E = s.ereignis; wirke(s, E.stillstand.wirkung, E.id);
+      s.register.push({ nr: `T-${s.meta.jahr}-${String(s.register.length + 1).padStart(2, "0")}`, jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz],
+        ereignis: E.titel, weg: "Ohne Beschluss: " + E.stillstand.text, ausgang: "ohne", bedingungen: [], ueberstimmt: [], verworfen: E.wege.map((x) => x.titel), urheber: "verfassung", ereignisId: E.id, wegId: null, jz: s.meta.jz });
+      s.ereignis = null;
+    }
+
+    // 1b. Offene Vorschläge: Weicht der Einwand, tritt der Vorschlag in Kraft (R-20). Kein Entscheid des Kerns:
+    //     Die Menschen haben beschlossen, dass er gilt, sobald niemand mehr widerspricht.
+    V.archiv.forEach((a) => {
+      if (!a.wartetAuf || a.offen) return;
+      const h = zustimmung(s, a.regel, null);
+      if (a.wartetAuf.every((id) => h[id] !== "einwand")) {
+        a.gueltigAb = s.meta.saison;
+        a.herkunft = "Beratung (Einwand von " + namen(s, a.wartetAuf) + " gewichen, " + JAHRESZEITEN[s.meta.jz] + " " + s.meta.jahr + ")";
+        V.beratung.ungeloest = Math.max(0, V.beratung.ungeloest - a.wartetAuf.length);
+        a.wartetAuf = null;
+      }
+    });
+
+    // 2. Routine: Regeln des Verbundarchivs ausführen (nur ausgehandelte Regeln, I-8)
+    let speicherGeregelt = false;
+    V.archiv.forEach((a) => {
+      if (a.offen || a.gueltigAb > s.meta.saison) return;
+      const r = a.regel;
+      if (r.typ === "speicher_vorrang" && s.meta.jz === 3 && V.speicher > 0 && !speicherGeregelt) {
+        speicherGeregelt = true;
+        if (r.ziel === "region" && a.auflage && a.auflage.typ === "erst_schwaechster") {
+          let rest = V.speicher;
+          while (rest > 0 && Math.min(...V.knoten.map((id) => deckungsgrad(s.knoten[id].korb))) < 0.85) { zuSchwaechstem(s, 0.1); rest -= 1; }
+          if (rest > 0) { hebeRegion(s, rest * 0.1); V.budget.bau = r3(V.budget.bau + rest * 0.4); }
+        }
+        else if (r.ziel === "region") { hebeRegion(s, V.speicher * 0.1); s.verbund.budget.bau = r3(V.budget.bau + V.speicher * 0.4); }
+        else if (r.ziel === "schwaechster") zuSchwaechstem(s, V.speicher * 0.1);
+        else if (s.knoten[r.ziel]) hebeTeilhabe(s.knoten[r.ziel].korb, V.speicher * 0.1);
+        V.speicher = 0;
+      }
+      if (r.typ === "vorAufbau_quote" && !(regelGilt(s, "material_grenze") && materialFrei(s) < 0.5 * r.stunden * materialFaktor(s))) {
+        verbrauche(s, 0.5 * r.stunden * pumpeFaktor(s));
+        if (a.auflage && a.auflage.typ === "mittragen") ["weidmoos", "erlenbach", "birk"].forEach((id) => { last(s, id, 10 * r.stunden / 3, { werkstatt: 1 }); });
+        else ["weidmoos", "erlenbach"].forEach((id) => { s.knoten[id].zeitlast += 10 * r.stunden / 2; });
+        s.region.vorAufbau.wasser = r3(clamp(s.region.vorAufbau.wasser + 0.04 * r.stunden, 0, 1));
+        s.region.korb.wasser = r3(clamp(s.region.korb.wasser + 0.02 * r.stunden, 0, 1));
+        V.budget.bau = r3(V.budget.bau + 0.25 * r.stunden);
+      }
+      if (r.typ === "material_kreislauf") {
+        if (a.auflage && a.auflage.typ === "nach_kraft") { last(s, "weidmoos", 9); last(s, "erlenbach", 5); last(s, "birk", 4, { werkstatt: 1 }); last(s, "steighof", 2); }
+        else V.knoten.forEach((id) => { last(s, id, 5, { werkstatt: 1 }); });
+      }
+      if (r.typ === "material_vorgriff" && !a.ausgefuehrt) { a.ausgefuehrt = true; s.material.anteil += r.menge; s.material.vorgriffGeplant = (s.material.vorgriffGeplant || 0) + r.menge; }
+      if (r.typ === "erwartung_verlaengern" && s.erwartung.steighof < r.bis) {
+        s.erwartung.steighof = r.bis;
+        s.knoten.steighof.spielraumBasis = r3(s.knoten.steighof.spielraumBasis + 0.5);
+        s.knoten.weidmoos.zeitlast += 10;
+        s.unerwartetSaisons.steighof = 0;
+      }
+      if (r.typ === "teilhabe_ausgleich") {
+        V.knoten.forEach((id) => { const k = s.knoten[id]; if (k.spielraum > 3) { k.spielraum -= 1; const z = zuSchwaechstem(s, 0.1); const f = fluss(s, id, z, "erwartet"); f.erwartetBis = s.meta.jahr + 1; } });
+      }
+    });
+    // 3. Ohne Verbundregel: Bedarf vor Fähigkeit (Verfassung F-2054-03)
+    if (s.meta.jz === 3 && V.speicher > 0 && !speicherGeregelt) { zuSchwaechstem(s, V.speicher * 0.1); V.speicher = 0; }
+
+    // 4. Reihung Satz 3: was nicht knapp ist
+    s.region.vorAufbau.bibliothek = r3(clamp(s.region.vorAufbau.bibliothek + 0.05, 0, 1));
+    s.region.vorAufbau.ausbildung = r3(clamp(s.region.vorAufbau.ausbildung + 0.05, 0, 1));
+    s.region.korb.grundbildung = r3(clamp(s.region.korb.grundbildung + 0.02, 0, 1));
+    s.region.korb.bildung = r3(clamp(s.region.korb.bildung + 0.02, 0, 1));
+
+    // 5. Wetter (Platzhalter R-10)
+    const w = zufall(s, 11);
+    s.wetter = w < 0.30 ? "Dürre" : w > 0.75 ? "Sturm" : "ruhig";
+    if (s.wetter === "Dürre") {
+      const schutz = s.region.vorAufbau.wasser;
+      s.region.korb.wasser = r3(clamp(s.region.korb.wasser - 0.06 * (1 - schutz), 0, 1));
+      s.region.korb.nahrung = r3(clamp(s.region.korb.nahrung - 0.03 * (1 - schutz), 0, 1));
+    }
+    if (s.wetter === "Sturm") {
+      V.knoten.forEach((id) => {
+        const k = s.knoten[id];
+        const schutz = clamp(0.5 * Math.min(k.reserveTage / 60, 1) + 0.5 * Math.min(Math.max(k.spielraum, 0), 4) / 4, 0, 0.9);
+        const wucht = s.naturhaushalt.gekippt ? 0.18 : 0.12;
+        ["mobilitaet", "kultur", "pflege"].forEach((p) => { k.korb[p] = r3(clamp(k.korb[p] - wucht * (1 - schutz), 0, 1)); });
+        k.korb.wohnung = r3(k.korb.wohnung - 0.1);
+      });
+      s.region.korb.wohnung = r3(clamp(s.region.korb.wohnung - 0.05, 0, 1));
+      verbrauche(s, 1);
+    }
+    verbrauche(s, 1.5);
+    // 5a. Zusagen der Zeichnung binden Werkstatt und Pflege (R-45)
+    s.zusagen.filter((z) => z.bisSaison > s.meta.saison).forEach((z) => { last(s, "birk", z.werkstatt, { werkstatt: 1 }); last(s, "birk", z.pflege, { pflege: 1 }); });
+    s.zusagen = s.zusagen.filter((z) => z.bisSaison > s.meta.saison + 1);
+    // 5b. Erschöpfung und Erholung (R-16, R-17, R-18)
+    V.knoten.forEach((id) => {
+      const k = s.knoten[id];
+      const ef = erschoepfteFelder(k);
+      const mued = k.felder ? ef.length > 0 : k.zeitlast > k.zeitlastBasis + 40;
+      s.erschoepft[id] = mued ? (s.erschoepft[id] || 0) + 1 : 0;
+      if (k.felder) {
+        s.erschoepfteFelder = ef.slice();
+        if (ef.indexOf("pflege") >= 0) { k.korb.pflege = r3(clamp(k.korb.pflege - 0.04, 0, 1)); k.korb.kultur = r3(clamp(k.korb.kultur - 0.04, 0, 1)); }
+        if (ef.indexOf("werkstatt") >= 0) { k.korb.mobilitaet = r3(clamp(k.korb.mobilitaet - 0.03, 0, 1)); k.korb.kultur = r3(clamp(k.korb.kultur - 0.02, 0, 1)); }
+        if (ef.indexOf("boden") >= 0) s.naturhaushalt.zustand = r3(clamp(s.naturhaushalt.zustand - 0.5, 0, 100));
+      } else if (mued) { k.korb.pflege = r3(clamp(k.korb.pflege - 0.04, 0, 1)); k.korb.kultur = r3(clamp(k.korb.kultur - 0.04, 0, 1)); }
+      else if (!(id === "steighof" && abhaengig(s))) hebeTeilhabe(k.korb, s.naturhaushalt.gekippt ? 0.015 : 0.03);
+    });
+    // 6. Schicht 1 der Mitglieder: Garantie der Föderation (R-01, I-1)
+    V.knoten.forEach((id) => POS1.forEach((p) => { s.knoten[id].korb[p] = 1; }));
+
+    // 7. Flüsse: erwartet oder unerwartet
+    let unerwartet = 0;
+    s.fluesse.forEach((f) => {
+      if (f.gerissen || f.art === "vertrag" || f.art === "arbeit") return;
+      if (f.nach === "steighof" && s.meta.jahr > s.erwartung.steighof) unerwartet += 1;
+    });
+    s.unerwartetSaisons.steighof = unerwartet > 0 ? s.unerwartetSaisons.steighof + 1 : 0;
+
+    // 7b. Genug statt mehr: geltender Spielraum-Deckel (R-38)
+    geltendeRegeln(s).filter((a) => a.regel.typ === "spielraum_deckel").forEach((a) => V.knoten.forEach((id) => {
+      const k = s.knoten[id]; if (k.spielraum > a.regel.max) { V.speicher += Math.floor(k.spielraum - a.regel.max); k.spielraum = a.regel.max + (k.spielraum - a.regel.max) % 1; }
+    }));
+    // 8. Biosphäre: Nutzung des Budgetanteils (R-09)
+    const grund = V.knoten.reduce((a, id) => a + s.knoten[id].last, 0);
+    const spiel = V.knoten.reduce((a, id) => a + Math.max(0, s.knoten[id].spielraum), 0) * 0.4;
+    V.budget.nutzung = r3(grund + spiel + V.budget.bau);
+
+    // 8b. Der Naturhaushalt (R-22, R-23)
+    const H = s.naturhaushalt;
+    const gehalten = V.knoten.reduce((a, id) => a + Math.max(0, s.knoten[id].spielraum), 0);
+    const entnahme = 0.4 + 0.1 * gehalten + 0.05 * s.gegebenSaison;
+    const nachwuchs = s.wetter === "Dürre" ? -1 : 0.09 * H.zustand * (1 - H.zustand / 100) * (H.gekippt ? 0.5 : 1);
+    H.zustand = r3(clamp(H.zustand + nachwuchs - entnahme, 0, 100));
+    if (H.zustand < H.kipp) H.gekippt = true;
+    s.gegebenSaison = 0;
+
+    // 9. Prüfen: Schwellen und Auswahl der Spannung
+    // 8c. Ried im Nachbarverbund (R-37)
+    s.ried.teilhabe = r3(clamp(s.ried.teilhabe + (s.wetter === "Dürre" ? -0.02 : 0.005), 0, 0.95));
+    s.lage = pruefen(s);
+
+    // 10. Weiterschalten; am Jahresende Spielraum, Zeitlast und Bau neu, Riss bleibt
+    const war = s.meta.jz;
+    if (war === 3) {
+      if (V.budget.nutzung > V.budget.deckel) V.budget.gerissen = true;
+      // Fonds, Reihung, Übergang (R-43, R-44, R-46)
+      s.fonds.mittel = r3(Math.max(0, s.fonds.mittel - s.fonds.versinkung));
+      const RG = s.region, R = RG.reihung, va = RG.vorAufbau, sy = RG.synchronisation;
+      const T = (va.wasser + va.verfassung + va.bibliothek + va.ausbildung + Object.values(sy).reduce((a, b) => a + b, 0) / Object.keys(sy).length) / 5;
+      const N = 1 - schicht1Min(RG.korb);
+      // zwei Drittel der Kapazität nach Tragfähigkeit, ein Drittel nach Not (nur ohne Zeichnung), wie in der Reihung von 2054
+      R.platz = r3(Math.max(0, R.platz - (3 * T + (R.gezeichnet ? 0 : 0.8 * N))));
+      R.aufnahmeBereit = R.platz <= 0;
+      const traege = R.traegeBis !== null && s.meta.jahr <= R.traegeBis;
+      RG.hybridAnteil = r3(clamp(RG.hybridAnteil - 0.04 * T * (traege ? 0.5 : 1), 0, 1));
+      const M = s.material, ueber = Math.max(0, M.verbraucht - M.anteil);
+      M.vorgriff = r3(M.vorgriff + ueber + (M.vorgriffGeplant || 0));
+      M.anteil = r3(Math.max(4, M.basis - ueber - (M.vorgriffGeplant || 0)));
+      M.vorgriffGeplant = 0; M.verbraucht = 0;
+      s.meta.jahr += 1;
+      // Erschöpfung hat ein Gedächtnis (R-50): die Hälfte der Überlast eines Feldes geht ins neue Jahr
+      V.knoten.forEach((id) => { const k = s.knoten[id]; k.spielraum = k.spielraumBasis; k.zeitlast = k.zeitlastBasis;
+        if (k.felder) { FELDER.forEach((f) => { const F = k.felder[f]; F.last = r3(F.bedarf + 0.5 * Math.max(0, F.last - F.kapazitaet)); }); k.zeitlast = r3(FELDER.reduce((a, f) => a + k.felder[f].last, 0)); } });
+      V.budget.bau = 0;
+    }
+    s.meta.jz = (war + 1) % 4;
+    s.meta.saison += 1;
+    if (s.meta.jz === 0) V.knoten.forEach((id) => { if (s.knoten[id].spieler) { s.knoten[id].stunden = kontingent(s.knoten[id]); s.knoten[id].anerkennung = 0; } });
+    // Spätere Folgen früherer Beschlüsse treten zu Beginn ihrer Jahreszeit ein, bevor das nächste Ereignis gewählt wird
+    s.spaeter.filter((x) => x.abSaison <= s.meta.saison).forEach((x) => wirke(s, x.wirkung, x.quelle));
+    s.spaeter = s.spaeter.filter((x) => x.abSaison > s.meta.saison);
+    s.ereignis = waehleEreignis(s);
+    mitRegisterSpannung(s);
+    // Die Amtszeit hat ein Genug (R-47): nach vier Jahreszeiten endet sie von selbst
+    const A = s.amtszeit;
+    if (A && !A.beendet && s.meta.saison - A.beginn >= 4) { A.beendet = true; A.bis = { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz] }; A.bild = bildDerAmtszeit(s); }
+    return s;
+  }
+
+  // ---------- Amtszeit, Bild und Weitergabe (R-47 bis R-51) ----------
+  function neueAmtszeit(s, nr) {
+    const herkunft = FELDER[Math.floor(zufall(s, 23 + nr) * FELDER.length)];
+    return {
+      nr, beginn: s.meta.saison, von: { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz] }, bis: null, herkunft, beendet: false, bild: null,
+      anfang: {
+        naturhaushalt: s.naturhaushalt.zustand, gekippt: s.naturhaushalt.gekippt, platz: s.region.reihung.platz,
+        archiv: s.verbund.archiv.length, register: s.register.length, gerissen: s.fluesse.filter((f) => f.gerissen).length,
+        lebendig: s.fluesse.filter((f) => !f.gerissen && (f.art === "gabe" || f.art === "arbeit")).length, gezeichnet: s.region.reihung.gezeichnet,
+        pumpe: s.gemeingut.pumpe.stufe, ried: s.ried.teilhabe
+      }
+    };
+  }
+  const ZAHL = (x) => String(Math.round(x * 10) / 10).replace(".", ",");
+  // Das Bild: einzelne Sätze, je einer pro Sache. Keine Zahl über allem, kein Urteil, kein Vergleich mit anderen Amtszeiten.
+  function bildDerAmtszeit(s) {
+    const A = s.amtszeit, a = A.anfang, bild = [];
+    const satz = (art, text, daten) => bild.push(daten ? { art, text, daten } : { art, text });
+    satz("gehalten", "Das Lebensnotwendige war in jeder Jahreszeit gedeckt, für alle in den vier Orten.");
+    const H = s.naturhaushalt;
+    satz("naturhaushalt", H.gekippt && !a.gekippt ? `Der Naturhaushalt ist gekippt: von ${ZAHL(a.naturhaushalt)} auf ${ZAHL(H.zustand)}, seine Erholungskraft ist gebrochen.`
+      : `Der Naturhaushalt steht bei ${ZAHL(H.zustand)} (zu Beginn ${ZAHL(a.naturhaushalt)}), Erholungskraft ${erholungskraft(s)}.`);
+    const R = s.region.reihung;
+    satz("tal-sued", R.aufnahmeBereit ? "Tal-Süd ist bereit für die Aufnahme." : `Tal-Süd wartet auf Platz ${ZAHL(R.platz)} der Reihung (zu Beginn ${ZAHL(a.platz)}).`);
+    if (R.gezeichnet && !a.gezeichnet) satz("zeichnung", "Tal-Süd hat sich mit Geld der alten Welt eingekauft. Eine bedürftigere Region ohne Geld ist dadurch auf der Warteliste zurückgefallen.");
+    const neu = s.verbund.archiv.slice(a.archiv);
+    if (neu.length) neu.forEach((r) => satz("regel", `Regel ${r.nr}: ${r.text}`, { nr: r.nr, regel: clone(r.regel) })); else satz("regel", "Es kam keine neue Regel ins Archiv.", { keine: true });
+    s.register.slice(a.register).forEach((t) => satz("tat", `«${t.ereignis}», ${t.jahreszeit}: ` + (t.ausgang === "gemeinsam" ? `gemeinsam: ${t.weg}` : t.ausgang === "durchsetzen" ? `durchgesetzt: ${t.weg}` + (t.ueberstimmt.length ? ` (überstimmt: ${t.ueberstimmt.join(", ")})` : "") : t.ausgang === "werben" ? "nichts beschlossen, weiter geworben" : t.weg.replace(/^Ohne Beschluss: /, "ohne Beschluss. "))));
+    const gerissen = s.fluesse.filter((f) => f.gerissen).length - a.gerissen;
+    if (gerissen > 0) satz("faeden", gerissen === 1 ? "Ein Faden ist gerissen." : `${gerissen} Fäden sind gerissen.`, { gerissen });
+    const lebendig = s.fluesse.filter((f) => !f.gerissen && (f.art === "gabe" || f.art === "arbeit")).length - a.lebendig;
+    if (lebendig > 0) satz("faeden", lebendig === 1 ? "Ein neuer Faden der Gabe läuft." : `${lebendig} neue Fäden der Gabe laufen.`, { neu: lebendig });
+    if (s.gemeingut.pumpe.stufe > a.pumpe) satz("gemeingut", "Der Bauplan der Pumpe im Gemeingut ist besser geworden, für alle.");
+    const k = s.knoten.birk;
+    const ueber = k.felder ? FELDER.filter((f) => k.felder[f].last > k.felder[f].bedarf) : [];
+    if (ueber.length) satz("erbe", (ueber.length === 1 ? "Das Arbeitsfeld " : "Die Arbeitsfelder ") + ueber.map((f) => "«" + k.felder[f].name + "»").join(" und ") + (ueber.length === 1 ? " geht" : " gehen") + " müde ins neue Jahr.", { felder: ueber });
+    satz("ried", s.ried.teilhabe < SCHWELLEN.teilhabe ? "Ried im Nachbarverbund liegt unter der Teilhabe-Schwelle." : "Ried im Nachbarverbund hält seine Teilhabe.");
+    satz("ungezaehlt", SIEBTES_FELD[Math.floor(zufall(s, 31) * SIEBTES_FELD.length)] + ": Das steht in keinem Feld.");
+    return bild;
+  }
+
+  // ---------- Sätze für die Tür, Deutsch und Englisch (R-53, Blick, Wandel, Bach, Bedingung) ----------
+  // Die Rechnung kennt keine Sprache; nur diese Lesefunktionen sprechen. Englisch: britische Schreibweise.
+  const FELD_SATZ = {
+    de: { pflege: ["die Pflege", "der Pflege"], werkstatt: ["die Werkstatt", "der Werkstatt"], boden: ["die Arbeit an Boden und Wasser", "der Arbeit an Boden und Wasser"] },
+    en: { pflege: ["care", "care"], werkstatt: ["the workshop", "the workshop"], boden: ["soil and water work", "soil and water work"] }
+  };
+  const gross = (t) => t.charAt(0).toUpperCase() + t.slice(1);
+  const sprache = (sp) => (sp === "en" ? "en" : "de");
+  const feldSatz = (f, sp, fall) => FELD_SATZ[sprache(sp)][f][fall || 0];
+  const PREIS = {
+    de: { "nh-": "der Bach wäre gesunken", "nh+": "der Bach hätte sich erholt", "ried+": "Ried hätte Hilfe bekommen", "ried-": "Ried hätte gewartet", "region+": "Tal-Süd wäre vorgerückt",
+      erfassung: "die Sorge wäre gezählt worden", spielraum: "alle hätten weniger Spielraum gehabt", fonds: "der Übergangsfonds wäre gebraucht worden", warten: "Tal-Süd hätte weiter gewartet", feld: (f) => `${feldSatz(f, "de")} hätte mehr getragen`, kaum: "kaum eine Wirkung" },
+    en: { "nh-": "the stream would have fallen", "nh+": "the stream would have recovered", "ried+": "Ried would have received help", "ried-": "Ried would have waited", "region+": "Tal-Süd would have moved up",
+      erfassung: "care would have been counted", spielraum: "everyone would have had less leeway", fonds: "the transition fund would have been needed", warten: "Tal-Süd would have kept waiting", feld: (f) => `${feldSatz(f, "en")} would have carried more`, kaum: "hardly any effect" }
+  };
+  function preisTeile(w) {
+    const t = [];
+    if (w.nh < 0) t.push("nh-"); else if (w.nh > 0) t.push("nh+");
+    if (w.ried > 0) t.push("ried+"); else if (w.ried < 0) t.push("ried-");
+    if (w.region > 0) t.push("region+");
+    if (w.erfassung === "lueckenlos") t.push("erfassung");
+    if (w.spielraumAlle < 0) t.push("spielraum");
+    if (w.fonds < 0) t.push("fonds");
+    FELDER.forEach((f) => { if (w[f] >= 10) t.push("feld:" + f); });
+    if (w.regionKorb) t.push("warten");
+    return t.slice(0, 2);
+  }
+  function preisInWorten(teile, sp) {
+    const P = PREIS[sprache(sp)];
+    return teile.length ? teile.map((k) => (k.indexOf("feld:") === 0 ? P.feld(k.slice(5)) : P[k])).join(", ") : P.kaum;
+  }
+  function preisVon(s, w, sp) { return preisInWorten(preisTeile(w), sp); }
+  function bedingungText(b, sp) {
+    if (b.halbiert) return sprache(sp) === "en" ? "Only until the stream and the moor recover; the taking is halved." : "Nur so lange, bis Bach und Moor sich erholen; die Entnahme wird halbiert.";
+    return sprache(sp) === "en" ? `${gross(feldSatz(b.nach, "en"))} takes over ${b.stunden} hours from ${feldSatz(b.von, "en", 1)}.`
+      : `${gross(feldSatz(b.nach, "de"))} übernimmt ${b.stunden} Stunden von ${feldSatz(b.von, "de", 1)}.`;
+  }
+  // Der Bach in Worten: erholt sich gut, langsam, kaum noch, nicht mehr
+  function bachSatz(s, sp) {
+    const H = s.naturhaushalt, en = sprache(sp) === "en";
+    if (H.gekippt) return en ? "It no longer recovers." : "Er erholt sich nicht mehr.";
+    if (s.wetter === "Dürre") return en ? "In the drought it does not recover." : "In der Dürre erholt er sich nicht.";
+    return H.zustand >= 60 ? (en ? "It recovers well." : "Er erholt sich gut.") : H.zustand >= 50 ? (en ? "It recovers slowly." : "Er erholt sich langsam.") : (en ? "It barely recovers any more." : "Er erholt sich kaum noch.");
+  }
+
+  // ---------- Der Blick: ein Satz zu jedem Kreis, ohne Zahl (Tür) ----------
+  function blick(s, kreis, sp) {
+    const k = s.knoten.birk, en = sprache(sp) === "en";
+    if (kreis === "birk") {
+      const voll = FELDER.filter((f) => k.felder[f].last > k.felder[f].kapazitaet);
+      if (voll.length) return en ? `${gross(feldSatz(voll[0], "en"))} is at its limit.` : `${gross(feldSatz(voll[0], "de"))} ist am Anschlag.`;
+      const eng = FELDER.filter((f) => k.felder[f].kapazitaet - k.felder[f].last < 10);
+      if (eng.length) return en ? `Work is getting tight. ${gross(feldSatz(eng[0], "en"))} has hardly any room left.` : `Die Arbeit wird knapp. ${gross(feldSatz(eng[0], "de"))} hat kaum noch Luft.`;
+      return en ? "Birk has room to breathe: there is still time free in all three kinds of work." : "Birk hat Luft: In allen drei Arbeitsfeldern ist noch Zeit frei.";
+    }
+    if (kreis === "steighof") {
+      if (abhaengig(s)) return en ? "Steighof has long been receiving more than it can give back. That weighs on it." : "Steighof bekommt seit Langem mehr, als es zurückgeben kann. Das drückt.";
+      if (s.unerwartetSaisons.steighof === 1) return en ? "Steighof accepts, but it is growing uneasy." : "Steighof nimmt an, aber es wird ihm unbehaglich.";
+      return deckungsgrad(s.knoten.steighof.korb) >= 0.9 ? (en ? "Steighof stands on its own." : "Steighof trägt sich selbst.") : (en ? "Steighof still needs you." : "Steighof braucht euch noch.");
+    }
+    if (kreis === "talsued") {
+      const R = s.region.reihung;
+      if (R.aufnahmeBereit) return en ? "Tal-Süd is ready to join." : "Tal-Süd ist bereit für die Aufnahme.";
+      if (R.gezeichnet) return en ? "Tal-Süd's traders have paid money in. It is moving up, but with the old world's money." : "Tal-Süds Händler haben Geld eingezahlt. Es rückt vor, aber mit dem Geld der alten Welt.";
+      return s.region.vorAufbau.wasser < 0.4 ? (en ? "Tal-Süd is short of water. The pipeline is still short." : "In Tal-Süd fehlt Wasser. Die Leitung ist noch kurz.")
+        : (en ? "Tal-Süd's pipeline is growing. It is still waiting." : "Die Leitung von Tal-Süd wächst. Es wartet noch.");
+    }
+    if (kreis === "gemein") {
+      const st = s.gemeingut.pumpe.stufe, voll = s.verbund.speicher > 0;
+      return en ? (voll ? "There is something in the store for winter" : "The store is empty") + ", and the pump design is " + (st === 0 ? "still rough." : st < 3 ? "getting better." : "mature.")
+        : (voll ? "Im Speicher liegt etwas für den Winter" : "Der Speicher ist leer") + ", und der Bauplan der Pumpe ist " + (st === 0 ? "noch roh." : st < 3 ? "besser geworden." : "ausgereift.");
+    }
+    if (kreis === "bach") return s.naturhaushalt.gekippt ? (en ? "The stream has tipped. It no longer recovers." : "Der Bach ist gekippt. Er erholt sich nicht mehr.") : (en ? "The stream. " : "Der Bach. ") + bachSatz(s, sp);
+    return "";
+  }
+
+  // ---------- Der Wandel: was sich beim Wechsel der Jahreszeit verändert hat, in einem Satz ----------
+  function wandel(a, b, sp) {
+    const en = sprache(sp) === "en";
+    if (b.naturhaushalt.gekippt && !a.naturhaushalt.gekippt) return en ? "The stream has tipped." : "Der Bach ist gekippt.";
+    if (b.region.reihung.aufnahmeBereit && !a.region.reihung.aufnahmeBereit) return en ? "Tal-Süd is ready to join." : "Tal-Süd ist bereit für die Aufnahme.";
+    if (b.unerwartetSaisons.steighof >= 2 && a.unerwartetSaisons.steighof < 2) return en ? "Steighof is growing uneasy: it receives without being able to give back." : "Steighof wird unruhig: Es bekommt, ohne zurückgeben zu können.";
+    if (b.fluesse.filter((f) => f.gerissen).length > a.fluesse.filter((f) => f.gerissen).length) return en ? "A thread has broken." : "Ein Faden ist gerissen.";
+    const voll = FELDER.find((f) => b.knoten.birk.felder[f].last > b.knoten.birk.felder[f].kapazitaet && a.knoten.birk.felder[f].last <= a.knoten.birk.felder[f].kapazitaet);
+    if (voll) return en ? `${gross(feldSatz(voll, "en"))} is now at its limit.` : `${gross(feldSatz(voll, "de"))} ist jetzt am Anschlag.`;
+    if (b.wetter === "Dürre" && a.wetter !== "Dürre") return en ? "It turned dry. The stream carries little water." : "Es wurde trocken. Der Bach führt wenig Wasser.";
+    if (b.wetter === "Sturm" && a.wetter !== "Sturm") return en ? "A storm passed over the valley." : "Ein Sturm ging über das Tal.";
+    if (b.region.reihung.platz < a.region.reihung.platz - 0.5) return en ? "Tal-Süd has moved up the waiting list." : "Tal-Süd ist auf der Warteliste näher gerückt.";
+    if (b.ried.teilhabe < SCHWELLEN.teilhabe && a.ried.teilhabe >= SCHWELLEN.teilhabe) return en ? "Ried, in the neighbouring network, is falling behind." : "Ried im Nachbarverbund fällt zurück.";
+    return null;
+  }
+
+  // ---------- Rückschau: was eine frühere Sprecherin auf dem Rückweg sieht ----------
+  function rueckschau(s) {
+    const name = (f) => s.knoten.birk.felder[f].name;
+    const zeiten = s.amtszeiten.map((a) => ({ nr: a.nr, von: a.von, bis: a.bis, herkunft: name(a.herkunft), satz: a.satz, bild: a.bild }));
+    const A = s.amtszeit;
+    return { zeiten, laufend: A ? { nr: A.nr, von: A.von, herkunft: name(A.herkunft), beendet: A.beendet, bild: A.bild } : null,
+      heute: { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz] } };
+  }
+
+  // ---------- Der Spielstand: nur das Protokoll, der Kern rechnet nach ----------
+  function spielstand(s) {
+    return { kern: VERSION, protokoll: clone(s.protokoll), pruefsumme: pruefsumme(s.protokoll), zustand: pruefsumme(bilanz(s)) };
+  }
+  function ladeSpielstand(stand) {
+    if (!stand || !Array.isArray(stand.protokoll)) return { ok: false, grund: "Kein Spielstand." };
+    if (pruefsumme(stand.protokoll) !== stand.pruefsumme) return { ok: false, grund: "Die Prüfsumme des Protokolls stimmt nicht; der Spielstand wurde verändert." };
+    let s;
+    try { s = nachspielen(stand.protokoll); } catch (err) { return { ok: false, grund: String(err.message || err) }; }
+    if (stand.kern === VERSION && stand.zustand && pruefsumme(bilanz(s)) !== stand.zustand) return { ok: false, grund: "Nachgerechnet ergibt das Protokoll eine andere Welt." };
+    return { ok: true, zustand: s, andererKern: stand.kern !== VERSION };
+  }
+
+  // ---------- Schwellen und Auswahl der Spannung (Reduktion E.4, Bauweg §7.7) ----------
+  const SCHWELLEN = { teilhabe: 0.8, randNot: 0.5, budgetAlarm: 0.95, zeitSpreizung: 1.12, unerwartetSaisons: 2 };
+
+  function pruefen(s) {
+    const V = s.verbund, sp = [];
+    V.knoten.forEach((id) => {
+      const d = deckungsgrad(s.knoten[id].korb);
+      if (d < SCHWELLEN.teilhabe) sp.push({ art: "teilhabe", feld: "Versorgung", wo: id, staerke: r3((SCHWELLEN.teilhabe - d) / SCHWELLEN.teilhabe), text: `${s.knoten[id].name} liegt unter der Teilhabe-Schwelle.` });
+    });
+    const rmin = schicht1Min(s.region.korb);
+    if (rmin < SCHWELLEN.randNot) {
+      let p = POS1[0]; POS1.forEach((q) => { if (s.region.korb[q] < s.region.korb[p]) p = q; });
+      sp.push({ art: "randNot", feld: "Versorgung", wo: "region", staerke: r3((SCHWELLEN.randNot - rmin) / SCHWELLEN.randNot + 0.2), text: `In der wartenden Region fehlt Lebensnotwendiges: ${POS_NAME[p]}.` });
+    }
+    const b = V.budget;
+    if (b.nutzung > b.deckel * SCHWELLEN.budgetAlarm) sp.push({ art: "biosphaere", feld: "Biosphäre", wo: "verbund", staerke: r3((b.nutzung - b.deckel * SCHWELLEN.budgetAlarm) / b.deckel + (b.nutzung > b.deckel ? 0.5 : 0)), text: b.nutzung > b.deckel ? "Der Verbund überschreitet seinen Anteil am Budget." : "Der Verbund nähert sich seinem Anteil am Budget." });
+    if (s.unerwartetSaisons.steighof >= SCHWELLEN.unerwartetSaisons) sp.push({ art: "einseitig", feld: "Gerechtigkeit", wo: "steighof", staerke: r3(0.1 * s.unerwartetSaisons.steighof), text: "Der Fluss zu Steighof läuft über die verbuchte Dauer hinaus nur in eine Richtung." });
+    const zl = V.knoten.map((id) => s.knoten[id].zeitlast), spr = Math.max(...zl) / Math.min(...zl);
+    if (spr > SCHWELLEN.zeitSpreizung) sp.push({ art: "zeit", feld: "Zeitwohlstand", wo: "verbund", staerke: r3(spr - SCHWELLEN.zeitSpreizung), text: "Die Last der notwendigen Arbeit ist ungleich verteilt." });
+    const H = s.naturhaushalt;
+    if (H.gekippt || H.zustand < H.kipp + 10) sp.push({ art: "naturhaushalt", feld: "Biosphäre", wo: "verbund", staerke: r3((H.kipp + 10 - Math.min(H.zustand, H.kipp + 10)) / 20 + (H.gekippt ? 0.5 : 0)), text: H.gekippt ? "Der Naturhaushalt ist gekippt: Seine Erholungskraft ist gebrochen." : "Der Naturhaushalt nähert sich seinem Kipppunkt." });
+    const Mt = s.material, ueber = Mt.verbraucht - Mt.anteil;
+    const matRegel = ["material_kreislauf", "material_grenze", "material_vorgriff"].some((typ) => regelGilt(s, typ));
+    if (ueber > 0) sp.push({ art: matRegel ? "material" : "regelluecke", feld: matRegel ? "Biosphäre" : "Archiv", wo: "verbund", staerke: r3(0.35 + 0.05 * ueber), text: matRegel ? "Der Materialanteil des Verbunds ist überschritten." : "Für nicht nachwachsendes Material gibt es keine Regel, und der Anteil des Verbunds ist überschritten." });
+    V.knoten.forEach((id) => { if ((s.erschoepft[id] || 0) > 0) sp.push({ art: "erschoepfung", feld: "Zeitwohlstand", wo: id, staerke: r3(0.12 * s.erschoepft[id]), text: s.knoten[id].felder && erschoepfteFelder(s.knoten[id]).length ? `In ${s.knoten[id].name} ist ${erschoepfteFelder(s.knoten[id]).map((f) => s.knoten[id].felder[f].name).join(" und ")} erschöpft.` : `In ${s.knoten[id].name} reicht die freie Zeit nicht mehr für die Teilhabe.` }); });
+    if (s.zusagenGeographie > 0 && s.zusagen.length) sp.push({ art: "zusagen", feld: "Gerechtigkeit", wo: "verbund", staerke: 0.35, text: "Eine bedürftigere Region ohne Zeichnung ist in der Reihung zurückgefallen, und Zusagen binden eure Werkstatt und Pflege." });
+    if (s.ried.teilhabe < SCHWELLEN.teilhabe) sp.push({ art: "ried", feld: "Versorgung", wo: "ried", staerke: r3((SCHWELLEN.teilhabe - s.ried.teilhabe) / SCHWELLEN.teilhabe), text: "Ried im Nachbarverbund liegt unter der Teilhabe-Schwelle." });
+    if (V.beratung.erzwungen > 0) sp.push({ art: "beratung", feld: "Gerechtigkeit", wo: "verbund", staerke: r3(0.15 * V.beratung.erzwungen), text: "Es wurde überstimmt statt getragen." });
+    const sv = V.archiv.filter((a) => a.regel.typ === "speicher_vorrang" && !a.offen);
+    if (sv.length > 1 && new Set(sv.map((a) => a.regel.ziel)).size > 1) sp.push({ art: "kollision", feld: "Archiv", wo: "verbund", staerke: 0.4, text: "Zwei Regeln weisen den Speicher verschiedenen Zielen zu." });
+    // feste Regel: stärkste Überschreitung, bei Gleichstand die zuerst geprüfte
+    let haupt = null; sp.forEach((x) => { if (!haupt || x.staerke > haupt.staerke) haupt = x; });
+    return { spannungen: sp, haupt, weitere: sp.filter((x) => x !== haupt).map((x) => x.feld) };
+  }
+
+  // ---------- Die Bilanz: alle Felder, drei Ebenen, keine Gesamtzahl, keine Reihung ----------
+  function bilanz(s) {
+    const V = s.verbund, ids = V.knoten;
+    const knoten = {};
+    ids.forEach((id) => {
+      const k = s.knoten[id];
+      knoten[id] = {
+        name: k.name,
+        versorgung: { deckungsgrad: r3(deckungsgrad(k.korb)), schicht1: r3(schicht1Min(k.korb)), positionen: clone(k.korb) },
+        zeitwohlstand: Object.assign({ notwendigeStunden: k.zeitlast, stundenOffen: k.stunden }, k.felder ? { felder: Object.fromEntries(FELDER.map((f) => [f, { name: k.felder[f].name, last: k.felder[f].last, kapazitaet: k.felder[f].kapazitaet, erschoepft: k.felder[f].last > k.felder[f].kapazitaet }])) } : {}),
+        resilienz: { reserveTage: Math.round(k.reserveTage + V.speicher * 2) },
+        biosphaere: { grundlast: k.last },
+        lernen: { blaupausen: k.blaupausen },
+        spielraum: k.spielraum
+      };
+    });
+    const dgs = ids.map((id) => deckungsgrad(s.knoten[id].korb));
+    const zl = ids.map((id) => s.knoten[id].zeitlast);
+    const fl = s.fluesse;
+    return {
+      knoten,
+      verbund: {
+        versorgung: { amSchwaechsten: r3(Math.min(...dgs)) },
+        biosphaere: { naturhaushalt: Object.assign(clone(s.naturhaushalt), { erholungskraft: erholungskraft(s) }), material: { anteil: s.material.anteil, verbraucht: s.material.verbraucht, vorgriff: s.material.vorgriff }, budgetImHintergrund: { nutzung: V.budget.nutzung, deckel: V.budget.deckel, gerissen: V.budget.gerissen } },
+        zeitwohlstand: { spreizungDerLast: r3(Math.max(...zl) / Math.min(...zl)) },
+        resilienz: { speicher: V.speicher },
+        gerechtigkeit: { spreizung: r3(Math.max(...dgs) / Math.min(...dgs)), beratung: clone(V.beratung) },
+        lernen: { blaupausen: ids.reduce((a, id) => a + s.knoten[id].blaupausen, 0), bauplanPumpe: s.gemeingut.pumpe.stufe, materialJePumpe: r3(pumpeFaktor(s)) },
+        reziprozitaet: {
+          lebendig: fl.filter((f) => !f.gerissen && (f.art === "gabe" || f.art === "arbeit")).length,
+          erwartet: fl.filter((f) => !f.gerissen && f.art === "erwartet").length,
+          verrechnet: fl.filter((f) => f.art === "vertrag").length,
+          gerissen: fl.filter((f) => f.gerissen).length,
+          samen: fl.reduce((a, f) => a + (f.gerissen || f.art === "vertrag" ? 0 : f.samen), 0)
+        }
+      },
+      netz: clone(s.netz.rahmen),
+      region: {
+        bezeichnung: s.region.bezeichnung,
+        deckungsgrad: r3(deckungsgrad(s.region.korb)), schicht1: r3(schicht1Min(s.region.korb)),
+        positionen: clone(s.region.korb), vorAufbau: clone(s.region.vorAufbau), hybridAnteil: s.region.hybridAnteil,
+        reihung: clone(s.region.reihung)
+      },
+      fonds: clone(s.fonds), zusagen: { aktiv: s.zusagen.length, zurueckgefallen: s.zusagenGeographie },
+      ried: { name: s.ried.name, verbund: s.ried.verbund, teilhabe: s.ried.teilhabe },
+      ereignis: s.ereignis ? { titel: s.ereignis.titel, lage: s.ereignis.lage, wege: s.ereignis.wege.map((w) => ({ id: w.id, titel: w.titel, haltungen: w.haltungen })) } : null,
+      amtszeit: s.amtszeit ? { nr: s.amtszeit.nr, herkunft: s.knoten.birk.felder[s.amtszeit.herkunft].name, von: s.amtszeit.von, beendet: s.amtszeit.beendet, bild: s.amtszeit.bild } : null,
+      erbe: s.erbe ? clone(s.erbe) : null,
+      register: s.register.slice(-8), gemeingut: { pumpe: s.gemeingut.pumpe.stufe, plaene: s.gemeingut.plaene.slice() }, erfassung: s.erfassung,
+      siebtesFeld: { inhalt: s.siebtesFeld.inhalt.slice() }
+    };
+  }
+
+  // ---------- Invarianten als Prüfungen (Bauweg §3.4, §7.6) ----------
+  function pruefeInvarianten(s, vorher) {
+    const res = [];
+    const ok = (id, b, text) => res.push({ id, ok: !!b, text });
+    const ids = s.verbund.knoten;
+    ok("I-1", ids.every((id) => POS1.every((p) => s.knoten[id].korb[p] === 1)), "Grundsicherung der Mitglieder überall gedeckt");
+    const B = bilanz(s);
+    ok("I-2", B.verbund.versorgung.amSchwaechsten === Math.min(...ids.map((id) => B.knoten[id].versorgung.deckungsgrad)), "Versorgung als Minimum, nicht als Mittel");
+    ok("I-3", !vorher || ((!vorher.verbund.budget.gerissen || s.verbund.budget.gerissen) && (!vorher.naturhaushalt.gekippt || s.naturhaushalt.gekippt) && s.material.vorgriff >= vorher.material.vorgriff), "Riss der Grenze, Kippen des Naturhaushalts und Vorgriff auf Material bleiben bestehen");
+    const verboten = /gesamt|score|punkte|index|rang|ranking|vertrau|trust/i;
+    const schluessel = []; (function scan(o, pfad) { if (o && typeof o === "object") Object.keys(o).forEach((k) => { if (verboten.test(k)) schluessel.push(pfad + k); scan(o[k], pfad + k + "."); }); })({ b: B, z: Object.assign({}, s, { protokoll: [], verfassung: [] }) }, "");
+    ok("I-4/5/6", schluessel.length === 0, "Keine Gesamtzahl, keine Reihung, kein Vertrauenswert" + (schluessel.length ? ": " + schluessel.join(", ") : ""));
+    ok("I-6", Object.keys(s.siebtesFeld).join() === "inhalt" && s.siebtesFeld.inhalt.every((t) => typeof t === "string"), "Siebtes Feld nur als Text");
+    ok("I-8", s.verbund.archiv.every((a) => String(a.urheber).indexOf("mensch:") === 0) && s.register.every((r) => String(r.urheber).indexOf("mensch:") === 0 || r.urheber === "verfassung"), "Archiv und Register nur aus menschlichen Beschlüssen (oder dem Stillstand der Verfassung)");
+    ok("I-8", s.protokoll.filter((e) => e.typ === "WEITERGABE").every((e) => String(e.urheber).indexOf("mensch:") === 0), "Weitergegeben wird nur von Menschen");
+    ok("I-9", ids.every((id) => s.knoten[id].stunden <= 4 && s.knoten[id].stunden >= 0), "Stunden nicht ansparbar");
+    ok("I-11", !s.ereignis || s.ereignis.wege.some((w) => !w.gesperrt), "Geltende Regeln sperren nie alle Wege eines Ereignisses");
+    const alleKoerbe = ids.map((id) => s.knoten[id].korb).concat([s.region.korb]);
+    ok("I-10", alleKoerbe.every((k) => Object.values(k).every((v) => v <= 1)), "Keine Korbposition über dem Genug");
+    return res;
+  }
+
+  // ---------- Öffentliche Schnittstelle ----------
+  function eintragen(s, e) {
+    const grund = tuersteher(s, e);
+    if (grund) return { ok: false, grund, zustand: s };
+    const n = anwenden(s, e);
+    const inv = pruefeInvarianten(n, s).filter((x) => !x.ok);
+    if (inv.length) return { ok: false, grund: "Invariante verletzt: " + inv.map((x) => x.id).join(", "), zustand: s };
+    return { ok: true, zustand: n };
+  }
+  function nachspielen(protokoll) {
+    let s = null;
+    for (const e of protokoll) { const r = eintragen(s, e); if (!r.ok) throw new Error("Nachspielen fehlgeschlagen: " + r.grund); s = r.zustand; }
+    return s;
+  }
+  function neueWelt(seed) { return eintragen(null, { typ: "START", seed: seed >>> 0 }).zustand; }
+
+  return {
+    VERSION, VERMERK, JAHRESZEITEN, POS1, POS2, POS_NAME, SIEBTES_FELD, NETZ_2060, REGELREGISTER, REGELTYPEN, SCHWELLEN,
+    neueWelt, eintragen, nachspielen, bilanz, pruefeInvarianten, pruefsumme, deckungsgrad, erholungskraft, zustimmung, pumpeFaktor, knotenrat, bedingungVon, FELDER, EREIGNISSE,
+    kontingent, spielstand, ladeSpielstand, rueckschau, blick, wandel, preisVon, preisInWorten, bedingungText, bachSatz, FELD_SATZ, SATZ_MAX, TISCHSCHWELLE, _waehleEreignis: waehleEreignis   // nur für Prüfungen und die Werkstatt (zweites Argument: ohne Tischschwelle)
+  };
+});
+
+</script>
+<script>
+"use strict";
+// Die Tür v0.3.2 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
+const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
+const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const JZ_DE = ["Frühling", "Sommer", "Herbst", "Winter"];
+
+// ---------- Die Sätze der Tür ----------
+const SPRACHEN = {
+  de: {
+    titel: "Das Genug", andere: "English", ort: "Birk · Alpen-Pol", bach: "Der Bach", augenblick: "Einen Augenblick.",
+    jz: ["Frühling", "Sommer", "Herbst", "Winter"],
+    jzSatz: ["Der Schnee geht, die Arbeit kommt.", "Es ist mehr da, als ihr braucht.", "Die Ernte ist drin.", "Die Tage sind kurz."],
+    anvertraut: "Dir ist ein Ort anvertraut. ",
+    kreise: { birk: ["Birk", "ihr"], steighof: ["Steighof", "Nachbarn"], talsued: ["Tal-Süd", "wartet"], gemein: ["Gemeingut", "für alle"] },
+    steine: { stunde: "Stunde", spielraum: "Spiel&shy;raum", vertrag: "Vertrag", zeichnung: "Geld" },
+    ereignis: {
+      bach: { titel: "Der Bach und die Pumpen", lage: "Der Bach sinkt, und Ried talabwärts bittet um Pumpen, die eure Werkstatt nur mit Bachwasser bauen kann.",
+        stillstand: "Die Werkstatt läuft wie bisher, der Bach sinkt weiter, Ried wartet.",
+        wege: { A: "Werkstatt auf Volllast, mit Notaggregat", B: "Den Bach schützen, die Hilfe verschieben", C: "Widderpumpen in Handarbeit, nach dem Bauplan aus dem Gemeingut" } },
+      kuehle: { titel: "Genug für Birk, zu viel für alle", lage: "Es ist heiss. Birk hält seinen eigenen Anteil, aber alle vier Orte zusammen verbrauchen mehr, als die Natur im Tal trägt.",
+        stillstand: "Birk bleibt in seinem Anteil, und alle zusammen verbrauchen weiter zu viel.",
+        wege: { A: "Das Kühlhaus aus Beton bauen", B: "Den Spielraum aller senken, bis es für die Natur reicht", C: "Den Felsenkeller mit Lehm umbauen" } },
+      erfassung: { titel: "Alles erfassen?", lage: "Eine Gruppe im Dorf will jede Stunde der Sorge-Arbeit aufschreiben, damit die Last gerechter verteilt wird.",
+        stillstand: "Es bleibt, wie es war, mit denselben wenigen, die die Sorge tragen.",
+        wege: { A: "Alles erfassen, auch die Sorge-Arbeit", B: "Nicht erfassen, aber eine Pflichtquote für die Ernte", C: "Nur die Aufgaben zeigen, nie die Menschen; das Fest bleibt ohne Eintrag" } },
+      aufnahme: { titel: "Die Bitte um Aufnahme", lage: "Tal-Süd, das noch mit Geld wirtschaftet, bittet um Aufnahme, und der Winter ist lang.",
+        stillstand: "Tal-Süd wartet, und Birk gibt weiter, wie bisher.",
+        wege: { A: "Die Aufnahme vertagen und Birk erholen lassen", B: "Tal-Süd aus Birks Reserven über dem Genug versorgen", C: "Die Schmiede von Tal-Süd mit Mitteln aus dem Übergangsfonds ausrüsten",
+          C2: "Die Schmiede von Tal-Süd ausrüsten, mit dem Rest des Übergangsfonds und eigenem Werkzeug" } }
+    },
+    regel: {
+      naturhaushalt_grenze: () => "Der Bach ist eine Grenze: Kein Weg darf ihm mehr nehmen, als er tragen kann.",
+      spielraum_deckel: () => "Genug statt mehr: Kein Ort behält mehr als vier Teile Spielraum; der Rest geht in den Speicher.",
+      keine_personen_erfassung: () => "Vertrauen vor Erfassung: Aufgaben werden sichtbar, Menschen nie.",
+      speicher_vorrang: () => "Der Speicher geht zuerst an Tal-Süd, das noch wartet."
+    },
+    ziel: {
+      stunde: { birk: "Die Stunde bleibt bei euch: dieses Jahr ein Stück mehr Spielraum.", steighof: "Arbeit mit Steighof, damit es sich selbst tragen kann.", talsued: "Arbeit an der Wasserleitung von Tal-Süd.", gemein: "Arbeit am Bauplan der Pumpe, offen für alle." },
+      spielraum: { steighof: "Geht an Steighof.", gemein: "In den Speicher. Im Winter geht er an die, die es brauchen." },
+      vertrag: { birk: "Annehmen: Material aus der alten Welt, dafür baut ihr Tal-Süds Leitung nach Vertrag." },
+      zeichnung: { birk: "Annehmen: Tal-Süds Händler zahlen Geld in den Übergangsfonds ein, und Tal-Süd rückt auf der Warteliste vor." }
+    },
+    antwort: {
+      stunde: { birk: "Mara: «Heute Abend ist Zeit fürs Gemeinschaftshaus.»", steighof: "Steighof: «Ihr arbeitet mit uns, nicht für uns. Das merken wir uns.»", talsued: "Tal-Süd: «Die Leitung wächst. Unsere Leute zählen die Meter.»", gemein: "Jorin: «Die Pumpe ist besser geworden. Auch Ried kann sie bauen.»" },
+      spielraumSteighof: "Steighof: «Danke. Gefragt hätten wir nicht.»", spielraumSteighofWieder: "Steighof: «Schon wieder. Wann dürfen wir zurückgeben?»",
+      speicher: "Erlenbach: «Es liegt im Speicher. Wer es braucht, bekommt es.»",
+      vertrag: "Tal-Süd: «Abgemacht. Wir zahlen, ihr baut.»", zeichnung: "Tal-Süd: «Unsere Händler haben eingezahlt. Wir rücken vor.»", abgelehnt: "Tal-Süd: «Gut. Wir fragen wieder.»",
+      voll: { werkstatt: "Jorin: «Die Werkstatt ist am Anschlag.»", pflege: "Mara: «Die Pflege trägt das nicht mehr lange.»", boden: "Rahel: «Boden und Wasser kommen nicht nach.»" },
+      nicken: "Am Tisch nicken sie.", schweigt: (n) => n.join(" und ") + (n.length === 1 ? " schweigt." : " schweigen.")
+    },
+    angebot: {
+      vertrag: "<b>Tal-Süd</b> legt dir etwas hin: «Wir liefern Rohre aus der alten Welt. Ihr baut uns die Leitung, nach Vertrag.»",
+      zeichnung: "<b>Tal-Süd</b> legt dir etwas hin: «Unsere Händler zahlen Geld in den Übergangsfonds ein. Dafür rücken wir auf der Warteliste vor.»"
+    },
+    zurueckschieben: "Zurückschieben",
+    hand: ["Deine Stunden sind gelegt.", "Was du nicht weitergibst, bleibt dieses Jahr in Birk.", "Diesmal liegt nichts in deiner Hand.", "Diesmal liegt nichts in deiner Hand."],
+    gehen: (j) => `Den ${j} gehen lassen`,
+    ohne: (j) => `Ohne Beschluss gilt am Ende des ${j}s: `,
+    tisch: { am: "Am Tisch", wartet: "Am Tisch wartet etwas", zurueck: "Zurück an den Tisch", offen: "Vorerst offen lassen", so: "So machen wir es", eingehen: "Darauf eingehen", trotzdem: "Trotzdem so",
+      bindet: (nr) => `Eure Regel ${nr} bindet.`, spannung: (nr) => `Steht in Spannung zu eurer Regel ${nr}.`, gebunden: "Dieser Weg ist durch eure Regel gebunden.",
+      haltung: { zustimmung: "Ja.", bedenken: "Mit Sorge. Aber ja." }, nurSo: "Nur so: " },
+    ungezaehlt: [
+      { t: "Beim Heuen half jemand mit, den niemand eingeteilt hatte." },
+      { t: "Am Brunnen erzählte die Älteste, wie es vor dem Übergang war. Die Kinder blieben sitzen." },
+      { t: "Jorin flickte ein Velo, das nicht ihm gehörte, und schrieb es nirgends auf." },
+      { t: "Im Gemeinschaftshaus spielte jemand Akkordeon, bis die Lampen ausgingen." },
+      { t: "Mara sass eine Nacht bei einer Kranken. Niemand hat es gezählt.", sorge: true },
+      { t: "Eine Nachbarin brachte Suppe, ohne zu fragen, ob man sie braucht.", sorge: true },
+      { t: "Der erste Schnee fiel, und für eine Stunde arbeitete niemand." },
+      { t: "Rahel zeigte einem Jungen, wo das Moor im Frühling das Wasser hält." },
+      { t: "Jemand liess die Werkstatt offen, damit andere ihr Werkzeug holen konnten." },
+      { t: "Zwei Kinder aus Tal-Süd lasen in der Bibliothek von Birk, bis es dunkel wurde." }
+    ],
+    bild: {
+      gehalten: "Das Lebensnotwendige war in jeder Jahreszeit gedeckt, für alle in den vier Orten.",
+      bachMehr: "Der Bach führt mehr Wasser als zu Beginn deines Jahres. ", bachWeniger: "Der Bach führt weniger Wasser als zu Beginn deines Jahres. ", bachGleich: "Der Bach führt etwa so viel Wasser wie zu Beginn deines Jahres. ", bachGekippt: "Der Bach ist gekippt. ",
+      bereit: "Tal-Süd ist bereit für die Aufnahme.", naeher: "Tal-Süd ist auf der Warteliste näher gerückt. Es wartet noch.", wartet: "Tal-Süd wartet.",
+      zeichnung: "Tal-Süd hat sich mit Geld der alten Welt eingekauft. Eine bedürftigere Region ohne Geld ist dadurch auf der Warteliste zurückgefallen.",
+      regel: (t) => "Eine neue Regel: " + t,
+      gerissen: (n) => (n === 1 ? "Ein Faden ist gerissen." : `${n} Fäden sind gerissen.`), neu: (n) => (n === 1 ? "Ein neuer Faden der Gabe läuft." : `${n} neue Fäden der Gabe laufen.`),
+      gemeingut: "Der Bauplan der Pumpe im Gemeingut ist besser geworden, für alle.",
+      muede: (namen) => (namen.length === 1 ? namen[0] + " geht müde ins neue Jahr." : namen.join(" und ") + " gehen müde ins neue Jahr.")
+    },
+    ende: { zu: "Dein Jahr ist zu Ende.", frage: "Was gibst du weiter?", platzhalter: "Ein Satz für den Menschen nach dir. Er darf auch fehlen.", reist: "Dein Satz reist mit. Alle, die nach dir kommen, können ihn lesen.", knopf: "Weitergeben" },
+    gegeben: { titel: "Weitergegeben.", text: "Gib den Link einem Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt.",
+      nach: ["Für den Menschen nach dir", "Ein Ort, ein Jahr."], vor: ["Für den Menschen vor dir", "Zum Anschauen: was aus dem Ort geworden ist, mit allen Sätzen."],
+      teilen: "Teilen", kopieren: "Kopieren", kopiert: "Kopiert", markiert: "Markiert: jetzt kopieren", teilText: "Ein Ort für dich." },
+    hinaus: { du: "Was du gerade getan hast, hat einen Namen.", ihr: "Was ihr getan habt, hat einen Namen.", lesen: "Nachlesen, wenn du willst" },
+    ankunft: { gegeben: "Jemand hat dir diesen Ort gegeben.", ohne: "Ohne einen Satz.", eintreten: "Eintreten" },
+    erbeOhne: "Ohne Satz bekommen.",
+    geschichte: { titel: "Was bisher geschah", saetze: "Die Sätze", ohneSatz: "ohne Satz", regeln: "Die Regeln, die gelten", dagegen: "Was dagegen sprach: ", keine: "Noch keine.",
+      taten: "Was in deinem Jahr am Tisch geschah", nichts: "Noch nichts.", schliessen: "Schliessen",
+      ausgang: { gemeinsam: "gemeinsam", durchsetzen: "durchgesetzt", werben: "offen geblieben", ohne: "ohne Beschluss" },
+      einwand: (wer, feld, h) => `${wer} (${h === "einwand" ? "Einwand" : "Bedenken"} aus ${feld})`, einstimmig: "Einstimmig. Verworfen: ", q: (t) => "«" + t + "»" },
+    schau: { titel: "Was aus dem Ort geworden ist", hinweis: "Jemand hat dir diesen Blick zurückgeschickt. Hier wird nicht gespielt.", ohne: "Ohne Satz weitergegeben.", heute: "Heute: ",
+      weiter: "Weiter zurück", weiterText: "Wenn du den Ort selbst bekommen hast, kannst du diesen Blick an den Menschen vor dir schicken.", kopieren: "Link kopieren", mein: "Zu meinem Ort", eigen: "Einen eigenen Ort beginnen" },
+    fuss: { oeffnen: "Einen Ort öffnen, den du bekommen hast", einfuegen: "Link hier einfügen", linkLabel: "Link zu einem Ort", oeffnenKnopf: "Öffnen", geschichte: "Was bisher geschah",
+      klang: (an) => "Klang: " + (an ? "an" : "aus"), neu: "Neu beginnen", neuFrage: "Diesen Ort verlassen und neu beginnen?", neuJa: "Ja, neu beginnen", nein: "Nein" },
+    fehler: { keinLink: "Das ist kein Link zu einem Ort.", kaputt: "Der Link ist beschädigt. Vielleicht wurde er beim Kopieren gekürzt.", nichtOeffnen: "Dieser Ort lässt sich nicht öffnen: ", zug: (g) => g },
+    q: (t) => "«" + t + "»"
+  },
+  en: {
+    titel: "What is enough", andere: "Deutsch", ort: "Birk · Alpine Pole", bach: "The stream", augenblick: "One moment.",
+    jz: ["Spring", "Summer", "Autumn", "Winter"],
+    jzSatz: ["The snow goes, the work comes.", "There is more than you need.", "The harvest is in.", "The days are short."],
+    anvertraut: "A place has been entrusted to you. ",
+    kreise: { birk: ["Birk", "you"], steighof: ["Steighof", "neighbours"], talsued: ["Tal-Süd", "waiting"], gemein: ["Commons", "for everyone"] },
+    steine: { stunde: "Hour", spielraum: "Lee&shy;way", vertrag: "Contract", zeichnung: "Money" },
+    ereignis: {
+      bach: { titel: "The stream and the pumps", lage: "The stream is falling, and Ried down the valley asks for pumps that your workshop can only build with water from the stream.",
+        stillstand: "The workshop runs as before, the stream keeps falling, Ried waits.",
+        wege: { A: "Workshop at full load, with the emergency generator", B: "Protect the stream, put off the help", C: "Ram pumps by hand, from the design in the commons" } },
+      kuehle: { titel: "Enough for Birk, too much for all", lage: "It is hot. Birk keeps within its own share, but all four places together use more than the valley's nature can bear.",
+        stillstand: "Birk stays within its share, and all together go on using too much.",
+        wege: { A: "Build the cold store in concrete", B: "Lower everyone's leeway until nature can bear it", C: "Rebuild the rock cellar with clay" } },
+      erfassung: { titel: "Record everything?", lage: "A group in the village wants to write down every hour of care work, so that the load is shared more fairly.",
+        stillstand: "Things stay as they were, with the same few carrying the care.",
+        wege: { A: "Record everything, care work included", B: "Record nothing, but set a quota for the harvest", C: "Show only the tasks, never the people; the festival stays unrecorded" } },
+      aufnahme: { titel: "The request to join", lage: "Tal-Süd, which still runs on money, asks to be taken in, and the winter is long.",
+        stillstand: "Tal-Süd waits, and Birk goes on giving as before.",
+        wege: { A: "Postpone the joining and let Birk recover", B: "Supply Tal-Süd from Birk's reserves above enough", C: "Equip Tal-Süd's forge with means from the transition fund",
+          C2: "Equip Tal-Süd's forge with what is left of the transition fund and your own tools" } }
+    },
+    regel: {
+      naturhaushalt_grenze: () => "The stream is a limit: no way may take more from it than it can bear.",
+      spielraum_deckel: () => "Enough, not more: each place keeps only what suffices; the rest goes into the store.",
+      keine_personen_erfassung: () => "Trust before records: tasks are made visible, people never.",
+      speicher_vorrang: () => "The store goes first to Tal-Süd, which is still waiting."
+    },
+    ziel: {
+      stunde: { birk: "The hour stays with you: a little more leeway this year.", steighof: "Work alongside Steighof, so that it can stand on its own.", talsued: "Work on Tal-Süd's water pipeline.", gemein: "Work on the pump design, open to all." },
+      spielraum: { steighof: "Goes to Steighof.", gemein: "Into the store. In winter it goes to those who need it." },
+      vertrag: { birk: "Accept: material from the old world, and in return you build Tal-Süd's pipeline under contract." },
+      zeichnung: { birk: "Accept: Tal-Süd's traders pay money into the transition fund, and Tal-Süd moves up the waiting list." }
+    },
+    antwort: {
+      stunde: { birk: "Mara: ‘Tonight there's time for the community hall.’", steighof: "Steighof: ‘You work with us, not for us. We'll remember that.’", talsued: "Tal-Süd: ‘The pipeline is growing. Our people are counting the metres.’", gemein: "Jorin: ‘The pump has got better. Ried can build it too.’" },
+      spielraumSteighof: "Steighof: ‘Thank you. We wouldn't have asked.’", spielraumSteighofWieder: "Steighof: ‘Again. When may we give something back?’",
+      speicher: "Erlenbach: ‘It's in the store. Whoever needs it will get it.’",
+      vertrag: "Tal-Süd: ‘Agreed. We pay, you build.’", zeichnung: "Tal-Süd: ‘Our traders have paid in. We're moving up.’", abgelehnt: "Tal-Süd: ‘All right. We'll ask again.’",
+      voll: { werkstatt: "Jorin: ‘The workshop is at its limit.’", pflege: "Mara: ‘Care can't carry this much longer.’", boden: "Rahel: ‘The soil and the water can't keep up.’" },
+      nicken: "Around the table, they nod.", schweigt: (n) => n.join(" and ") + " fall" + (n.length === 1 ? "s" : "") + " silent."
+    },
+    angebot: {
+      vertrag: "<b>Tal-Süd</b> puts something in front of you: ‘We'll supply pipes from the old world. You build our pipeline, under contract.’",
+      zeichnung: "<b>Tal-Süd</b> puts something in front of you: ‘Our traders pay money into the transition fund. In return, we move up the waiting list.’"
+    },
+    zurueckschieben: "Push it back",
+    hand: ["Your hours are placed.", "What you don't pass on stays in Birk this year.", "This time there is nothing in your hand.", "This time there is nothing in your hand."],
+    gehen: (j) => `Let ${j.toLowerCase()} go`,
+    ohne: (j) => `If nothing is decided, at the end of ${j.toLowerCase()}: `,
+    tisch: { am: "At the table", wartet: "Something is waiting at the table", zurueck: "Back to the table", offen: "Leave it open for now", so: "That's how we'll do it", eingehen: "Agree to it", trotzdem: "Do it anyway",
+      bindet: (nr) => `Your rule ${nr} binds.`, spannung: (nr) => `In tension with your rule ${nr}.`, gebunden: "This way is bound by your rule.",
+      haltung: { zustimmung: "Yes.", bedenken: "With misgivings. But yes." }, nurSo: "Only like this: " },
+    ungezaehlt: [
+      { t: "At haymaking someone helped whom nobody had put on the list." },
+      { t: "At the fountain the eldest told how things were before the transition. The children stayed sitting." },
+      { t: "Jorin mended a bicycle that wasn't his, and wrote it down nowhere." },
+      { t: "In the community hall someone played the accordion until the lamps went out." },
+      { t: "Mara sat up all night with a sick woman. Nobody counted it.", sorge: true },
+      { t: "A neighbour brought soup without asking whether it was needed.", sorge: true },
+      { t: "The first snow fell, and for an hour nobody worked." },
+      { t: "Rahel showed a boy where the moor holds the water in spring." },
+      { t: "Someone left the workshop open so that others could fetch their tools." },
+      { t: "Two children from Tal-Süd read in Birk's library until it grew dark." }
+    ],
+    bild: {
+      gehalten: "What life needs was covered in every season, for everyone in the four places.",
+      bachMehr: "The stream carries more water than at the start of your year. ", bachWeniger: "The stream carries less water than at the start of your year. ", bachGleich: "The stream carries about as much water as at the start of your year. ", bachGekippt: "The stream has tipped. ",
+      bereit: "Tal-Süd is ready to join.", naeher: "Tal-Süd has moved up the waiting list. It is still waiting.", wartet: "Tal-Süd is waiting.",
+      zeichnung: "Tal-Süd bought its way in with money from the old world. A region in greater need, without money, has fallen back on the waiting list as a result.",
+      regel: (t) => "A new rule: " + t,
+      gerissen: (n) => (n === 1 ? "A thread has broken." : `${n} threads have broken.`), neu: (n) => (n === 1 ? "A new thread of giving is running." : `${n} new threads of giving are running.`),
+      gemeingut: "The pump design in the commons has got better, for everyone.",
+      muede: (namen) => (namen.length === 1 ? namen[0] + " goes into the new year tired." : namen.join(" and ") + " go into the new year tired.")
+    },
+    ende: { zu: "Your year is over.", frage: "What do you pass on?", platzhalter: "One sentence for the person after you. It may also be left out.", reist: "Your sentence travels with it. Everyone who comes after you can read it.", knopf: "Pass it on" },
+    gegeben: { titel: "Passed on.", text: "Give the link to one person. They play their year in the world you leave them.",
+      nach: ["For the person after you", "One place, one year."], vor: ["For the person before you", "To look at: what has become of the place, with every sentence."],
+      teilen: "Share", kopieren: "Copy", kopiert: "Copied", markiert: "Selected: copy it now", teilText: "A place for you." },
+    hinaus: { du: "What you have just done has a name.", ihr: "What you have done together has a name.", lesen: "Read about it, if you like" },
+    ankunft: { gegeben: "Someone has given you this place.", ohne: "Without a sentence.", eintreten: "Step in" },
+    erbeOhne: "Received without a sentence.",
+    geschichte: { titel: "What has happened so far", saetze: "The sentences", ohneSatz: "without a sentence", regeln: "The rules in force", dagegen: "What spoke against it: ", keine: "None yet.",
+      taten: "What happened at the table in your year", nichts: "Nothing yet.", schliessen: "Close",
+      ausgang: { gemeinsam: "together", durchsetzen: "pushed through", werben: "left open", ohne: "without a decision" },
+      einwand: (wer, feld, h) => `${wer} (${h === "einwand" ? "objection" : "misgivings"} from ${feld})`, einstimmig: "Unanimous. Set aside: ", q: (t) => "‘" + t + "’" },
+    schau: { titel: "What has become of the place", hinweis: "Someone has sent this view back to you. Nothing is played here.", ohne: "Passed on without a sentence.", heute: "Today: ",
+      weiter: "Further back", weiterText: "If you were given the place yourself, you can send this view on to the person before you.", kopieren: "Copy link", mein: "To my place", eigen: "Begin a place of your own" },
+    fuss: { oeffnen: "Open a place you've been given", einfuegen: "Paste the link here", linkLabel: "Link to a place", oeffnenKnopf: "Open", geschichte: "What has happened so far",
+      klang: (an) => "Sound: " + (an ? "on" : "off"), neu: "Start again", neuFrage: "Leave this place and start again?", neuJa: "Yes, start again", nein: "No" },
+    fehler: { keinLink: "That isn't a link to a place.", kaputt: "The link is damaged. Perhaps it was cut short when it was copied.", nichtOeffnen: "This place can't be opened. ", zug: () => "That isn't possible at the moment." },
+    q: (t) => "‘" + t + "’"
+  }
+};
+const SPRACH_KEY = "ez_lang";
+function waehleSprache() {
+  try { const q = new URLSearchParams(location.search).get("lang"); if (q === "de" || q === "en") return q; } catch (e) { /* ohne Adressangabe */ }
+  try { const g = localStorage.getItem(SPRACH_KEY); if (g === "de" || g === "en") return g; } catch (e) { /* Browser entscheidet */ }
+  const liste = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+  for (const l of liste) { const k = String(l).slice(0, 2).toLowerCase(); if (k === "de" || k === "gsw") return "de"; if (k === "en") return "en"; }
+  return "en";
+}
+let SP = waehleSprache(), L = SPRACHEN[SP];
+function setzeSprache(sp) { SP = sp; L = SPRACHEN[sp]; document.documentElement.lang = sp === "de" ? "de-CH" : "en-GB"; document.title = L.titel; }
+
+const ZIELE = {
+  stunde: { birk: { typ: "STUNDE", ziel: "spielraum" }, steighof: { typ: "STUNDE", ziel: "steighof" }, talsued: { typ: "STUNDE", ziel: "vorAufbau" }, gemein: { typ: "STUNDE", ziel: "blaupause" } },
+  spielraum: { steighof: { typ: "TEILEN", ziel: "steighof" }, gemein: { typ: "TEILEN", ziel: "speicher" } },
+  vertrag: { birk: { typ: "ANGEBOT", angebot: "vertrag", annehmen: true } },
+  zeichnung: { birk: { typ: "ANGEBOT", angebot: "zeichnung", annehmen: true } }
+};
+function antwortFuer(art, kreis, s) {
+  const A = L.antwort;
+  if (art === "stunde") return A.stunde[kreis];
+  if (art === "spielraum") return kreis === "steighof" ? (s.unerwartetSaisons.steighof >= 2 ? A.spielraumSteighofWieder : A.spielraumSteighof) : A.speicher;
+  return A[art];
+}
+// Texte aus dem Kern in der Sprache der Tür
+const jzName = (deName) => L.jz[Math.max(0, JZ_DE.indexOf(deName))];
+const ereignisText = (id) => L.ereignis[id] || null;
+function wegTitel(E, W) { const T = ereignisText(E.id); if (!T) return W.titel; return (W.id === "C" && /Rest/.test(W.titel) ? T.wege.C2 : T.wege[W.id]) || W.titel; }
+function regelText(a) { const f = a.regel && L.regel[a.regel.typ]; return f ? f(a.regel) : a.text; }
+function feldName(f) { const n = K.FELD_SATZ[SP][f][0]; return n.charAt(0).toUpperCase() + n.slice(1); }
+function gegengrundText(a) {
+  const d = a.gegengrundDaten; if (!d) return a.gegengrund;
+  const G = L.geschichte;
+  if (d.einwaende.length) return d.einwaende.map((x) => G.einwand(x.wer, K.FELD_SATZ[SP][x.feld][1], x.haltung)).join("; ");
+  const T = ereignisText(a.ereignisId);
+  return G.einstimmig + d.verworfen.map((v) => G.q((T && T.wege[v.wegId]) || v.titel) + " (" + K.preisInWorten(v.preis, SP) + ")").join("; ");
+}
+
+// ---------- Zustand der Tür (nicht der Welt) ----------
+let S = null, ansicht = "spiel", sel = null, vor = null, antwort = "", ungezaehlt = -1, tischZu = false, weg = null, abgelehnt = {}, meldung = "";
+let gelegtSaison = -1, tischAuf = false, blickId = null, puls = null, wandelPaar = null, geschichteOffen = false;
+let empfangen = false, links = null, oeffnenSichtbar = false, neuFragen = false, schauStand = null, schauLink = "";
+let klangAn = true; try { klangAn = localStorage.getItem("das-genug-klang") !== "aus"; } catch (e) { /* Standard: an */ }
+
+function speichern() {
+  try { localStorage.setItem(SPEICHER, JSON.stringify({ stand: K.spielstand(S), empfangen, links, ansicht: ansicht === "schau" ? "spiel" : ansicht })); } catch (e) { /* ohne Speicher spielbar */ }
+}
+
+// ---------- Klang: Holz beim Legen, ein Oberton beim Beschluss (im Browser erzeugt, ohne Tondateien) ----------
+let ac = null;
+function klang(art) {
+  if (!klangAn) return;
+  try {
+    ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+    if (ac.state === "suspended") ac.resume();
+    const t = ac.currentTime, aus = ac.createGain(); aus.gain.value = 0.18; aus.connect(ac.destination);
+    if (art === "holz") {
+      const n = ac.createBuffer(1, ac.sampleRate * 0.06, ac.sampleRate), d = n.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 4);
+      const q = ac.createBufferSource(); q.buffer = n; const f = ac.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 1700; f.Q.value = 3;
+      q.connect(f).connect(aus); q.start(t);
+      const o = ac.createOscillator(), g = ac.createGain(); o.frequency.setValueAtTime(220, t); o.frequency.exponentialRampToValueAtTime(140, t + 0.08);
+      g.gain.setValueAtTime(0.5, t); g.gain.exponentialRampToValueAtTime(0.001, t + 0.1); o.connect(g).connect(aus); o.start(t); o.stop(t + 0.12);
+    } else {
+      [1, 2.76, 5.4].forEach((r, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = 392 * r;
+        g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.35 / (i + 1), t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 2.4 / (i + 1));
+        o.connect(g).connect(aus); o.start(t); o.stop(t + 2.5); });
+    }
+  } catch (e) { /* ohne Klang spielbar */ }
+}
+function zug(e) {
+  const r = K.eintragen(S, Object.assign({ urheber: ICH }, e));
+  if (!r.ok) { meldung = L.fehler.zug(r.grund); return false; }
+  S = r.zustand; meldung = ""; speichern(); return true;
+}
+
+// ---------- Links ohne Server: der Spielstand reist im Link ----------
+const b64 = (bytes) => { let s = ""; bytes.forEach((b) => (s += String.fromCharCode(b))); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+const unb64 = (str) => { const s = atob(str.replace(/-/g, "+").replace(/_/g, "/")); return Uint8Array.from(s, (c) => c.charCodeAt(0)); };
+async function packe(stand) {
+  const roh = new TextEncoder().encode(JSON.stringify(stand));
+  if (typeof CompressionStream === "function") {
+    const buf = await new Response(new Blob([roh]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+    return "z" + b64(new Uint8Array(buf));
+  }
+  return "j" + b64(roh);
+}
+async function entpacke(code) {
+  const art = code[0], bytes = unb64(code.slice(1));
+  let text;
+  if (art === "z") text = await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).text();
+  else if (art === "j") text = new TextDecoder().decode(bytes);
+  else throw new Error("unbekannt");
+  return JSON.parse(text);
+}
+function basis() { return location.href.split("#")[0]; }
+function lesen(eingabe) {
+  const m = String(eingabe).trim().match(/#?([bs])=([zj][A-Za-z0-9_-]+)/);
+  if (m) return { art: m[1], code: m[2] };
+  const roh = String(eingabe).trim();
+  if (/^[zj][A-Za-z0-9_-]{20,}$/.test(roh)) return { art: "b", code: roh };
+  return null;
+}
+async function oeffne(eingabe) {
+  const l = lesen(eingabe); if (!l) { meldung = L.fehler.keinLink; zeichne(); return; }
+  let stand;
+  try { stand = await entpacke(l.code); } catch (e) { meldung = L.fehler.kaputt; zeichne(); return; }
+  const g = K.ladeSpielstand(stand);
+  if (!g.ok) { meldung = L.fehler.nichtOeffnen + (SP === "de" ? g.grund : ""); zeichne(); return; }
+  meldung = "";
+  if (l.art === "s") { schauStand = g.zustand; schauLink = basis() + "#s=" + l.code; ansicht = "schau"; zeichne(); return; }
+  S = g.zustand; empfangen = true; links = null; abgelehnt = {}; antwort = ""; ungezaehlt = -1; tischZu = false; weg = null; wandelPaar = null;
+  ansicht = S.amtszeit && S.amtszeit.beendet ? "ende" : "ankunft"; speichern(); zeichne();
+}
+
+// ---------- Steine in der Hand ----------
+function hand() {
+  if (!S || S.amtszeit.beendet) return [];
+  const birk = S.knoten.birk, jz = S.meta.jz, h = [];
+  if (jz === 0) { for (let i = 0; i < birk.stunden; i++) h.push({ id: "st" + i, art: "stunde" }); if (!abgelehnt[S.meta.saison + ":vertrag"] && (gelegtSaison === S.meta.saison || birk.stunden === 0)) h.push({ id: "vertrag", art: "vertrag", angebot: true }); }
+  if (jz === 1) for (let i = 0; i < Math.floor(birk.spielraum); i++) h.push({ id: "sr" + i, art: "spielraum" });
+  if (jz === 3 && !S.region.reihung.gezeichnet && !abgelehnt[S.meta.saison + ":zeichnung"]) h.push({ id: "zeichnung", art: "zeichnung", angebot: true });
+  return h;
+}
+function zielFuer(art, kreis) {
+  const e = ZIELE[art] && ZIELE[art][kreis];
+  if (!e) return null;
+  if (art === "stunde" && kreis === "gemein" && S.gemeingut.pumpe.stufe >= 3) return null;
+  return { e, ziel: L.ziel[art][kreis] };
+}
+function lege(stein, kreis) {
+  const z = zielFuer(stein.art, kreis); if (!z) return;
+  if (zug(z.e)) { gelegtSaison = S.meta.saison; puls = kreis; blickId = null; klang("holz"); antwort = antwortFuer(stein.art, kreis, S); if (stein.angebot) abgelehnt[S.meta.saison + ":" + stein.art] = true;
+    const k = S.knoten.birk; const voll = K.FELDER.filter((f) => k.felder[f].last > k.felder[f].kapazitaet);
+    if (voll.length && stein.art === "stunde") antwort = L.antwort.voll[voll[0]];
+  }
+  sel = null; vor = null; zeichne();
+}
+function ablehnen(art) { abgelehnt[S.meta.saison + ":" + art] = true; sel = null; vor = null; antwort = L.antwort.abgelehnt; zeichne(); }
+
+// ---------- Die Jahreszeit gehen lassen ----------
+function gehenLassen() {
+  const vorher = S;
+  if (!zug({ typ: "JAHRESZEIT_ENDE" })) { zeichne(); return; }
+  const n = L.ungezaehlt.length, frei = L.ungezaehlt.map((u, i) => (u.sorge && S.sorgeGezaehlt ? -1 : i)).filter((i) => i >= 0);
+  ungezaehlt = frei[(S.meta.seed + S.meta.takt * 7) % frei.length];
+  wandelPaar = [vorher, S];
+  antwort = ""; sel = null; vor = null; tischZu = false; tischAuf = false; weg = null; blickId = null; puls = null;
+  if (S.amtszeit.beendet) ansicht = "ende";
+  speichern(); zeichne(); window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ---------- Der Tisch ----------
+function stimmenFuer(W) {
+  return Object.keys(W.haltungen).map((k) => {
+    const h = W.haltungen[k].haltung;
+    const satz = h === "einwand" ? L.tisch.nurSo + K.bedingungText(K.bedingungVon(S, k, W.wirkung), SP) : L.tisch.haltung[h];
+    return { wer: k, h, satz };
+  });
+}
+function beschliesse(ausgang) {
+  const E = S.ereignis, W = E.wege.find((w) => w.id === weg);
+  const bed = Object.keys(W.haltungen).filter((k) => W.haltungen[k].haltung === "einwand");
+  if (zug({ typ: "EREIGNIS_BESCHLUSS", ereignis: E.id, weg: W.id, ausgang, bedingungen: ausgang === "gemeinsam" ? bed : [] })) {
+    antwort = ausgang === "durchsetzen" && bed.length ? L.antwort.schweigt(bed) : L.antwort.nicken;
+    klang("schale");
+  }
+  weg = null; zeichne();
+}
+
+// ---------- Das Bild des Jahres, in Worten ----------
+function bildInWorten(s, A) {
+  const a = A.anfang, B = L.bild, out = [B.gehalten];
+  const d = s.naturhaushalt.zustand - a.naturhaushalt;
+  out.push((s.naturhaushalt.gekippt && !a.gekippt ? B.bachGekippt : d > 1 ? B.bachMehr : d < -1 ? B.bachWeniger : B.bachGleich) + K.bachSatz(s, SP));
+  const R = s.region.reihung;
+  out.push(R.aufnahmeBereit ? B.bereit : R.platz < a.platz - 0.5 ? B.naeher : B.wartet);
+  return out.concat(bildTeile(A.bild || [], s));
+}
+function bildTeile(bild, s) {
+  const B = L.bild, out = [];
+  bild.forEach((x) => {
+    const d = x.daten || {};
+    if (x.art === "zeichnung") out.push(B.zeichnung);
+    else if (x.art === "regel" && !d.keine) { const a = (s.verbund.archiv.find((r) => r.nr === d.nr)) || { regel: d.regel, text: x.text }; out.push(B.regel(regelText(a))); }
+    else if (x.art === "faeden") out.push(d.gerissen ? B.gerissen(d.gerissen) : d.neu ? B.neu(d.neu) : x.text);
+    else if (x.art === "gemeingut") out.push(B.gemeingut);
+    else if (x.art === "erbe" && d.felder) out.push(B.muede(d.felder.map(feldName)));
+  });
+  return out;
+}
+
+// ---------- Weitergeben und zurückschicken ----------
+async function weitergeben() {
+  const satz = (document.getElementById("satz") || {}).value || "";
+  if (!zug({ typ: "WEITERGABE", satz: satz.replace(/\s+/g, " ").trim() })) { zeichne(); return; }
+  const code = await packe(K.spielstand(S));
+  links = { weiter: basis() + "#b=" + code, zurueck: empfangen ? basis() + "#s=" + code : null };
+  ansicht = "gegeben"; speichern(); zeichne();
+}
+async function kopiere(text, knopf) {
+  try { await navigator.clipboard.writeText(text); knopf.textContent = L.gegeben.kopiert; }
+  catch (e) { const el = knopf.parentElement.parentElement.querySelector(".link"); if (el) { const r = document.createRange(); r.selectNodeContents(el); const sl = getSelection(); sl.removeAllRanges(); sl.addRange(r); } knopf.textContent = L.gegeben.markiert; }
+}
+async function teile(text, knopf) {
+  if (navigator.share) { try { await navigator.share({ title: L.titel, text: L.gegeben.teilText, url: text }); return; } catch (e) { /* abgebrochen oder verweigert */ } }
+  kopiere(text, knopf);
+}
+
+// ---------- Zeichnen ----------
+function ring(anteil, farbe, dicke, start) {
+  const r = 46, u = 2 * Math.PI * r, l = Math.max(0, Math.min(1, anteil)) * u;
+  return `<circle cx="50" cy="50" r="${r}" fill="none" style="stroke:${farbe}" stroke-width="${dicke || 3}" stroke-dasharray="${l} ${u}" transform="rotate(${start || -90} 50 50)" stroke-linecap="round"/>`;
+}
+function kreisBild(id) {
+  const s = S;
+  if (id === "birk") { const k = s.knoten.birk; return K.FELDER.map((f, i) => { const F = k.felder[f], frei = F.kapazitaet - F.last;   // freie Zeit je Arbeitsfeld; aufgebraucht wird der Bogen rostrot
+      return frei > 0 ? ring(Math.min(1, frei / 40) / 3 * 0.9, "var(--leise)", 4, -90 + i * 120) : ring(0.04, "var(--rost)", 7, -90 + i * 120); }).join(""); }
+  if (id === "steighof") return ring((K.deckungsgrad(s.knoten.steighof.korb) - 0.5) * 2, "var(--bach)", 3);
+  if (id === "talsued") return ring(s.region.vorAufbau.wasser, "var(--bach)", 3);
+  if (id === "gemein") { let d = ""; for (let i = 0; i < 3; i++) d += `<circle cx="${38 + i * 12}" cy="76" r="3.5" style="fill:${i < s.gemeingut.pumpe.stufe ? "var(--bach)" : "none"};stroke:var(--leise)"/>`; for (let i = 0; i < Math.min(8, s.verbund.speicher); i++) d += `<rect x="${30 + i * 5}" y="20" width="3.5" height="8" style="fill:var(--birke-rand)"/>`; return d; }
+  return "";
+}
+function bach(s) {
+  const H = s.naturhaushalt, w = 1.2 + (H.zustand / 100) * 6;
+  return `<svg class="bach" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 13 C 50 3, 100 23, 150 13 S 250 3, 300 13 S 380 23, 400 13" stroke-width="${w}" ${H.gekippt ? 'stroke-dasharray="6 8"' : ""} opacity="${0.35 + H.zustand / 160}"/></svg>`;
+}
+
+function zeichne() {
+  const app = document.getElementById("app");
+  setzeSprache(SP);
+  document.body.dataset.jz = S ? S.meta.jz : schauStand ? schauStand.meta.jz : 0;
+  if (ansicht === "schau") { app.innerHTML = schau(); binde(); return; }
+  if (!S) { app.innerHTML = `<p class="leer">${L.augenblick}</p>`; return; }
+  if (ansicht === "ankunft") app.innerHTML = ankunft();
+  else if (ansicht === "ende") app.innerHTML = ende();
+  else if (ansicht === "gegeben") app.innerHTML = gegeben();
+  else app.innerHTML = spiel();
+  binde();
+}
+function kopf(mitErbe) {
+  let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${L.jz[S.meta.jz]} ${S.meta.jahr}</span></div>`;
+  o += mitErbe ? `<button class="bachknopf" data-bach aria-label="${L.bach}">${bach(S)}</button>` : bach(S);
+  if (mitErbe && S.erbe) o += `<button class="erbe" data-geschichte>${S.erbe.satz ? L.q(esc(S.erbe.satz)) : L.erbeOhne}</button>`;
+  return o;
+}
+function geschichte() {
+  const R = K.rueckschau(S), taten = S.register.slice(S.amtszeit.anfang.register), G = L.geschichte;
+  let o = `<section class="geschichte" aria-label="${G.titel}"><h3>${G.titel}</h3>`;
+  if (R.zeiten.length) o += `<div><h3>${G.saetze}</h3><ul>${R.zeiten.map((z) => `<li>${jzName(z.von.jahreszeit)} ${z.von.jahr}: ${z.satz ? L.q(esc(z.satz)) : G.ohneSatz}</li>`).join("")}</ul></div>`;
+  o += `<div><h3>${G.regeln}</h3>${S.verbund.archiv.length ? `<ul>${S.verbund.archiv.map((a) => `<li>${esc(a.nr)}: ${esc(regelText(a))}<br><span class="hinweis">${G.dagegen}${esc(gegengrundText(a))}</span></li>`).join("")}</ul>` : `<p class="hinweis">${G.keine}</p>`}</div>`;
+  o += `<div><h3>${G.taten}</h3>${taten.length ? `<ul>${taten.map((t) => { const T = ereignisText(t.ereignisId); return `<li>${jzName(t.jahreszeit)}, ${L.q(esc(T ? T.titel : t.ereignis))}: ${G.ausgang[t.ausgang] || t.ausgang}</li>`; }).join("")}</ul>` : `<p class="hinweis">${G.nichts}</p>`}</div>`;
+  return o + `<button class="leise" data-geschichte style="align-self:flex-start">${G.schliessen}</button></section>`;
+}
+function spiel() {
+  const E = S.ereignis, h = hand(), st = sel && h.find((x) => x.id === sel);
+  let o = kopf(true);
+  if (geschichteOffen) o += geschichte();
+  const erste = S.meta.saison === S.amtszeit.beginn && !antwort;
+  o += `<p class="lage">${erste && S.amtszeit.nr === 1 && S.meta.jz === 0 ? L.anvertraut : ""}${L.jzSatz[S.meta.jz]}</p>`;
+  const wandelSatz = wandelPaar ? K.wandel(wandelPaar[0], wandelPaar[1], SP) : null;
+  if (wandelSatz) o += `<p class="wandel">${esc(wandelSatz)}</p>`;
+  if (ungezaehlt >= 0) o += `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>`;
+  o += `<div class="feld">` + Object.keys(L.kreise).map((id) => {
+    const z = st ? zielFuer(st.art, id) : null;
+    const cls = (st ? (z ? (vor === id ? "vor" : "bereit") : "ruht") : blickId === id ? "blick" : "") + (puls === id ? " puls" : "");
+    return `<button class="kreis ${cls}" data-kreis="${id}" aria-label="${L.kreise[id][0]}"><svg viewBox="0 0 100 100">${kreisBild(id)}</svg><span class="n">${L.kreise[id][0]}</span><span class="r">${L.kreise[id][1]}</span></button>`;
+  }).join("") + `<svg class="faeden" aria-hidden="true"></svg></div>`;
+  const zt = st && vor ? zielFuer(st.art, vor) : null;
+  o += `<p class="ziel">${zt ? esc(zt.ziel) : blickId ? esc(K.blick(S, blickId, SP)) : meldung ? esc(meldung) : ""}</p>`;
+  o += `<p class="antwort">${esc(antwort)}</p>`;
+  const angebot = h.find((x) => x.angebot);
+  if (angebot) o += `<p class="angebotssatz">${L.angebot[angebot.art]}</p>`;
+  o += `<div class="hand">` + (h.length ? h.map((x) => `<button class="stein ${x.angebot ? "angebot" : ""} ${sel === x.id ? "sel" : ""}" data-stein="${x.id}">${L.steine[x.art]}</button>`).join("") : `<span class="leer">${L.hand[S.meta.jz]}</span>`) + `</div>`;
+  if (angebot) o += `<div class="reihe" style="justify-content:center"><button class="leise" data-ablehnen="${angebot.art}">${L.zurueckschieben}</button></div>`;
+  const steine = h.filter((x) => !x.angebot).length;
+  if (E && !tischZu && (tischAuf || gelegtSaison === S.meta.saison || steine === 0)) o += tisch(E);
+  else if (E) o += `<button class="leise" data-tisch="auf" style="align-self:center">${tischZu ? L.tisch.zurueck : L.tisch.wartet}</button>`;
+  const T = E && ereignisText(E.id);
+  if (E) o += `<p class="ohne">${L.ohne(L.jz[S.meta.jz])}${esc(T ? T.stillstand : E.stillstand.text)}</p>`;
+  o += `<button class="weiter" data-gehen>${L.gehen(L.jz[S.meta.jz])}</button>`;
+  o += fuss();
+  return o;
+}
+function tisch(E) {
+  const T = ereignisText(E.id), Ti = L.tisch;
+  let o = `<section class="tisch" aria-label="${Ti.am}"><span class="titel">${Ti.am} · ${esc(T ? T.titel : E.titel)}</span><p>${esc(T ? T.lage : E.lage)}</p><div class="wege">`;
+  o += E.wege.map((W) => `<button class="weg ${weg === W.id ? "sel" : ""}" data-weg="${W.id}" ${W.gesperrt ? 'aria-disabled="true"' : ""}>${esc(wegTitel(E, W))}${W.gesperrt ? `<br><span class="hinweis">${Ti.bindet(esc(W.sperren[0].nr))}</span>` : W.spannungen.length ? `<br><span class="hinweis">${Ti.spannung(esc(W.spannungen[0].nr))}</span>` : ""}</button>`).join("");
+  o += `</div>`;
+  const W = weg && E.wege.find((w) => w.id === weg);
+  if (W) {
+    const st = stimmenFuer(W), einwand = st.some((x) => x.h === "einwand");
+    o += `<div class="stimmen">` + st.map((x) => `<span><span class="wer">${x.wer}:</span> ${esc(x.satz)}</span>`).join("") + `</div>`;
+    o += `<div class="reihe">` + (einwand ? `<button class="haupt" data-beschluss="gemeinsam">${Ti.eingehen}</button><button class="leise" data-beschluss="durchsetzen">${Ti.trotzdem}</button>` : `<button class="haupt" data-beschluss="gemeinsam">${Ti.so}</button>`) + `</div>`;
+  }
+  o += `<div class="reihe"><button class="leise" data-tisch="zu">${Ti.offen}</button></div></section>`;
+  return o;
+}
+function ankunft() {
+  const e = S.erbe, A = L.ankunft;
+  return kopf() + `<p class="hinweis">${A.gegeben}</p>
+    <p class="satz">${e && e.satz ? L.q(esc(e.satz)) : A.ohne}</p>
+    <button class="haupt" data-eintreten style="align-self:flex-start">${A.eintreten}</button>` + fuss();
+}
+function ende() {
+  const A = S.amtszeit, En = L.ende;
+  return kopf() + `<h2>${En.zu}</h2>
+    <div class="bild">${bildInWorten(S, A).map((t) => `<p>${esc(t)}</p>`).join("")}</div>
+    ${ungezaehlt >= 0 ? `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>` : ""}
+    <label for="satz"><h2>${En.frage}</h2></label>
+    <textarea id="satz" maxlength="${K.SATZ_MAX}" placeholder="${En.platzhalter}"></textarea>
+    <p class="hinweis">${En.reist}</p>
+    ${meldung ? `<p class="hinweis">${esc(meldung)}</p>` : ""}
+    <button class="haupt" data-weitergeben style="align-self:flex-start">${En.knopf}</button>` + fuss();
+}
+function linkBlock(titel, satz, url, id) {
+  return `<section class="tuer"><h2>${titel}</h2><p class="hinweis">${satz}</p><p class="link">${esc(url)}</p><div class="reihe"><button class="haupt" data-teilen="${id}">${L.gegeben.teilen}</button><button class="leise" data-kopieren="${id}">${L.gegeben.kopieren}</button></div></section>`;
+}
+// Die Tür hinaus führt zum Manifest der Webseite (dort ?tab=manifest, seit index.html v0.66)
+function hinaus(wer) { return `<section class="tuer"><p class="satz">${L.hinaus[wer]}</p><p><a href="https://entryzero.vercel.app/?tab=manifest&amp;lang=${SP}" target="_blank" rel="noopener">${L.hinaus.lesen}</a></p></section>`; }
+function gegeben() {
+  const Ge = L.gegeben;
+  let o = kopf() + `<h2>${Ge.titel}</h2><p>${Ge.text}</p>`;
+  if (links) {
+    o += linkBlock(Ge.nach[0], Ge.nach[1], links.weiter, "weiter");
+    if (links.zurueck) o += linkBlock(Ge.vor[0], Ge.vor[1], links.zurueck, "zurueck");
+  }
+  return o + hinaus("du") + fuss();
+}
+function schau() {
+  const s = schauStand, R = K.rueckschau(s), Sc = L.schau;
+  let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${jzName(R.heute.jahreszeit)} ${R.heute.jahr}</span></div>`;
+  o += `<h2>${Sc.titel}</h2><p class="hinweis">${Sc.hinweis}</p><div class="zeitlinie">`;
+  o += R.zeiten.map((z) => `<div class="z"><span class="j">${jzName(z.von.jahreszeit)} ${z.von.jahr}</span><p class="satz">${z.satz ? L.q(esc(z.satz)) : Sc.ohne}</p>${bildTeile(z.bild || [], s).map((t) => `<p class="hinweis">${esc(t)}</p>`).join("")}</div>`).join("");
+  o += `</div><div class="bild"><p>${Sc.heute}${esc(K.blick(s, "bach", SP))} ${esc(K.blick(s, "talsued", SP))}</p></div>`;
+  o += `<section class="tuer"><h2>${Sc.weiter}</h2><p class="hinweis">${Sc.weiterText}</p><p class="link">${esc(schauLink)}</p><div class="reihe"><button class="leise" data-weiterzurueck>${Sc.kopieren}</button></div></section>`;
+  o += hinaus("ihr");
+  o += `<div class="fuss"><button class="klein" data-zurueckzumspiel>${S ? Sc.mein : Sc.eigen}</button><button class="klein" data-sprache>${L.andere}</button></div>`;
+  return o;
+}
+function fuss() {
+  const F = L.fuss;
+  let o = `<div class="fuss">` + (meldung && ["spiel", "ende"].indexOf(ansicht) < 0 ? `<p class="hinweis">${esc(meldung)}</p>` : "");
+  if (oeffnenSichtbar) o += `<div class="oeffnen"><input id="oeffnen" placeholder="${F.einfuegen}" aria-label="${F.linkLabel}"><button class="leise" data-oeffnen>${F.oeffnenKnopf}</button></div>`;
+  else o += `<button class="klein" data-zeigeoeffnen>${F.oeffnen}</button>`;
+  if (ansicht === "spiel" && !geschichteOffen) o += `<button class="klein" data-geschichte>${F.geschichte}</button>`;
+  o += `<button class="klein" data-klang aria-pressed="${klangAn}">${F.klang(klangAn)}</button>`;
+  o += `<button class="klein" data-sprache lang="${SP === "de" ? "en" : "de"}">${L.andere}</button>`;
+  o += neuFragen ? `<span class="hinweis">${F.neuFrage}</span><div class="reihe"><button class="leise" data-neu="ja">${F.neuJa}</button><button class="leise" data-neu="nein">${F.nein}</button></div>` : `<button class="klein" data-neu="frage">${F.neu}</button>`;
+  return o + `</div>`;
+}
+
+// ---------- Bedienung: tippen oder ziehen ----------
+function binde() {
+  const app = document.getElementById("app");
+  app.querySelectorAll("[data-stein]").forEach((b) => b.addEventListener("pointerdown", ziehStart));
+  app.querySelectorAll("[data-stein]").forEach((b) => b.addEventListener("keydown", (ev) => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); sel = sel === b.dataset.stein ? null : b.dataset.stein; vor = null; zeichne(); } }));
+  app.querySelectorAll("[data-kreis]").forEach((b) => b.addEventListener("click", () => {
+    const st = sel && hand().find((x) => x.id === sel), id = b.dataset.kreis;
+    if (!st) { blickId = blickId === id ? null : id; puls = null; zeichne(); return; }
+    if (!zielFuer(st.art, id)) return;
+    if (vor === id) lege(st, id); else { vor = id; zeichne(); }
+  }));
+  const on = (sel_, fn) => app.querySelectorAll(sel_).forEach((b) => b.addEventListener("click", (ev) => fn(b, ev)));
+  on("[data-ablehnen]", (b) => ablehnen(b.dataset.ablehnen));
+  on("[data-bach]", () => { blickId = blickId === "bach" ? null : "bach"; puls = null; zeichne(); });
+  on("[data-geschichte]", () => { geschichteOffen = !geschichteOffen; zeichne(); if (geschichteOffen) window.scrollTo({ top: 0, behavior: "smooth" }); });
+  on("[data-klang]", () => { klangAn = !klangAn; try { localStorage.setItem("das-genug-klang", klangAn ? "an" : "aus"); } catch (e) { /* nur für diese Sitzung */ } zeichne(); });
+  on("[data-sprache]", () => { SP = SP === "de" ? "en" : "de"; try { localStorage.setItem(SPRACH_KEY, SP); } catch (e) { /* nur für diese Sitzung */ } meldung = ""; zeichne(); });
+  on("[data-gehen]", () => gehenLassen());
+  on("[data-weg]", (b) => { const W = S.ereignis.wege.find((w) => w.id === b.dataset.weg); if (W.gesperrt) { meldung = L.tisch.gebunden; } else weg = W.id; zeichne(); });
+  on("[data-beschluss]", (b) => beschliesse(b.dataset.beschluss));
+  on("[data-tisch]", (b) => { tischZu = b.dataset.tisch === "zu"; tischAuf = !tischZu; weg = null; zeichne(); });
+  on("[data-eintreten]", () => { ansicht = "spiel"; speichern(); zeichne(); });
+  on("[data-weitergeben]", () => weitergeben());
+  on("[data-teilen]", (b) => teile(links[b.dataset.teilen], b));
+  on("[data-kopieren]", (b) => kopiere(links[b.dataset.kopieren], b));
+  on("[data-weiterzurueck]", (b) => kopiere(schauLink, b));
+  on("[data-zurueckzumspiel]", () => { ansicht = S ? (S.amtszeit.beendet ? (links ? "gegeben" : "ende") : "spiel") : "spiel"; if (!S) neueWelt(); history.replaceState(null, "", basis()); zeichne(); });
+  on("[data-zeigeoeffnen]", () => { oeffnenSichtbar = true; zeichne(); const i = document.getElementById("oeffnen"); if (i) i.focus(); });
+  on("[data-oeffnen]", () => oeffne(document.getElementById("oeffnen").value));
+  faeden();
+  on("[data-neu]", (b) => { const v = b.dataset.neu; if (v === "frage") neuFragen = true; else if (v === "nein") neuFragen = false; else { neuFragen = false; neueWelt(); } zeichne(); });
+}
+// ---------- Die Fäden: Linien zwischen den Kreisen, ohne Zahl ----------
+function faeden() {
+  const svg = document.querySelector(".faeden"); if (!svg || !S) return;
+  const feld = svg.parentElement.getBoundingClientRect(), mitte = {}, rad = {};
+  document.querySelectorAll("[data-kreis]").forEach((k) => { const r = k.getBoundingClientRect(); mitte[k.dataset.kreis] = [r.left - feld.left + r.width / 2, r.top - feld.top + r.height / 2]; rad[k.dataset.kreis] = r.width / 2; });
+  const ziel = { steighof: "steighof", region: "talsued", speicher: "gemein" }, linien = {};
+  S.fluesse.forEach((f) => {
+    let a = null, art = "";
+    if (f.von === "birk" && ziel[f.nach]) { a = ziel[f.nach]; art = f.art === "vertrag" ? "vertrag" : ""; }
+    else if (f.nach === "birk" && f.von === "region") { a = "talsued"; art = "vertrag"; }
+    if (!a) return;
+    if (f.gerissen) art = "gerissen";
+    else if (a === "steighof" && S.unerwartetSaisons.steighof >= 2) art = "unruhig";
+    linien[a + art] = { a, art };
+  });
+  let o = "";
+  Object.values(linien).forEach(({ a, art }) => {
+    const p = mitte.birk, q = mitte[a]; if (!p || !q) return;
+    const dx = q[0] - p[0], dy = q[1] - p[1], l = Math.hypot(dx, dy), ux = dx / l, uy = dy / l, versatz = art === "vertrag" ? 7 : 0;
+    const x1 = p[0] + ux * (rad.birk - 2) - uy * versatz, y1 = p[1] + uy * (rad.birk - 2) + ux * versatz, x2 = q[0] - ux * (rad[a] - 2) - uy * versatz, y2 = q[1] - uy * (rad[a] - 2) + ux * versatz;
+    o += `<line class="${art}" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`;
+  });
+  svg.innerHTML = o;
+}
+window.addEventListener("resize", faeden);
+let zieh = null;
+function ziehStart(ev) {
+  const b = ev.currentTarget, id = b.dataset.stein;
+  zieh = { id, x: ev.clientX, y: ev.clientY, bewegt: false, geist: null, b };
+  b.setPointerCapture(ev.pointerId);
+  b.addEventListener("pointermove", ziehen); b.addEventListener("pointerup", ziehEnde, { once: true }); b.addEventListener("pointercancel", ziehEnde, { once: true });
+}
+function ziehen(ev) {
+  if (!zieh) return;
+  if (!zieh.bewegt && Math.hypot(ev.clientX - zieh.x, ev.clientY - zieh.y) < 8) return;
+  if (!zieh.bewegt) { zieh.bewegt = true; sel = zieh.id; const g = zieh.b.cloneNode(true); g.classList.add("geist"); document.body.appendChild(g); zieh.geist = g; markiere(); }
+  zieh.geist.style.left = ev.clientX - 27 + "px"; zieh.geist.style.top = ev.clientY - 27 + "px";
+  const el = document.elementFromPoint(ev.clientX, ev.clientY), k = el && el.closest("[data-kreis]");
+  const st = hand().find((x) => x.id === zieh.id);
+  const neu = k && zielFuer(st.art, k.dataset.kreis) ? k.dataset.kreis : null;
+  if (neu !== vor) { vor = neu; markiere(); }
+}
+function markiere() {
+  const st = sel && hand().find((x) => x.id === sel);
+  document.querySelectorAll("[data-kreis]").forEach((k) => { const ok = st && zielFuer(st.art, k.dataset.kreis); k.className = "kreis " + (st ? (ok ? (vor === k.dataset.kreis ? "vor" : "bereit") : "ruht") : ""); });
+  const z = document.querySelector(".ziel"), zt = st && vor ? zielFuer(st.art, vor) : null; if (z) z.textContent = zt ? zt.ziel : "";
+  document.querySelectorAll("[data-stein]").forEach((b) => b.classList.toggle("sel", b.dataset.stein === sel));
+}
+function ziehEnde() {
+  const z = zieh; zieh = null; if (!z) return;
+  z.b.removeEventListener("pointermove", ziehen);
+  if (z.geist) z.geist.remove();
+  if (!z.bewegt) { sel = sel === z.id ? null : z.id; vor = null; zeichne(); return; }
+  const st = hand().find((x) => x.id === z.id);
+  if (st && vor) lege(st, vor); else { vor = null; zeichne(); }
+}
+
+// ---------- Start ----------
+function neueWelt() {
+  S = K.neueWelt((Math.random() * 4294967295) >>> 0); empfangen = false; links = null; ansicht = "spiel"; sel = null; vor = null; antwort = ""; ungezaehlt = -1; abgelehnt = {}; meldung = ""; wandelPaar = null;
+  speichern();
+}
+async function start() {
+  setzeSprache(SP);
+  const h = location.hash;
+  if (/^#[bs]=/.test(h)) { await oeffne(h); if (S || schauStand) return; }
+  try {
+    const roh = localStorage.getItem(SPEICHER);
+    if (roh) { const d = JSON.parse(roh), g = K.ladeSpielstand(d.stand); if (g.ok) { S = g.zustand; empfangen = !!d.empfangen; links = d.links || null; ansicht = d.ansicht || "spiel"; zeichne(); return; } }
+  } catch (e) { /* ohne Speicher spielbar */ }
+  neueWelt(); zeichne();
+}
+window.addEventListener("hashchange", () => { if (/^#[bs]=/.test(location.hash)) oeffne(location.hash); });
+start();
+</script>
+
+</body>
+</html>

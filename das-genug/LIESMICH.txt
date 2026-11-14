@@ -1,0 +1,26 @@
+Das Genug / What is enough, Tür v0.3.2, Webseitenfassung (14.11.2026)
+
+Inhalt
+  index.html   Das Spiel, eine Seite, Deutsch und Englisch. Rechenkern v0.16 ist eingebettet.
+               Die Sprache folgt der Browsersprache (Deutsch bei de, sonst Englisch), wie die Webseite;
+               unten lässt sie sich umschalten; die Wahl teilt sie mit der Webseite (ez_lang).
+  fonts/       Schriften Atkinson Hyperlegible und Bricolage Grotesque (SIL Open Font License 1.1, Lizenztexte liegen bei).
+
+Einbau
+  Den Ordner «das-genug» unverändert in das öffentliche Verzeichnis der Webseite legen
+  (bei entryzero.vercel.app also neben index.html), dann erreichbar unter /das-genug/.
+  Die Seite lädt nichts von fremden Servern und speichert nichts auf einem Server.
+
+Links
+  #b=…  öffnet einen weitergegebenen Ort zum Spielen
+  #s=…  öffnet einen zurückgeschickten Blick zum Anschauen
+  Ein Link funktioniert in beiden Sprachen; die Sätze der Spielenden bleiben, wie sie geschrieben wurden.
+  Die Links funktionieren nur unter derselben Adresse.
+
+---
+
+What is enough (Das Genug), Door v0.3.2, website version (14 November 2026)
+
+Put the folder "das-genug" unchanged into the public directory of the website; it is then reachable at /das-genug/.
+The page follows the browser language (German for de, otherwise English) and can be switched at the bottom.
+It loads nothing from other servers and stores nothing on a server.
