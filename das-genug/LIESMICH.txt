@@ -1,4 +1,4 @@
-Das Genug / What is enough, Tür v0.4, Webseitenfassung (15.11.2026)
+Das Genug / What is enough, Tür v0.4.1, Webseitenfassung (15.11.2026)
 
 Inhalt
   index.html   Das Spiel, eine Seite, Deutsch und Englisch. Rechenkern v0.16 ist eingebettet.
@@ -19,7 +19,7 @@ Links
 
 ---
 
-What is enough (Das Genug), Door v0.4, website version (15 November 2026)
+What is enough (Das Genug), Door v0.4.1, website version (15 November 2026)
 
 Put the folder "das-genug" unchanged into the public directory of the website; it is then reachable at /das-genug/.
 The page follows the browser language (German for de, otherwise English) and can be switched at the bottom.
@@ -27,3 +27,6 @@ It loads nothing from other servers and stores nothing on a server.
 
 Neu in v0.4: Der Ordner bilder/ enthält die Bilder der vier Jahreszeiten (je ein ganzes Blatt und ein Band, WebP). Er gehört zum Spiel und muss mit hochgeladen werden.
 New in v0.4: the folder bilder/ holds the pictures of the four seasons (one full sheet and one band each, WebP). It belongs to the game and must be uploaded with it.
+
+Neu in v0.4.1: vorschau.jpg (1200 × 630) ist das Vorschaubild für Messenger und soziale Medien; die Seite verweist darauf mit voller Adresse.
+New in v0.4.1: vorschau.jpg (1200 × 630) is the preview image for messengers and social media; the page refers to it by its full address.

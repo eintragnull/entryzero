@@ -12,7 +12,15 @@
 <meta property="og:description" content="Ein Jahr. Eine Geste. Dann gibst du weiter. · One year. One gesture. Then you pass it on.">
 <meta property="og:locale" content="de_CH">
 <meta property="og:locale:alternate" content="en_GB">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://entryzero.vercel.app/das-genug/vorschau.jpg">
+<meta property="og:image:secure_url" content="https://entryzero.vercel.app/das-genug/vorschau.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Farbstiftzeichnung eines Bergtals im Frühling: ein Bach von der Quelle am Gletscher, die Dörfer Birk, Steighof und Tal-Süd, der Speicher im Gemeingut. · Coloured-pencil drawing of a mountain valley in spring.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://entryzero.vercel.app/das-genug/vorschau.jpg">
+<meta name="twitter:image:alt" content="Farbstiftzeichnung eines Bergtals im Frühling · Coloured-pencil drawing of a mountain valley in spring">
 <meta name="twitter:title" content="Das Genug · What is enough">
 <meta name="twitter:description" content="Ein Jahr. Eine Geste. Dann gibst du weiter. · One year. One gesture. Then you pass it on.">
 <style>
@@ -23,7 +31,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.4 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.14 · Bilder der Jahreszeiten (Farbstift v0.3): das ganze Blatt beim Beginn jeder Jahreszeit, ein Band daraus auf dem Brett statt der Wellenlinie; der Bach im Bild zeigt, wie viel Wasser er führt -->
+<!-- Die Tür v0.4.1 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.15 · Wie viele Hände: bei der Ankunft, in «Was bisher geschah» und im Blick zurück; nur die eigene Linie, nie eine Gesamtzahl, nie beim Weitergeben -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -1256,7 +1264,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 </script>
 <script>
 "use strict";
-// Die Tür v0.4 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.4.1 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1405,6 +1413,11 @@ const SPRACHEN = {
       teilen: "Teilen", kopieren: "Kopieren", kopiert: "Kopiert", markiert: "Markiert: jetzt kopieren", teilText: "Ein Ort für dich." },
     hinaus: { du: "Was du gerade getan hast, hat einen Namen.", ihr: "Was ihr getan habt, hat einen Namen.", lesen: "Nachlesen, wenn du willst" },
     ankunft: { gegeben: "Jemand hat dir diesen Ort gegeben.", ohne: "Ohne einen Satz.", eintreten: "Eintreten" },
+    haende: {
+      vor: (n, Z) => n === 1 ? "Vor dir hat ihn ein Mensch gehalten." : `Vor dir haben ihn ${Z} Menschen gehalten.`,
+      seitDir: (n, Z) => "Seit du ihn weitergegeben hast, ist der Ort durch " + (n === 1 ? "eine weitere Hand" : `${Z} weitere Hände`) + " gegangen.",
+      insgesamt: (n, Z) => "Der Ort ist durch " + (n === 1 ? "eine Hand" : `${Z} Hände`) + " gegangen."
+    },
     erbeOhne: "Ohne Satz bekommen.",
     geschichte: { titel: "Was bisher geschah", saetze: "Die Sätze", ohneSatz: "ohne Satz", regeln: "Die Regeln, die gelten", dagegen: "Was dagegen sprach: ", keine: "Noch keine.",
       taten: "Was in deinem Jahr am Tisch geschah", nichts: "Noch nichts.", schliessen: "Schliessen",
@@ -1555,6 +1568,11 @@ const SPRACHEN = {
       teilen: "Share", kopieren: "Copy", kopiert: "Copied", markiert: "Selected: copy it now", teilText: "A place for you." },
     hinaus: { du: "What you have just done has a name.", ihr: "What you have done together has a name.", lesen: "Read about it, if you like" },
     ankunft: { gegeben: "Someone has given you this place.", ohne: "Without a sentence.", eintreten: "Step in" },
+    haende: {
+      vor: (n, Z) => n === 1 ? "Before you, one person held it." : `Before you, ${Z} people held it.`,
+      seitDir: (n, Z) => "Since you passed it on, the place has gone through " + (n === 1 ? "one more pair of hands." : `${Z} more hands.`),
+      insgesamt: (n, Z) => "The place has gone through " + (n === 1 ? "one pair of hands." : `${Z} hands.`)
+    },
     erbeOhne: "Received without a sentence.",
     geschichte: { titel: "What has happened so far", saetze: "The sentences", ohneSatz: "without a sentence", regeln: "The rules in force", dagegen: "What spoke against it: ", keine: "None yet.",
       taten: "What happened at the table in your year", nichts: "Nothing yet.", schliessen: "Close",
@@ -1677,6 +1695,18 @@ function lesen(eingabe) {
   if (/^[zj][A-Za-z0-9_-]{20,}$/.test(roh)) return { art: "b", code: roh };
   return null;
 }
+// Welche Hand war meine? Nur wenn der eigene gespeicherte Ort derselben Linie angehört (sein Protokoll ist der Anfang des zurückgeschickten).
+let eigeneHand = null;
+function eigeneHandIn(schau) {
+  try {
+    const roh = localStorage.getItem(SPEICHER); if (!roh) return null;
+    const d = JSON.parse(roh), g = K.ladeSpielstand(d.stand); if (!g.ok) return null;
+    const mein = g.zustand, n = mein.amtszeiten.length;
+    if (!n || n > schau.amtszeiten.length || mein.meta.seed !== schau.meta.seed) return null;
+    if (JSON.stringify(mein.protokoll) !== JSON.stringify(schau.protokoll.slice(0, mein.protokoll.length))) return null;
+    return n;
+  } catch (e) { return null; }
+}
 async function oeffne(eingabe) {
   const l = lesen(eingabe); if (!l) { meldung = L.fehler.keinLink; zeichne(); return; }
   let stand;
@@ -1684,7 +1714,7 @@ async function oeffne(eingabe) {
   const g = K.ladeSpielstand(stand);
   if (!g.ok) { meldung = L.fehler.nichtOeffnen + (SP === "de" ? g.grund : ""); zeichne(); return; }
   meldung = "";
-  if (l.art === "s") { schauStand = g.zustand; schauLink = basis() + "#s=" + l.code; ansicht = "schau"; zeichne(); return; }
+  if (l.art === "s") { schauStand = g.zustand; schauLink = basis() + "#s=" + l.code; eigeneHand = eigeneHandIn(schauStand); ansicht = "schau"; zeichne(); return; }
   S = g.zustand; empfangen = true; links = null; abgelehnt = {}; antwort = ""; ungezaehlt = -1; tischZu = false; weg = null; wandelPaar = null; folge = [];
   ansicht = S.amtszeit && S.amtszeit.beendet ? "ende" : "ankunft"; speichern(); zeichne();
 }
@@ -1949,6 +1979,7 @@ function kopf(mitErbe) {
 function geschichte() {
   const R = K.rueckschau(S), taten = S.register.slice(S.amtszeit.anfang.register), G = L.geschichte;
   let o = `<section class="geschichte" aria-label="${G.titel}"><h3>${G.titel}</h3>`;
+  if (S.amtszeiten.length) o += `<p>${L.haende.vor(S.amtszeiten.length, Z(S.amtszeiten.length))}</p>`;
   if (R.zeiten.length) o += `<div><h3>${G.saetze}</h3><ul>${R.zeiten.map((z) => `<li>${jzName(z.von.jahreszeit)} ${z.von.jahr}: ${z.satz ? L.q(esc(z.satz)) : G.ohneSatz}</li>`).join("")}</ul></div>`;
   o += `<div><h3>${G.regeln}</h3>${S.verbund.archiv.length ? `<ul>${S.verbund.archiv.map((a) => `<li>${esc(a.nr)}: ${esc(regelText(a))}<br><span class="hinweis">${G.dagegen}${esc(gegengrundText(a))}</span></li>`).join("")}</ul>` : `<p class="hinweis">${G.keine}</p>`}</div>`;
   o += `<div><h3>${G.taten}</h3>${taten.length ? `<ul>${taten.map((t) => { const T = ereignisText(t.ereignisId); return `<li>${jzName(t.jahreszeit)}, ${L.q(esc(T ? T.titel : t.ereignis))}: ${G.ausgang[t.ausgang] || t.ausgang}</li>`; }).join("")}</ul>` : `<p class="hinweis">${G.nichts}</p>`}</div>`;
@@ -2024,8 +2055,9 @@ function tisch(E) {
 }
 function ankunft() {
   const e = S.erbe, A = L.ankunft;
+  const n = S.amtszeiten.length;
   return kopf() + `<p class="hinweis">${A.gegeben}</p>
-    <p class="satz">${e && e.satz ? L.q(esc(e.satz)) : A.ohne}</p>
+    <p class="satz">${e && e.satz ? L.q(esc(e.satz)) : A.ohne}</p>` + (n > 0 ? `<p>${L.haende.vor(n, Z(n))}</p>` : "") + `
     <button class="haupt" data-eintreten style="align-self:flex-start">${A.eintreten}</button>` + fuss();
 }
 function ende() {
@@ -2056,7 +2088,9 @@ function gegeben() {
 function schau() {
   const s = schauStand, R = K.rueckschau(s), Sc = L.schau;
   let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${jzName(R.heute.jahreszeit)} ${R.heute.jahr}</span></div>` + bild(s, "band");
-  o += `<h2>${Sc.titel}</h2><p class="hinweis">${Sc.hinweis}</p><div class="zeitlinie">`;
+  const alle = s.amtszeiten.length, seit = eigeneHand ? alle - eigeneHand : null;
+  o += `<h2>${Sc.titel}</h2><p class="hinweis">${Sc.hinweis}</p>`;
+  o += `<p>${seit !== null && seit > 0 ? L.haende.seitDir(seit, Z(seit)) : L.haende.insgesamt(alle, Z(alle))}</p><div class="zeitlinie">`;
   o += R.zeiten.map((z) => `<div class="z"><span class="j">${jzName(z.von.jahreszeit)} ${z.von.jahr}</span><p class="satz">${z.satz ? L.q(esc(z.satz)) : Sc.ohne}</p>${bildTeile(z.bild || [], s).map((t) => `<p class="hinweis">${esc(t)}</p>`).join("")}</div>`).join("");
   o += `</div><div class="bild"><p>${Sc.heute}${esc(K.blick(s, "bach", SP))} ${esc(K.blick(s, "talsued", SP))}</p></div>`;
   o += `<section class="tuer"><h2>${Sc.weiter}</h2><p class="hinweis">${Sc.weiterText}</p><p class="link">${esc(schauLink)}</p><div class="reihe"><button class="leise" data-weiterzurueck>${Sc.kopieren}</button></div></section>`;
