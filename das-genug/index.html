@@ -23,7 +23,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.3.5 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.13 · Nur Namen, die das Brett zeigt: Ried → das Dorf talabwärts, keine «Föderation», keine «vier Orte», Erlenbach spricht nicht mehr; Werkstattwörter des Kerns werden an der Tür übersetzt -->
+<!-- Die Tür v0.4 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.14 · Bilder der Jahreszeiten (Farbstift v0.3): das ganze Blatt beim Beginn jeder Jahreszeit, ein Band daraus auf dem Brett statt der Wellenlinie; der Bach im Bild zeigt, wie viel Wasser er führt -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -88,6 +88,11 @@ p{margin:0}
 .kreis.puls{animation:puls .9s ease-out}
 @keyframes puls{0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--bach) 55%, transparent)}100%{box-shadow:0 0 0 22px transparent}}
 .bachknopf{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer}
+.blatt{position:relative;display:block;border-radius:12px;overflow:hidden;background:#FAF7F0;box-shadow:0 0 0 1px var(--linie)}
+.blatt img{display:block;width:100%;height:auto}
+.blatt svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.schwelle{display:flex;flex-direction:column;gap:14px}
+.schwelle .blattknopf{display:block;width:100%;background:none;border:none;padding:0;cursor:pointer;border-radius:14px}
 .erbe{background:none;border:none;padding:0;font:inherit;font-style:italic;color:var(--leise);text-align:left;cursor:pointer;text-decoration:underline dotted;text-underline-offset:4px}
 .wandel{font-family:var(--display);font-weight:500}
 .ohne{font-size:.9rem;color:var(--leise);text-align:center}
@@ -1251,7 +1256,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 </script>
 <script>
 "use strict";
-// Die Tür v0.3.5 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.4 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1263,7 +1268,11 @@ const Z = (n) => L.zahl[n] || String(n);   // Zahlwort in der Sprache der Tür
 const SPRACHEN = {
   de: {
     titel: "Das Genug", andere: "English", ort: "Birk · Alpen-Pol", bach: "Der Bach", augenblick: "Einen Augenblick.",
-    zurWebseite: "Zurück zur Webseite",
+    zurWebseite: "Zurück zur Webseite", weiter: "Weiter",
+    bildAlt: ["Frühling im Tal: Schnee auf den Gipfeln, der volle Bach von der Quelle am Berg, Birk am Wasser, der Steighof am Hang, der Speicher im Gemeingut, Tal-Süd auf trockenem Boden mit der halb gebauten Leitung.",
+      "Sommer im Tal: Schnee nur auf den Spitzen, grüne Wiesen, reifendes Korn und Heu, der Bach, Birk, der Steighof, der Speicher und Tal-Süd.",
+      "Herbst im Tal: goldene Lärchen, Stoppelfelder, Säcke vor dem Speicher, der Bach führt weniger Wasser.",
+      "Winter im Tal: alles weiss, Schnee auf den Dächern, Rauch aus den Kaminen, der Bach schmal mit Eis am Rand."],
     hilfe: { knopf: "Wie man spielt", titel: "Wie man spielt", schliessen: "Schliessen",
       schritte: ["Tippe auf einen Stein in deiner Hand, dann auf einen Ort. Du liest, was geschehen würde.",
         "Tippe noch einmal auf den Ort, dann liegt der Stein dort. Du kannst ihn auch hinziehen.",
@@ -1410,7 +1419,11 @@ const SPRACHEN = {
   },
   en: {
     titel: "What is enough", andere: "Deutsch", ort: "Birk · Alpine Pole", bach: "The stream", augenblick: "One moment.",
-    zurWebseite: "Back to the website",
+    zurWebseite: "Back to the website", weiter: "Continue",
+    bildAlt: ["Spring in the valley: snow on the peaks, the stream full from its source on the mountain, Birk by the water, Steighof on the slope, the store in the commons, Tal-Süd on dry ground with the half-built pipeline.",
+      "Summer in the valley: snow only on the summits, green meadows, ripening grain and hay, the stream, Birk, Steighof, the store and Tal-Süd.",
+      "Autumn in the valley: golden larches, stubble fields, sacks in front of the store, the stream carries less water.",
+      "Winter in the valley: everything white, snow on the roofs, smoke from the chimneys, the stream narrow with ice along its banks."],
     hilfe: { knopf: "How to play", titel: "How to play", schliessen: "Close",
       schritte: ["Tap a stone in your hand, then a place. You read what would happen.",
         "Tap the place again, and the stone is laid there. You can also drag it.",
@@ -1709,7 +1722,7 @@ function gehenLassen() {
   ungezaehlt = frei.length ? frei[(S.meta.seed + S.meta.takt * 7) % frei.length] : -1;
   wandelPaar = [vorher, S]; folge = folgeSaetze(vorher, S, zuegeDerSaison(vorher));
   antwort = ""; sel = null; vor = null; tischZu = false; tischAuf = false; weg = null; blickId = null; puls = null;
-  if (S.amtszeit.beendet) ansicht = "ende";
+  ansicht = S.amtszeit.beendet ? "ende" : "schwelle";
   speichern(); zeichne(); window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -1887,6 +1900,17 @@ function untertitel(id) {
   if (id === "talsued") { const R = S.region.reihung; if (R.aufnahmeBereit) return L.talsuedBereit; if (R.gezeichnet) return L.talsuedBezahlt; }
   return L.kreise[id][1];
 }
+// ---------- Die Bilder der Jahreszeiten ----------
+// BILDER[jz] = { voll, band, bach }: ganzes Blatt, Band (Ausschnitt y 150–540 von 1200×800), Umriss des Bachs
+const BILDER = [{"voll":"bilder/fruehling_voll.webp","band":"bilder/fruehling_band.webp","bach":"M601 285L606 318L618 348L605 379L578 412L540 442L473 486L394 543L306 619L221 704L162 788L198 812L251 729L330 645L414 569L491 510L556 463L594 428L623 389L634 348L618 314L611 283Z"},{"voll":"bilder/sommer_voll.webp","band":"bilder/sommer_band.webp","bach":"M602 285L607 318L619 348L607 380L579 414L542 444L475 488L396 546L308 622L224 706L166 791L194 809L248 726L328 642L412 566L489 508L554 460L593 426L621 388L633 348L617 314L610 283Z"},{"voll":"bilder/herbst_voll.webp","band":"bilder/herbst_band.webp","bach":"M603 285L608 317L620 348L608 381L580 415L543 445L476 490L397 547L310 623L226 708L168 792L192 808L246 725L326 641L411 565L488 506L553 459L592 425L620 387L632 348L616 315L609 283Z"},{"voll":"bilder/winter_voll.webp","band":"bilder/winter_band.webp","bach":"M604 284L609 317L622 348L610 382L582 416L544 447L478 492L399 550L312 626L229 710L172 794L189 806L243 722L324 638L409 562L486 504L552 457L590 424L618 386L630 348L615 315L608 284Z"}];
+// Der Bach im Bild zeigt, wie viel Wasser er führt: Je tiefer der Zustand, desto mehr legt sich Papier über das Blau
+function bild(s, art) {
+  const B = BILDER && BILDER[s.meta.jz]; if (!B) return bach(s);
+  const H = s.naturhaushalt, deck = H.gekippt ? 0.85 : Math.max(0, Math.min(0.8, (75 - H.zustand) / 50));
+  const vb = art === "band" ? "0 150 1200 390" : "0 0 1200 800";
+  const alt = art === "voll" ? ` alt="${L.bildAlt[s.meta.jz]}"` : ` alt=""`;
+  return `<span class="blatt ${art}"><img src="${B[art]}"${alt} decoding="async"><svg viewBox="${vb}" preserveAspectRatio="none" aria-hidden="true"><path d="${B.bach}" style="fill:#FAF7F0;opacity:${deck.toFixed(2)}"/>${H.gekippt ? `<path d="${B.bach}" style="fill:none;stroke:#7A7A76;stroke-width:3;stroke-dasharray:10 10"/>` : ""}</svg></span>`;
+}
 function bach(s) {
   const H = s.naturhaushalt, w = 1.2 + (H.zustand / 100) * 6;
   return `<svg class="bach" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 13 C 50 3, 100 23, 150 13 S 250 3, 300 13 S 380 23, 400 13" stroke-width="${w}" ${H.gekippt ? 'stroke-dasharray="6 8"' : ""} opacity="${0.35 + H.zustand / 160}"/></svg>`;
@@ -1901,6 +1925,7 @@ function zeichne() {
   if (ansicht === "ankunft") app.innerHTML = leiste() + ankunft();
   else if (ansicht === "ende") app.innerHTML = leiste() + ende();
   else if (ansicht === "gegeben") app.innerHTML = leiste() + gegeben();
+  else if (ansicht === "schwelle") app.innerHTML = leiste() + schwelle();
   else app.innerHTML = leiste() + spiel();
   binde();
 }
@@ -1917,7 +1942,7 @@ function hilfe() {
 }
 function kopf(mitErbe) {
   let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${L.jz[S.meta.jz]} ${S.meta.jahr}</span></div>`;
-  o += mitErbe ? `<button class="bachknopf" data-bach aria-label="${L.bach}">${bach(S)}</button>` : bach(S);
+  o += mitErbe ? `<button class="bachknopf" data-bach aria-label="${L.bach}">${bild(S, "band")}</button>` : bild(S, "band");
   if (mitErbe && S.erbe) o += `<button class="erbe" data-geschichte>${S.erbe.satz ? L.q(esc(S.erbe.satz)) : L.erbeOhne}</button>`;
   return o;
 }
@@ -1936,12 +1961,29 @@ function spiel() {
   if (geschichteOffen) o += geschichte();
   const erste = S.meta.saison === S.amtszeit.beginn && !antwort;
   const duerre = S.meta.jz === 1 && S.wetter === "Dürre", jzSatz = duerre ? L.sommerDuerre : L.jzSatz[S.meta.jz];
-  o += `<p class="lage">${erste && S.amtszeit.nr === 1 && S.meta.jz === 0 ? L.anvertraut : ""}${jzSatz}</p>`;
+  o += `<p class="lage">${jzSatz}</p>`;
+  return o + brett(E, h, st, erste);
+}
+// Die Schwelle: das ganze Blatt der neuen Jahreszeit, ihr Satz und was sich verändert hat. Hier wird nichts verlangt.
+function schwelle() {
+  const duerre = S.meta.jz === 1 && S.wetter === "Dürre", jzSatz = duerre ? L.sommerDuerre : L.jzSatz[S.meta.jz];
+  const anfang = S.meta.saison === S.amtszeit.beginn && S.amtszeit.nr === 1 && S.meta.jz === 0;
+  let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${L.jz[S.meta.jz]} ${S.meta.jahr}</span></div><section class="schwelle">`;
+  o += `<button class="blattknopf" data-weiter aria-label="${L.weiter}">${bild(S, "voll")}</button>`;
+  if (S.erbe && S.meta.saison === S.amtszeit.beginn) o += `<button class="erbe" data-geschichte>${S.erbe.satz ? L.q(esc(S.erbe.satz)) : L.erbeOhne}</button>`;
+  o += `<p class="lage">${anfang ? L.anvertraut : ""}${jzSatz}</p>`;
   // im trockenen Sommer sagt der Satz der Jahreszeit schon, was der Wandel sagen würde
   const wandelSatz = wandelPaar && !(duerre && wandelPaar[1].wetter === "Dürre" && wandelPaar[0].wetter !== "Dürre" && K.wandel(wandelPaar[0], wandelPaar[1], "de") === "Es wurde trocken. Der Bach führt wenig Wasser.") ? tuerwort(K.wandel(wandelPaar[0], wandelPaar[1], SP)) : null;
   if (wandelSatz) o += `<p class="wandel">${esc(wandelSatz)}</p>`;
   if (wandelPaar && folge.length) o += folge.map((t) => `<p>${esc(t)}</p>`).join("");
   if (ungezaehlt >= 0) o += `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>`;
+  o += `<button class="haupt" data-weiter style="align-self:flex-start">${L.weiter}</button></section>`;
+  if (geschichteOffen) o += geschichte();
+  return o + fuss();
+}
+// Das Brett: die vier Kreise, die Hand, der Tisch
+function brett(E, h, st, erste) {
+  let o = "";
   o += `<div class="feld">` + Object.keys(L.kreise).map((id) => {
     const z = st ? zielFuer(st.art, id) : null;
     const cls = (st ? (z ? (vor === id ? "vor" : "bereit") : "ruht") : blickId === id ? "blick" : "") + (puls === id ? " puls" : "");
@@ -2013,7 +2055,7 @@ function gegeben() {
 }
 function schau() {
   const s = schauStand, R = K.rueckschau(s), Sc = L.schau;
-  let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${jzName(R.heute.jahreszeit)} ${R.heute.jahr}</span></div>`;
+  let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${jzName(R.heute.jahreszeit)} ${R.heute.jahr}</span></div>` + bild(s, "band");
   o += `<h2>${Sc.titel}</h2><p class="hinweis">${Sc.hinweis}</p><div class="zeitlinie">`;
   o += R.zeiten.map((z) => `<div class="z"><span class="j">${jzName(z.von.jahreszeit)} ${z.von.jahr}</span><p class="satz">${z.satz ? L.q(esc(z.satz)) : Sc.ohne}</p>${bildTeile(z.bild || [], s).map((t) => `<p class="hinweis">${esc(t)}</p>`).join("")}</div>`).join("");
   o += `</div><div class="bild"><p>${Sc.heute}${esc(K.blick(s, "bach", SP))} ${esc(K.blick(s, "talsued", SP))}</p></div>`;
@@ -2056,7 +2098,8 @@ function binde() {
   on("[data-weg]", (b) => { const W = S.ereignis.wege.find((w) => w.id === b.dataset.weg); if (W.gesperrt) { meldung = L.tisch.gebunden; } else weg = W.id; zeichne(); });
   on("[data-beschluss]", (b) => beschliesse(b.dataset.beschluss));
   on("[data-tisch]", (b) => { tischZu = b.dataset.tisch === "zu"; tischAuf = !tischZu; weg = null; zeichne(); });
-  on("[data-eintreten]", () => { ansicht = "spiel"; speichern(); zeichne(); });
+  on("[data-eintreten]", () => { ansicht = "schwelle"; speichern(); zeichne(); window.scrollTo({ top: 0 }); });
+  on("[data-weiter]", () => { ansicht = "spiel"; geschichteOffen = false; speichern(); zeichne(); window.scrollTo({ top: 0 }); });
   on("[data-weitergeben]", () => weitergeben());
   on("[data-teilen]", (b) => teile(links[b.dataset.teilen], b));
   on("[data-kopieren]", (b) => kopiere(links[b.dataset.kopieren], b));
@@ -2127,7 +2170,7 @@ function ziehEnde() {
 
 // ---------- Start ----------
 function neueWelt() {
-  S = K.neueWelt((Math.random() * 4294967295) >>> 0); empfangen = false; links = null; ansicht = "spiel"; sel = null; vor = null; antwort = ""; ungezaehlt = -1; abgelehnt = {}; meldung = ""; wandelPaar = null; folge = [];
+  S = K.neueWelt((Math.random() * 4294967295) >>> 0); empfangen = false; links = null; ansicht = "schwelle"; sel = null; vor = null; antwort = ""; ungezaehlt = -1; abgelehnt = {}; meldung = ""; wandelPaar = null; folge = [];
   speichern();
 }
 async function start() {
