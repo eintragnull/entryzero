@@ -23,7 +23,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.3.3 · 14.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.10 · Nichts läuft ins Leere: Jahresbild in zwei Teilen (was du getan hast / was in der Welt geschah, mit Ursachen), Folgesätze nach jeder Jahreszeit, Hinweis auf verfallende Stunden, Spielraum in Birk sichtbar, Geld bei Tal-Süd sichtbar, ungezählte Sätze nach Jahreszeit -->
+<!-- Die Tür v0.3.4 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.12 · Leiste oben: zurück zur Webseite (?tab=spiel) und «Wie man spielt» (nur Bedienung, keine Bedeutung); leise Tipp-Hinweise in der ersten Jahreszeit -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -55,6 +55,15 @@ h1{font-size:2rem;margin:0}
 h2{font-size:1.3rem;margin:0}
 p{margin:0}
 .kopf{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.leiste{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:-6px}
+.leiste a,.leiste button{background:none;border:none;padding:6px 0;color:var(--leise);font:inherit;font-size:.85rem;text-decoration:none;cursor:pointer}
+.leiste a:hover,.leiste button:hover{text-decoration:underline}
+.leiste .hilfeknopf{display:inline-flex;align-items:center;gap:6px}
+.leiste .hilfeknopf b{display:inline-grid;place-items:center;width:22px;height:22px;border:1.5px solid var(--leise);border-radius:50%;font-weight:700;font-size:.8rem}
+.hilfe{border:1px solid var(--linie);border-radius:16px;background:var(--karte);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.hilfe h3{font-family:var(--display);font-size:1rem;margin:0}
+.hilfe ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.tipp{font-size:.9rem;color:var(--leise);text-align:center;margin:0}
 .ort{font-size:.85rem;color:var(--leise);letter-spacing:.06em;text-transform:uppercase}
 .zeit{font-size:1.5rem}
 .bach{display:block;width:100%;height:26px}
@@ -1242,7 +1251,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 </script>
 <script>
 "use strict";
-// Die Tür v0.3.3 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.3.4 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1254,6 +1263,16 @@ const Z = (n) => L.zahl[n] || String(n);   // Zahlwort in der Sprache der Tür
 const SPRACHEN = {
   de: {
     titel: "Das Genug", andere: "English", ort: "Birk · Alpen-Pol", bach: "Der Bach", augenblick: "Einen Augenblick.",
+    zurWebseite: "Zurück zur Webseite",
+    hilfe: { knopf: "Wie man spielt", titel: "Wie man spielt", schliessen: "Schliessen",
+      schritte: ["Tippe auf einen Stein in deiner Hand, dann auf einen Ort. Du liest, was geschehen würde.",
+        "Tippe noch einmal auf den Ort, dann liegt der Stein dort. Du kannst ihn auch hinziehen.",
+        "Ohne Stein in der Hand: Tippe auf einen Ort oder auf den Bach, und du siehst, wie es ihm geht.",
+        "Wartet etwas am Tisch, wähle einen Weg und beschliesse. Du kannst ihn auch vorerst offen lassen.",
+        "Bist du fertig mit der Jahreszeit, lass sie gehen. Nach vier Jahreszeiten ist dein Jahr zu Ende, und du kannst den Ort weitergeben."],
+      bleibt: "Dein Ort bleibt in diesem Browser gespeichert, auch wenn du die Seite verlässt.",
+      sinn: "Was die Dinge bedeuten, zeigt das Spiel selbst.",
+      tippStein: "Tippe auf einen Stein in deiner Hand.", tippOrt: "Tippe auf einen Ort.", tippNochmal: "Tippe noch einmal darauf, dann liegt der Stein dort." },
     jz: ["Frühling", "Sommer", "Herbst", "Winter"],
     jzSatz: ["Der Schnee geht, die Arbeit kommt.", "Es ist mehr da, als ihr braucht.", "Die Ernte ist drin.", "Die Tage sind kurz."],
     sommerDuerre: "Es ist trocken, der Bach führt wenig Wasser. In Birk ist trotzdem mehr da, als ihr braucht.",
@@ -1391,6 +1410,16 @@ const SPRACHEN = {
   },
   en: {
     titel: "What is enough", andere: "Deutsch", ort: "Birk · Alpine Pole", bach: "The stream", augenblick: "One moment.",
+    zurWebseite: "Back to the website",
+    hilfe: { knopf: "How to play", titel: "How to play", schliessen: "Close",
+      schritte: ["Tap a stone in your hand, then a place. You read what would happen.",
+        "Tap the place again, and the stone is laid there. You can also drag it.",
+        "With no stone in your hand: tap a place or the stream, and you see how it is doing.",
+        "If something is waiting at the table, choose a way and decide. You can also leave it open for now.",
+        "When you're done with the season, let it go. After four seasons your year is over, and you can pass the place on."],
+      bleibt: "Your place stays saved in this browser, even if you leave the page.",
+      sinn: "What things mean, the game shows you itself.",
+      tippStein: "Tap a stone in your hand.", tippOrt: "Tap a place.", tippNochmal: "Tap it again to lay the stone there." },
     jz: ["Spring", "Summer", "Autumn", "Winter"],
     jzSatz: ["The snow goes, the work comes.", "There is more than you need.", "The harvest is in.", "The days are short."],
     sommerDuerre: "It is dry, and the stream carries little water. Even so, Birk has more than it needs.",
@@ -1565,7 +1594,7 @@ function gegengrundText(a) {
 
 // ---------- Zustand der Tür (nicht der Welt) ----------
 let S = null, ansicht = "spiel", sel = null, vor = null, antwort = "", ungezaehlt = -1, tischZu = false, weg = null, abgelehnt = {}, meldung = "";
-let gelegtSaison = -1, tischAuf = false, blickId = null, puls = null, wandelPaar = null, geschichteOffen = false, folge = [];
+let gelegtSaison = -1, tischAuf = false, blickId = null, puls = null, wandelPaar = null, geschichteOffen = false, folge = [], hilfeOffen = false;
 let empfangen = false, links = null, oeffnenSichtbar = false, neuFragen = false, schauStand = null, schauLink = "";
 let klangAn = true; try { klangAn = localStorage.getItem("das-genug-klang") !== "aus"; } catch (e) { /* Standard: an */ }
 
@@ -1860,13 +1889,24 @@ function zeichne() {
   const app = document.getElementById("app");
   setzeSprache(SP);
   document.body.dataset.jz = S ? S.meta.jz : schauStand ? schauStand.meta.jz : 0;
-  if (ansicht === "schau") { app.innerHTML = schau(); binde(); return; }
+  if (ansicht === "schau") { app.innerHTML = leiste() + schau(); binde(); return; }
   if (!S) { app.innerHTML = `<p class="leer">${L.augenblick}</p>`; return; }
-  if (ansicht === "ankunft") app.innerHTML = ankunft();
-  else if (ansicht === "ende") app.innerHTML = ende();
-  else if (ansicht === "gegeben") app.innerHTML = gegeben();
-  else app.innerHTML = spiel();
+  if (ansicht === "ankunft") app.innerHTML = leiste() + ankunft();
+  else if (ansicht === "ende") app.innerHTML = leiste() + ende();
+  else if (ansicht === "gegeben") app.innerHTML = leiste() + gegeben();
+  else app.innerHTML = leiste() + spiel();
   binde();
+}
+// Oben: zurück zur Spielseite der Webseite (der Ort bleibt gespeichert) und, im Spiel, «Wie man spielt»
+function leiste() {
+  let o = `<nav class="leiste"><a href="https://entryzero.vercel.app/?tab=spiel&amp;lang=${SP}">‹ ${L.zurWebseite}</a>`;
+  if (ansicht === "spiel") o += `<button class="hilfeknopf" data-hilfe aria-expanded="${hilfeOffen}"><b aria-hidden="true">?</b>${L.hilfe.knopf}</button>`;
+  return o + `</nav>`;
+}
+// Nur die Bedienung, nie die Bedeutung (Prüffrage 22)
+function hilfe() {
+  const H = L.hilfe;
+  return `<section class="hilfe" aria-label="${H.titel}"><h3>${H.titel}</h3><ol>${H.schritte.map((t) => `<li>${t}</li>`).join("")}</ol><p class="hinweis">${H.bleibt}</p><p class="hinweis">${H.sinn}</p><button class="leise" data-hilfe style="align-self:flex-start">${H.schliessen}</button></section>`;
 }
 function kopf(mitErbe) {
   let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${L.jz[S.meta.jz]} ${S.meta.jahr}</span></div>`;
@@ -1885,6 +1925,7 @@ function geschichte() {
 function spiel() {
   const E = S.ereignis, h = hand(), st = sel && h.find((x) => x.id === sel);
   let o = kopf(true);
+  if (hilfeOffen) o += hilfe();
   if (geschichteOffen) o += geschichte();
   const erste = S.meta.saison === S.amtszeit.beginn && !antwort;
   const duerre = S.meta.jz === 1 && S.wetter === "Dürre", jzSatz = duerre ? L.sommerDuerre : L.jzSatz[S.meta.jz];
@@ -1901,6 +1942,7 @@ function spiel() {
   }).join("") + `<svg class="faeden" aria-hidden="true"></svg></div>`;
   const zt = st && vor ? zielFuer(st.art, vor) : null;
   o += `<p class="ziel">${zt ? esc(zt.ziel) : blickId ? esc(K.blick(S, blickId, SP)) : meldung ? esc(meldung) : ""}</p>`;
+  if (erste && gelegtSaison !== S.meta.saison && h.some((x) => !x.angebot)) o += `<p class="tipp">${!st ? L.hilfe.tippStein : !vor ? L.hilfe.tippOrt : L.hilfe.tippNochmal}</p>`;
   o += `<p class="antwort">${esc(antwort)}</p>`;
   const angebot = h.find((x) => x.angebot);
   if (angebot) o += `<p class="angebotssatz">${L.angebot[angebot.art]}</p>`;
@@ -1999,6 +2041,7 @@ function binde() {
   const on = (sel_, fn) => app.querySelectorAll(sel_).forEach((b) => b.addEventListener("click", (ev) => fn(b, ev)));
   on("[data-ablehnen]", (b) => ablehnen(b.dataset.ablehnen));
   on("[data-bach]", () => { blickId = blickId === "bach" ? null : "bach"; puls = null; zeichne(); });
+  on("[data-hilfe]", () => { hilfeOffen = !hilfeOffen; zeichne(); if (hilfeOffen) window.scrollTo({ top: 0, behavior: "smooth" }); });
   on("[data-geschichte]", () => { geschichteOffen = !geschichteOffen; zeichne(); if (geschichteOffen) window.scrollTo({ top: 0, behavior: "smooth" }); });
   on("[data-klang]", () => { klangAn = !klangAn; try { localStorage.setItem("das-genug-klang", klangAn ? "an" : "aus"); } catch (e) { /* nur für diese Sitzung */ } zeichne(); });
   on("[data-sprache]", () => { SP = SP === "de" ? "en" : "de"; try { localStorage.setItem(SPRACH_KEY, SP); } catch (e) { /* nur für diese Sitzung */ } meldung = ""; zeichne(); });
