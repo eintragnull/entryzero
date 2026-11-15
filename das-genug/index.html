@@ -23,7 +23,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.3.4 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.12 · Leiste oben: zurück zur Webseite (?tab=spiel) und «Wie man spielt» (nur Bedienung, keine Bedeutung); leise Tipp-Hinweise in der ersten Jahreszeit -->
+<!-- Die Tür v0.3.5 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.13 · Nur Namen, die das Brett zeigt: Ried → das Dorf talabwärts, keine «Föderation», keine «vier Orte», Erlenbach spricht nicht mehr; Werkstattwörter des Kerns werden an der Tür übersetzt -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -1251,7 +1251,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 </script>
 <script>
 "use strict";
-// Die Tür v0.3.4 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.3.5 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1294,10 +1294,10 @@ const SPRACHEN = {
     },
     steine: { stunde: "Stunde", spielraum: "Spiel&shy;raum", vertrag: "Vertrag", zeichnung: "Geld" },
     ereignis: {
-      bach: { titel: "Der Bach und die Pumpen", lage: "Der Bach sinkt, und Ried talabwärts bittet um Pumpen, die eure Werkstatt nur mit Bachwasser bauen kann.",
-        stillstand: "Die Werkstatt läuft wie bisher, der Bach sinkt weiter, Ried wartet.",
+      bach: { titel: "Der Bach und die Pumpen", lage: "Der Bach sinkt, und das Dorf talabwärts bittet um Pumpen, die eure Werkstatt nur mit Bachwasser bauen kann.",
+        stillstand: "Die Werkstatt läuft wie bisher, der Bach sinkt weiter, das Dorf talabwärts wartet.",
         wege: { A: "Werkstatt auf Volllast, mit Notaggregat", B: "Den Bach schützen, die Hilfe verschieben", C: "Widderpumpen in Handarbeit, nach dem Bauplan aus dem Gemeingut" } },
-      kuehle: { titel: "Genug für Birk, zu viel für alle", lage: "Es ist heiss. Birk hält seinen eigenen Anteil, aber alle vier Orte zusammen verbrauchen mehr, als die Natur im Tal trägt.",
+      kuehle: { titel: "Genug für Birk, zu viel für alle", lage: "Es ist heiss. Birk hält seinen eigenen Anteil, aber zusammen mit seinen Nachbarn verbraucht es mehr, als die Natur im Tal trägt.",
         stillstand: "Birk bleibt in seinem Anteil, und alle zusammen verbrauchen weiter zu viel.",
         wege: { A: "Das Kühlhaus aus Beton bauen", B: "Den Spielraum aller senken, bis es für die Natur reicht", C: "Den Felsenkeller mit Lehm umbauen" } },
       erfassung: { titel: "Alles erfassen?", lage: "Eine Gruppe im Dorf will jede Stunde der Sorge-Arbeit aufschreiben, damit die Last gerechter verteilt wird.",
@@ -1316,15 +1316,15 @@ const SPRACHEN = {
     },
     ziel: {
       stunde: { birk: "Die Stunde bleibt bei euch: dieses Jahr ein Stück mehr Spielraum.", steighof: "Arbeit mit Steighof, damit es sich selbst tragen kann.", talsued: "Arbeit an der Wasserleitung von Tal-Süd.", gemein: "Arbeit am Bauplan der Pumpe, offen für alle." },
-      spielraum: { steighof: "Geht an Steighof.", gemein: "In den Speicher. Im Winter geht er an die, die es brauchen." },
+      spielraum: { steighof: "Geht an Steighof.", gemein: "In den Speicher. Im Winter geht er an die, die ihn brauchen." },
       vertrag: { birk: "Annehmen: Material aus der alten Welt, dafür baut ihr Tal-Süds Leitung nach Vertrag." },
       zeichnung: { birk: "Annehmen: Tal-Süds Händler zahlen Geld in den Übergangsfonds ein, und Tal-Süd rückt auf der Warteliste vor. Ein Jahr lang arbeiten eure Werkstatt und die Pflege auch für Tal-Süd." }
     },
     antwort: {
-      stunde: { birk: "Mara: «Heute Abend ist Zeit fürs Gemeinschaftshaus.»", steighof: "Steighof: «Ihr arbeitet mit uns, nicht für uns. Das merken wir uns.»", talsued: "Tal-Süd: «Die Leitung wächst. Unsere Leute zählen die Meter.»", gemein: "Jorin: «Die Pumpe ist besser geworden. Auch Ried kann sie bauen.»" },
+      stunde: { birk: "Mara: «Heute Abend ist Zeit fürs Gemeinschaftshaus.»", steighof: "Steighof: «Ihr arbeitet mit uns, nicht für uns. Das merken wir uns.»", talsued: "Tal-Süd: «Die Leitung wächst. Unsere Leute zählen die Meter.»", gemein: "Jorin: «Die Pumpe ist besser geworden. Auch das Dorf talabwärts kann sie bauen.»" },
       spielraumSteighof: "Steighof: «Danke. Gefragt hätten wir nicht.»", spielraumSteighofWieder: "Steighof: «Schon wieder. Wann dürfen wir zurückgeben?»",
-      speicher: "Erlenbach: «Es liegt im Speicher. Wer es braucht, bekommt es.»",
-      vertrag: "Tal-Süd: «Abgemacht. Wir zahlen, ihr baut.»", zeichnung: "Tal-Süd: «Unsere Händler haben eingezahlt. Wir rücken vor.»", abgelehnt: "Tal-Süd: «Gut. Wir fragen wieder.»",
+      speicher: "Mara: «Es liegt im Speicher. Wer es braucht, bekommt es.»",
+      vertrag: "Tal-Süd: «Abgemacht. Wir liefern, ihr baut.»", zeichnung: "Tal-Süd: «Unsere Händler haben eingezahlt. Wir rücken vor.»", abgelehnt: "Tal-Süd: «Gut. Wir fragen wieder.»",
       voll: { werkstatt: "Jorin: «Die Werkstatt ist am Anschlag.»", pflege: "Mara: «Die Pflege trägt das nicht mehr lange.»", boden: "Rahel: «Boden und Wasser kommen nicht nach.»" },
       nicken: "Am Tisch nicken sie.", schweigt: (n) => n.join(" und ") + (n.length === 1 ? " schweigt." : " schweigen.")
     },
@@ -1371,17 +1371,17 @@ const SPRACHEN = {
       entschieden: (titel, weg, a) => `Am Tisch, ${titel}: ${weg}, ${a === "durchsetzen" ? "durchgesetzt" : "gemeinsam beschlossen"}.`,
       ohneBeschluss: (titel, satz) => `Ohne Beschluss, ${titel}: ${satz}`,
       geldJa: "Das Geld von Tal-Süd hast du angenommen.", geldNein: "Das Geld von Tal-Süd hast du nicht angenommen.",
-      gehalten: "Das Lebensnotwendige war gedeckt, für alle in den vier Orten. In der Föderation ist das immer so.",
+      gehalten: "Das Lebensnotwendige war gedeckt, für alle in Birk und bei euren Nachbarn. Das ist hier immer so.",
       trocken: (liste) => `${liste} war es trocken, und in der Dürre erholt sich der Bach nicht.`,
       jzIn: ["im Frühling", "im Sommer", "im Herbst", "im Winter"],
-      entnahme: (blieb) => "Die vier Orte nehmen ihm in jeder Jahreszeit ihren Teil" + (blieb ? "; der Spielraum, der in Birk blieb, gehört dazu." : "."),
-      naeher: "Tal-Süd ist auf der Warteliste näher gerückt: Seine Not ist gross, und es lernt aus den offenen Bibliotheken der Föderation.",
-      naeherGeld: "Tal-Süd ist auf der Warteliste näher gerückt: durch das Geld seiner Händler, und weil es aus den offenen Bibliotheken der Föderation lernt.",
+      entnahme: (blieb) => "Alle, die am Bach leben, nehmen ihm in jeder Jahreszeit ihren Teil" + (blieb ? "; der Spielraum, der in Birk blieb, gehört dazu." : "."),
+      naeher: "Tal-Süd ist auf der Warteliste näher gerückt: Seine Not ist gross, und es lernt aus euren offenen Bibliotheken.",
+      naeherGeld: "Tal-Süd ist auf der Warteliste näher gerückt: durch das Geld seiner Händler, und weil es aus euren offenen Bibliotheken lernt.",
       leitung: "Auch die Leitung, an der du mitgebaut hast, zählt.",
       nochWarten: "Es wartet noch."
     },
     bild: {
-      gehalten: "Das Lebensnotwendige war in jeder Jahreszeit gedeckt, für alle in den vier Orten.",
+      gehalten: "Das Lebensnotwendige war in jeder Jahreszeit gedeckt, für alle in Birk und bei euren Nachbarn.",
       bachMehr: "Der Bach führt mehr Wasser als zu Beginn deines Jahres. ", bachWeniger: "Der Bach führt weniger Wasser als zu Beginn deines Jahres. ", bachGleich: "Der Bach führt etwa so viel Wasser wie zu Beginn deines Jahres. ", bachGekippt: "Der Bach ist gekippt. ",
       bereit: "Tal-Süd ist bereit für die Aufnahme.", naeher: "Tal-Süd ist auf der Warteliste näher gerückt. Es wartet noch.", wartet: "Tal-Süd wartet.",
       zeichnung: "Tal-Süd hat sich mit Geld der alten Welt eingekauft. Eine bedürftigere Region ohne Geld ist dadurch auf der Warteliste zurückgefallen.",
@@ -1441,10 +1441,10 @@ const SPRACHEN = {
     },
     steine: { stunde: "Hour", spielraum: "Lee&shy;way", vertrag: "Contract", zeichnung: "Money" },
     ereignis: {
-      bach: { titel: "The stream and the pumps", lage: "The stream is falling, and Ried down the valley asks for pumps that your workshop can only build with water from the stream.",
-        stillstand: "The workshop runs as before, the stream keeps falling, Ried waits.",
+      bach: { titel: "The stream and the pumps", lage: "The stream is falling, and the village downstream asks for pumps that your workshop can only build with water from the stream.",
+        stillstand: "The workshop runs as before, the stream keeps falling, the village downstream waits.",
         wege: { A: "Workshop at full load, with the emergency generator", B: "Protect the stream, put off the help", C: "Ram pumps by hand, from the design in the commons" } },
-      kuehle: { titel: "Enough for Birk, too much for all", lage: "It is hot. Birk keeps within its own share, but all four places together use more than the valley's nature can bear.",
+      kuehle: { titel: "Enough for Birk, too much for all", lage: "It is hot. Birk keeps within its own share, but together with its neighbours it uses more than the valley's nature can bear.",
         stillstand: "Birk stays within its share, and all together go on using too much.",
         wege: { A: "Build the cold store in concrete", B: "Lower everyone's leeway until nature can bear it", C: "Rebuild the rock cellar with clay" } },
       erfassung: { titel: "Record everything?", lage: "A group in the village wants to write down every hour of care work, so that the load is shared more fairly.",
@@ -1468,10 +1468,10 @@ const SPRACHEN = {
       zeichnung: { birk: "Accept: Tal-Süd's traders pay money into the transition fund, and Tal-Süd moves up the waiting list. For a year your workshop and care also work for Tal-Süd." }
     },
     antwort: {
-      stunde: { birk: "Mara: ‘Tonight there's time for the community hall.’", steighof: "Steighof: ‘You work with us, not for us. We'll remember that.’", talsued: "Tal-Süd: ‘The pipeline is growing. Our people are counting the metres.’", gemein: "Jorin: ‘The pump has got better. Ried can build it too.’" },
+      stunde: { birk: "Mara: ‘Tonight there's time for the community hall.’", steighof: "Steighof: ‘You work with us, not for us. We'll remember that.’", talsued: "Tal-Süd: ‘The pipeline is growing. Our people are counting the metres.’", gemein: "Jorin: ‘The pump has got better. The village downstream can build it too.’" },
       spielraumSteighof: "Steighof: ‘Thank you. We wouldn't have asked.’", spielraumSteighofWieder: "Steighof: ‘Again. When may we give something back?’",
-      speicher: "Erlenbach: ‘It's in the store. Whoever needs it will get it.’",
-      vertrag: "Tal-Süd: ‘Agreed. We pay, you build.’", zeichnung: "Tal-Süd: ‘Our traders have paid in. We're moving up.’", abgelehnt: "Tal-Süd: ‘All right. We'll ask again.’",
+      speicher: "Mara: ‘It's in the store. Whoever needs it will get it.’",
+      vertrag: "Tal-Süd: ‘Agreed. We deliver, you build.’", zeichnung: "Tal-Süd: ‘Our traders have paid in. We're moving up.’", abgelehnt: "Tal-Süd: ‘All right. We'll ask again.’",
       voll: { werkstatt: "Jorin: ‘The workshop is at its limit.’", pflege: "Mara: ‘Care can't carry this much longer.’", boden: "Rahel: ‘The soil and the water can't keep up.’" },
       nicken: "Around the table, they nod.", schweigt: (n) => n.join(" and ") + " fall" + (n.length === 1 ? "s" : "") + " silent."
     },
@@ -1517,17 +1517,17 @@ const SPRACHEN = {
       entschieden: (titel, weg, a) => `At the table, ${titel}: ${weg}, ${a === "durchsetzen" ? "pushed through" : "decided together"}.`,
       ohneBeschluss: (titel, satz) => `Without a decision, ${titel}: ${satz}`,
       geldJa: "You accepted Tal-Süd's money.", geldNein: "You did not accept Tal-Süd's money.",
-      gehalten: "What life needs was covered for everyone in the four places. In the federation it always is.",
+      gehalten: "What life needs was covered for everyone in Birk and among your neighbours. Here it always is.",
       trocken: (liste) => `${liste.charAt(0).toUpperCase() + liste.slice(1)} it was dry, and in a drought the stream does not recover.`,
       jzIn: ["in spring", "in summer", "in autumn", "in winter"],
-      entnahme: (blieb) => "The four places take their share from it every season" + (blieb ? "; the leeway that stayed in Birk is part of that." : "."),
-      naeher: "Tal-Süd has moved up the waiting list: its need is great, and it learns from the federation's open libraries.",
-      naeherGeld: "Tal-Süd has moved up the waiting list: through its traders' money, and because it learns from the federation's open libraries.",
+      entnahme: (blieb) => "Everyone who lives by the stream takes their share from it every season" + (blieb ? "; the leeway that stayed in Birk is part of that." : "."),
+      naeher: "Tal-Süd has moved up the waiting list: its need is great, and it learns from your open libraries.",
+      naeherGeld: "Tal-Süd has moved up the waiting list: through its traders' money, and because it learns from your open libraries.",
       leitung: "The pipeline you helped build counts too.",
       nochWarten: "It is still waiting."
     },
     bild: {
-      gehalten: "What life needs was covered in every season, for everyone in the four places.",
+      gehalten: "What life needs was covered in every season, for everyone in Birk and among your neighbours.",
       bachMehr: "The stream carries more water than at the start of your year. ", bachWeniger: "The stream carries less water than at the start of your year. ", bachGleich: "The stream carries about as much water as at the start of your year. ", bachGekippt: "The stream has tipped. ",
       bereit: "Tal-Süd is ready to join.", naeher: "Tal-Süd has moved up the waiting list. It is still waiting.", wartet: "Tal-Süd is waiting.",
       zeichnung: "Tal-Süd bought its way in with money from the old world. A region in greater need, without money, has fallen back on the waiting list as a result.",
@@ -1583,13 +1583,20 @@ const jzName = (deName) => L.jz[Math.max(0, JZ_DE.indexOf(deName))];
 const ereignisText = (id) => L.ereignis[id] || null;
 function wegTitel(E, W) { const T = ereignisText(E.id); if (!T) return W.titel; return (W.id === "C" && /Rest/.test(W.titel) ? T.wege.C2 : T.wege[W.id]) || W.titel; }
 function regelText(a) { const f = a.regel && L.regel[a.regel.typ]; return f ? f(a.regel) : a.text; }
+// Der Kern spricht Werkstattsprache (Ried im Nachbarverbund). An der Tür gibt es nur, was das Brett zeigt.
+function tuerwort(t) {
+  if (!t) return t;
+  return SP === "en"
+    ? t.replace(/Ried, in the neighbouring network,/g, "The village downstream").replace(/\bRied\b/g, "the village downstream")
+    : t.replace(/Ried im Nachbarverbund/g, "Das Dorf talabwärts").replace(/\bRied\b/g, "das Dorf talabwärts");
+}
 function feldName(f) { const n = K.FELD_SATZ[SP][f][0]; return n.charAt(0).toUpperCase() + n.slice(1); }
 function gegengrundText(a) {
   const d = a.gegengrundDaten; if (!d) return a.gegengrund;
   const G = L.geschichte;
   if (d.einwaende.length) return d.einwaende.map((x) => G.einwand(x.wer, K.FELD_SATZ[SP][x.feld][1], x.haltung)).join("; ");
   const T = ereignisText(a.ereignisId);
-  return G.einstimmig + d.verworfen.map((v) => G.q((T && T.wege[v.wegId]) || v.titel) + " (" + K.preisInWorten(v.preis, SP) + ")").join("; ");
+  return G.einstimmig + d.verworfen.map((v) => G.q((T && T.wege[v.wegId]) || v.titel) + " (" + tuerwort(K.preisInWorten(v.preis, SP)) + ")").join("; ");
 }
 
 // ---------- Zustand der Tür (nicht der Welt) ----------
@@ -1931,7 +1938,7 @@ function spiel() {
   const duerre = S.meta.jz === 1 && S.wetter === "Dürre", jzSatz = duerre ? L.sommerDuerre : L.jzSatz[S.meta.jz];
   o += `<p class="lage">${erste && S.amtszeit.nr === 1 && S.meta.jz === 0 ? L.anvertraut : ""}${jzSatz}</p>`;
   // im trockenen Sommer sagt der Satz der Jahreszeit schon, was der Wandel sagen würde
-  const wandelSatz = wandelPaar && !(duerre && wandelPaar[1].wetter === "Dürre" && wandelPaar[0].wetter !== "Dürre" && K.wandel(wandelPaar[0], wandelPaar[1], "de") === "Es wurde trocken. Der Bach führt wenig Wasser.") ? K.wandel(wandelPaar[0], wandelPaar[1], SP) : null;
+  const wandelSatz = wandelPaar && !(duerre && wandelPaar[1].wetter === "Dürre" && wandelPaar[0].wetter !== "Dürre" && K.wandel(wandelPaar[0], wandelPaar[1], "de") === "Es wurde trocken. Der Bach führt wenig Wasser.") ? tuerwort(K.wandel(wandelPaar[0], wandelPaar[1], SP)) : null;
   if (wandelSatz) o += `<p class="wandel">${esc(wandelSatz)}</p>`;
   if (wandelPaar && folge.length) o += folge.map((t) => `<p>${esc(t)}</p>`).join("");
   if (ungezaehlt >= 0) o += `<p class="ungezaehlt">${esc(L.ungezaehlt[ungezaehlt].t)}</p>`;
