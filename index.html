@@ -2,9 +2,20 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.66 ·  2026-11-14
+  Fassung:  v0.67 ·  2026-11-20
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
+
+  Aenderungen v0.66 -> v0.67 (Sitzung 20.11.2026, Beschluss Martin):
+  DAS SPIEL: Text der Spielseite erweitert. Der Ort wird benannt (Birk,
+  ein Dorf an einem Bach in den Bergen, 2060). «Nach einem Jahr hoert das
+  Spiel von selbst auf» war falsch (das Spiel geht durch Weitergabe weiter)
+  und heisst jetzt: «Nach vier Jahreszeiten endet dein Jahr von selbst. Das
+  Spiel geht weiter: Der Ort wandert in andere Haende.» (Variante A; die
+  Variante mit dem Los verworfen, weil sie mehr verwirrt als erklaert.)
+  Neu «So geht es» (nur Bedienung, Dauer, Link und Rueckweg, nie die
+  Bedeutung) und «Woher es kommt» (Verweis auf das Buch und das Manifest).
+  Kanon: keine Offenlegung (G3), keine Aufforderung zum Weitergeben (G2).
 
   Aenderungen v0.65 -> v0.66 (Sitzung 14.11.2026, Beschluss Martin):
   (1) DAS SPIEL: neuer Menuepunkt an zweiter Stelle «Das Spiel / The Game»
@@ -2178,17 +2189,31 @@
             <p style="font-size: 1.35rem; font-weight: 600; color: var(--primary); text-align: center;" class="lang-en hidden">One year. One gesture. Then you pass it on.</p>
 
             <div class="lang-de">
-                <p>Dir ist ein Ort anvertraut und eine Handvoll Stunden. Jede Jahreszeit legst du, was du hast, auf einen Kreis: zu dir, zu den Nachbarn, zu denen, die noch warten, ins Gemeinsame.</p>
+                <p>Dir ist ein Ort anvertraut: Birk, ein Dorf an einem Bach in den Bergen, im Jahr 2060. Dazu eine Handvoll Stunden. Jede Jahreszeit legst du, was du hast, auf einen Kreis: zu dir, zu den Nachbarn, zu denen, die noch warten, ins Gemeinsame.</p>
                 <p>Mehr musst du nicht wissen. Was du getan hast, merkst du an dem, was antwortet.</p>
-                <p>Es gibt keine Punkte, keinen Sieg und keine nächste Stufe. Nach einem Jahr hört das Spiel von selbst auf. Die Frage war nie, wie viel du holst, sondern: Was genügt?</p>
+                <p>Es gibt keine Punkte, keinen Sieg und keine nächste Stufe. Nach vier Jahreszeiten endet dein Jahr von selbst. Das Spiel geht weiter: Der Ort wandert in andere Hände. Die Frage war nie, wie viel du holst, sondern: Was genügt?</p>
                 <p>Am Ende fragt es nur noch eines: Was gibst du weiter? Ein Satz, an einen Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt, mit dem, was du geschützt hast, und mit dem, was du versäumt hast.</p>
+                <h3 class="lang-de">So geht es</h3>
+                <p>Tippe auf einen Stein in deiner Hand, dann auf einen Ort. Du liest, was geschehen würde. Tippst du noch einmal, liegt der Stein.</p>
+                <p>Manchmal wartet etwas am Tisch. Du kannst entscheiden oder es offen lassen.</p>
+                <p>Dein Jahr hat vier Jahreszeiten und dauert etwa eine Viertelstunde. Du kannst jederzeit aufhören: Dein Ort bleibt in deinem Browser.</p>
+                <p>Am Ende bekommst du einen Link für den nächsten Menschen. Hat dir jemand den Ort gegeben, bekommst du auch einen Link zurück. Damit sieht, wer vor dir war, was aus seinem Ort geworden ist.</p>
+                <h3 class="lang-de">Woher es kommt</h3>
+                <p>Das Spiel spielt in der Welt von <a class="inline-link" href="#" onclick="switchTab('buch'); return false;">«Eintrag Null»</a>. Du musst das Buch nicht kennen. Wer danach wissen will, wie diese Welt gebaut ist, findet es im <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifest</a>.</p>
                 <p><em>Gib es deiner Enkelin. Oder lass es dir von ihr geben.</em></p>
             </div>
             <div class="lang-en hidden">
-                <p>A place is entrusted to you, and a handful of hours. Each season you lay what you have on a circle: towards yourselves, towards the neighbours, towards those still waiting, into what you share.</p>
+                <p>A place is entrusted to you: Birk, a village by a stream in the mountains, in the year 2060. And a handful of hours. Each season you lay what you have on a circle: towards yourselves, towards the neighbours, towards those still waiting, into what you share.</p>
                 <p>You need know nothing more. You notice what you have done by what answers.</p>
-                <p>There are no points, no winning and no next level. After one year the game stops by itself. The question was never how much you can take, but: what is enough?</p>
+                <p>There are no points, no winning and no next level. After four seasons your year ends by itself. The game goes on: the place passes into other hands. The question was never how much you can take, but: what is enough?</p>
                 <p>At the end it asks only one thing: what do you pass on? One sentence, to one person. They play their year in the world you leave them, with what you protected and with what you neglected.</p>
+                <h3 class="lang-en hidden">How it works</h3>
+                <p>Tap a stone in your hand, then a place. You read what would happen. Tap again, and the stone is laid.</p>
+                <p>Sometimes something is waiting at the table. You can decide, or leave it open.</p>
+                <p>Your year has four seasons and takes about a quarter of an hour. You can stop at any time: your place stays in your browser.</p>
+                <p>At the end you get a link for the next person. If someone gave you the place, you also get a link back, so the person before you can see what has become of their place.</p>
+                <h3 class="lang-en hidden">Where it comes from</h3>
+                <p>The game is set in the world of <a class="inline-link" href="#" onclick="switchTab('buch'); return false;"><em>Entry Zero</em></a>. You don't need to know the book. If afterwards you want to know how this world is built, you'll find it in the <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifesto</a>.</p>
                 <p><em>Give it to your granddaughter. Or let her give it to you.</em></p>
             </div>
 
