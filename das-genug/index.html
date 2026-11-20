@@ -31,7 +31,7 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/bricolage-grotesque-latin-500-normal.woff2) format("woff2")}
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2")}
 </style>
-<!-- Die Tür v0.4.1 · 15.11.2026 · Kern v0.16 (unverändert) · Spielkonzept v0.15 · Wie viele Hände: bei der Ankunft, in «Was bisher geschah» und im Blick zurück; nur die eigene Linie, nie eine Gesamtzahl, nie beim Weitergeben -->
+<!-- Die Tür v0.5 · 20.11.2026 · Kern v0.17 · Bewahrheitung der Gegengründe, Regel öffnen mit Vermerk, «Nicht am Tisch», Hinweis bei langem Link und Datei · vorher v0.4.1 · Wie viele Hände: bei der Ankunft, in «Was bisher geschah» und im Blick zurück; nur die eigene Linie, nie eine Gesamtzahl, nie beim Weitergeben -->
 
 <style>
 /* Layout: eine Spalte auf dem Telefon; oben Ort und Bach, in der Mitte vier Kreise, unten die Hand. Die Jahreszeit färbt den Grund. */
@@ -156,7 +156,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 <main id="app" aria-live="polite"></main>
 
 <script>
-/* Das Genug — Rechenkern v0.16 (Tür v0.3: Sätze ohne Modellwörter, Deutsch und Englisch für Blick, Wandel, Bach, Preis und Bedingung; strukturierte Daten für Bild, Archiv und Register)
+/* Das Genug — Rechenkern v0.17 (Tür v0.5: Bewahrheitung der Gegengründe; ein eingetroffener Gegengrund ist ein neues Faktum und kann eine Regel öffnen. Vorher v0.16: Tür v0.3: Sätze ohne Modellwörter, Deutsch und Englisch für Blick, Wandel, Bach, Preis und Bedingung; strukturierte Daten für Bild, Archiv und Register)
  * Ein Kern für Browser und Simulation. Kein Romankanon: Der Rechenkern ist Spielsetzung.
  * Grundlage: Vollmodell v0.2, Reduktion v0.1, Bauweg v0.2. Norm B in allen Texten.
  *
@@ -172,7 +172,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  const VERSION = "0.16";
+  const VERSION = "0.17";
   const VERMERK = "Der Rechenkern ist Spielsetzung, kein Kanon. TSBL beschreibt kein Zuteilungsverfahren (Vollmodell F.2); der Motor füllt diese Lücke für das Spiel, nicht für die Welt.";
   const JAHRESZEITEN = ["Frühling", "Sommer", "Herbst", "Winter"];
 
@@ -250,6 +250,8 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     { id: "R-51", name: "Die Herkunft der Sprecherin (Pflege, Werkstatt oder Boden und Wasser) wird je Amtszeit gelost; sie ändert den Blick, nicht die Rechnung", status: "platzhalter", quelle: "Auslosung (Beschluss Martin 13.11.2026); Ratstisch-Entwurf" },
     { id: "R-52", name: "Tischschwelle: Ein Ereignis öffnet den Tisch nur, wenn sein Auslöser eine Schwelle erreicht; darunter läuft die Routine ohne Beratung", status: "platzhalter", quelle: "Integral §9.5 (Schwellen, Koordinationsmembran); Spielkonzept v0.4, 0b Folge 3 (der Tisch ist selten); Werte gesetzt" },
     { id: "R-53", name: "Ein einstimmiger Beschluss verbucht als Gegengrund die verworfenen Wege und ihren Preis", status: "echt", quelle: "Bauplan §3.5 (Beschluss und Gegengrund ins Archiv); Analyse vom 14.11.2026" },
+    { id: "R-54", name: "Bewahrheitung: Was gegen einen Beschluss sprach, wird acht Jahreszeiten lang am Ende jeder Jahreszeit geprüft und als eingetreten oder nicht eingetreten vermerkt; ohne Schuld, ohne Ursache, ohne Zahl", status: "echt", quelle: "Roman: RB-48-014 mit nachträglichem Verweis (K22, Beleg 3); Schatzkarte v0.2, Fund 1; Spielkonzept C.6 (ob der Gegengrund recht behielt); Beschluss Martin 20.11.2026" },
+    { id: "R-55", name: "Ein eingetroffener Gegengrund ist ein neues Faktum: Ein Einwand mit diesem Vermerk öffnet die Regel; die Wege am Tisch werden neu geprüft", status: "echt", quelle: "Integral CDS (Review, Revision, Override); Spielkonzept C.4 (Revisionsauslöser); Beschluss Martin 20.11.2026" },
     { id: "R-30", name: "Bauplan Pumpe im Gemeingut: Eine Stunde verbessert ihn für alle (bis Stufe 3); jede Stufe senkt das Material je Pumpe um 20 %", status: "platzhalter", quelle: "Integral OAD: offene Entwürfe, Lebenszyklus (Module 4); kein geistiges Eigentum" }
   ];
 
@@ -635,6 +637,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     }
     if (e.typ === "EINWAND") {
       if (!s.verbund.archiv.find((a) => a.nr === e.gegen)) return "Einwand gegen eine unbekannte Regel.";
+      if (e.ausVermerk && !vermerkFuerRegel(s, e.gegen)) return "Für diese Regel ist nicht eingetreten, was dagegen sprach. Ohne neues Faktum öffnet sie sich nicht.";
     }
     if (e.typ === "EREIGNIS_BESCHLUSS") {
       const E = s.ereignis;
@@ -737,7 +740,8 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     if (e.typ === "EINWAND") {
       const a = s.verbund.archiv.find((x) => x.nr === e.gegen);
       if (e.neuesFaktum) { a.offen = true; s.verbund.beratung.revisionen += 1; }
-      a.einwaende = (a.einwaende || []).concat([{ urheber: e.urheber, text: e.text, neuesFaktum: !!e.neuesFaktum }]);
+      a.einwaende = (a.einwaende || []).concat([{ urheber: e.urheber, text: e.text, neuesFaktum: !!e.neuesFaktum, ausVermerk: !!e.ausVermerk }]);
+      if (a.offen && s.ereignis) wegeNeuPruefen(s);
     }
     if (e.typ === "EREIGNIS_BESCHLUSS") {
       const E = s.ereignis, W = E.wege.find((x) => x.id === e.weg);
@@ -749,6 +753,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
         ueberstimmt = Object.keys(W.haltungen).filter((k) => W.haltungen[k].haltung === "einwand" && (e.bedingungen || []).indexOf(k) < 0);
         text = W.titel;
       }
+      const befuerchtungen = e.ausgang === "werben" ? [] : befuerchtungenVon(s, E, W, w);
       wirke(s, w, E.id);
       const anzahl = Object.keys(W ? W.haltungen : {}).length || 3;
       const zust = W ? Object.keys(W.haltungen).reduce((a, k) => a + (W.haltungen[k].haltung === "einwand" ? ((e.bedingungen || []).indexOf(k) >= 0 ? 1 : 0) : W.haltungen[k].haltung === "bedenken" ? 0.5 : 1), 0) / anzahl : 0.5;
@@ -771,7 +776,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
       }
       s.register.push({ nr: `T-${s.meta.jahr}-${String(s.register.length + 1).padStart(2, "0")}`, jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz], regel: regelNr,
         ereignis: E.titel, weg: text, ausgang: e.ausgang, bedingungen: (e.bedingungen || []).slice(), ueberstimmt, ereignisId: E.id, wegId: e.ausgang === "werben" ? null : W.id, jz: s.meta.jz,
-        verworfen: E.wege.filter((x) => e.ausgang === "werben" || x.id !== e.weg).map((x) => x.titel), urheber: e.urheber });
+        verworfen: E.wege.filter((x) => e.ausgang === "werben" || x.id !== e.weg).map((x) => x.titel), urheber: e.urheber, befuerchtungen });
       s.ereignis = null;
     }
     if (e.typ === "JAHRESZEIT_ENDE") s = automatik(s);
@@ -933,6 +938,7 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     // 9. Prüfen: Schwellen und Auswahl der Spannung
     // 8c. Ried im Nachbarverbund (R-37)
     s.ried.teilhabe = r3(clamp(s.ried.teilhabe + (s.wetter === "Dürre" ? -0.02 : 0.005), 0, 0.95));
+    pruefeBefuerchtungen(s);   // R-54
     s.lage = pruefen(s);
 
     // 10. Weiterschalten; am Jahresende Spielraum, Zeitlast und Bau neu, Riss bleibt
@@ -1001,6 +1007,14 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     const neu = s.verbund.archiv.slice(a.archiv);
     if (neu.length) neu.forEach((r) => satz("regel", `Regel ${r.nr}: ${r.text}`, { nr: r.nr, regel: clone(r.regel) })); else satz("regel", "Es kam keine neue Regel ins Archiv.", { keine: true });
     s.register.slice(a.register).forEach((t) => satz("tat", `«${t.ereignis}», ${t.jahreszeit}: ` + (t.ausgang === "gemeinsam" ? `gemeinsam: ${t.weg}` : t.ausgang === "durchsetzen" ? `durchgesetzt: ${t.weg}` + (t.ueberstimmt.length ? ` (überstimmt: ${t.ueberstimmt.join(", ")})` : "") : t.ausgang === "werben" ? "nichts beschlossen, weiter geworben" : t.weg.replace(/^Ohne Beschluss: /, "ohne Beschluss. "))));
+    // je Stimme und Sorge ein Satz, der früheste Beschluss zuerst (keine Wiederholung derselben Sorge)
+    const schonGesagt = {};
+    s.register.forEach((t) => (t.befuerchtungen || []).forEach((b) => {
+      if (!b.wann || b.wann.saison < A.beginn) return;
+      const k = [b.status, b.sorge, b.wer || "", b.feld || "", b.wer ? "" : t.regel].join("|");
+      if (schonGesagt[k]) return; schonGesagt[k] = true;
+      satz("vermerk", vermerkSatz(b, t, "de"), { register: t.nr, regel: t.regel || null, ereignisId: t.ereignisId, befuerchtung: clone(b) });
+    }));
     const gerissen = s.fluesse.filter((f) => f.gerissen).length - a.gerissen;
     if (gerissen > 0) satz("faeden", gerissen === 1 ? "Ein Faden ist gerissen." : `${gerissen} Fäden sind gerissen.`, { gerissen });
     const lebendig = s.fluesse.filter((f) => !f.gerissen && (f.art === "gabe" || f.art === "arbeit")).length - a.lebendig;
@@ -1106,12 +1120,97 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
     return null;
   }
 
+  // ---------- Bewahrheitung (R-54, R-55): was gegen einen Beschluss sprach, und ob es eintrat ----------
+  // Rein aus der Lage, ohne Schuld und ohne Ursache: Der Vermerk sagt «ist eingetreten», nie «weil».
+  // Beide Richtungen: Die Sorge um den Bach bestätigt das Schonen, die Sorge um eine Last das Sich-Sichern.
+  const PRUEFFRIST = 8;
+  function befuerchtungenVon(s, E, W, w) {
+    const k = s.knoten.birk, H = s.naturhaushalt, out = [];
+    // Geprüft wird ab der Jahreszeit nach dem Beschluss: Was der Beschluss selbst sofort bewirkt, ist keine Bewahrheitung.
+    const basis = () => ({ seit: s.meta.saison, bis: s.meta.saison + 1 + PRUEFFRIST, von: { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz] }, amtszeit: s.amtszeit ? s.amtszeit.nr : null, status: "offen", wann: null });
+    const bachZiel = () => (H.zustand >= H.kipp + 10 ? "naht" : "kippt");
+    Object.keys(W.haltungen).forEach((st) => {
+      const h = W.haltungen[st], f = h.feld;
+      if (h.haltung === "zustimmung") return;
+      if (f === "boden" && (W.wirkung.nh || 0) < 0) {
+        if (!H.gekippt) out.push(Object.assign({ wer: st, feld: f, sorge: "bach", ziel: bachZiel(), wert: H.zustand }, basis()));
+        return;
+      }
+      const F = k.felder[f], nach = F.last + (w[f] || 0);
+      if (h.haltung === "einwand" || nach > F.kapazitaet - 10) out.push(Object.assign({ wer: st, feld: f, sorge: "last", ziel: null, wert: r3(F.last) }, basis()));
+    });
+    // Einstimmige Regel: Was dagegen sprach, ist der Vorteil der verworfenen Wege (wie im Archiv verbucht)
+    if (W.regel && Object.keys(W.haltungen).every((x) => W.haltungen[x].haltung === "zustimmung")) {
+      const gesehen = {};
+      E.wege.filter((x) => x.id !== W.id).forEach((x) => preisTeile(x.wirkung).forEach((p) => {
+        const sorge = p === "ried+" ? "ried" : p === "region+" ? "talsued" : p === "nh+" ? "bach" : null;
+        // nur ein Vorteil, den der gewählte Weg nicht selbst hat
+        const ww = W.wirkung, hatSelbst = sorge === "ried" ? (ww.ried || 0) > 0 : sorge === "talsued" ? (ww.region || 0) > 0 : (ww.nh || 0) > 0;
+        if (!sorge || hatSelbst || gesehen[sorge] || (sorge === "bach" && H.gekippt)) return;
+        gesehen[sorge] = true;
+        out.push(Object.assign({ wer: null, feld: null, sorge, ziel: sorge === "bach" ? bachZiel() : null, wegId: x.id,
+          wert: sorge === "ried" ? s.ried.teilhabe : sorge === "talsued" ? r3(schicht1Min(s.region.korb)) : H.zustand }, basis()));
+      }));
+    }
+    return out;
+  }
+  function istEingetroffen(s, b) {
+    const H = s.naturhaushalt;
+    if (b.sorge === "bach") return b.ziel === "kippt" ? H.gekippt : H.gekippt || (H.zustand < H.kipp + 10 && H.zustand < b.wert);
+    if (b.sorge === "last") { const F = s.knoten.birk.felder[b.feld]; return F.last > F.kapazitaet; }
+    if (b.sorge === "ried") return s.ried.teilhabe < SCHWELLEN.teilhabe && s.ried.teilhabe < b.wert - 0.02;
+    if (b.sorge === "talsued") { const m = schicht1Min(s.region.korb); return !s.region.mitglied && m < SCHWELLEN.randNot && m < b.wert - 0.02; }
+    return false;
+  }
+  function pruefeBefuerchtungen(s) {
+    s.register.forEach((t) => (t.befuerchtungen || []).forEach((b) => {
+      if (b.status !== "offen" || s.meta.saison <= b.seit) return;
+      const wann = { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz], saison: s.meta.saison };
+      if (istEingetroffen(s, b)) { b.status = "eingetroffen"; b.wann = wann; }
+      else if (s.meta.saison + 1 >= b.bis) { b.status = "nicht_eingetroffen"; b.wann = wann; }
+    }));
+  }
+  function vermerkFuerRegel(s, nr) {
+    return s.register.some((t) => t.regel === nr && (t.befuerchtungen || []).some((b) => b.status === "eingetroffen"));
+  }
+  function wegeNeuPruefen(s) {
+    const E = s.ereignis; if (!E) return;
+    E.wege.forEach((w) => { const p = pruefeWeg(s, w); w.spannungen = p.spannungen; w.sperren = p.sperren; w.gesperrt = p.sperren.length > 0; });
+    E.bindungRuht = false;
+    if (E.wege.every((w) => w.gesperrt)) { E.bindungRuht = true; E.wege.forEach((w) => { w.gesperrt = false; }); }
+    mitRegisterSpannung(s);
+  }
+  // Der Vermerk in einem Satz, Deutsch und Englisch. Keine Zahl ausser Jahr und Jahreszeit.
+  const JZ_EN = ["Spring", "Summer", "Autumn", "Winter"];
+  function vermerkSatz(b, t, sp) {
+    const en = sprache(sp) === "en", jzi = (n) => Math.max(0, JAHRESZEITEN.indexOf(n));
+    const vonTxt = (en ? JZ_EN[jzi(b.von.jahreszeit)] : b.von.jahreszeit) + " " + b.von.jahr;
+    const objekt = b.sorge === "bach" ? (en ? " for the stream" : " für den Bach") : b.sorge === "last" ? (en ? " for " : " für ") + feldSatz(b.feld, sp) : "";
+    // Ohne Stimme (einstimmige Regel): die Sorge, die gegen die Regel sprach, mit ihrem Gegenstand
+    const um = { bach: en ? "the stream" : "den Bach", ried: "Ried", talsued: "Tal-Süd" }[b.sorge];
+    const subjekt = b.wer ? (en ? `What ${b.wer} feared${objekt}` : `Was ${b.wer}${objekt} befürchtet hatte`)
+      : (en ? `The concern for ${um} that spoke against rule ${t.regel}` : `Die Sorge um ${um}, die gegen die Regel ${t.regel} sprach`);
+    if (b.status === "nicht_eingetroffen") return en ? `${subjekt} (${vonTxt}) did not come about in two years.` : `${subjekt} (${vonTxt}), ist zwei Jahre lang nicht eingetreten.`;
+    if (b.status !== "eingetroffen") return "";
+    const was = {
+      bach: b.ziel === "kippt" ? (en ? "the stream has tipped." : "Der Bach ist gekippt.") : (en ? "the stream is nearing its tipping point." : "Der Bach nähert sich seinem Kipppunkt."),
+      last: b.feld ? (en ? `${feldSatz(b.feld, "en")} is at its limit.` : `${gross(feldSatz(b.feld, "de"))} ist am Anschlag.`) : "",
+      ried: en ? "Ried is falling behind." : "Ried fällt zurück.",
+      talsued: en ? "Tal-Süd lacks what is most needed." : "Tal-Süd fehlt das Nötigste."
+    }[b.sorge];
+    const gleich = b.wann.saison === b.seit;
+    const wann = gleich ? (en ? "in that same season" : "noch in derselben Jahreszeit") : en ? `in ${JZ_EN[jzi(b.wann.jahreszeit)].toLowerCase()} ${b.wann.jahr}` : `im ${b.wann.jahreszeit} ${b.wann.jahr}`;
+    return en ? `${subjekt} (${vonTxt}) came about ${wann}: ${was}` : `${subjekt} (${vonTxt}), ist ${wann} eingetreten: ${was}`;
+  }
+
   // ---------- Rückschau: was eine frühere Sprecherin auf dem Rückweg sieht ----------
   function rueckschau(s) {
     const name = (f) => s.knoten.birk.felder[f].name;
     const zeiten = s.amtszeiten.map((a) => ({ nr: a.nr, von: a.von, bis: a.bis, herkunft: name(a.herkunft), satz: a.satz, bild: a.bild }));
     const A = s.amtszeit;
-    return { zeiten, laufend: A ? { nr: A.nr, von: A.von, herkunft: name(A.herkunft), beendet: A.beendet, bild: A.bild } : null,
+    const vermerke = [];
+    s.register.forEach((t) => (t.befuerchtungen || []).forEach((b) => { if (b.status !== "offen") vermerke.push({ register: t.nr, regel: t.regel || null, ereignisId: t.ereignisId, befuerchtung: clone(b) }); }));
+    return { zeiten, vermerke, laufend: A ? { nr: A.nr, von: A.von, herkunft: name(A.herkunft), beendet: A.beendet, bild: A.bild } : null,
       heute: { jahr: s.meta.jahr, jahreszeit: JAHRESZEITEN[s.meta.jz] } };
   }
 
@@ -1257,14 +1356,14 @@ textarea{font:inherit;width:100%;min-height:84px;border-radius:12px;border:2px s
   return {
     VERSION, VERMERK, JAHRESZEITEN, POS1, POS2, POS_NAME, SIEBTES_FELD, NETZ_2060, REGELREGISTER, REGELTYPEN, SCHWELLEN,
     neueWelt, eintragen, nachspielen, bilanz, pruefeInvarianten, pruefsumme, deckungsgrad, erholungskraft, zustimmung, pumpeFaktor, knotenrat, bedingungVon, FELDER, EREIGNISSE,
-    kontingent, spielstand, ladeSpielstand, rueckschau, blick, wandel, preisVon, preisInWorten, bedingungText, bachSatz, FELD_SATZ, SATZ_MAX, TISCHSCHWELLE, _waehleEreignis: waehleEreignis   // nur für Prüfungen und die Werkstatt (zweites Argument: ohne Tischschwelle)
+    kontingent, spielstand, ladeSpielstand, rueckschau, blick, wandel, preisVon, preisInWorten, bedingungText, bachSatz, FELD_SATZ, SATZ_MAX, TISCHSCHWELLE, PRUEFFRIST, vermerkSatz, _waehleEreignis: waehleEreignis   // nur für Prüfungen und die Werkstatt (zweites Argument: ohne Tischschwelle)
   };
 });
 
 </script>
 <script>
 "use strict";
-// Die Tür v0.4.1 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
+// Die Tür v0.5 · Deutsch und Englisch. Sprache wie auf entryzero.vercel.app: 1. ?lang= (nicht gemerkt), 2. gemerkte Wahl 'ez_lang'
 // (gemeinsam mit der Webseite), 3. Browsersprache, 4. sonst Englisch.
 const K = DasGenugKern, ICH = "mensch:birk", SPEICHER = "das-genug-tuer-v1";
 const esc = (x) => String(x == null ? "" : x).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -1355,7 +1454,8 @@ const SPRACHEN = {
     ohne: (j) => `Ohne Beschluss gilt am Ende des ${j}s: `,
     tisch: { am: "Am Tisch", wartet: "Am Tisch wartet etwas", zurueck: "Zurück an den Tisch", offen: "Vorerst offen lassen", so: "So machen wir es", eingehen: "Darauf eingehen", trotzdem: "Trotzdem so",
       bindet: (nr) => `Eure Regel ${nr} bindet.`, spannung: (nr) => `Steht in Spannung zu eurer Regel ${nr}.`, gebunden: "Dieser Weg ist durch eure Regel gebunden.",
-      haltung: { zustimmung: "Ja.", bedenken: "Mit Sorge. Aber ja." }, nurSo: "Nur so: " },
+      haltung: { zustimmung: "Ja.", bedenken: "Mit Sorge. Aber ja." }, nurSo: "Nur so: ",
+      nichtAmTisch: (wer) => `Nicht am Tisch, aber betroffen: ${wer}.`, oeffnen: (nr) => `Regel ${nr} wieder öffnen`, geoeffnet: (nr) => `Regel ${nr} ist wieder offen. Am Tisch gilt jetzt, was ihr beratet.` },
     // z: in welchen Jahreszeiten der Satz stimmt (die Jahreszeit, die eben vergangen ist; 0 Frühling … 3 Winter)
     ungezaehlt: [
       { t: "Beim Heuen half jemand mit, den niemand eingeteilt hatte.", z: [1] },
@@ -1408,7 +1508,9 @@ const SPRACHEN = {
       muede: (namen) => gross(namen.length === 1 ? namen[0] + " geht müde ins neue Jahr." : namen.join(" und ") + " gehen müde ins neue Jahr.")
     },
     ende: { zu: "Dein Jahr ist zu Ende.", frage: "Was gibst du weiter?", platzhalter: "Ein Satz für den Menschen nach dir. Er darf auch fehlen.", reist: "Dein Satz reist mit. Alle, die nach dir kommen, können ihn lesen.", knopf: "Weitergeben" },
-    gegeben: { titel: "Weitergegeben.", text: "Gib den Link einem Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt.",
+    gegeben: { lang: "Dieser Link ist lang. In E-Mails oder SMS kann er brechen. Sicherer ist eine Datei.", langRahmen: "Dieser Link ist lang. In E-Mails oder SMS kann er brechen; ein Messenger oder eine Notiz trägt ihn sicherer.",
+      datei: "Als Datei speichern", dateiName: "das-genug-ort.txt", dateiText: "Das Genug. Ein Ort für dich. Öffne den Link, oder öffne diese Datei im Spiel unter «Einen Ort öffnen».",
+      titel: "Weitergegeben.", text: "Gib den Link einem Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt.",
       nach: ["Für den Menschen nach dir", "Ein Ort, ein Jahr."], vor: ["Für den Menschen vor dir", "Zum Anschauen: was aus dem Ort geworden ist, mit allen Sätzen."],
       teilen: "Teilen", kopieren: "Kopieren", kopiert: "Kopiert", markiert: "Markiert: jetzt kopieren", teilText: "Ein Ort für dich." },
     hinaus: { du: "Was du gerade getan hast, hat einen Namen.", ihr: "Was ihr getan habt, hat einen Namen.", lesen: "Nachlesen, wenn du willst" },
@@ -1419,13 +1521,13 @@ const SPRACHEN = {
       insgesamt: (n, Z) => "Der Ort ist durch " + (n === 1 ? "eine Hand" : `${Z} Hände`) + " gegangen."
     },
     erbeOhne: "Ohne Satz bekommen.",
-    geschichte: { titel: "Was bisher geschah", saetze: "Die Sätze", ohneSatz: "ohne Satz", regeln: "Die Regeln, die gelten", dagegen: "Was dagegen sprach: ", keine: "Noch keine.",
+    geschichte: { offen: "Wieder offen, gilt nicht mehr.", titel: "Was bisher geschah", saetze: "Die Sätze", ohneSatz: "ohne Satz", regeln: "Die Regeln, die gelten", dagegen: "Was dagegen sprach: ", keine: "Noch keine.",
       taten: "Was in deinem Jahr am Tisch geschah", nichts: "Noch nichts.", schliessen: "Schliessen",
       ausgang: { gemeinsam: "gemeinsam", durchsetzen: "durchgesetzt", werben: "offen geblieben", ohne: "ohne Beschluss" },
       einwand: (wer, feld, h) => `${wer} (${h === "einwand" ? "Einwand" : "Bedenken"} aus ${feld})`, einstimmig: "Einstimmig. Verworfen: ", q: (t) => "«" + t + "»" },
-    schau: { titel: "Was aus dem Ort geworden ist", hinweis: "Jemand hat dir diesen Blick zurückgeschickt. Hier wird nicht gespielt.", ohne: "Ohne Satz weitergegeben.", heute: "Heute: ",
+    schau: { deinJahr: "Aus deinem Jahr", titel: "Was aus dem Ort geworden ist", hinweis: "Jemand hat dir diesen Blick zurückgeschickt. Hier wird nicht gespielt.", ohne: "Ohne Satz weitergegeben.", heute: "Heute: ",
       weiter: "Weiter zurück", weiterText: "Wenn du den Ort selbst bekommen hast, kannst du diesen Blick an den Menschen vor dir schicken.", kopieren: "Link kopieren", mein: "Zu meinem Ort", eigen: "Einen eigenen Ort beginnen" },
-    fuss: { oeffnen: "Einen Ort öffnen, den du bekommen hast", einfuegen: "Link hier einfügen", linkLabel: "Link zu einem Ort", oeffnenKnopf: "Öffnen", geschichte: "Was bisher geschah",
+    fuss: { datei: "Oder eine Datei öffnen", oeffnen: "Einen Ort öffnen, den du bekommen hast", einfuegen: "Link hier einfügen", linkLabel: "Link zu einem Ort", oeffnenKnopf: "Öffnen", geschichte: "Was bisher geschah",
       klang: (an) => "Klang: " + (an ? "an" : "aus"), neu: "Neu beginnen", neuFrage: "Diesen Ort verlassen und neu beginnen?", neuJa: "Ja, neu beginnen", nein: "Nein" },
     fehler: { keinLink: "Das ist kein Link zu einem Ort.", kaputt: "Der Link ist beschädigt. Vielleicht wurde er beim Kopieren gekürzt.", nichtOeffnen: "Dieser Ort lässt sich nicht öffnen: ", zug: (g) => g },
     q: (t) => "«" + t + "»"
@@ -1511,7 +1613,8 @@ const SPRACHEN = {
     ohne: (j) => `If nothing is decided, at the end of ${j.toLowerCase()}: `,
     tisch: { am: "At the table", wartet: "Something is waiting at the table", zurueck: "Back to the table", offen: "Leave it open for now", so: "That's how we'll do it", eingehen: "Agree to it", trotzdem: "Do it anyway",
       bindet: (nr) => `Your rule ${nr} binds.`, spannung: (nr) => `In tension with your rule ${nr}.`, gebunden: "This way is bound by your rule.",
-      haltung: { zustimmung: "Yes.", bedenken: "With misgivings. But yes." }, nurSo: "Only like this: " },
+      haltung: { zustimmung: "Yes.", bedenken: "With misgivings. But yes." }, nurSo: "Only like this: ",
+      nichtAmTisch: (wer) => `Not at the table, but affected: ${wer}.`, oeffnen: (nr) => `Reopen rule ${nr}`, geoeffnet: (nr) => `Rule ${nr} is open again. At the table, what you discuss now counts.` },
     ungezaehlt: [
       { t: "At haymaking someone helped whom nobody had put on the list.", z: [1] },
       { t: "At the fountain the eldest told how things were before the transition. The children stayed sitting.", z: [0, 1, 2] },
@@ -1563,7 +1666,9 @@ const SPRACHEN = {
       muede: (namen) => gross(namen.length === 1 ? namen[0] + " goes into the new year tired." : namen.join(" and ") + " go into the new year tired.")
     },
     ende: { zu: "Your year is over.", frage: "What do you pass on?", platzhalter: "One sentence for the person after you. It may also be left out.", reist: "Your sentence travels with it. Everyone who comes after you can read it.", knopf: "Pass it on" },
-    gegeben: { titel: "Passed on.", text: "Give the link to one person. They play their year in the world you leave them.",
+    gegeben: { lang: "This link is long. In emails or text messages it may break. A file is safer.", langRahmen: "This link is long. In emails or text messages it may break; a messenger app or a note carries it more safely.",
+      datei: "Save as a file", dateiName: "what-is-enough-place.txt", dateiText: "What is enough. A place for you. Open the link, or open this file in the game under ‘Open a place you've been given’.",
+      titel: "Passed on.", text: "Give the link to one person. They play their year in the world you leave them.",
       nach: ["For the person after you", "One place, one year."], vor: ["For the person before you", "To look at: what has become of the place, with every sentence."],
       teilen: "Share", kopieren: "Copy", kopiert: "Copied", markiert: "Selected: copy it now", teilText: "A place for you." },
     hinaus: { du: "What you have just done has a name.", ihr: "What you have done together has a name.", lesen: "Read about it, if you like" },
@@ -1574,13 +1679,13 @@ const SPRACHEN = {
       insgesamt: (n, Z) => "The place has gone through " + (n === 1 ? "one pair of hands." : `${Z} hands.`)
     },
     erbeOhne: "Received without a sentence.",
-    geschichte: { titel: "What has happened so far", saetze: "The sentences", ohneSatz: "without a sentence", regeln: "The rules in force", dagegen: "What spoke against it: ", keine: "None yet.",
+    geschichte: { offen: "Reopened, no longer in force.", titel: "What has happened so far", saetze: "The sentences", ohneSatz: "without a sentence", regeln: "The rules in force", dagegen: "What spoke against it: ", keine: "None yet.",
       taten: "What happened at the table in your year", nichts: "Nothing yet.", schliessen: "Close",
       ausgang: { gemeinsam: "together", durchsetzen: "pushed through", werben: "left open", ohne: "without a decision" },
       einwand: (wer, feld, h) => `${wer} (${h === "einwand" ? "objection" : "misgivings"} from ${feld})`, einstimmig: "Unanimous. Set aside: ", q: (t) => "‘" + t + "’" },
-    schau: { titel: "What has become of the place", hinweis: "Someone has sent this view back to you. Nothing is played here.", ohne: "Passed on without a sentence.", heute: "Today: ",
+    schau: { deinJahr: "From your year", titel: "What has become of the place", hinweis: "Someone has sent this view back to you. Nothing is played here.", ohne: "Passed on without a sentence.", heute: "Today: ",
       weiter: "Further back", weiterText: "If you were given the place yourself, you can send this view on to the person before you.", kopieren: "Copy link", mein: "To my place", eigen: "Begin a place of your own" },
-    fuss: { oeffnen: "Open a place you've been given", einfuegen: "Paste the link here", linkLabel: "Link to a place", oeffnenKnopf: "Open", geschichte: "What has happened so far",
+    fuss: { datei: "Or open a file", oeffnen: "Open a place you've been given", einfuegen: "Paste the link here", linkLabel: "Link to a place", oeffnenKnopf: "Open", geschichte: "What has happened so far",
       klang: (an) => "Sound: " + (an ? "on" : "off"), neu: "Start again", neuFrage: "Leave this place and start again?", neuJa: "Yes, start again", nein: "No" },
     fehler: { keinLink: "That isn't a link to a place.", kaputt: "The link is damaged. Perhaps it was cut short when it was copied.", nichtOeffnen: "This place can't be opened. ", zug: () => "That isn't possible at the moment." },
     q: (t) => "‘" + t + "’"
@@ -1621,6 +1726,27 @@ function tuerwort(t) {
     ? t.replace(/Ried, in the neighbouring network,/g, "The village downstream").replace(/\bRied\b/g, "the village downstream")
     : t.replace(/Ried im Nachbarverbund/g, "Das Dorf talabwärts").replace(/\bRied\b/g, "das Dorf talabwärts");
 }
+// Der Vermerk (R-54) in der Sprache der Tür; das Dorf talabwärts statt Ried
+function vermerk(b, regel) {
+  let x = tuerwort(K.vermerkSatz(b, { regel }, SP));
+  return SP === "de" ? x.replace(/: das Dorf/, ": Das Dorf") : x;
+}
+function vermerkeVonTat(t) { return (t.befuerchtungen || []).filter((b) => b.status !== "offen").map((b) => vermerk(b, t.regel)); }
+function vermerkeZurRegel(nr) {
+  const out = []; S.register.forEach((t) => { if (t.regel === nr) (t.befuerchtungen || []).forEach((b) => { if (b.status !== "offen") out.push(b); }); }); return out;
+}
+function oeffenbar(nr) {
+  const a = S.verbund.archiv.find((x) => x.nr === nr);
+  return a && !a.offen && !S.amtszeit.beendet && vermerkeZurRegel(nr).some((b) => b.status === "eingetroffen");
+}
+function nichtAmTisch(W) {
+  const w = W.wirkung || {}, wer = [];
+  if ((w.ried || 0) < 0) wer.push(tuerwort("Ried"));
+  if (w.regionKorb && Object.values(w.regionKorb).some((v) => v < 0)) wer.push("Tal-Süd");
+  return wer;
+}
+const IM_RAHMEN = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+const LINK_LANG = 2000;
 function feldName(f) { const n = K.FELD_SATZ[SP][f][0]; return n.charAt(0).toUpperCase() + n.slice(1); }
 function gegengrundText(a) {
   const d = a.gegengrundDaten; if (!d) return a.gegengrund;
@@ -1889,6 +2015,7 @@ function bildTeile(bild, s) {
     else if (x.art === "faeden") out.push(d.gerissen ? B.gerissen(d.gerissen) : d.neu ? B.neu(d.neu) : x.text);
     else if (x.art === "gemeingut") out.push(B.gemeingut);
     else if (x.art === "erbe" && d.felder) out.push(B.muede(d.felder.map((f) => K.FELD_SATZ[SP][f][0])));
+    else if (x.art === "vermerk" && d.befuerchtung) out.push(vermerk(d.befuerchtung, d.regel));
   });
   return out;
 }
@@ -1900,6 +2027,14 @@ async function weitergeben() {
   const code = await packe(K.spielstand(S));
   links = { weiter: basis() + "#b=" + code, zurueck: empfangen ? basis() + "#s=" + code : null };
   ansicht = "gegeben"; speichern(); zeichne();
+}
+// Ein langer Link reist sicherer als Datei: Sie enthält den Link selbst und lässt sich unter «Einen Ort öffnen» laden.
+function alsDatei() {
+  try {
+    const blob = new Blob([L.gegeben.dateiText + "\n\n" + links.weiter + "\n"], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = L.gegeben.dateiName;
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  } catch (e) { /* ohne Datei bleibt der Link */ }
 }
 async function kopiere(text, knopf) {
   try { await navigator.clipboard.writeText(text); knopf.textContent = L.gegeben.kopiert; }
@@ -1981,8 +2116,10 @@ function geschichte() {
   let o = `<section class="geschichte" aria-label="${G.titel}"><h3>${G.titel}</h3>`;
   if (S.amtszeiten.length) o += `<p>${L.haende.vor(S.amtszeiten.length, Z(S.amtszeiten.length))}</p>`;
   if (R.zeiten.length) o += `<div><h3>${G.saetze}</h3><ul>${R.zeiten.map((z) => `<li>${jzName(z.von.jahreszeit)} ${z.von.jahr}: ${z.satz ? L.q(esc(z.satz)) : G.ohneSatz}</li>`).join("")}</ul></div>`;
-  o += `<div><h3>${G.regeln}</h3>${S.verbund.archiv.length ? `<ul>${S.verbund.archiv.map((a) => `<li>${esc(a.nr)}: ${esc(regelText(a))}<br><span class="hinweis">${G.dagegen}${esc(gegengrundText(a))}</span></li>`).join("")}</ul>` : `<p class="hinweis">${G.keine}</p>`}</div>`;
-  o += `<div><h3>${G.taten}</h3>${taten.length ? `<ul>${taten.map((t) => { const T = ereignisText(t.ereignisId); return `<li>${jzName(t.jahreszeit)}, ${L.q(esc(T ? T.titel : t.ereignis))}: ${G.ausgang[t.ausgang] || t.ausgang}</li>`; }).join("")}</ul>` : `<p class="hinweis">${G.nichts}</p>`}</div>`;
+  o += `<div><h3>${G.regeln}</h3>${S.verbund.archiv.length ? `<ul>${S.verbund.archiv.map((a) => `<li>${esc(a.nr)}: ${esc(regelText(a))}${a.offen ? ` <span class="hinweis">${G.offen}</span>` : ""}<br><span class="hinweis">${G.dagegen}${esc(gegengrundText(a))}</span>`
+    + vermerkeZurRegel(a.nr).map((b) => `<br><span class="hinweis">${esc(vermerk(b, a.nr))}</span>`).join("")
+    + (oeffenbar(a.nr) ? `<br><button class="leise" data-regeloeffnen="${esc(a.nr)}">${L.tisch.oeffnen(esc(a.nr))}</button>` : "") + `</li>`).join("")}</ul>` : `<p class="hinweis">${G.keine}</p>`}</div>`;
+  o += `<div><h3>${G.taten}</h3>${taten.length ? `<ul>${taten.map((t) => { const T = ereignisText(t.ereignisId); return `<li>${jzName(t.jahreszeit)}, ${L.q(esc(T ? T.titel : t.ereignis))}: ${G.ausgang[t.ausgang] || t.ausgang}${vermerkeVonTat(t).map((v) => `<br><span class="hinweis">${esc(v)}</span>`).join("")}</li>`; }).join("")}</ul>` : `<p class="hinweis">${G.nichts}</p>`}</div>`;
   return o + `<button class="leise" data-geschichte style="align-self:flex-start">${G.schliessen}</button></section>`;
 }
 function spiel() {
@@ -2044,10 +2181,15 @@ function tisch(E) {
   let o = `<section class="tisch" aria-label="${Ti.am}"><span class="titel">${Ti.am} · ${esc(T ? T.titel : E.titel)}</span><p>${esc(T ? T.lage : E.lage)}</p><div class="wege">`;
   o += E.wege.map((W) => `<button class="weg ${weg === W.id ? "sel" : ""}" data-weg="${W.id}" ${W.gesperrt ? 'aria-disabled="true"' : ""}>${esc(wegTitel(E, W))}${W.gesperrt ? `<br><span class="hinweis">${Ti.bindet(esc(W.sperren[0].nr))}</span>` : W.spannungen.length ? `<br><span class="hinweis">${Ti.spannung(esc(W.spannungen[0].nr))}</span>` : ""}</button>`).join("");
   o += `</div>`;
+  const regelnAmTisch = []; E.wege.forEach((w) => w.sperren.concat(w.spannungen).forEach((x) => { if (regelnAmTisch.indexOf(x.nr) < 0 && oeffenbar(x.nr)) regelnAmTisch.push(x.nr); }));
+  regelnAmTisch.forEach((nr) => { const b = vermerkeZurRegel(nr).find((x) => x.status === "eingetroffen");
+    o += `<p class="hinweis">${esc(vermerk(b, nr))}</p><div class="reihe"><button class="leise" data-regeloeffnen="${esc(nr)}">${Ti.oeffnen(esc(nr))}</button></div>`; });
   const W = weg && E.wege.find((w) => w.id === weg);
   if (W) {
     const st = stimmenFuer(W), einwand = st.some((x) => x.h === "einwand");
     o += `<div class="stimmen">` + st.map((x) => `<span><span class="wer">${x.wer}:</span> ${esc(x.satz)}</span>`).join("") + `</div>`;
+    const draussen = nichtAmTisch(W);
+    if (draussen.length) o += `<p class="hinweis">${esc(Ti.nichtAmTisch(draussen.join(SP === "de" ? " und " : " and ")))}</p>`;
     o += `<div class="reihe">` + (einwand ? `<button class="haupt" data-beschluss="gemeinsam">${Ti.eingehen}</button><button class="leise" data-beschluss="durchsetzen">${Ti.trotzdem}</button>` : `<button class="haupt" data-beschluss="gemeinsam">${Ti.so}</button>`) + `</div>`;
   }
   o += `<div class="reihe"><button class="leise" data-tisch="zu">${Ti.offen}</button></div></section>`;
@@ -2082,6 +2224,7 @@ function gegeben() {
   if (links) {
     o += linkBlock(Ge.nach[0], Ge.nach[1], links.weiter, "weiter");
     if (links.zurueck) o += linkBlock(Ge.vor[0], Ge.vor[1], links.zurueck, "zurueck");
+    if (links.weiter.length > LINK_LANG) o += `<section class="tuer"><p class="hinweis">${IM_RAHMEN ? Ge.langRahmen : Ge.lang}</p>` + (IM_RAHMEN ? "" : `<div class="reihe"><button class="leise" data-datei>${Ge.datei}</button></div>`) + `</section>`;
   }
   return o + hinaus("du") + fuss();
 }
@@ -2090,7 +2233,11 @@ function schau() {
   let o = `<div class="kopf"><span class="ort">${L.ort}</span><span class="zeit">${jzName(R.heute.jahreszeit)} ${R.heute.jahr}</span></div>` + bild(s, "band");
   const alle = s.amtszeiten.length, seit = eigeneHand ? alle - eigeneHand : null;
   o += `<h2>${Sc.titel}</h2><p class="hinweis">${Sc.hinweis}</p>`;
-  o += `<p>${seit !== null && seit > 0 ? L.haende.seitDir(seit, Z(seit)) : L.haende.insgesamt(alle, Z(alle))}</p><div class="zeitlinie">`;
+  o += `<p>${seit !== null && seit > 0 ? L.haende.seitDir(seit, Z(seit)) : L.haende.insgesamt(alle, Z(alle))}</p>`;
+  const gesagt = {}, meine = eigeneHand ? R.vermerke.filter((v) => { const b = v.befuerchtung, k = [b.status, b.sorge, b.wer || "", b.feld || "", b.wer ? "" : v.regel].join("|");
+    if (b.amtszeit !== eigeneHand || gesagt[k]) return false; gesagt[k] = true; return true; }) : [];
+  if (meine.length) o += `<section class="bild" aria-label="${Sc.deinJahr}"><h3 class="jahrtitel">${Sc.deinJahr}</h3>${meine.map((v) => `<p>${esc(vermerk(v.befuerchtung, v.regel))}</p>`).join("")}</section>`;
+  o += `<div class="zeitlinie">`;
   o += R.zeiten.map((z) => `<div class="z"><span class="j">${jzName(z.von.jahreszeit)} ${z.von.jahr}</span><p class="satz">${z.satz ? L.q(esc(z.satz)) : Sc.ohne}</p>${bildTeile(z.bild || [], s).map((t) => `<p class="hinweis">${esc(t)}</p>`).join("")}</div>`).join("");
   o += `</div><div class="bild"><p>${Sc.heute}${esc(K.blick(s, "bach", SP))} ${esc(K.blick(s, "talsued", SP))}</p></div>`;
   o += `<section class="tuer"><h2>${Sc.weiter}</h2><p class="hinweis">${Sc.weiterText}</p><p class="link">${esc(schauLink)}</p><div class="reihe"><button class="leise" data-weiterzurueck>${Sc.kopieren}</button></div></section>`;
@@ -2101,7 +2248,7 @@ function schau() {
 function fuss() {
   const F = L.fuss;
   let o = `<div class="fuss">` + (meldung && ["spiel", "ende"].indexOf(ansicht) < 0 ? `<p class="hinweis">${esc(meldung)}</p>` : "");
-  if (oeffnenSichtbar) o += `<div class="oeffnen"><input id="oeffnen" placeholder="${F.einfuegen}" aria-label="${F.linkLabel}"><button class="leise" data-oeffnen>${F.oeffnenKnopf}</button></div>`;
+  if (oeffnenSichtbar) o += `<div class="oeffnen"><input id="oeffnen" placeholder="${F.einfuegen}" aria-label="${F.linkLabel}"><button class="leise" data-oeffnen>${F.oeffnenKnopf}</button></div><label class="klein" style="cursor:pointer">${F.datei}<input type="file" id="datei" accept=".txt,text/plain" hidden></label>`;
   else o += `<button class="klein" data-zeigeoeffnen>${F.oeffnen}</button>`;
   if (ansicht === "spiel" && !geschichteOffen) o += `<button class="klein" data-geschichte>${F.geschichte}</button>`;
   o += `<button class="klein" data-klang aria-pressed="${klangAn}">${F.klang(klangAn)}</button>`;
@@ -2141,6 +2288,14 @@ function binde() {
   on("[data-zurueckzumspiel]", () => { ansicht = S ? (S.amtszeit.beendet ? (links ? "gegeben" : "ende") : "spiel") : "spiel"; if (!S) neueWelt(); history.replaceState(null, "", basis()); zeichne(); });
   on("[data-zeigeoeffnen]", () => { oeffnenSichtbar = true; zeichne(); const i = document.getElementById("oeffnen"); if (i) i.focus(); });
   on("[data-oeffnen]", () => oeffne(document.getElementById("oeffnen").value));
+  on("[data-datei]", () => alsDatei());
+  const datei = app.querySelector("#datei");
+  if (datei) datei.addEventListener("change", async () => { const f = datei.files && datei.files[0]; if (f) { try { oeffne(await f.text()); } catch (e) { meldung = L.fehler.kaputt; zeichne(); } } });
+  on("[data-regeloeffnen]", (b) => {
+    const nr = b.dataset.regeloeffnen, v = vermerkeZurRegel(nr).find((x) => x.status === "eingetroffen");
+    if (v && zug({ typ: "EINWAND", gegen: nr, neuesFaktum: true, ausVermerk: true, text: K.vermerkSatz(v, { regel: nr }, "de") })) { antwort = L.tisch.geoeffnet(nr); weg = null; klang("beschluss"); }
+    zeichne();
+  });
   faeden();
   on("[data-neu]", (b) => { const v = b.dataset.neu; if (v === "frage") neuFragen = true; else if (v === "nein") neuFragen = false; else { neuFragen = false; neueWelt(); } zeichne(); });
 }
@@ -2220,6 +2375,7 @@ async function start() {
 window.addEventListener("hashchange", () => { if (/^#[bs]=/.test(location.hash)) oeffne(location.hash); });
 start();
 </script>
+
 
 
 </body>
