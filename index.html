@@ -2,9 +2,34 @@
 <!--
   ================================================================
   entryzero.vercel.app — index.html
-  Fassung:  v0.68 ·  2026-11-20
+  Fassung:  v0.71 ·  2026-11-21
   Grundlage: Webseiten_Texte_DE_v0_16 · Webseiten_Texte_EN_v0_14
              Proton_Linkliste_v0_4 · Begleittext_Web_Landschaft_v0_2
+
+  Aenderungen v0.70 -> v0.71 (Sitzung 21.11.2026, Beschluss Martin):
+  WIE DAS SPIEL GEMACHT IST: «keine Cookies» las sich wie ein Widerspruch
+  zum Spielstand im Browser. Jetzt sagt der Text, wo gespeichert wird (nur
+  im Browserspeicher des eigenen Geraets) und dass dieser Speicher, anders
+  als ein Cookie, nie an einen Server geht (Webtext v0.3).
+  DATENSCHUTZHINWEIS: neuer Satz ueber den Browserspeicher (Sprachwahl,
+  Klang, Spielstand; bleibt auf dem Geraet, loeschbar).
+
+  Aenderungen v0.69 -> v0.70 (Sitzung 21.11.2026, Beschluss Martin):
+  WERKSTATT: neuer Abschnitt «Das Spiel» mit Karte und eigener Seite
+  «Wie das Spiel gemacht ist» (panel-spielbau, DE/EN, woertlich aus
+  TSBL_Spiel_Das_Genug_Webtext_Wie_das_Spiel_gemacht_ist_v0_2.md),
+  mit Offenlegung und Kolophon (G3: Offenlegung nur in der Werkstatt).
+  DAS SPIEL: zweiter Link neben dem Manifest-Link («Woher es kommt»),
+  fuer Interessierte, ohne Offenlegung. «Jede Jahreszeit legst du ... auf
+  einen Kreis» heisst jetzt «Durch das Jahr legst du ... auf einen von
+  vier Kreisen» (der Herbst hat keine Geste, Spielkonzept 16.7).
+  DAS BUCH: «Weißbuch» -> «Weissbuch» (Norm B).
+
+  Aenderungen v0.68 -> v0.69 (Sitzung 20.11.2026, Beschluss Martin):
+  DAS SPIEL: «eine Handvoll Stunden» heisst jetzt «eine Handvoll Tage
+  Gemeinwerk» (EN «a handful of days of common work»), wie im Spiel ab
+  Tuer v0.6: Ein Stein ist ein Tag, an dem das Dorf gemeinsam arbeitet,
+  nicht die Stunde eines Menschen.
 
   Aenderungen v0.67 -> v0.68 (Sitzung 20.11.2026, Beschluss Martin):
   DAS SPIEL: Der Knopf «Ein Jahr spielen» steht zusaetzlich gleich unter
@@ -1277,6 +1302,10 @@
         /* Abschnittsklammer — derselbe Stil wie die Quellenkarten der Grundlagen.
            Der border-radius laesst den gruenen Balken oben und unten schmaler
            auslaufen; das ergibt die abgerundete Spitze. */
+        #panel-spielbau ul { margin: 0 0 1.1em 1.2em; padding: 0; }
+        #panel-spielbau li { margin-bottom: .55em; }
+        .spielbau-trenner { border: 0; border-top: 1px solid rgba(0,0,0,.12); margin: 2em 0 1.2em; }
+        .spielbau-kolophon { font-style: italic; font-size: .95rem; }
         .work-section {
             background: rgba(0, 0, 0, 0.55);
             padding: 20px 22px;
@@ -2198,7 +2227,7 @@
             </div>
 
             <div class="lang-de">
-                <p>Dir ist ein Ort anvertraut: Birk, ein Dorf an einem Bach in den Bergen, im Jahr 2060. Dazu eine Handvoll Stunden. Jede Jahreszeit legst du, was du hast, auf einen Kreis: zu dir, zu den Nachbarn, zu denen, die noch warten, ins Gemeinsame.</p>
+                <p>Dir ist ein Ort anvertraut: Birk, ein Dorf an einem Bach in den Bergen, im Jahr 2060. Dazu eine Handvoll Tage Gemeinwerk. Durch das Jahr legst du, was du hast, auf einen von vier Kreisen: zu dir, zu den Nachbarn, zu denen, die noch warten, ins Gemeinsame.</p>
                 <p>Mehr musst du nicht wissen. Was du getan hast, merkst du an dem, was antwortet.</p>
                 <p>Es gibt keine Punkte, keinen Sieg und keine nächste Stufe. Nach vier Jahreszeiten endet dein Jahr von selbst. Das Spiel geht weiter: Der Ort wandert in andere Hände. Die Frage war nie, wie viel du holst, sondern: Was genügt?</p>
                 <p>Am Ende fragt es nur noch eines: Was gibst du weiter? Ein Satz, an einen Menschen. Er spielt sein Jahr in der Welt, die du ihm hinterlässt, mit dem, was du geschützt hast, und mit dem, was du versäumt hast.</p>
@@ -2208,11 +2237,11 @@
                 <p>Dein Jahr hat vier Jahreszeiten und dauert etwa eine Viertelstunde. Du kannst jederzeit aufhören: Dein Ort bleibt in deinem Browser.</p>
                 <p>Am Ende bekommst du einen Link für den nächsten Menschen. Hat dir jemand den Ort gegeben, bekommst du auch einen Link zurück. Damit sieht, wer vor dir war, was aus seinem Ort geworden ist.</p>
                 <h3 class="lang-de">Woher es kommt</h3>
-                <p>Das Spiel spielt in der Welt von <a class="inline-link" href="#" onclick="switchTab('buch'); return false;">«Eintrag Null»</a>. Du musst das Buch nicht kennen. Wer danach wissen will, wie diese Welt gebaut ist, findet es im <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifest</a>.</p>
+                <p>Das Spiel spielt in der Welt von <a class="inline-link" href="#" onclick="switchTab('buch'); return false;">«Eintrag Null»</a>. Du musst das Buch nicht kennen. Wer danach wissen will, wie diese Welt gebaut ist, findet es im <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifest</a>. Wie das Spiel selbst gemacht ist und wie es ohne Server weiterwandert, steht <a class="inline-link" href="#" onclick="switchTab('spielbau'); return false;">in der Werkstatt</a>.</p>
                 <p><em>Gib es deiner Enkelin. Oder lass es dir von ihr geben.</em></p>
             </div>
             <div class="lang-en hidden">
-                <p>A place is entrusted to you: Birk, a village by a stream in the mountains, in the year 2060. And a handful of hours. Each season you lay what you have on a circle: towards yourselves, towards the neighbours, towards those still waiting, into what you share.</p>
+                <p>A place is entrusted to you: Birk, a village by a stream in the mountains, in the year 2060. And a handful of days of common work. Through the year you lay what you have on one of four circles: towards yourselves, towards the neighbours, towards those still waiting, into what you share.</p>
                 <p>You need know nothing more. You notice what you have done by what answers.</p>
                 <p>There are no points, no winning and no next level. After four seasons your year ends by itself. The game goes on: the place passes into other hands. The question was never how much you can take, but: what is enough?</p>
                 <p>At the end it asks only one thing: what do you pass on? One sentence, to one person. They play their year in the world you leave them, with what you protected and with what you neglected.</p>
@@ -2222,7 +2251,7 @@
                 <p>Your year has four seasons and takes about a quarter of an hour. You can stop at any time: your place stays in your browser.</p>
                 <p>At the end you get a link for the next person. If someone gave you the place, you also get a link back, so the person before you can see what has become of their place.</p>
                 <h3 class="lang-en hidden">Where it comes from</h3>
-                <p>The game is set in the world of <a class="inline-link" href="#" onclick="switchTab('buch'); return false;"><em>Entry Zero</em></a>. You don't need to know the book. If afterwards you want to know how this world is built, you'll find it in the <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifesto</a>.</p>
+                <p>The game is set in the world of <a class="inline-link" href="#" onclick="switchTab('buch'); return false;"><em>Entry Zero</em></a>. You don't need to know the book. If afterwards you want to know how this world is built, you'll find it in the <a class="inline-link" href="#" onclick="switchTab('manifest'); return false;">Manifesto</a>. How the game itself was made, and how it travels on without a server, is told <a class="inline-link" href="#" onclick="switchTab('spielbau'); return false;">in the workshop</a>.</p>
                 <p><em>Give it to your granddaughter. Or let her give it to you.</em></p>
             </div>
 
@@ -2249,7 +2278,7 @@
                     <p style="font-style: italic;">Der Roman lässt sich auf mehreren Ebenen lesen – und er legt sie frei.</p>
                     <p>Als Erzählung folgt er vier Generationen einer Familie zwischen 2029 und 2100: über eine Insel vor Kanadas Pazifikküste, ein Schweizer Tal und einen costa-ricanischen Trockenwald. Getragen von einer fünfzig Jahre währenden Liebe über die Grenze zweier Wirtschaftsordnungen und einem Geheimnis, das älter ist als sie.</p>
                     <p>Als Weltentwurf zeigt er, wie eine Gesellschaft ohne Geld funktionieren kann: ohne eine zentrale Macht, innerhalb der Grenzen, die unser einziger Planet setzt. Doch der Übergang dorthin hat seinen Preis.</p>
-                    <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weißbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.</p>
+                    <p>Als Dokument ruht er auf nachprüfbaren Quellen – einem Gerechtigkeitsbericht, einem Weissbuch zur netzbasierten Koordination, einem Klimaszenario des Weltklimarats – und macht sein Gerüst einsehbar.</p>
                     <p style="margin-bottom: 0;">Als Frage bleibt: Ob eine gerechte Ordnung ohne Unschuld auskommt – und ob eine Gesellschaft, die keine Mitte mehr duldet, es aushält, eben diese Macht in hundert Händen zugleich zu tragen.</p>
                 </div>
                 <div class="lang-en hidden">
@@ -2552,6 +2581,7 @@
                     <li><a class="inline-link" href="#w-entstehung">Wie das Buch entstand</a><span class="toc-kind">Offenlegung</span></li>
                     <li><a class="inline-link" href="#w-texte">Drei Texte über das Erzählen</a><span class="toc-kind">Novelle · Werkstatttext · Essay</span></li>
                     <li><a class="inline-link" href="#w-belege">Was die Prüfung ergibt</a><span class="toc-kind">Prüfung</span></li>
+                    <li><a class="inline-link" href="#w-spiel">Wie das Spiel gemacht ist</a><span class="toc-kind">Spiel</span></li>
                     <li><a class="inline-link" href="#w-schluss">Der Abschluss: die Zählung</a><span class="toc-kind">Zählung</span></li>
                 </ol>
             </nav>
@@ -2561,6 +2591,7 @@
                     <li><a class="inline-link" href="#w-entstehung">How the book was made</a><span class="toc-kind">Disclosure</span></li>
                     <li><a class="inline-link" href="#w-texte">Three texts about the telling</a><span class="toc-kind">Novella · Workshop text · Essay</span></li>
                     <li><a class="inline-link" href="#w-belege">What the checking yields</a><span class="toc-kind">Check</span></li>
+                    <li><a class="inline-link" href="#w-spiel">How the game was made</a><span class="toc-kind">Game</span></li>
                     <li><a class="inline-link" href="#w-schluss">In closing: the count</a><span class="toc-kind">Count</span></li>
                 </ol>
             </nav>
@@ -2719,6 +2750,20 @@
                 </p>
 
                 <!-- ---------- Das Register der Entstehung ---------- -->
+            </section>
+
+<span class="sec-anchor" id="w-spiel" aria-hidden="true"></span>
+            <section class="work-section">
+                <span class="sec-kicker lang-de">Spiel</span><span class="sec-kicker lang-en hidden">Game</span>
+                <h2 class="lang-de">Wie das Spiel gemacht ist</h2>
+                <h2 class="lang-en hidden">How the game was made</h2>
+                <p class="lang-de">«Das Genug» ist das Spiel zur Welt dieses Buches: ein Jahr, eine Geste, dann gibst du weiter. Der Werkstatttext erzählt in einfacher Sprache, woher es kommt, wie es rechnet, wie ein Ort ohne Server von Mensch zu Mensch wandert und wie es geprüft wurde.</p>
+                <p class="lang-en hidden">‘What is enough’ is the game set in this book's world: one year, one gesture, then you pass it on. The workshop text tells in plain language where it comes from, how it works out its sums, how a place travels from person to person without a server, and how it was tested.</p>
+                <p>
+                    <a class="inline-link" href="#" onclick="switchTab('spielbau'); return false;"><span class="lang-de">Auf dieser Webseite lesen →</span><span class="lang-en hidden">Read on this website →</span></a>
+                    <span class="doc-caution lang-de">Verrät, wie die Welt im Spiel rechnet — besser nach dem ersten Jahr.</span>
+                    <span class="doc-caution lang-en hidden">Gives away how the game's world works out its sums — better after your first year.</span>
+                </p>
             </section>
 
                         <span class="sec-anchor" id="w-schluss" aria-hidden="true"></span>
@@ -3401,6 +3446,90 @@
             </p>
         </div>
 
+
+        <!-- ================= SEITE: WIE DAS SPIEL GEMACHT IST (v0.70) =================
+             woertlich aus TSBL_Spiel_Das_Genug_Webtext_Wie_das_Spiel_gemacht_ist_v0_3.md -->
+        <div id="panel-spielbau" class="content-panel">
+            <p class="breadcrumb">
+                <a href="#" onclick="switchTab('werkstatt'); return false;"><span class="lang-de">Die Werkstatt</span><span class="lang-en hidden">The Workshop</span></a><span class="sep" aria-hidden="true">›</span><span class="lang-de">Wie das Spiel gemacht ist</span><span class="lang-en hidden">How the game was made</span>
+            </p>
+            <p class="page-kicker lang-de">Werkstatttext · Das Spiel</p>
+            <p class="page-kicker lang-en hidden">Workshop text · The game</p>
+            <h1 class="lang-de">Wie das Spiel gemacht ist</h1>
+            <h1 class="lang-en hidden">How the game was made</h1>
+            <p class="manifest-lead lang-de">«Das Genug»: woher es kommt, wie es rechnet und wie ein Ort ohne Server von Mensch zu Mensch wandert.</p>
+            <p class="manifest-lead lang-en hidden">‘What is enough’: where it comes from, how it works out its sums, and how a place travels from person to person without a server.</p>
+
+            <p class="quiet-note lang-de"><em>Wer das Spiel noch nicht gespielt hat: Spiel zuerst. Dieser Text erzählt, wie die Welt im Spiel rechnet, und das entdeckt man besser selbst.</em></p>
+            <h2 class="lang-de">Woher es kommt</h2>
+            <p class="lang-de">«Das Genug» ist aus dem Roman «Eintrag Null» entstanden. Der Roman erzählt von einer Welt, in der niemand mehr Angst vor Hunger oder Würdeverlust haben muss, weil das Lebensnotwendige für alle gesichert ist. Offen bleibt dort eine andere Frage: Wie entscheiden Menschen über alles Weitere, wenn kein Preis sagt, was etwas wert ist? Und wann ist es genug?</p>
+            <p class="lang-de">Das Spiel wurde nicht am Reissbrett entworfen. Es wurde aus dem Buch herausgeschält, über viele kleine Versuche, von denen die meisten wieder verworfen wurden. Zuerst entstand ein ausführliches Modell der Welt, mit Dörfern, Arbeitsfeldern, einem Wasserhaushalt, einem Archiv der Beschlüsse und einer Region, die noch auf ihre Aufnahme wartet. Dann wurde es Schritt für Schritt vereinfacht, bis eine einzige Geste übrig blieb: Du legst, was du hast, auf einen von vier Kreisen.</p>
+            <p class="lang-de">Drei Grundsätze haben dabei jede Entscheidung geleitet. Das Spiel belohnt keine Richtung, auch das Teilen nicht; wer für sich sorgt, soll das genauso begründen können. Das Spiel nimmt dir nie eine Wahl weg. Und es erklärt nichts vorher: Was etwas bedeutet, merkst du an dem, was antwortet.</p>
+            <h2 class="lang-de">Wie es funktioniert</h2>
+            <p class="lang-de">Du sprichst ein Jahr lang für <strong>Birk</strong>, ein Dorf an einem Bach in den Bergen, im Jahr 2060. Birk hat drei Arbeitsfelder, und für jedes spricht ein Mensch: <strong>Mara</strong> für die Pflege, <strong>Jorin</strong> für die Werkstatt, <strong>Rahel</strong> für Boden und Wasser. Jedes Feld kann nur so viel tragen, wie Menschen da sind.</p>
+            <p class="lang-de">Um Birk herum liegen <strong>Steighof</strong>, ein junges Nachbardorf, das sich noch nicht ganz selbst trägt; <strong>Tal-Süd</strong>, eine Region, der das Wasser fehlt und die noch mit Geld wirtschaftet; das <strong>Gemeingut</strong> mit dem gemeinsamen Speicher und dem Bauplan einer Pumpe; und der <strong>Bach</strong>. Birk und seine Nachbardörfer gehören zu einem Verbund von Orten, die ohne Geld wirtschaften. Tal-Süd möchte aufgenommen werden; wer zuerst an der Reihe ist, regelt eine Warteliste.</p>
+            <p class="lang-de">Der Bach ist die eine harte Grenze der Welt. Alle, die an ihm leben, nehmen ihm jede Jahreszeit ihren Teil. In nassen Zeiten erholt er sich, in der Dürre nicht, und wenn er zu tief sinkt, kippt er und erholt sich nicht mehr.</p>
+            <p class="lang-de">Auf dem <strong>Brett</strong> liegen vier Kreise: Birk, Steighof, Tal-Süd und das Gemeingut. Was du in der Hand hast, legst du auf einen von ihnen. Drei Jahreszeiten geben dir etwas in die Hand, der Herbst nicht:</p>
+            <ul class="lang-de"><li><strong>Im Frühling</strong> hast du einige Tage <strong>Gemeinwerk</strong>, Tage, an denen das Dorf gemeinsam arbeitet. Du legst sie zu Steighof, an die Wasserleitung nach Tal-Süd oder an den Bauplan der Pumpe. Oder du lässt einen Tag bei Birk; dann hat Birk dieses Jahr etwas mehr Spielraum. Was du nicht legst, verfällt. Ausserdem bietet Tal-Süd einen Vertrag an: Es liefert Rohre aus der alten Welt, und Birk baut ihm dafür die Leitung.</li><li><strong>Im Sommer</strong> ist mehr da, als Birk braucht: <strong>Spielraum</strong>. Du kannst ihn an Steighof geben oder in den Speicher legen, aus dem im Winter versorgt wird, wer es braucht. Was du nicht weitergibst, braucht Birk selbst auf. Beides nimmt dem Bach etwas.</li><li><strong>Im Herbst</strong> ist die Ernte drin. Du legst nichts; es zeigt sich, was Frühling und Sommer gebracht haben.</li><li><strong>Im Winter</strong> legt dir Tal-Süd Geld hin. Es ist nicht für Birk: Tal-Süds Händler zahlen es in den Übergangsfonds ein, aus dem der Verbund bezahlt, was er noch in der alten Welt kaufen muss, und Tal-Süd rückt dafür auf der Warteliste vor. Nimmst du an, arbeiten Werkstatt und Pflege von Birk ein Jahr lang auch für Tal-Süd.</li></ul>
+            <p class="lang-de">Jedes Angebot kannst du annehmen oder ablehnen. Und in jeder Jahreszeit kann etwas <strong>an den Tisch</strong> kommen: der sinkende Bach, eine Hitzewelle, die Bitte um Aufnahme. Dann sagen Mara, Jorin und Rahel, was sie von jedem Weg halten. Du kannst gemeinsam beschliessen, einen Weg gegen einen Einwand durchsetzen oder die Sache offen lassen; dann gilt, was ohne Beschluss gilt. Jeder Beschluss wird mit dem aufgeschrieben, was dagegen sprach. Später vermerkt das Spiel, ob eingetreten ist, was jemand befürchtet hatte, oder nicht. Ist es eingetreten, kann eine Regel wieder geöffnet werden.</p>
+            <p class="lang-de">Eines ist immer gesichert: <strong>Das Lebensnotwendige ist für alle gedeckt</strong>, in jeder Jahreszeit, was du auch tust. Es geht nie ums Überleben. Es geht um alles, was darüber hinausgeht.</p>
+            <p class="lang-de">Es gibt keine Punkte und keinen Sieg. Am Ende des Jahres steht, was du getan hast und was in der Welt geschah, mit den Gründen, aber ohne Urteil. Dann gibst du den Ort mit einem Satz an einen Menschen weiter. Er spielt sein Jahr in der Welt, die du ihm hinterlässt.</p>
+            <h2 class="lang-de">Wie die Weitergabe ohne Server geht</h2>
+            <p class="lang-de">Das Spiel speichert nichts auf einem Server. Es gibt keine Anmeldung und keine Datenbank. Gespeichert wird an einem einzigen Ort: im Speicher deines Browsers, auf deinem eigenen Gerät, damit du später weiterspielen kannst. Anders als ein Cookie schickt der Browser diesen Speicher nie an einen Server; er bleibt bei dir. Trotzdem kann ein Ort von Mensch zu Mensch wandern, und das geht so:</p>
+            <p class="lang-de">Jeder Zug wird in ein <strong>Protokoll</strong> geschrieben, eine Liste wie ein Hausbuch: «Frühling 2060: ein Tag Gemeinwerk an die Leitung», «Sommer 2060: ein Teil Spielraum in den Speicher» und so fort. Ins Protokoll kommen nur die Entscheidungen der Menschen, die spielen. Das Wetter und alle Folgen werden nie eingetragen, und auch die Welt selbst wird nie gespeichert. Sie wird bei jedem Öffnen aus dem Protokoll neu ausgerechnet, Zug für Zug. Weil die Rechnung immer gleich ist und auch das Wetter aus einem festen Startwert gewürfelt wird, entsteht auf jedem Gerät genau dieselbe Welt.</p>
+            <p class="lang-de">Beim Weitergeben wird das Protokoll zusammengepresst und in den Link geschrieben, hinter das Zeichen «#». Dieser Teil eines Links wird von keinem Browser an den Server geschickt; er bleibt auf dem Gerät. Eine Prüfsumme merkt, wenn ein Link unterwegs beschädigt wurde. Nach einem Jahr ist der Link etwa 350 Zeichen lang. Erst nach vierzig bis hundert Weitergaben wird er so lang, dass er in E-Mails brechen kann; dann bietet die Seite an, ihn als kleine Datei zu speichern.</p>
+            <p class="lang-de">Weil jeder Link seine ganze Geschichte trägt, weiss das Spiel, durch wie viele Hände dieser Ort gegangen ist. Wer einen Ort weitergegeben hat, bekommt vom nächsten Menschen vielleicht einen Link zurück und sieht dann, was aus seinem Ort geworden ist. Eine Gesamtzahl aller Weitergaben gibt es nicht: Wer einen Link an drei Menschen schickt, eröffnet drei Linien, die nichts voneinander wissen. Das ist ohne Server so, und es ist auch gewollt, denn eine Gabe ist keine Reichweite.</p>
+            <p class="lang-de">Löschen kannst du deinen Ort, indem du die Browserdaten dieser Seite löschst. Auch die Schriften liegen auf dieser Webseite selbst; nichts wird von fremden Servern geladen. Wie jede Webseite wird auch diese von einem Anbieter ausgeliefert; das Spiel selbst schickt nichts dorthin.</p>
+            <h2 class="lang-de">Die technischen Grundlagen</h2>
+            <p class="lang-de">Unter der Oberfläche braucht das Spiel wenig:</p>
+            <ul class="lang-de"><li><strong>Eine einzige Webseite.</strong> Das Spiel ist eine HTML-Seite mit JavaScript, etwa 200 Kilobyte gross, dazu die Bilder. Es läuft im Browser, auf dem Telefon wie am Rechner.</li><li><strong>Der Rechenkern.</strong> Rund 1'200 Zeilen JavaScript enthalten alle Regeln der Welt: die Arbeitsfelder, den Bach, die Warteliste, den Tisch, das Archiv der Beschlüsse. Ein Prüfteil, der «Türsteher», lässt nur Züge ins Protokoll, die nach den Regeln möglich sind.</li><li><strong>Feste Grundsätze im Code.</strong> Einige Regeln dürfen nie verletzt werden, zum Beispiel: Das Lebensnotwendige kann durch keinen Zug gesenkt werden. Der Kern prüft diese Grundsätze nach jedem Zug.</li><li><strong>Die Bilder.</strong> Die vier Farbstiftzeichnungen der Jahreszeiten wurden nicht gemalt, sondern als Programm gezeichnet: Linien mit der freien Bibliothek Rough.js, die von Hand gezogen wirken, darunter Farbflächen mit einem Korn wie von Farbstift. Danach wurden sie als kleine Bilddateien gespeichert. Über dem Bild zeichnet das Spiel, was sich ändert: wie viel Wasser der Bach führt, wie weit die Leitung reicht, wie viele Säcke vor dem Speicher stehen, wo Menschen aus Birk arbeiten.</li><li><strong>Zwei Sprachen.</strong> Deutsch und Englisch, zuerst nach der Sprache des Browsers, unten auf der Seite umschaltbar.</li><li><strong>Offen und frei.</strong> Der ganze Code steckt in der Seite und lässt sich im Browser lesen. Code, Texte und Bilder des Spiels stehen wie der Roman unter der Lizenz CC BY-NC-SA 4.0: Man darf sie teilen und verändern, mit Namensnennung, nicht kommerziell und unter derselben Lizenz. Die beiden Schriften behalten ihre eigene freie Lizenz.</li></ul>
+            <h2 class="lang-de">Wie es geprüft wurde</h2>
+            <p class="lang-de">Bei jeder Änderung liefen Prüfprogramme: Jeder mögliche Zug wurde in Hunderten von Welten ausprobiert. Ganze Jahre wurden ohne Zug und mit allen Zügen gespielt, in beiden Sprachen. Eine Namensprüfung sorgt dafür, dass im Spiel nur Namen vorkommen, die man auf dem Brett auch sieht. Ein weiteres Prüfprogramm mit dem Namen «Waage» spielt mit sechs Arten von Spielenden, von der Teilenden bis zum Bewahrer, viele Jahre durch und wiegt, ob das Spiel eine Haltung heimlich bevorzugt. Ausserdem wurde jede Änderung daraufhin geprüft, ob sie zur Welt des Buches und zu ihren Grundsätzen passt.</p>
+            <h2 class="lang-de">Was das Spiel nicht beweist</h2>
+            <p class="lang-de">Das Spiel zeigt eine Welt, in der Menschen ohne Preis entscheiden, was genügt. Ob das im Grossen trägt, bei Spitälern, Verkehr und ganzen Regionen, beweist es nicht. Das ist eine offene Frage, die sich nur in der Wirklichkeit klären liesse. Das Spiel macht sie spielbar, auch bis zum Scheitern. Vieles ist vereinfacht: Ein Dorf hat drei Arbeitsfelder, ein Jahr hat drei Gesten. Und einige Fragen sind noch offen, etwa wie sehr das Wetter vom Zufall abhängen soll. Sie sind in den Arbeitspapieren zum Spiel festgehalten, zusammen mit den Entscheiden, die zum heutigen Spiel geführt haben.</p>
+            <h2 class="lang-de">Wer es gemacht hat</h2>
+            <p class="lang-de">Erdacht, geprüft und entschieden hat der Autor von «Eintrag Null»: jede Regel, jeden Satz, jedes Bild. Vorschläge, Programmcode, Bilder und Prüfprogramme wurden mit einem KI-Sprachmodell geschrieben und von ihm Fassung um Fassung geprüft, gespielt und verworfen oder angenommen.</p>
+            <hr class="spielbau-trenner lang-de">
+            <p class="spielbau-kolophon lang-de"><em>Mit einem KI-Sprachmodell wurde das Vorhandene neu geordnet und formuliert; erzählt und entschieden hat ein Mensch.</em><br><a class="inline-link" href="https://entryzero.vercel.app">https://entryzero.vercel.app</a></p>
+
+            <p class="quiet-note lang-en hidden"><em>If you haven't played yet: play first. This text tells how the world in the game works out its sums, and that is better discovered for yourself.</em></p>
+            <h2 class="lang-en hidden">Where it comes from</h2>
+            <p class="lang-en hidden">‘What is enough’ grew out of the novel <em>Entry Zero</em>. The novel tells of a world in which no one has to fear hunger or loss of dignity any more, because what life needs is secured for everyone. What remains open there is another question: how do people decide about everything else when no price says what something is worth? And when is it enough?</p>
+            <p class="lang-en hidden">The game was not designed on a drawing board. It was drawn out of the book, through many small attempts, most of which were set aside again. First came a detailed model of the world, with villages, fields of work, a water balance, an archive of decisions and a region still waiting to be taken in. Then it was simplified step by step until a single gesture was left: you lay what you have on one of four circles.</p>
+            <p class="lang-en hidden">Three principles guided every decision. The game rewards no direction, not even sharing; someone who looks after their own should be able to give reasons just as well. The game never takes a choice away from you. And it explains nothing in advance: you notice what something means by what answers.</p>
+            <h2 class="lang-en hidden">How it works</h2>
+            <p class="lang-en hidden">For one year you speak for <strong>Birk</strong>, a village by a stream in the mountains, in the year 2060. Birk has three fields of work, and one person speaks for each: <strong>Mara</strong> for care, <strong>Jorin</strong> for the workshop, <strong>Rahel</strong> for soil and water. Each field can carry only as much as there are people for it.</p>
+            <p class="lang-en hidden">Around Birk lie <strong>Steighof</strong>, a young neighbouring village that cannot yet quite stand on its own; <strong>Tal-Süd</strong>, a region that lacks water and still runs on money; the <strong>commons</strong>, with the shared store and the design for a pump; and the <strong>stream</strong>. Birk and its neighbours belong to a federation of places that live without money. Tal-Süd wants to be taken in; a waiting list settles whose turn comes first.</p>
+            <p class="lang-en hidden">The stream is the one hard limit of this world. Everyone who lives by it takes their share every season. In wet times it recovers, in a drought it does not, and if it sinks too low it tips and no longer recovers.</p>
+            <p class="lang-en hidden">On the <strong>board</strong> lie four circles: Birk, Steighof, Tal-Süd and the commons. Whatever is in your hand, you lay on one of them. Three seasons put something in your hand; autumn does not:</p>
+            <ul class="lang-en hidden"><li><strong>In spring</strong> you have a few <strong>days of common work</strong>, days on which the village works together. You lay them with Steighof, on the pipeline to Tal-Süd or on the pump design. Or you leave a day with Birk; then Birk has a little more leeway this year. What you don't lay lapses. Tal-Süd also offers a contract: it delivers pipes from the old world, and in return Birk builds its pipeline.</li><li><strong>In summer</strong> there is more than Birk needs: <strong>leeway</strong>. You can give it to Steighof or put it into the store, from which those in need are supplied in winter. What you don't pass on, Birk uses up itself. Both take something from the stream.</li><li><strong>In autumn</strong> the harvest is in. You lay nothing; what spring and summer brought comes to light.</li><li><strong>In winter</strong> Tal-Süd lays money before you. It is not for Birk: Tal-Süd's traders pay it into the transition fund, from which the federation pays for what it still has to buy in the old world, and in return Tal-Süd moves up the waiting list. If you accept, Birk's workshop and care also work for Tal-Süd for a year.</li></ul>
+            <p class="lang-en hidden">You can accept or decline every offer. And in any season something may come <strong>to the table</strong>: the falling stream, a heatwave, the request to be taken in. Then Mara, Jorin and Rahel say what they think of each way. You can decide together, push a way through against an objection, or leave the matter open; then what holds without a decision applies. Every decision is written down together with what spoke against it. Later the game notes whether what someone feared came about or not. If it came about, a rule can be reopened.</p>
+            <p class="lang-en hidden">One thing is always secured: <strong>what life needs is covered for everyone</strong>, in every season, whatever you do. It is never about survival. It is about everything beyond that.</p>
+            <p class="lang-en hidden">There are no points and no winning. At the end of the year you read what you did and what happened in the world, with the reasons but without judgement. Then you pass the place on, with one sentence, to one person. They play their year in the world you leave them.</p>
+            <h2 class="lang-en hidden">How passing it on works without a server</h2>
+            <p class="lang-en hidden">The game stores nothing on a server. There is no sign-up and no database. Things are kept in one place only: in your browser's storage, on your own device, so that you can carry on playing later. Unlike a cookie, the browser never sends this storage to a server; it stays with you. Even so, a place can travel from person to person, and this is how:</p>
+            <p class="lang-en hidden">Every move is written into a <strong>record</strong>, a list like a household book: ‘Spring 2060: one day of common work on the pipeline’, ‘Summer 2060: one piece of leeway into the store’, and so on. Only the decisions of the people playing go into the record. The weather and all consequences are never entered, and the world itself is never stored either. Each time it is opened, it is worked out anew from the record, move by move. Because the sums are always the same, and even the weather is drawn from a fixed starting value, exactly the same world appears on every device.</p>
+            <p class="lang-en hidden">When you pass the place on, the record is compressed and written into the link, after the sign ‘#’. No browser sends this part of a link to the server; it stays on the device. A checksum notices if a link was damaged on the way. After one year the link is about 350 characters long. Only after forty to a hundred hand-overs does it grow long enough to break in an email; then the page offers to save it as a small file.</p>
+            <p class="lang-en hidden">Because every link carries its whole history, the game knows how many hands this place has passed through. Someone who passed a place on may get a link back from the next person and can then see what has become of their place. There is no total of all hand-overs: someone who sends a link to three people opens three lines that know nothing of one another. That is how it is without a server, and it is also intended, because a gift is not a reach.</p>
+            <p class="lang-en hidden">You can delete your place by clearing this site's data in your browser. The typefaces, too, are kept on this website itself; nothing is loaded from other servers. Like every website, this one is delivered by a hosting provider; the game itself sends nothing there.</p>
+            <h2 class="lang-en hidden">The technical foundations</h2>
+            <p class="lang-en hidden">Beneath the surface the game needs little:</p>
+            <ul class="lang-en hidden"><li><strong>A single web page.</strong> The game is one HTML page with JavaScript, about 200 kilobytes, plus the pictures. It runs in the browser, on a phone as on a computer.</li><li><strong>The core.</strong> Some 1,200 lines of JavaScript hold all the rules of the world: the fields of work, the stream, the waiting list, the table, the archive of decisions. A checking part, the ‘doorkeeper’, lets into the record only moves that the rules allow.</li><li><strong>Fixed principles in the code.</strong> Some rules may never be broken, for example: no move can lower what life needs. The core checks these principles after every move.</li><li><strong>The pictures.</strong> The four coloured-pencil drawings of the seasons were not painted but drawn by a program: lines made with the free library Rough.js, which look hand-drawn, with areas of colour beneath them that have a grain like coloured pencil. They were then saved as small image files. On top of the picture the game draws what changes: how much water the stream carries, how far the pipeline reaches, how many sacks stand in front of the store, where people from Birk are working.</li><li><strong>Two languages.</strong> German and English, first by your browser's language, switchable at the bottom of the page.</li><li><strong>Open and free.</strong> All the code is in the page and can be read in the browser. The game's code, texts and pictures are, like the novel, under the licence CC BY-NC-SA 4.0: you may share and adapt them, with attribution, non-commercially and under the same licence. The two typefaces keep their own free licence.</li></ul>
+            <h2 class="lang-en hidden">How it was tested</h2>
+            <p class="lang-en hidden">Test programs ran with every change: every possible move was tried in hundreds of worlds. Whole years were played with no moves and with every move, in both languages. A name check makes sure that the game only mentions names you can actually see on the board. A further test program, called ‘the balance’, plays many years with six kinds of players, from the one who shares to the one who keeps, and weighs whether the game secretly favours an attitude. Every change was also checked for whether it fits the world of the book and its principles.</p>
+            <h2 class="lang-en hidden">What the game does not prove</h2>
+            <p class="lang-en hidden">The game shows a world in which people decide without prices what is enough. Whether that holds on a large scale, for hospitals, transport and whole regions, it does not prove. That is an open question that only reality could settle. The game makes it playable, even to the point of failure. Much is simplified: a village has three fields of work, a year has three gestures. And some questions are still open, such as how much the weather should depend on chance. They are set down in the working papers on the game, together with the decisions that led to the game as it is today.</p>
+            <h2 class="lang-en hidden">Who made it</h2>
+            <p class="lang-en hidden">The author of <em>Entry Zero</em> conceived, tested and decided it: every rule, every sentence, every picture. Proposals, program code, pictures and test programs were written with an AI language model, and he tested, played and set aside or accepted them, version by version.</p>
+            <hr class="spielbau-trenner lang-en hidden">
+            <p class="spielbau-kolophon lang-en hidden"><em>With an AI language model the existing was reordered and put into words; the telling and the deciding were done by a human being.</em><br><a class="inline-link" href="https://entryzero.vercel.app">https://entryzero.vercel.app</a></p>
+
+            <p class="manifest-cta">
+                <a class="action-btn" href="/das-genug/"><span class="lang-de">Ein Jahr spielen</span><span class="lang-en hidden">Play one year</span></a>
+                <button class="action-btn secondary" onclick="switchTab('werkstatt')"><span class="lang-de">Zurück zur Werkstatt</span><span class="lang-en hidden">Back to the workshop</span></button>
+            </p>
+        </div>
+
         <!-- ================= SEITE: DAS FEUER, DAS ANTWORTET ================= -->
         <div id="panel-essay" class="content-panel">
             <p class="breadcrumb">
@@ -3625,8 +3754,8 @@
 
     <dialog id="privacy-dialog" class="privacy-dialog" aria-labelledby="pd-title">
         <h2 id="pd-title"><span class="lang-de">Datenschutzhinweis</span><span class="lang-en hidden">Privacy Notice</span></h2>
-        <p class="lang-de">Diese Website wird über Vercel Inc., USA, gehostet. Es werden keine Analyse-Tools, Tracking-Cookies oder Werbeskripte verwendet. Im Rahmen des normalen Hosting-Betriebs können serverseitig minimale Logdaten (z.&nbsp;B. Zeitstempel, abgerufene Ressource) verarbeitet werden. Es werden keine personenbezogenen Daten durch diese Website erhoben oder gespeichert.</p>
-        <p class="lang-en hidden">This website is hosted by Vercel Inc., USA. No analytics tools, tracking cookies, or advertising scripts are used. Vercel may process minimal server-side log data (e.g. timestamp, requested resource) as part of standard hosting operations. No personal data is collected or stored by this website.</p>
+        <p class="lang-de">Diese Website wird über Vercel Inc., USA, gehostet. Es werden keine Analyse-Tools, Tracking-Cookies oder Werbeskripte verwendet. Im Rahmen des normalen Hosting-Betriebs können serverseitig minimale Logdaten (z.&nbsp;B. Zeitstempel, abgerufene Ressource) verarbeitet werden. Es werden keine personenbezogenen Daten durch diese Website erhoben oder gespeichert. Die Website und das Spiel «Das Genug» legen im Speicher deines Browsers nur ab, was sie für dich brauchen: deine Sprachwahl, ob der Klang im Spiel an ist, und, wenn du spielst, den Stand deines Spiels. Diese Daten bleiben auf deinem Gerät, werden an keinen Server übertragen und lassen sich in den Einstellungen deines Browsers löschen.</p>
+        <p class="lang-en hidden">This website is hosted by Vercel Inc., USA. No analytics tools, tracking cookies, or advertising scripts are used. Vercel may process minimal server-side log data (e.g. timestamp, requested resource) as part of standard hosting operations. No personal data is collected or stored by this website. The website and the game ‘What is enough’ keep in your browser's storage only what they need for you: your choice of language, whether the game's sound is on, and, if you play, the state of your game. This data stays on your device, is not sent to any server and can be deleted in your browser's settings.</p>
         <button type="button" class="pd-close" onclick="document.getElementById('privacy-dialog').close()"><span class="lang-de">Schliessen</span><span class="lang-en hidden">Close</span></button>
     </dialog>
 
@@ -3961,7 +4090,7 @@
             // «Die Grundlagen» — deren Punkt bleibt markiert, damit der
             // Besucher sieht, wo er ist (sonst waere gar nichts markiert).
             const EBENE = { manifest: 'grundlagen', traegt: 'grundlagen', 'bilanz-interaktiv': 'grundlagen',
-                            landschaft: 'werkstatt', essay: 'werkstatt', einladung: 'buch' };
+                            landschaft: 'werkstatt', essay: 'werkstatt', spielbau: 'werkstatt', einladung: 'buch' };
             const markiere = EBENE[tabId] || tabId;
 
             const targetPanel = document.getElementById('panel-' + tabId);
