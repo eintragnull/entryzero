@@ -1,7 +1,7 @@
-Das Genug / What is enough, Tür v0.5, Webseitenfassung (20.11.2026)
+Das Genug / What is enough, Tür v0.7, Webseitenfassung (21.11.2026)
 
 Inhalt
-  index.html   Das Spiel, eine Seite, Deutsch und Englisch. Rechenkern v0.16 ist eingebettet.
+  index.html   Das Spiel, eine Seite, Deutsch und Englisch. Rechenkern v0.17 ist eingebettet.
                Die Sprache folgt der Browsersprache (Deutsch bei de, sonst Englisch), wie die Webseite;
                unten lässt sie sich umschalten; die Wahl teilt sie mit der Webseite (ez_lang).
   fonts/       Schriften Atkinson Hyperlegible und Bricolage Grotesque (SIL Open Font License 1.1, Lizenztexte liegen bei).
@@ -19,7 +19,7 @@ Links
 
 ---
 
-What is enough (Das Genug), Door v0.5, website version (20 November 2026)
+What is enough (Das Genug), Door v0.7, website version (21 November 2026)
 
 Put the folder "das-genug" unchanged into the public directory of the website; it is then reachable at /das-genug/.
 The page follows the browser language (German for de, otherwise English) and can be switched at the bottom.
@@ -33,3 +33,9 @@ New in v0.4.1: vorschau.jpg (1200 × 630) is the preview image for messengers an
 
 Neu in v0.5 (Kern v0.17): Was gegen einen Beschluss sprach, wird später vermerkt (eingetreten oder nicht); eine Regel lässt sich mit eingetroffenem Gegengrund wieder öffnen; ein sehr langer Link lässt sich als Datei speichern und unter «Einen Ort öffnen» wieder laden.
 New in v0.5 (core v0.17): what spoke against a decision is noted later (came about or not); a rule can be reopened when its concern came about; a very long link can be saved as a file and loaded again under ‘Open a place you've been given’.
+
+Neu in v0.6: Ein Erbe für alle (auch die erste Hand findet einen Satz und den Ort, wie er ist); das Bild antwortet (Leitung, Säcke, Menschen aus Birk); Tage Gemeinwerk statt Stunden; kürzere Schwelle; eine Stimme zu Beginn jeder Jahreszeit.
+New in v0.6: an inheritance for everyone; the picture answers your hand; days of common work instead of hours; a shorter threshold; a voice at the start of each season.
+
+Neu in v0.7: «Neu beginnen» zeigt die Rückfrage gleich im Bild. Ein Angebot von Tal-Süd (Vertrag im Frühling, Geld im Winter) liegt in einem eigenen Feld mit «Vertrag ablehnen» bzw. «Geld ablehnen».
+New in v0.7: "Start again" brings its question into view. An offer from Tal-Süd (contract in spring, money in winter) sits in a field of its own with "Decline the contract" or "Decline the money".
